@@ -8,6 +8,8 @@ import { FAQPageRoutingModule } from './faq-routing.module';
 
 import { FAQPage } from './faq.page';
 
+
+
 @NgModule({
   imports: [
     CommonModule,
