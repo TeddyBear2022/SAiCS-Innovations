@@ -1,0 +1,7 @@
+{
+  "name": "SAiCS-MobileApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
