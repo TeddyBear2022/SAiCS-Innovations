@@ -8,9 +8,23 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./User/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./User/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./User/register/register.module').then( m => m.RegisterPageModule)
+  },
+
+  
 ];
 
 @NgModule({
