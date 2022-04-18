@@ -1,0 +1,77 @@
+ion-content {
+  --background: #f5f5f5;
+  --color: black;
+}
+
+ion-toolbar {
+  --background: #008080;
+  --color: #ffffff;
+
+  .cartIcon {
+    color: #08c10f;
+  }
+}
+ion-grid {
+  .vl {
+    border-left: 1px solid black;
+    height: 100%;
+  }
+
+  #clientProfileForm {
+    //   Stlying for selects
+    #clientProfileFormCol2 {
+      ion-select {
+        margin-left: 25%;
+        margin-right: 25%;
+      }
+
+      ion-input {
+        margin-left: 25%;
+        margin-right: 30%;
+      }
+
+      ion-select[placeholder="Title"] {
+        width: 15%;
+        margin-left: 25%;
+        margin-right: -10%;
+      }
+
+      ion-input[placeholder="Name"] {
+        margin-left: 15%;
+      }
+    }
+
+    ion-select {
+      color: black;
+      border-bottom: solid 1pt black;
+      width: 300px;
+    }
+    ion-select[placeholder] {
+      color: black;
+      text-align: center;
+    }
+
+    // Styling for inputs
+    ion-input {
+      color: black;
+      border-bottom: solid 1pt black;
+      width: 300px;
+    }
+    ion-input[placeholder] {
+      color: black;
+      text-align: center;
+    }
+
+    // Buttons 
+    ion-button[id="update"]
+      {
+        --background: #008080;
+        --color:white;
+      }
+      ion-button[id="delete"]
+      {
+        --background: #f44336;
+        --color:white;
+      }
+  }
+}
