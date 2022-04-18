@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'next',
     pathMatch: 'full'
   },
   {
@@ -51,6 +51,16 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./Client/profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'next',
+    loadChildren: () => import('./User/next/next.module').then( m => m.NextPageModule)
+  },  {
+    path: 'waiting',
+    loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
+  },
+
+
+
 
     
     
