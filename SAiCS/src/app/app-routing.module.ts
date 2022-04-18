@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'register',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -24,6 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
+
     path: 'feedback',
     loadChildren: () => import('./Client/feedback/feedback.module').then( m => m.FeedbackPageModule)
   },
@@ -36,9 +37,22 @@ const routes: Routes = [
     loadChildren: () => import('./User/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
 
-
-
-
+    path: 'faq',
+    loadChildren: () => import('./Client/faq/faq.module').then( m => m.FAQPageModule)
+  },
+  {
+    path: 'account-faq',
+    loadChildren: () => import('./Client/faq/account-faq/account-faq.module').then( m => m.AccountFaqPageModule )
+  },
+  {
+    path: 'product-faq',
+    loadChildren: () => import('./Client/faq/product-faq/product-faq.module').then( m => m.ProductFaqPageModule )
+  },
+  {
+    path: 'delivery-faq',
+    loadChildren: () => import('./Client/faq/delivery-faq/delivery-faq.module').then( m => m.DeliveryFaqPageModule )
+  },
+    
 
 ];
 
