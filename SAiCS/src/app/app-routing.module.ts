@@ -23,6 +23,21 @@ const routes: Routes = [
     path: 'landing-page',
     loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
   },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./Client/feedback/feedback.module').then( m => m.FeedbackPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./Client/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./User/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+
+
+
 
 
 ];

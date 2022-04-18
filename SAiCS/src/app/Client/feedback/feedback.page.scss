@@ -1,0 +1,60 @@
+ion-content {
+    --background: #f5f5f5;
+    --color : black;
+  }
+
+  ion-toolbar
+  {
+    --background: #008080;
+    --color: #FFFFFF;
+
+    .cartIcon
+    {
+      color: #08c10f;
+    }
+  }
+
+  ion-grid
+  {
+    .vl {
+      border-left: 1px solid black;
+      height: 80%;
+    }
+
+    #clientFeedbackForm{
+      ion-select{
+        color: black;
+        border-bottom: solid 1pt black ;
+        width:300px;
+      }
+      ion-select[placeholder]
+      {
+        color: black;
+        text-align: center;
+        
+      }
+
+      ion-textarea
+      {
+        border: solid 1pt black;
+        height: 150px;
+        background-color: white;
+        margin-top: 5pt;
+        width:100%;
+      }
+
+      ion-button
+      {
+        --background: #008080;
+        --color:white;
+      }
+    }
+
+    
+
+    #bubbles
+    {
+      bottom: 0;
+      position: absolute;
+    }
+  }
