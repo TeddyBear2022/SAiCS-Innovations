@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPage implements OnInit {
 
+  registerForm : FormGroup = new FormGroup({
+    usertype: new FormControl('', Validators.required),
+  })
+
+  userTypeReg:any;
+  userType:NgModel
+  AmbassadorRanking: NgModel
+  
   constructor() { }
 
   ngOnInit() {
   }
 
+  showValue(){
+    this.userTypeReg = this.userType
+    console.log(this.userTypeReg);
+    
+  }
 }
