@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'next',
+    redirectTo: 'delivery-faq',
     pathMatch: 'full'
   },
   {
@@ -54,7 +54,8 @@ const routes: Routes = [
   {
     path: 'next',
     loadChildren: () => import('./User/next/next.module').then( m => m.NextPageModule)
-  },  {
+  },
+  {
     path: 'waiting',
     loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
   },

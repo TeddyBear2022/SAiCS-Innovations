@@ -5,7 +5,7 @@
     </ion-buttons>    
     <ion-buttons slot="secondary">
       <ion-button shape="round">
-        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <ion-icon size="large" name="cart" style="color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
@@ -18,9 +18,52 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div id="container">
-    <label>Product FAQ info</label>
+<ion-content  [fullscreen]="true">
+
+  <br> <br> 
+    <ion-label class="Heading"><h1 style="font-size: 25pt; text-align: center; font-style: normal;"> <b>Let Us Answer Your Questions!</b></h1></ion-label>
+    <br>
+
+  <div class="container">
+
+  <ion-card class="accfaq-margin">
+    <ion-card-header>
+      <ion-card-title> <span>Products </span> <ion-icon class="P-icon"  name="cart"  style="color: black;" ></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
+
+
+    <br> <br>
+
+    <ion-card-content>
+      <ion-text>
+        <H2>Q.. Are there any side effects to the product ranges?</H2><br>
+        <H3>A... Only the Detox may cause a headache, but a painkiller may be taken. Headaches may occur due to toxins being flushed
+           from the body.</H3><br><br>
+
+        <H2>Q.. Are the products natural?</H2><br>
+        <H3> A... All products are 100% natural</H3><br><br>
+
+          <H2>Q.. Are the products safe to use?</H2><br>
+          <H3> A... All SAiCS products are safe to use for persons from the ages of +6 years.The products are safe for high blood pressure,
+             diabetes and breast feeding mothers.</H3>
+      </ion-text>
+    </ion-card-content>
+
+  </ion-card>
+
+</div>
+
+<ion-row> 
+  <ion-col style="margin-top: 2%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
   </div>
+  </ion-col>
+</ion-row>
  
 </ion-content>
