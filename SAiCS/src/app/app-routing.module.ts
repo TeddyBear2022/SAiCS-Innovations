@@ -59,6 +59,14 @@ const routes: Routes = [
     path: 'waiting',
     loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
   },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'view-ambassador',
+    loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
+  },
 
 
 

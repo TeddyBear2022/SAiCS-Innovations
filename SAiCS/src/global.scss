@@ -24,3 +24,32 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+// all navbars
+#navbar
+{
+  --background: #062b80;
+  #toolbarProfileIcon{color: #FFFFFF;}
+  #toolbarUserName{color: #FFFFFF;}
+  #toolbarCartIcon{color: #08c10f;}
+  
+}
+
+
+ion-menu {
+    --ion-background-color: #757575;
+    --ion-text-color: white;
+  
+    ion-toolbar {
+      --background: #757575;
+    }
+  
+  }
+
+  ion-menu-button
+  {
+    --color: #FFFFFF;
+  }
+
+ 

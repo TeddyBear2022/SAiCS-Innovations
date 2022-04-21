@@ -1,24 +1,31 @@
+
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar id="navbar">
     <ion-buttons slot="start">
-      <ion-menu-button auto-hide="false">
-        
+      <ion-menu-button auto-hide="false" menu="main-menu">
+        <ion-icon slot=”icon-only” name=”menu”></ion-icon>
       </ion-menu-button>
     </ion-buttons>    
+
+
     <ion-buttons slot="secondary">
       <ion-button shape="round">
-        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+    
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
-    <ion-buttons slot="end">
-      <ion-button shape="round">
-        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
-      </ion-button>
-    </ion-buttons>    
+      <ion-buttons slot="end">
+        <ion-button (click)="presentPopover($event)" shape="round">
+          <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+       
+    
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
   <div id="container">
@@ -44,7 +51,7 @@
               
             </ion-card-content>
             <ion-footer >
-            <div><u>Learn more</u></div>
+            <div><a routerLink="/account-faq">Learn more</a></div>
             </ion-footer>
           </ion-card>
         </ion-col>
@@ -59,7 +66,7 @@
               Learn all you need to know about products
             </ion-card-content>
             <ion-footer >
-              <div ><u>Learn more</u></div>
+              <div ><a routerLink="/product-faq">Learn more</a></div>
             </ion-footer>
           </ion-card>
         </ion-col>
@@ -75,7 +82,7 @@
              Confused about delivery?
             </ion-card-content>
             <ion-footer >
-             <div ><u> Learn more</u></div>
+             <div ><a routerLink="/delivery-faq">Learn more</a></div>
             </ion-footer>
           </ion-card>
         </ion-col>
