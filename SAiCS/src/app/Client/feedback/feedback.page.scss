@@ -5,7 +5,7 @@ ion-content {
 
   ion-toolbar
   {
-    --background: #008080;
+    --background:  #062b80;
     --color: #FFFFFF;
 
     .cartIcon
@@ -37,6 +37,7 @@ ion-content {
       ion-textarea
       {
         border: solid 1pt black;
+        border-radius: 11px !important;
         height: 150px;
         background-color: white;
         margin-top: 5pt;
@@ -45,7 +46,7 @@ ion-content {
 
       ion-button
       {
-        --background: #008080;
+        --background: #062b80;
         --color:white;
       }
     }

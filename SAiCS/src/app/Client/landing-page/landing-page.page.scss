@@ -14,7 +14,7 @@
 
   ion-toolbar
   {
-    --background: #008080;
+    --background: #062b80;
     --color: #FFFFFF;
 
     .cartIcon
@@ -46,6 +46,7 @@
 
   ion-button{
     text-transform: none;
+       
   --ion-color-secondary: #08c10f;
       --ion-color-secondary-rgb: 8,193,15;
       --ion-color-secondary-contrast: #ffffff;
@@ -76,4 +77,9 @@ ion-input
     --ion-color-secondary-contrast-rgb: 0,0,0;
     --ion-color-secondary-shade: #d8d8d8;
     --ion-color-secondary-tint: #f6f6f6;
+}
+
+ion-select{
+  border: solid 1pt black;
+  border-radius: 12px !important;
 }
