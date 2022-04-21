@@ -21,7 +21,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  showValue(){
+  UserTypeSelected(){
     this.userTypeReg = this.userType
     console.log(this.userTypeReg);
     

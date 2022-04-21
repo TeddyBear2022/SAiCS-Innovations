@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+  Category:any;
+  
 
   constructor( private route : Router) {
 
@@ -22,5 +26,10 @@ export class HomePage {
 
   Home(){
     this.route.navigate(['home'])
+  }
+
+  SelectedCategory(string:string){
+    console.log(string)
+    this.Category = string
   }
 }
