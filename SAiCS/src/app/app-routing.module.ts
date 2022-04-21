@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LandingPagePage } from './Client/landing-page/landing-page.page';
 
 const routes: Routes = [
   {
@@ -9,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'profile',
+    redirectTo: 'delivery-faq',
     pathMatch: 'full'
   },
   {
@@ -68,8 +67,6 @@ const routes: Routes = [
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
-
-
 
 
 

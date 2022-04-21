@@ -18,9 +18,50 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div id="container">
-    <label>Account FAQ info</label>
+<ion-content  [fullscreen]="true">
+
+  <br> <br> <br>
+    <ion-label class="Heading"><h1 style="font-size: 25pt; text-align: center; font-style: normal;"> <b>Let Us Answer Your Questions!</b></h1></ion-label>
+    <br>
+
+  <div class="container">
+
+  <ion-card class="accfaq-margin">
+    <ion-card-header>
+      <ion-card-title><ion-label>Account </ion-label><ion-icon class="P-icon" size="large" name="person-outline" end></ion-icon></ion-card-title>
+    </ion-card-header>
+
+
+    <br> <br>
+
+    <ion-card-content>
+      <ion-text>
+        <H2 (click)="txtClick1()">Q.. How do I change my password?</H2><br>
+        <H3 *ngIf="display">  A.. Click on the profile icon, there you will be directed to your profile page. To change your password, click on the
+           "Change password?" link. You will be redirected to the change password page where you can change your current password.</H3><br><br>
+
+        <H2 (click)="txtClick2()" >Q.. What is a SAiCS account?</H2><br>
+        <H3 *ngIf="display2"> A... SAiCS account is a platform that allows you to connect to one of our trusted ambassadors who are put in place 
+          to ease your ordering process.</H3><br><br>
+
+          <H2 (click)="txtClick3()" >Q.. How do I view and update my profile details?</H2><br>
+          <H3 *ngIf="display3"> A... Click on the profile icon which will direct you to your profile page. There you can view your profile details 
+            and choose whether to change or delete your profile.</H3>
+      </ion-text>
+    </ion-card-content>
+
+  </ion-card>
+</div>
+
+<ion-row> 
+  <ion-col style="margin-top: 2%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
   </div>
- 
+  </ion-col>
+</ion-row>
 </ion-content>
