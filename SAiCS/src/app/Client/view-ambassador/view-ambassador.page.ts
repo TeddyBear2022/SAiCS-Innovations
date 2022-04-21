@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 
+
 @Component({
-  selector: 'app-account-faq',
-  templateUrl: './account-faq.page.html',
-  styleUrls: ['./account-faq.page.scss'],
+  selector: 'app-view-ambassador',
+  templateUrl: './view-ambassador.page.html',
+  styleUrls: ['./view-ambassador.page.scss'],
 })
-export class AccountFaqPage implements OnInit {
+export class ViewAmbassadorPage implements OnInit {
 
   constructor(public popoverController: PopoverController){}
 
@@ -19,6 +20,7 @@ export class AccountFaqPage implements OnInit {
     });
     return await popover.present();
   }
+
 
   ngOnInit() {
   }

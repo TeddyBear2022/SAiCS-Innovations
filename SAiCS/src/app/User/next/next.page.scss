@@ -9,10 +9,17 @@
     transform: translateY(-50%);
   }
 
+
   ion-content {
     --background: #f5f5f5;
     --color : black;
   }
+
+  h1{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    }
 
   ion-input{
     border-bottom: solid 1pt black ;
@@ -24,14 +31,50 @@
 
 ion-button{
   text-transform: none;
-	--ion-color-secondary: #00008b;
-	--ion-color-secondary-rgb: 0,0,139;
+	--ion-color-secondary: #062B80;
 	--ion-color-secondary-contrast: #ffffff;
-	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #00007a;
-	--ion-color-secondary-tint: #1a1a97;
+  margin-top:30px;
+  border-radius: 11px;
 
 }
 
+/* Quote section*/
+
+  blockquote {
+    position: relative;
+    margin: 100px auto;
+    width: 480px;
+    font-size: 28px;
+    line-height: 1.5;
+    text-align: left;
+    color: #333333;
+  }
+  
+  blockquote span {
+    display: block;
+    text-align: right;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #333333;
+  }
+  
+  blockquote.tweet-this:hover p {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  /*Form section*/
+  #registerNextForm
+  {
+    ion-list {
+      --ion-item-background: transparent;
+      ion-input[placeholder]
+      {
+        color: black;
+        text-align: center;
+      }
+
+     }
+  }
 
  

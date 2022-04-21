@@ -13,7 +13,7 @@
   }
 
 
-#clientTopSalesCard
+#myAmbassadorCard
 {
   display: flex; 
   align-items: center; 
@@ -23,35 +23,23 @@
   ion-card
   {
     height:65%; 
-    width: 75%; 
+    width: 65%; 
     padding: 3%;
-    --background:#e0e0e0;
+    --background:#a6a6a6;
+    border: 2px solid #000000;
+    color: #ffffff;
+
+    p{font-size: 25px; font-style: italic; font-weight: bold;}
+    text-align: center;
   
     ion-card-content
-    {
-      margin-left: -20%;
-      margin-right: 30%;
+    { 
+        p{line-height: 1.5;}
+      
     }
   }
-
-  ion-button{
-    text-transform: none;
-  --ion-color-secondary: #08c10f;
-      --ion-color-secondary-rgb: 8,193,15;
-      --ion-color-secondary-contrast: #ffffff;
-      --ion-color-secondary-contrast-rgb: 255,255,255;
-      --ion-color-secondary-shade: #07aa0d;
-      --ion-color-secondary-tint: #21c727;
-  }
 }
 
-#products
-{
-  ion-button
-  {
-    color: #08c10f;
-  }
-}
 
 ion-input
 {
@@ -67,3 +55,32 @@ ion-input
     --ion-color-secondary-shade: #d8d8d8;
     --ion-color-secondary-tint: #f6f6f6;
 }
+
+h1{
+text-align: center;
+font-size: 35px;
+font-weight: bold;
+}
+
+/*Table styling*/
+#ambassadors {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%
+  }
+  
+  #ambassadors td, #ambassadors th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #ambassadors tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #ambassadors tr:hover {background-color: #ddd;}
+  
+  #ambassadors th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #424242;
+    color: white;
+  }
