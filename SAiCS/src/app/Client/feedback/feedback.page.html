@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <h1 style="font-weight: bold; text-align: center;">Let's get your Feedback!</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <img src="./assets/SAiCS Logo.png" alt="SAiCS logo">
+        </ion-col>
+
+        <ion-col>
+          <div class="vl"></div>
+        </ion-col>
+
+        <ion-col style="display: flex; align-items: flex-start;" size="5">
+          <form id="clientFeedbackForm">
+            <ion-row>
+              <ion-col>
+                <br><br><br><br>
+              <ion-select placeholder="Feedback Type">
+                <ion-select-option value="Product">Product</ion-select-option>
+                <ion-select-option value="Ambassador">Ambassador</ion-select-option>
+              </ion-select>
+            <br><br>
+
+            <!--Is a cascading select type-->
+              <ion-select placeholder="Product">
+              </ion-select>
+            <br><br>
+
+              <ion-label style="display: block;text-align: center;">Description:</ion-label>
+              <ion-textarea name="description"></ion-textarea>
+              </ion-col>
+            </ion-row>
+            
+            <br><br>
+
+            <ion-row>
+              <ion-col></ion-col>
+             <ion-col></ion-col>
+             <ion-col><ion-button>Submit</ion-button></ion-col>
+            </ion-row>
+            
+          </form>
+        </ion-col>
+       
+      </ion-row>
+      <ion-row> 
+        <ion-col style="margin-top: 2%;">
+          <div id="bubbles">
+            <svg >
+              <circle id="gray" cx="10" cy="60" r="60" fill="#bdbdbd"/>
+              <circle id="teal" cx="50" cy="130" r="60" fill="#008080" fill-opacity="0.8" />
+              <circle id="blue" cx="120" cy="165" r="60" fill="#00008b" fill-opacity="0.8" />
+            </svg>
+        </div>
+        </ion-col>
+        
+      </ion-row>
+    </ion-grid>
+   
+    </div>
+    
+</ion-content>
+
+

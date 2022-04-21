@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+    <label>Account FAQ info</label>
+  </div>
+ 
+</ion-content>
