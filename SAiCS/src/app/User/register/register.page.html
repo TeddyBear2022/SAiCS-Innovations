@@ -53,12 +53,18 @@
        </ion-col>
 
        <!-- If Ambassador selected -->
-       <div *ngIf="userTypeReg== 'Ambassador'">
-       <ion-col size="5.5">
+      
+       <ion-col size="5.5" *ngIf="userTypeReg== 'Ambassador'">
         <br><br>
          <ion-select placeholder="Select Ambassador Ranking" >
           <!-- Add through database -->
         </ion-select>
+        <br>
+        <ion-label>
+          Alias Name:
+        </ion-label>
+        <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+        <label style="color: #3f51b5; margin-right: 40%;">*Optional</label>
         <br>
         <ion-label>
           Referral Code:
@@ -86,12 +92,12 @@
       </ion-label>
       <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 60pt;background-color: white;margin-top: 5pt;"></ion-input>
       </ion-col>
-    </div>
+  
    
        <!-- If Admin selected -->       
-    <div *ngIf="userTypeReg== 'Admin'">
+    
       <br>
-      <ion-col size="5.5">
+      <ion-col size="5.5" *ngIf="userTypeReg== 'Admin'">
       <ion-label>
         ID Number :
       </ion-label>
@@ -103,22 +109,22 @@
     <input type="file" >
     <br><br>
   </ion-col>
-    </div>
+
 
     <!-- If Client selected -->
-    <div *ngIf="userTypeReg== 'Client'">
       <br>
-      <ion-col size="5.5">
+      <ion-col size="5.5" *ngIf="userTypeReg == 'Client'">
         <ion-label>
           Referral Code:
         </ion-label>
         <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
         <br>
-        <ion-label>Do you have a referal Code?<code></code></ion-label>
+        <ion-label style="color: #3f51b5;"><u>Do you have a referal Code?</u></ion-label>
   </ion-col>
-    </div>
+
 
      </ion-row>
+
      <ion-row>
        <ion-col></ion-col>
        <ion-col></ion-col>
