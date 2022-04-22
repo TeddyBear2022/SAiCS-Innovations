@@ -10,7 +10,7 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 export class LandingPagePage implements OnInit {
 
   constructor(public popoverController: PopoverController){}
-
+  
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
