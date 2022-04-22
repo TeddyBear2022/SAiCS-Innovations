@@ -41,15 +41,19 @@ ion-menu {
     --ion-background-color: #757575;
     --ion-text-color: white;
   
-    ion-toolbar {
-      --background: #757575;
-    }
-  
+  ion-toolbar {--background: #757575;}
+  ion-list{ background : #757575 !important;}
+  ion-item{
+    --background : #757575 !important;
+    --color: #FFFFFF;
+    ion-icon {color: #000000;}
   }
+  ion-footer{border-top: 1px solid #000000;}
+  }
+
 
   ion-menu-button
   {
     --color: #FFFFFF;
   }
 
- 
