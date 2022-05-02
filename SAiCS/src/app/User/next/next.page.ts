@@ -12,4 +12,5 @@ export class NextPage implements OnInit {
   ngOnInit() {
   }
 
+  
 }
