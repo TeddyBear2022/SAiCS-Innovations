@@ -14,7 +14,7 @@ namespace SAiCS_Innovations_API.Models
         }
 
         public int ClientId { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public int? AmbassadorId { get; set; }
 
         public virtual Ambassador Ambassador { get; set; }

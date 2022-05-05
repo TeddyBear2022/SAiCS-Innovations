@@ -11,9 +11,9 @@ namespace SAiCS_Innovations_API.Models
         public string Description { get; set; }
         public int? ProductId { get; set; }
         public int? FeedbackTypeId { get; set; }
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
         public int? AmbassadorId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public virtual Ambassador Ambassador { get; set; }
         public virtual Client Client { get; set; }

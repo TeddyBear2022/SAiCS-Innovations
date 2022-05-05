@@ -14,7 +14,7 @@ namespace SAiCS_Innovations_API.Models
 
         public int AddressId { get; set; }
         public string Address1 { get; set; }
-        public int PostalCode { get; set; }
+        public int? PostalCode { get; set; }
         public string City { get; set; }
 
         public virtual ICollection<User> Users { get; set; }

@@ -10,10 +10,10 @@ namespace SAiCS_Innovations_API.Models
         public int AmbassadorOrderId { get; set; }
         public int? AmabassadorId { get; set; }
         public int? OrderStatusId { get; set; }
-        public int CartId { get; set; }
+        public int? CartId { get; set; }
         public byte[] ProofOfPayment { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime Date { get; set; }
+        public decimal? Amount { get; set; }
+        public DateTime? Date { get; set; }
         public int? DeliveryId { get; set; }
         public string TrackingNumber { get; set; }
 

@@ -9,12 +9,12 @@ namespace SAiCS_Innovations_API.Models
     {
         public int ClientOrderId { get; set; }
         public int? OrderStatusId { get; set; }
-        public int CartId { get; set; }
-        public int ClientId { get; set; }
+        public int? CartId { get; set; }
+        public int? ClientId { get; set; }
         public int? DeliveryId { get; set; }
         public byte[] ProofOfPayment { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
+        public DateTime? Date { get; set; }
+        public decimal? Amount { get; set; }
         public string TrackingNumber { get; set; }
 
         public virtual Cart Cart { get; set; }

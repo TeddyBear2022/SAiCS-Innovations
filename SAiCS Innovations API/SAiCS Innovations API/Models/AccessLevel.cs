@@ -12,13 +12,6 @@ namespace SAiCS_Innovations_API.Models
             UserRoles = new HashSet<UserRole>();
         }
 
-        public AccessLevel(int ID, string Name, string Description)
-        {
-            this.AccessLevelId = ID;
-            this.AccessLevelName = Name;
-            this.Description = Description;
-            
-        }
         public int AccessLevelId { get; set; }
         public string AccessLevelName { get; set; }
         public string Description { get; set; }

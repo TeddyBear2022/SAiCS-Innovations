@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.DependencyInjection;
 
 #nullable disable
 
@@ -17,23 +16,15 @@ namespace SAiCS_Innovations_API.Models
             : base(options)
         {
         }
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-        //    services.AddDbContext<SaicsInnovationsDBContext>(options =>
-        //    {
-        //        options.UseSqlServer("Server=LAPTOP-4KPHVJPB\\SQLEXPRESS02;Database=SaicsInnovationsDB;Trusted_Connection=True;");
-        //        options.EnableSensitiveDataLogging();
-        //    });
-        //}
 
-        public virtual DbSet<AccessLevel> AccessLevel { get; set; }
+        public virtual DbSet<AccessLevel> AccessLevels { get; set; }
         public virtual DbSet<AccountType> AccountTypes { get; set; }
-        public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Ambassador> Ambassadors { get; set; }
         public virtual DbSet<AmbassadorOrder> AmbassadorOrders { get; set; }
         public virtual DbSet<AmbassadorType> AmbassadorTypes { get; set; }
-        public virtual DbSet<ApplicationStatus> ApplicationStatus { get; set; }
+        public virtual DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<BankAccount> BankAccounts { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
@@ -43,7 +34,7 @@ namespace SAiCS_Innovations_API.Models
         public virtual DbSet<ClientOrder> ClientOrders { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
         public virtual DbSet<ContentType> ContentTypes { get; set; }
-        public virtual DbSet<Country> Country { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<CourseStatus> CourseStatuses { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
@@ -67,11 +58,11 @@ namespace SAiCS_Innovations_API.Models
         public virtual DbSet<Quiz> Quizzes { get; set; }
         public virtual DbSet<Special> Specials { get; set; }
         public virtual DbSet<SpecialType> SpecialTypes { get; set; }
-        public virtual DbSet<Title> Title { get; set; }
+        public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserApplicationStatus> UserApplicationStatuses { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<Vat> Vat { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Vat> Vats { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -93,12 +84,10 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.AccessLevelId).HasColumnName("AccessLevelID");
 
                 entity.Property(e => e.AccessLevelName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
@@ -110,7 +99,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.AccountTypeId).HasColumnName("AccountTypeID");
 
                 entity.Property(e => e.AccountTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -122,13 +110,11 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.AddressId).HasColumnName("AddressID");
 
                 entity.Property(e => e.Address1)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Address");
 
                 entity.Property(e => e.City)
-                    .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
             });
@@ -139,13 +125,12 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.AdminId).HasColumnName("AdminID");
 
-                entity.Property(e => e.Idnumber).HasColumnName("IDNumber");
+                entity.Property(e => e.Idnumber)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("IDNumber");
 
-                entity.Property(e => e.Idphoto)
-                    .IsRequired()
-                    .HasColumnName("IDPhoto");
-
-                entity.Property(e => e.ProofOfAddressPhoto).IsRequired();
+                entity.Property(e => e.Idphoto).HasColumnName("IDPhoto");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -162,42 +147,49 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.AmbassadorId).HasColumnName("AmbassadorID");
 
+                entity.Property(e => e.AliasName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.AmbassadorTypeId).HasColumnName("AmbassadorTypeID");
 
                 entity.Property(e => e.BankAccountId).HasColumnName("BankAccountID");
 
                 entity.Property(e => e.CourseId).HasColumnName("CourseID");
 
-                entity.Property(e => e.Idnumber).HasColumnName("IDNumber");
+                entity.Property(e => e.Idnumber)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("IDNumber");
 
-                entity.Property(e => e.Idphoto)
-                    .IsRequired()
-                    .HasColumnName("IDPhoto");
+                entity.Property(e => e.Idphoto).HasColumnName("IDPhoto");
 
-                entity.Property(e => e.ProofOfAddressPhoto).IsRequired();
+                entity.Property(e => e.ReferralCode)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.AmbassadorType)
                     .WithMany(p => p.Ambassadors)
                     .HasForeignKey(d => d.AmbassadorTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Ambassador_AmbassadorType");
 
                 entity.HasOne(d => d.BankAccount)
                     .WithMany(p => p.Ambassadors)
                     .HasForeignKey(d => d.BankAccountId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Ambassador_BankAccount");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Ambassadors)
                     .HasForeignKey(d => d.CourseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ambassador_Course");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ambassadors)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Ambassador_User");
             });
 
@@ -219,8 +211,6 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
 
-                entity.Property(e => e.ProofOfPayment).IsRequired();
-
                 entity.Property(e => e.TrackingNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false);
@@ -228,24 +218,23 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Amabassador)
                     .WithMany(p => p.AmbassadorOrders)
                     .HasForeignKey(d => d.AmabassadorId)
-                    .OnDelete(DeleteBehavior.SetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_AmbassadorOrder_Ambassador");
 
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.AmbassadorOrders)
                     .HasForeignKey(d => d.CartId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_AmbassadorOrder_Cart");
 
                 entity.HasOne(d => d.Delivery)
                     .WithMany(p => p.AmbassadorOrders)
                     .HasForeignKey(d => d.DeliveryId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_AmbassadorOrder_Delivery");
 
                 entity.HasOne(d => d.OrderStatus)
                     .WithMany(p => p.AmbassadorOrders)
                     .HasForeignKey(d => d.OrderStatusId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_AmbassadorOrder_OrderStatus");
             });
 
@@ -256,7 +245,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.AmbassadorTypeId).HasColumnName("AmbassadorTypeID");
 
                 entity.Property(e => e.AmbassadorTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -268,7 +256,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.ApplicationStatusId).HasColumnName("ApplicationStatusID");
 
                 entity.Property(e => e.StatusName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -290,13 +277,10 @@ namespace SAiCS_Innovations_API.Models
                     .HasColumnName("Audit_Log_Datestamp");
 
                 entity.Property(e => e.AuditLogDescription)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("Audit_Log_Description");
 
                 entity.Property(e => e.AuditLogTimestamp)
-                    .IsRequired()
                     .IsRowVersion()
                     .IsConcurrencyToken()
                     .HasColumnName("Audit_Log_Timestamp");
@@ -304,13 +288,12 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.AuditLogs)
                     .HasForeignKey(d => d.AdminId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AuditLog_Admin");
 
                 entity.HasOne(d => d.Ambassador)
                     .WithMany(p => p.AuditLogs)
                     .HasForeignKey(d => d.AmbassadorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_AuditLog_Ambassador");
             });
 
@@ -323,14 +306,12 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.AccountTypeId).HasColumnName("AccountTypeID");
 
                 entity.Property(e => e.BankName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.AccountType)
                     .WithMany(p => p.BankAccounts)
                     .HasForeignKey(d => d.AccountTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_BankAccount_AccountType");
             });
 
@@ -343,29 +324,32 @@ namespace SAiCS_Innovations_API.Models
 
             modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(e => new { e.PackageId, e.ProductId });
-
                 entity.ToTable("CartItem");
+
+                entity.Property(e => e.CartItemId).HasColumnName("CartItemID");
+
+                entity.Property(e => e.CartId).HasColumnName("CartID");
 
                 entity.Property(e => e.PackageId).HasColumnName("PackageID");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
-                entity.Property(e => e.CartId).HasColumnName("CartID");
-
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.CartId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_CartItem_Cart");
 
                 entity.HasOne(d => d.Package)
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.PackageId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_CartItem_Package");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_CartItem_Product");
             });
 
@@ -375,14 +359,10 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.CertificateId).HasColumnName("CertificateID");
 
-                entity.Property(e => e.CertificateDescription)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.CertificateDescription).HasColumnType("text");
 
                 entity.Property(e => e.CertificateName)
-                    .IsRequired()
-                    .HasMaxLength(30)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CourseStatusId).HasColumnName("CourseStatusID");
@@ -390,7 +370,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.CourseStatus)
                     .WithMany(p => p.Certificates)
                     .HasForeignKey(d => d.CourseStatusId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Certificate_CourseStatus");
             });
 
@@ -407,6 +386,7 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Ambassador)
                     .WithMany(p => p.Clients)
                     .HasForeignKey(d => d.AmbassadorId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Client_Ambassador");
 
                 entity.HasOne(d => d.User)
@@ -433,8 +413,6 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
 
-                entity.Property(e => e.ProofOfPayment).IsRequired();
-
                 entity.Property(e => e.TrackingNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false);
@@ -442,23 +420,23 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.ClientOrders)
                     .HasForeignKey(d => d.CartId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ClientOrder_Cart");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.ClientOrders)
                     .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ClientOrder_Client");
 
                 entity.HasOne(d => d.Delivery)
                     .WithMany(p => p.ClientOrders)
                     .HasForeignKey(d => d.DeliveryId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ClientOrder_Delivery");
 
                 entity.HasOne(d => d.OrderStatus)
                     .WithMany(p => p.ClientOrders)
                     .HasForeignKey(d => d.OrderStatusId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ClientOrder_OrderStatus");
             });
 
@@ -470,12 +448,9 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.ContentTypeId).HasColumnName("ContentTypeID");
 
-                entity.Property(e => e.ContentUpload).IsRequired();
-
                 entity.HasOne(d => d.ContentType)
                     .WithMany(p => p.Contents)
                     .HasForeignKey(d => d.ContentTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Content_ContentType");
             });
 
@@ -486,7 +461,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.ContentTypeId).HasColumnName("ContentTypeID");
 
                 entity.Property(e => e.ContentTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -498,12 +472,10 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
                 entity.Property(e => e.CountryCode)
-                    .IsRequired()
                     .HasMaxLength(5)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CountryName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -519,7 +491,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.ContentId).HasColumnName("ContentID");
 
                 entity.Property(e => e.CourseName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
@@ -530,25 +501,21 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.Courses)
                     .HasForeignKey(d => d.AdminId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Course_Admin");
 
                 entity.HasOne(d => d.Content)
                     .WithMany(p => p.Courses)
                     .HasForeignKey(d => d.ContentId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Course_Content");
 
                 entity.HasOne(d => d.CourseStatus)
                     .WithMany(p => p.Courses)
                     .HasForeignKey(d => d.CourseStatusId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Course_CourseStatus");
 
                 entity.HasOne(d => d.Quiz)
                     .WithMany(p => p.Courses)
                     .HasForeignKey(d => d.QuizId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Course_Quiz");
             });
 
@@ -574,17 +541,14 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.CurrencyId).HasColumnName("CurrencyID");
 
                 entity.Property(e => e.CurrencyConversionsNames)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CurrencyName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CurrencySymbol)
-                    .IsRequired()
                     .HasMaxLength(6)
                     .IsUnicode(false);
             });
@@ -596,7 +560,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.DeliveryId).HasColumnName("DeliveryID");
 
                 entity.Property(e => e.DeliveryOption)
-                    .IsRequired()
                     .HasMaxLength(3)
                     .IsUnicode(false);
 
@@ -605,7 +568,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.DeliveryType)
                     .WithMany(p => p.Deliveries)
                     .HasForeignKey(d => d.DeliveryTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Delivery_DeliveryType");
             });
 
@@ -616,12 +578,10 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.DeliveryTypeId).HasColumnName("DeliveryTypeID");
 
                 entity.Property(e => e.DeliveryTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
@@ -633,17 +593,13 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.Faqid).HasColumnName("FAQID");
 
                 entity.Property(e => e.Faqanswers)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("FAQAnswers");
 
                 entity.Property(e => e.FaqcategoryId).HasColumnName("FAQCategoryID");
 
                 entity.Property(e => e.Faqquestion)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("FAQQuestion");
 
                 entity.Property(e => e.FaqtypeId).HasColumnName("FAQTypeID");
@@ -651,13 +607,11 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Faqcategory)
                     .WithMany(p => p.Faqs)
                     .HasForeignKey(d => d.FaqcategoryId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_FAQ_FAQCategory");
 
                 entity.HasOne(d => d.Faqtype)
                     .WithMany(p => p.Faqs)
                     .HasForeignKey(d => d.FaqtypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_FAQ_FAQType");
             });
 
@@ -668,7 +622,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.FaqcategoryId).HasColumnName("FAQCategoryID");
 
                 entity.Property(e => e.CategoryName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -680,7 +633,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.FaqtypeId).HasColumnName("FAQTypeID");
 
                 entity.Property(e => e.FaqtypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("FAQTypeName");
@@ -698,10 +650,7 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.FeedbackTypeId).HasColumnName("FeedbackTypeID");
 
@@ -715,18 +664,17 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Feedback_Client");
 
                 entity.HasOne(d => d.FeedbackType)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.FeedbackTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Feedback_FeedbackType");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Feedback_Product");
             });
 
@@ -737,7 +685,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.FeedbackTypeId).HasColumnName("FeedbackTypeID");
 
                 entity.Property(e => e.FeedbackTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -749,12 +696,10 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.OrderStatusName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -765,30 +710,25 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.PackageId).HasColumnName("PackageID");
 
+                entity.Property(e => e.Description).HasColumnType("text");
+
                 entity.Property(e => e.PackageName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PackageTypeId).HasColumnName("PackageTypeID");
 
-                entity.Property(e => e.ReturnableYN)
-                    .HasMaxLength(3)
-                    .IsUnicode(false)
-                    .HasColumnName("Returnable(y/n)");
-
                 entity.HasOne(d => d.PackageType)
                     .WithMany(p => p.Packages)
                     .HasForeignKey(d => d.PackageTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Package_PackageType");
             });
 
             modelBuilder.Entity<PackagePrice>(entity =>
             {
-                entity.HasKey(e => new { e.PackageId, e.PriceId });
-
                 entity.ToTable("PackagePrice");
+
+                entity.Property(e => e.PackagePriceId).HasColumnName("PackagePriceID");
 
                 entity.Property(e => e.PackageId).HasColumnName("PackageID");
 
@@ -797,12 +737,12 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Package)
                     .WithMany(p => p.PackagePrices)
                     .HasForeignKey(d => d.PackageId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PackagePrice_Package");
 
                 entity.HasOne(d => d.Price)
                     .WithMany(p => p.PackagePrices)
                     .HasForeignKey(d => d.PriceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PackagePrice_Price");
             });
 
@@ -826,7 +766,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.DateSet).HasColumnType("date");
 
                 entity.Property(e => e.HashedOtp)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("HashedOTP");
@@ -836,13 +775,10 @@ namespace SAiCS_Innovations_API.Models
                     .HasColumnName("OTPExpireTime");
 
                 entity.Property(e => e.Password1)
-                    .IsRequired()
-                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("Password");
 
                 entity.Property(e => e.ResetPasswordLink)
-                    .IsRequired()
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
@@ -851,7 +787,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Passwords)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Password_User");
             });
 
@@ -870,7 +805,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Prices)
                     .HasForeignKey(d => d.CurrencyId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Price_Currency");
             });
 
@@ -880,55 +814,41 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProductImage).IsRequired();
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.ProductName)
-                    .IsRequired()
                     .HasMaxLength(40)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProductTypeId).HasColumnName("ProductTypeID");
-
-                entity.Property(e => e.ReturnableYN)
-                    .IsRequired()
-                    .HasMaxLength(3)
-                    .IsUnicode(false)
-                    .HasColumnName("Returnable(y/n)");
 
                 entity.Property(e => e.SpecialId).HasColumnName("SpecialID");
 
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Product_ProductType");
 
                 entity.HasOne(d => d.Special)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.SpecialId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Product_Special");
             });
 
             modelBuilder.Entity<ProductPrice>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.PriceId });
-
                 entity.ToTable("ProductPrice");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+                entity.Property(e => e.ProductPriceId).HasColumnName("ProductPriceID");
 
                 entity.Property(e => e.PriceId).HasColumnName("PriceID");
+
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.HasOne(d => d.Price)
                     .WithMany(p => p.ProductPrices)
                     .HasForeignKey(d => d.PriceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ProductPrice_Price");
 
                 entity.HasOne(d => d.Product)
@@ -943,13 +863,9 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.ProductTypeId).HasColumnName("ProductTypeID");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.ProductTypeName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -960,15 +876,9 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.QuestionBankId).HasColumnName("QuestionBankID");
 
-                entity.Property(e => e.Answers)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Answers).HasColumnType("text");
 
-                entity.Property(e => e.Questions)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.Questions).HasColumnType("text");
             });
 
             modelBuilder.Entity<Quiz>(entity =>
@@ -979,20 +889,15 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.QuestionBankId).HasColumnName("QuestionBankID");
 
-                entity.Property(e => e.QuizDescription)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
+                entity.Property(e => e.QuizDescription).HasColumnType("text");
 
                 entity.Property(e => e.QuizName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.QuestionBank)
                     .WithMany(p => p.Quizzes)
                     .HasForeignKey(d => d.QuestionBankId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Quiz_QuestionBank");
             });
 
@@ -1007,7 +912,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.SpecialType)
                     .WithMany(p => p.Specials)
                     .HasForeignKey(d => d.SpecialTypeId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Special_SpecialType");
             });
 
@@ -1025,7 +929,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.TitleId).HasColumnName("TitleID");
 
                 entity.Property(e => e.TitleName)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
@@ -1038,21 +941,17 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.AddressId).HasColumnName("AddressID");
 
-                entity.Property(e => e.ApplicationStatusId).HasColumnName("ApplicationStatusID");
-
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
                 entity.Property(e => e.EmailAddress)
-                    .IsRequired()
-                    .HasMaxLength(30);
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Surname)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
@@ -1061,33 +960,29 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.UserRoleId).HasColumnName("UserRoleID");
 
                 entity.Property(e => e.Username)
-                    .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.SetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_User_Address");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CountryId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_User_Country");
 
                 entity.HasOne(d => d.Title)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.TitleId)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_User_Title");
 
                 entity.HasOne(d => d.UserRole)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.UserRoleId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_User_UserRole");
+                    .HasConstraintName("FK_User_UserRoleID");
             });
 
             modelBuilder.Entity<UserApplicationStatus>(entity =>
@@ -1103,14 +998,12 @@ namespace SAiCS_Innovations_API.Models
                 entity.HasOne(d => d.ApplicationStatus)
                     .WithMany(p => p.UserApplicationStatuses)
                     .HasForeignKey(d => d.ApplicationStatusId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_UserApplicationStatus_ApplicationStatus");
+                    .HasConstraintName("FK_UserApplicationStatus_UserApplicationStatus");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserApplicationStatuses)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_UserApplicationStatus_UserApplicationStatus");
+                    .HasConstraintName("FK_UserApplicationStatus_User");
             });
 
             modelBuilder.Entity<UserRole>(entity =>
@@ -1121,16 +1014,14 @@ namespace SAiCS_Innovations_API.Models
 
                 entity.Property(e => e.AccessLevelId).HasColumnName("AccessLevelID");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
+                entity.Property(e => e.UserRoleName)
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.AccessLevel)
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.AccessLevelId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_UserRole_AccessLevel");
+                    .HasConstraintName("FK_UserRoleID_AccessLevel");
             });
 
             modelBuilder.Entity<Vat>(entity =>
@@ -1140,7 +1031,6 @@ namespace SAiCS_Innovations_API.Models
                 entity.Property(e => e.Vatid).HasColumnName("VATID");
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasMaxLength(150)
                     .IsUnicode(false);
 

@@ -12,5 +12,7 @@ export class NextPage implements OnInit {
   ngOnInit() {
   }
 
-  
+  Register(){
+    console.log("Register user")
+  }
 }

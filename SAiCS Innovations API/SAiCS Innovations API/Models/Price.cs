@@ -14,7 +14,7 @@ namespace SAiCS_Innovations_API.Models
         }
 
         public int PriceId { get; set; }
-        public decimal Price1 { get; set; }
+        public decimal? Price1 { get; set; }
         public int? CurrencyId { get; set; }
 
         public virtual Currency Currency { get; set; }

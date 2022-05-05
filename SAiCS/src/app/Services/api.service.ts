@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
+import { AdminVM } from '../Models/AdminVM';
+import { Ambassador } from '../Models/Ambassador';
+import { AmbassadorVM } from '../Models/AmbassadorVM';
+import { ClientVM } from '../Models/CientVM';
 import { Country } from '../Models/Country';
+import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
 
 @Injectable({
@@ -25,10 +30,20 @@ export class ApiService {
   getCountrys():Observable<Country[]>{
     return this.api.get<Country[]>(this.apilink+"Admin/getCountry")
   }
-  //get login details to login
-  //
-  //get city
-  //send email
+  //get login details to login/verify user
   //post: needs to be able to create a user from 
+  
+  //Register Clent
+  registerClient(newClient:ClientVM):Observable<ClientVM>{
+    return this.api.post<ClientVM>(this.apilink+"User/RegisterClient", newClient)
+  }
+  //Register Ambassador
+  registerAmbassador(newAmbassador:AmbassadorVM):Observable<AmbassadorVM>{
+    return this.api.post<AmbassadorVM>(this.apilink+"User/RegisterAmbassador", newAmbassador)
+  }
+  //Register Admin
+  registerAdmin(newAdmin:AdminVM):Observable<AdminVM>{
+    return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
+  }
   //reset password
 }

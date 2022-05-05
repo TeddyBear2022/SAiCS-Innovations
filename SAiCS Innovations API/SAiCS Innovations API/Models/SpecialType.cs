@@ -13,7 +13,7 @@ namespace SAiCS_Innovations_API.Models
         }
 
         public int SpecialTypeId { get; set; }
-        public int SpecialTypeName { get; set; }
+        public int? SpecialTypeName { get; set; }
 
         public virtual ICollection<Special> Specials { get; set; }
     }

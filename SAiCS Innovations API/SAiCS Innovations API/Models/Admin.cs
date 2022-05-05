@@ -15,7 +15,7 @@ namespace SAiCS_Innovations_API.Models
 
         public int AdminId { get; set; }
         public int? UserId { get; set; }
-        public int Idnumber { get; set; }
+        public string Idnumber { get; set; }
         public byte[] Idphoto { get; set; }
         public byte[] ProofOfAddressPhoto { get; set; }
 

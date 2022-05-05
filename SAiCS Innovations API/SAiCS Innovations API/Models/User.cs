@@ -24,9 +24,8 @@ namespace SAiCS_Innovations_API.Models
         public string Username { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public byte[] EmailAddress { get; set; }
-        public int PhoneNumber { get; set; }
-        public int? ApplicationStatusId { get; set; }
+        public string EmailAddress { get; set; }
+        public int? PhoneNumber { get; set; }
 
         public virtual Address Address { get; set; }
         public virtual Country Country { get; set; }

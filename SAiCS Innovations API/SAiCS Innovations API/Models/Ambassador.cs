@@ -16,15 +16,16 @@ namespace SAiCS_Innovations_API.Models
         }
 
         public int AmbassadorId { get; set; }
-        public int CourseId { get; set; }
-        public int BankAccountId { get; set; }
-        public int UserId { get; set; }
+        public int? CourseId { get; set; }
+        public int? BankAccountId { get; set; }
+        public int? UserId { get; set; }
         public int? AmbassadorTypeId { get; set; }
-        public int Idnumber { get; set; }
+        public string Idnumber { get; set; }
         public byte[] Idphoto { get; set; }
         public byte[] ProofOfAddressPhoto { get; set; }
         public byte[] ProfilePic { get; set; }
-        public int ReferralCode { get; set; }
+        public string AliasName { get; set; }
+        public string ReferralCode { get; set; }
 
         public virtual AmbassadorType AmbassadorType { get; set; }
         public virtual BankAccount BankAccount { get; set; }

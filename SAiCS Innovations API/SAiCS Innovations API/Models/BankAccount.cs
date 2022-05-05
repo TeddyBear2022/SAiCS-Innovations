@@ -13,9 +13,9 @@ namespace SAiCS_Innovations_API.Models
         }
 
         public int BankAccountId { get; set; }
-        public int CardNumber { get; set; }
+        public int? CardNumber { get; set; }
         public string BankName { get; set; }
-        public int AccountTypeId { get; set; }
+        public int? AccountTypeId { get; set; }
 
         public virtual AccountType AccountType { get; set; }
         public virtual ICollection<Ambassador> Ambassadors { get; set; }

@@ -14,7 +14,7 @@ namespace SAiCS_Innovations_API.Models
 
         public int UserRoleId { get; set; }
         public int? AccessLevelId { get; set; }
-        public string Description { get; set; }
+        public string UserRoleName { get; set; }
 
         public virtual AccessLevel AccessLevel { get; set; }
         public virtual ICollection<User> Users { get; set; }

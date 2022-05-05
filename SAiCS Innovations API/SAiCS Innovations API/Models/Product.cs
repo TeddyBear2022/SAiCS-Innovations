@@ -18,10 +18,9 @@ namespace SAiCS_Innovations_API.Models
         public int? SpecialId { get; set; }
         public int? ProductTypeId { get; set; }
         public string Description { get; set; }
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public string ProductName { get; set; }
         public byte[] ProductImage { get; set; }
-        public string ReturnableYN { get; set; }
 
         public virtual ProductType ProductType { get; set; }
         public virtual Special Special { get; set; }
