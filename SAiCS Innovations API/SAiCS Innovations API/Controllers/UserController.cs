@@ -31,7 +31,6 @@ namespace SAiCS_Innovations_API.Controllers
                 email.Body = "Welcome to the SAiCS Innvoation app, we are happy that you chose to do business with us!";
                 email.IsBodyHtml = false;
 
-
                 using (SmtpClient Smtp = new SmtpClient())
                 {
                     Smtp.Host = "smtp.gmail.com";
@@ -39,7 +38,7 @@ namespace SAiCS_Innovations_API.Controllers
                     NetworkCredential credentials = new NetworkCredential("u20551313@tuks.co.za", "FentseT@21");
                     Smtp.UseDefaultCredentials = false;
                     Smtp.Credentials = credentials;
-                    Smtp.Port = 587;
+                    Smtp.Port = 587; 
                     Smtp.Send(email);
                 }
             }
@@ -47,43 +46,163 @@ namespace SAiCS_Innovations_API.Controllers
         }
 
         //Register Admin
-        [HttpPost("RegisterAdmin")]
-        public object RegisterAdmin()
+        //[HttpPost("TestRegisterAdmin")]
+        //public object TestRegisterAdmin()
+        //{
+        //    try
+        //    {
+        //        //Creating an admin
+        //        Admin admin = new Admin();
+        //        admin.Idnumber = "020142100101";
+        //        admin.Idphoto = null;
+        //        admin.ProofOfAddressPhoto = null;
+
+        //        //Creating user
+        //        User user = new User();
+        //        user.UserRole = new UserRole { UserRoleId = 3 };
+        //        user.UserRoleId = user.UserRole.UserRoleId;
+        //        user.Title = new Title { TitleId = 2 };
+        //        user.TitleId = user.Title.TitleId;
+        //        user.Country = new Country { CountryId = 1 };
+        //        user.CountryId = user.Country.CountryId;
+        //        user.Address = new Address { Address1 = "Parkview Oakland", City = "Cape town", PostalCode = 0110 };
+        //        user.AddressId = user.Address.AddressId;
+        //        user.Username = "Demo";
+        //        user.Name = "DemoName ";
+        //        user.Surname = " DemoSurname";
+        //        user.EmailAddress = "demo@gmail.com";
+        //        user.PhoneNumber = 0745258785;   
+        //        Password password = new Password { Password1 = BCrypt.Net.BCrypt.HashPassword("Demo1"), UserId = user.UserId };
+        //        UserApplicationStatus uAPP = new UserApplicationStatus { ApplicationStatusId = 1, UserId = user.UserId };
+        //        uAPP.UserId = user.UserId;
+
+        //        //Linking Tables
+        //        //Admin->User
+        //        user.Admins.Add(admin);
+        //        admin.User = user;
+        //        //Title->User
+        //        user.Title.Users.Add(user);
+        //        user.Title = user.Title;
+        //        //UserRole->User
+        //        user.UserRole.Users.Add(user);
+        //        user.UserRole = user.UserRole;
+        //        //Country->User
+        //        user.Country.Users.Add(user);
+        //        user.Country = user.Country;
+        //        //Address->User
+        //        user.Address.Users.Add(user);
+        //        user.Address = user.Address;
+        //        //password->User
+        //        user.Passwords.Add(password);
+        //        password.User = user;
+        //        //userapplicationstatus
+        //        //user.UserApplicationStatuses.Add(uAPP);
+        //        //uAPP.User = user;
+
+        //        //Assignings
+        //        //userrole
+        //        db.Entry(user.UserRole).State = EntityState.Unchanged;
+        //        //title
+        //        db.Entry(user.Title).State = EntityState.Unchanged;
+        //        //Country
+        //        db.Entry(user.Country).State = EntityState.Unchanged;
+        //        //user application status
+        //        //db.Entry(user.UserApplicationStatuses).State = EntityState.Unchanged;
+
+        //        //Add to database
+        //        db.UserApplicationStatuses.Add(uAPP);
+        //        db.Admins.Add(admin);
+        //        db.SaveChanges();
+
+        //        return db.Admins.Include(user => user.User);
+
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return BadRequest(error.Message);
+        //    }
+
+        //}
+
+        //Register User
+        [HttpPost("RegisterUser")]
+        public object RegisterUser(registerVM registration)
         {
             try
             {
-                //Creating an admin
+                //if admin user
+                if (registration.RegisterInfo.UsertypeID == 3) 
+                {
+                    if (RegisterAdmin(registration) == true)
+                    {
+                        return "Admin registered";
+                    }
+                }
+                
+                //if ambassasdor user
+                if (registration.RegisterInfo.UsertypeID == 2)
+                {
+                    if (RegisterAmbassador(registration) == true)
+                    {
+                        return "Ambassador registered";
+                    }
+                       
+                }
+
+                //if client user
+                if (registration.RegisterInfo.UsertypeID == 1)
+                {
+                    return "register client";
+                }
+                else
+                {
+                    return "not registered";
+                }
+                
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+       
+        private  bool RegisterAdmin(registerVM registration)
+        {
+            try
+            {
+                                                        //Creating an admin
                 Admin admin = new Admin();
-                admin.Idnumber = "6516516516";
+                admin.Idnumber = registration.RegisterInfo.Idnumber.ToString();
                 admin.Idphoto = null;
                 admin.ProofOfAddressPhoto = null;
 
-                //Creating user
+                                                         //Creating user
                 User user = new User();
                 user.UserRole = new UserRole { UserRoleId = 3 };
                 user.UserRoleId = user.UserRole.UserRoleId;
-                user.Title = new Title { TitleId = 1 };
+                user.Title = new Title { TitleId = registration.RegisterInfo.TitleID };
                 user.TitleId = user.Title.TitleId;
-                user.Country = new Country { CountryId = 1 };
+                user.Country = new Country { CountryId = registration.RegisterInfo.CountryID };
                 user.CountryId = user.Country.CountryId;
-                user.Address = new Address { Address1 = "Moreleta park", City = "Pretoria", PostalCode = 1080 };
+                user.Address = new Address { Address1 = registration.RegisterInfo.Address, City = registration.RegisterInfo.City, PostalCode = registration.RegisterInfo.PostalCode };
                 user.AddressId = user.Address.AddressId;
-                user.Username = "SAiCS innovations";
-                user.Name = "SAICS ";
-                user.Surname = " Innovations";
-                user.EmailAddress = "saicsinnovations@gmail.com";
-                user.PhoneNumber = 0789875855;   
-                Password password = new Password { Password1 = BCrypt.Net.BCrypt.HashPassword("Saics@2022"), UserId = user.UserId };
-                //UserApplicationStatus uAPP = new UserApplicationStatus { ApplicationStatusId = 1, UserId = user.UserId };
-                // uAPP.UserId = user.UserId;
+                user.Username = registration.AccessInfo.Username;
+                user.Name = registration.RegisterInfo.Name;
+                user.Surname = registration.RegisterInfo.Surname;
+                user.EmailAddress = registration.RegisterInfo.EmailAddress;
+                user.PhoneNumber = registration.RegisterInfo.PhoneNumber;
+                Password password = new Password { Password1 = BCrypt.Net.BCrypt.HashPassword(registration.AccessInfo.Password), UserId = user.UserId };
+                UserApplicationStatus uAPP = new UserApplicationStatus { ApplicationStatusId = 1, UserId = user.UserId };
 
-                //Linking Tables
+                                                          //Linking Tables
                 //Admin->User
                 user.Admins.Add(admin);
                 admin.User = user;
+
                 //Title->User
                 user.Title.Users.Add(user);
                 user.Title = user.Title;
+
                 //UserRole->User
                 user.UserRole.Users.Add(user);
                 user.UserRole = user.UserRole;
@@ -93,33 +212,33 @@ namespace SAiCS_Innovations_API.Controllers
                 //Address->User
                 user.Address.Users.Add(user);
                 user.Address = user.Address;
+
                 //password->User
                 user.Passwords.Add(password);
                 password.User = user;
-                //userapplicationstatus
-                //user.UserApplicationStatuses.Add(uAPP);
-                //uAPP.User = user;
 
-                //Assignings
+                //userapplicationstatus
+                user.UserApplicationStatuses.Add(uAPP);
+                uAPP.User = user;
+
+                                                           //Assignings
                 //userrole
                 db.Entry(user.UserRole).State = EntityState.Unchanged;
                 //title
                 db.Entry(user.Title).State = EntityState.Unchanged;
                 //Country
                 db.Entry(user.Country).State = EntityState.Unchanged;
-                //user application status
-                //db.Entry(user.UserApplicationStatuses).State = EntityState.Unchanged;
 
-                //Add to database
+                                                        //Add to database
+                db.UserApplicationStatuses.Add(uAPP);
                 db.Admins.Add(admin);
                 db.SaveChanges();
 
-                return db.Admins.Include(user => user.User);
-
+               return true;
             }
             catch (Exception error)
             {
-                return BadRequest(error.Message);
+                return false;
             }
 
         }
@@ -146,10 +265,105 @@ namespace SAiCS_Innovations_API.Controllers
                 return BadRequest(error.Message);
             }
         }
-        
+
+        private bool RegisterAmbassador(registerVM registration)
+        {
+            try
+            {
+                //Create Ambassador
+                Ambassador ambassador = new Ambassador();
+                //ambassador.Course = new Course { CourseId = null };
+                //ambassador.CourseId = ambassador.Course.CourseId;
+                //ambassador.BankAccount = new BankAccount { AccountTypeId = 1, BankName = "FNB", CardNumber = 0101010012 };
+                //ambassador.BankAccountId = ambassador.BankAccount.BankAccountId;
+                ambassador.AmbassadorType = new AmbassadorType { AmbassadorTypeId = 1 };
+                ambassador.AmbassadorTypeId = ambassador.AmbassadorType.AmbassadorTypeId;
+                ambassador.Idnumber = registration.RegisterInfo.Idnumber.ToString();
+                ambassador.Idphoto = null;
+                ambassador.ProofOfAddressPhoto = null; //fix it up
+                ambassador.ProfilePic = null;
+                ambassador.AliasName = registration.RegisterInfo.AliasName;
+                ambassador.ReferralCode = null;
+
+                //Create User
+                User user = new User();
+                user.UserRole = new UserRole { UserRoleId = 2 };
+                user.UserRoleId = user.UserRole.UserRoleId;
+                user.Title = new Title { TitleId = registration.RegisterInfo.TitleID };
+                user.TitleId = user.Title.TitleId;
+                user.Country = new Country { CountryId = registration.RegisterInfo.CountryID };
+                user.CountryId = user.Country.CountryId;
+                user.Address = new Address { Address1 = registration.RegisterInfo.Address, City= registration.RegisterInfo.City, PostalCode = registration.RegisterInfo.PostalCode };
+                user.AddressId = user.Address.AddressId;
+                user.Username = registration.AccessInfo.Username;
+                user.Name = registration.RegisterInfo.Name;
+                user.Surname = registration.RegisterInfo.Surname;
+                user.EmailAddress = registration.RegisterInfo.Address;
+                user.PhoneNumber = registration.RegisterInfo.PhoneNumber;
+                Password password = new Password { Password1 = BCrypt.Net.BCrypt.HashPassword(registration.AccessInfo.Password), UserId = user.UserId };
+                UserApplicationStatus uAPP = new UserApplicationStatus { ApplicationStatusId = 2, UserId = user.UserId };
+
+                //User
+                user.Ambassadors.Add(ambassador);
+                ambassador.User = user;
+
+                //Ambassadortype
+                ambassador.AmbassadorType.Ambassadors.Add(ambassador);
+                ambassador.AmbassadorType = ambassador.AmbassadorType;
+
+                //userrole
+                user.UserRole.Users.Add(user);
+                user.UserRole = user.UserRole;
+
+                //title
+                user.Title.Users.Add(user);
+                user.Title = user.Title;
+
+                //country
+                user.Country.Users.Add(user);
+                user.Country = user.Country;
+
+                //userapplicationstatus
+                user.UserApplicationStatuses.Add(uAPP);
+                uAPP.User = user;
+
+                //address
+                user.Address.Users.Add(user);
+                user.Address = user.Address;
+
+                //password
+                user.Passwords.Add(password);
+                password.User = user;
+
+                //Application status
+                user.UserApplicationStatuses.Add(uAPP);
+                uAPP.User = user;
+
+                                                        //Assignings
+                //userrole
+                db.Entry(user.UserRole).State = EntityState.Unchanged;
+                //title
+                db.Entry(user.Title).State = EntityState.Unchanged;
+                //Country
+                db.Entry(user.Country).State = EntityState.Unchanged;
+                //Ambassador Type
+                db.Entry(ambassador.AmbassadorType).State = EntityState.Unchanged;
+
+                                                        //add to database
+                db.UserApplicationStatuses.Add(uAPP);
+                db.Ambassadors.Add(ambassador);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
         //Register Ambassador
-        [HttpPost("RegisterAmbassador")]
-        public object RegisterAmbassador()
+        [HttpPost("TestRegisterAmbassador")]
+        public object TestRegisterAmbassador()
         {
             try
             {
@@ -384,14 +598,12 @@ namespace SAiCS_Innovations_API.Controllers
             }
         }
         [HttpPost("PasswordHash")]
-        public object PasswordHash()
+        public object PasswordHash(string _password)
         {
-            string password = "treasure";
+            
             try
             {
-                password = BCrypt.Net.BCrypt.HashPassword("Treasure");
-                bool verified = BCrypt.Net.BCrypt.Verify("Treasure", password);
-
+                var password = BCrypt.Net.BCrypt.HashPassword(_password);
                 return password;
 
             }
@@ -400,33 +612,33 @@ namespace SAiCS_Innovations_API.Controllers
                 return BadRequest(error.Message);
             }       
         }
-        [HttpPost("Login")]
-        public object Login()
+        [HttpPost("TestLogin")]
+        public object TestLogin()
         {
             try
             {
+                //code works
                 // get account from database
                 //var account = _context.Accounts.SingleOrDefault(x => x.Email == model.Email);
                 // var account = db.Users.Include(password => password.Passwords).Select(x => new { x.UserId, x.Username, x.EmailAddress });
-                
                 var account = db.Users.SingleOrDefault(user => user.EmailAddress == "saicsinnovations@gmail.com"|| user.Username == "SAiCS innovations");
                 var passwords = db.Passwords.Include(user => user.User).Where(x => x.UserId == account.UserId).Select(user => user.Password1).FirstOrDefault();
                 // var password = db.Passwords.SingleOrDefault(user => user.UserId == account.UserId);
                 var userpassword = BCrypt.Net.BCrypt.HashPassword("Saics@2022");
-                // check account found and verify password
 
-                //if (!BCrypt.Net.BCrypt.Verify(passwords.ToString(), "Saics@2022"))
-                //{
-                //    //authentication failed
-                //    return false;
-                //}
-                //else
-                //{
-                //    //authentication successful
-                //    return true;
-                //}
+                // check account found and verify password
+                if (account == null || !BCrypt.Net.BCrypt.Verify("Saics@2022", passwords ))
+                {
+                    //authentication failed
+                    return false;
+                }
+                else
+                {
+                    //authentication successful
+                    return true;
+                }
                 //bool verified = BCrypt.Net.BCrypt.Verify("Treasure", password);
-                return passwords;
+                //return passwords.GetType();
             }
             catch (Exception error)
             {
@@ -434,15 +646,153 @@ namespace SAiCS_Innovations_API.Controllers
 
             }
         }
-
- 
-        [HttpPost("generateHashPassword")]
-        public object generateHashPassword()
+        [HttpPost("LatestLogin")]
+        public object LatestLogin(LoginVM logindetails)
         {
-            var password = BCrypt.Net.BCrypt.HashPassword("Saics@2022");
-            return password;
+            try
+            {
+                //code works
+                // get account from database
+                //var account = _context.Accounts.SingleOrDefault(x => x.Email == model.Email);
+                // var account = db.Users.Include(password => password.Passwords).Select(x => new { x.UserId, x.Username, x.EmailAddress });
+                var account = db.Users.SingleOrDefault(user => user.EmailAddress == logindetails.EmailorUsername || user.Username == logindetails.EmailorUsername);
+                var passwords = db.Passwords.Include(user => user.User).Where(x => x.UserId == account.UserId).Select(user => user.Password1).FirstOrDefault();
+                // var password = db.Passwords.SingleOrDefault(user => user.UserId == account.UserId);
+                //var userpassword = BCrypt.Net.BCrypt.HashPassword("Saics@2022");
+
+                // check account found and verify password
+                if (account == null || !BCrypt.Net.BCrypt.Verify(logindetails.Password, passwords))
+                {
+                    //authentication failed
+                    return false;
+                }
+                else
+                {
+                    //authentication successful
+                    return true;
+                }
+                //bool verified = BCrypt.Net.BCrypt.Verify("Treasure", password);
+                //return passwords.GetType();
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+
+            }
+        }
+        [HttpPost("Login")]
+        public object Login(LoginVM logindetails)
+        {
+            try
+            {
+                if ((db.Users.SingleOrDefault(user => user.EmailAddress == logindetails.EmailorUsername || user.Username == logindetails.EmailorUsername))== null)
+                {
+                    //account doesnt exist
+                    return false;
+                }
+                else
+                {
+                    var account = db.Users.SingleOrDefault(user => user.EmailAddress == logindetails.EmailorUsername || user.Username == logindetails.EmailorUsername);
+                    var passwords = db.Passwords.Include(user => user.User).Where(x => x.UserId == account.UserId).Select(user => user.Password1).FirstOrDefault();
+                    if (!BCrypt.Net.BCrypt.Verify(logindetails.Password, passwords))
+                    {
+                        //authentication failed (passwords dont match)
+                        return false;
+                    }
+                    else
+                    {
+                        //authentication successful
+                        return true;
+                    }
+                }
+               
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+
+            }
+        }
+        //Update user
+        [HttpPut("UpdateUser")]
+        public object UpdateUser(User _user)
+        {
+            try
+            {
+                var oldUserDetails = db.Users.Where(user => user.UserId == _user.UserId).FirstOrDefault();
+                if (oldUserDetails == null)
+                {
+                    return NotFound("user doesnt exist");
+                }
+                else
+                {
+                    return "not working";
+                }
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+        public void Delete<T>(T entity) where T : class
+        {
+            db.Remove(entity);
+        }
+        [HttpDelete("DeleteUser")]
+        public object DeleteUser()
+        {
+            int userId = 12;
+            try
+            {
+                var userDelete = db.Users.Where(user => user.UserId == userId).FirstOrDefault();
+                var applicationsstatusdelete = db.UserApplicationStatuses.Where(user => user.UserId == userId).FirstOrDefault();
+                var passwordDelete = db.Passwords.Where(user => user.UserId == userId).FirstOrDefault();
+                if (userDelete == null)
+                {
+                    return "User Doesnt exist";
+                }
+                else
+                {
+                    Delete(userDelete);
+                    Delete(applicationsstatusdelete);
+                    Delete(passwordDelete);
+                    //db.Remove(userDelete);
+                    db.SaveChanges();
+                    return "user deleted";
+                }
+
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.InnerException.Message);
+            }
         }
 
+        [HttpPost("getUserSessionInfo")]
+        public object getUserSessionInfo(LoginVM logindetails)
+        {
+            try
+            {
+                var user =  db.Users.Where(user => user.Username == logindetails.EmailorUsername || user.EmailAddress == logindetails.EmailorUsername).Include(country => country.Country)
+                                                                        .Include(title => title.Title)
+                                                                        .Include(userrole => userrole.UserRole)
+                                                                        .Include(address=>address.Address)
+                                                                        .FirstOrDefault();
+                if (user == null)
+                {
+                    return "User doesnt exist";
+                }
+                else
+                {
+                    return user;
+                }
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+       
 
     }
 }

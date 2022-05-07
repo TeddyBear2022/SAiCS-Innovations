@@ -7,6 +7,8 @@ import { Ambassador } from '../Models/Ambassador';
 import { AmbassadorVM } from '../Models/AmbassadorVM';
 import { ClientVM } from '../Models/CientVM';
 import { Country } from '../Models/Country';
+import { LoginVM } from '../Models/LoginVM';
+import { registerVM } from '../Models/registerVM';
 import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
 
@@ -45,5 +47,17 @@ export class ApiService {
   registerAdmin(newAdmin:AdminVM):Observable<AdminVM>{
     return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
   }
+  //login
+  login(logindetails:LoginVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink+"User/Login",logindetails)
+  }
+  //get Users session info
+  session(logindetails:LoginVM){
+    return this.api.post(this.apilink+"User/getUserSessionInfo", logindetails)
+  }
   //reset password
+  //Register user
+  registerUser(registrationinfo:registerVM):Observable<registerVM>{
+    return this.api.post<registerVM>(this.apilink+"User/RegisterUser", registrationinfo );
+  }
 }

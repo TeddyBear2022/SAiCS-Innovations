@@ -23,10 +23,10 @@
           <br> <br> <br> <br> <br> <br><br>
           <ion-label class="Heading"><h1 style="font-size: 21pt;"> <b>Login </b></h1></ion-label>
           <br> <br> <br>
-          <ion-input  placeholder="E-mail / Username" formControlName="username" [required]="true" align="center"></ion-input>
+          <ion-input  placeholder="E-mail / Username" formControlName="input" [required]="true" align="center"></ion-input>
         
           <br>
-          <span *ngIf="localForm.submitted && loginForm.controls['username'].invalid "> Please enter a valid username</span>
+          <span *ngIf="localForm.submitted && loginForm.controls['input'].invalid "> Please enter a valid username</span>
           <ion-input  name="password" [type]="showPassword?'text':'password'" placeholder-color="primary" color="primary" placeholder="Password"  formControlName="password" [required]="true" align="center"></ion-input>
           <br>
           <span *ngIf="localForm.submitted && loginForm.controls['password'].invalid ">Please enter a valid password </span>

@@ -44,20 +44,20 @@
         <ion-col id="clientProfileFormCol2" size="5">
           <ion-list>
             <ion-item-group lines="none" style="display: flex; width: 90%;margin-left: 5%;">
-                <ion-input placeholder="Title" > </ion-input>
-                <ion-input placeholder="Name"> </ion-input>
+                <ion-input placeholder="title" [value]="title" >  </ion-input>
+                <ion-input placeholder="Name" [value]="name"> </ion-input>
             </ion-item-group>
             <ion-item lines="none">
-              <ion-input placeholder="Surname"> </ion-input>
+              <ion-input placeholder="Surname" [value]="Surname"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-input placeholder="Email Address"> </ion-input>
+              <ion-input placeholder="Email Address" [value]="emailaddress"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-input placeholder="Phone Number"> </ion-input>
+              <ion-input placeholder="Phone Number" [value]="phonenumber"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-input placeholder="Username"> </ion-input>
+              <ion-input placeholder="Username" [value]="username"> </ion-input>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -68,24 +68,20 @@
 
         <ion-col id="clientProfileFormCol3" size="5.5">
           <ion-list>
+            
             <ion-item lines="none">
-              <ion-input placeholder="Password"> </ion-input>
-            </ion-item>
-            <ion-item lines="none">
-              <ion-select placeholder="Country">
-                <!-- Add through database -->
+              <ion-select placeholder="Country" [placeholder]="country" >
+               <ion-item-option ></ion-item-option>
               </ion-select>
             </ion-item>
             <ion-item lines="none">
-              <ion-select placeholder="City">
-                <!-- Add through database -->
-              </ion-select>
+              <ion-input placeholder="City" [value]="city"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-input placeholder="Address"> </ion-input>
+              <ion-input placeholder="Address" [value]="address"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-input placeholder="Postal"> </ion-input>
+              <ion-input placeholder="Postal" [value]="postal"> </ion-input>
             </ion-item>
             <ion-item lines="none">
               <ion-label style="text-align: right;color: #3f51b5;"><a href="">Change Password?</a></ion-label>
