@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit {
   address:string
   postal:string
   profilereginfo:registerationinfoVM 
+  userID:number
 
   constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage){}
 
@@ -48,6 +49,7 @@ export class ProfilePage implements OnInit {
     this.postal = this.profileinfo[0].address.postalCode
     this.phonenumber = this.profileinfo[0].phoneNumber
     this.username = this.profileinfo[0].username
+    //this.userID = this.profileinfo
 
   console.log(this.profileinfo[0])
   }
