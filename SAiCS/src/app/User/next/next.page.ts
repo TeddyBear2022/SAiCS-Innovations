@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { accessInfoVM } from 'src/app/Models/accessinfoVM';
 import { registerationinfoVM } from 'src/app/Models/registerationinfoVM';
 import { registerVM } from 'src/app/Models/registerVM';
@@ -20,7 +22,7 @@ export class NextPage implements OnInit {
   registration: registerVM
   registrationinfo:registerationinfoVM[]= this.tempStorage.getRegisterInfo()
 
-  constructor(private tempStorage: TemporaryStorage, private api:ApiService) { }
+  constructor(private tempStorage: TemporaryStorage, private api:ApiService, private route:Router, private alert:AlertController) { }
 
   ngOnInit() {
     this.register = new FormGroup({
@@ -31,6 +33,19 @@ export class NextPage implements OnInit {
     })
   }  
 
+  //Alert
+  async presentAlert() {
+    const alert = await this.alert.create({
+      header: 'Registration',
+      message: 'Congratulations!  your registration was successful',
+      buttons: [{text: 'OK', handler: ()=> {
+        this.tempStorage.clearRegistrationInfo()
+        this.route.navigate(['home'])}}]
+    });
+
+    await alert.present();
+  }
+  
   //register
   Register(){
     if(this.register.invalid){
@@ -44,31 +59,16 @@ export class NextPage implements OnInit {
       }
      else
      {
-      this.passwordMatchError = false
-      let temp = this.register.value
-      
-      // let accessinfo:accessInfoVM
-      // accessinfo.Username = this.register.value.password
-      // this.tempStorage.addAccessInfo(this.register.value)
-    //   // accessinfo.Password = this.register.get('password').value
-    //   // accessinfo.Username = this.username
-    //   // accessinfo.Password = this.password
-    // //   this.userRegistration.AccessInfo = accessinfo
-      
-      //this.userRegistration.RegisterInfo = this.registrationinfo[0]
-    //    this.userRegistration.AccessInfo = accessinfo
-    // //  //this.userRegistration.AccessInfo{ passw}
-    var test:accessInfoVM = new accessInfoVM(this.register.get('username').value,this.register.get('password').value)
-    // test.Username = this.register.get('username').value
-    // test.Password = this.register.get('password').value
-    //let access= new accessInfoVM('','')
+    this.passwordMatchError = false  
+    var test:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.register.get('username').value)
     this.registration= new registerVM(test, this.registrationinfo[0])
-    //console.log(this.registration)
-     // console.log(this.registration.RegisterInfo[0].usertype)
-      this.api.registerUser(this.registration).subscribe(result => console.log(result))
-      //need to create a constructor for 
-      // do data binding instead
-      //then send to api and it should register
+    this.api.registerUser(this.registration).subscribe(result => {
+      console.log(result)
+      if(result == true){
+        this.presentAlert();
+      }
+    })
+
      }
     }
   }

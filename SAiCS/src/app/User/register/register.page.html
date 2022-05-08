@@ -56,8 +56,12 @@
        <!-- If Ambassador selected --> 
        <ion-col size="5.5" *ngIf="userTypeReg == 2">
         <br><br>
-         <ion-select formControlName="ambassadorranking" placeholder="Select Ambassador Ranking"  >
-          <!-- Add through database -->
+         <ion-select formControlName="ambassadorType" placeholder="Select Ambassador Ranking"  >
+          <ion-select-option  *ngFor="let AmbassadorTypeID of AmbassadorTypeIDs" value={{AmbassadorTypeID.ambassadorTypeId}}>
+            <ion-item>
+              {{AmbassadorTypeID.ambassadorTypeName}}
+            </ion-item>
+          </ion-select-option>
         </ion-select>
         <br>
         <ion-label>

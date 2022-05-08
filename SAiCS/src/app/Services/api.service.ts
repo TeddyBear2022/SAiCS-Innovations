@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { AdminVM } from '../Models/AdminVM';
 import { Ambassador } from '../Models/Ambassador';
+import { AmbassadorType } from '../Models/AmbassadorType';
 import { AmbassadorVM } from '../Models/AmbassadorVM';
 import { ClientVM } from '../Models/CientVM';
 import { Country } from '../Models/Country';
@@ -56,8 +57,13 @@ export class ApiService {
     return this.api.post(this.apilink+"User/getUserSessionInfo", logindetails)
   }
   //reset password
+
+  //get ambassador rankings
+  getAmbassadorRankings():Observable<AmbassadorType[]>{
+    return this.api.get<AmbassadorType[]>(this.apilink+"Admin/getAmbassadorTypes")
+  }
   //Register user
-  registerUser(registrationinfo:registerVM):Observable<registerVM>{
-    return this.api.post<registerVM>(this.apilink+"User/RegisterUser", registrationinfo );
+  registerUser(registrationinfo:registerVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink+"User/RegisterUser", registrationinfo );
   }
 }

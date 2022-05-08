@@ -59,6 +59,22 @@ namespace SAiCS_Innovations_API.Controllers
 
             }
         }
+        //GetAmbassadors
+        [HttpGet("getAmbassadorTypes")]
+        public object GetAmbassadorTypes()
+        {
+            try
+            {
+                var ambassadorTypeList = db.AmbassadorTypes;
+
+                return ambassadorTypeList.ToList();
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+
         [HttpGet("getCountry")]
         public object GetCountry()
         {

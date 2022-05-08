@@ -5,6 +5,7 @@ import { registerVM } from 'src/app/Models/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -24,6 +25,13 @@ export class ProfilePage implements OnInit {
   postal:string
   profilereginfo:registerationinfoVM 
   userID:number
+  userRoleID:number
+  refferalcode:string
+  proofofaddress:string
+  idphoto:string
+  ambassadorranking:string
+  aliasname:string
+  aboutmyself:string
 
   constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage){}
 
@@ -49,7 +57,14 @@ export class ProfilePage implements OnInit {
     this.postal = this.profileinfo[0].address.postalCode
     this.phonenumber = this.profileinfo[0].phoneNumber
     this.username = this.profileinfo[0].username
-    //this.userID = this.profileinfo
+    this.userID = this.profileinfo[0].userId
+    this.userRoleID = this.profileinfo[0].userRoleId
+    this.refferalcode = this.profileinfo[0].userRoleId 
+    this.proofofaddress = this.profileinfo[0].proofofaddress
+    this.idphoto =this.profileinfo[0].idphoto
+    this.ambassadorranking= this.profileinfo[0].ambassadorranking
+    this.aliasname=this.profileinfo[0].aliasname
+    this.aboutmyself=this.profileinfo[0].aboutmyself
 
   console.log(this.profileinfo[0])
   }

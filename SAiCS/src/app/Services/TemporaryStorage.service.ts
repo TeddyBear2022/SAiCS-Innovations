@@ -79,5 +79,13 @@ import { registerVM } from "../Models/registerVM"
         localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
        }
      }
+     //logging out
+     clearRegistrationInfo(){
+      let registerInfo:registerationinfoVM[] = []
+       if(localStorage){
+        localStorage.setItem('registerInfo', JSON.stringify(registerInfo))
+       
+       }
+     }
   }
   

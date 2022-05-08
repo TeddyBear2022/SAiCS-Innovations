@@ -21,6 +21,7 @@ export class RegisterPage implements OnInit {
   titles= []
   userTypes= []
   countrys= []
+  AmbassadorTypeIDs=[]
   
   constructor(private api: ApiService, private route : Router, private registerInfo: TemporaryStorage) { }
   ngOnInit() {
@@ -36,6 +37,11 @@ export class RegisterPage implements OnInit {
       this.countrys = result
       console.log(result)
     })   
+    this.api.getAmbassadorRankings().subscribe(result=> {
+      this.AmbassadorTypeIDs= result
+      console.log(result)
+
+    })
     
    //Registeration form
    this.register = new FormGroup({
@@ -51,7 +57,7 @@ export class RegisterPage implements OnInit {
     postalcode:new FormControl('', Validators.required),
     idnumber:new FormControl(),
     idphotoANDAddress:new FormControl(),
-    ambassadorranking:new FormControl(),
+    ambassadorType:new FormControl(),
     aliasname:new FormControl(),
     referralcode:new FormControl(),
     aboutmyself:new FormControl(),
@@ -71,7 +77,7 @@ export class RegisterPage implements OnInit {
     
     if(this.register.get('usertypeID').value == 2)
     {
-      this.register.get('ambassadorranking').setValidators(Validators.required)
+      this.register.get('ambassadorType').setValidators(Validators.required)
       this.register.get('aliasname').setValidators(Validators.required)
       this.register.get('referralcode').setValidators(Validators.required)
       this.register.get('idnumber').setValidators(Validators.required)
@@ -87,7 +93,7 @@ export class RegisterPage implements OnInit {
     {
       this.register.get('idnumber').clearValidators()
       this.register.get('idphotoANDAddress').clearValidators()
-      this.register.get('ambassadorranking').clearValidators()
+      this.register.get('ambassadorType').clearValidators()
       this.register.get('aliasname').clearValidators()
       this.register.get('referralcode').clearValidators()   
       this.register.get('aboutmyself').clearValidators()

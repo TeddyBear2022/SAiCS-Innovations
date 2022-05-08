@@ -9,8 +9,8 @@ export class registerationinfoVM{
     City:number // change to string
     Address:string
     PostalCode:number
-    Idnumber:number
-    RefferalCode:string;
+    Idnumber:number| null
+    referralcode:string;
     ProofOfAdderess:File
     IDPhoto:File;
     AmbassadorRankingID:number
