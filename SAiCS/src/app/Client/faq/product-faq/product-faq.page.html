@@ -35,14 +35,18 @@
     <br> <br>
 
     <ion-card-content>
-      <ion-list class="txt-block" *ngFor="let a of ProductFAQs; let i = index">
-        <div>
-          <ion-text >
-            <H2 (mouseenter)="hoverStateIn(i)" (mouseleave)="hoverStateOut(i)">Q.. {{a.faqquestion}}</H2><br>
-            <H3 *ngIf = 'showText[i]'>  A.. {{a.faqanswers}}</H3><br><br>
-          </ion-text>
-        </div>
-        </ion-list>
+      <ion-text>
+        <H2 (click)="txtClick1()">Q.. Are there any side effects to the product ranges?</H2><br>
+        <H3 *ngIf="display">A... Only the Detox may cause a headache, but a painkiller may be taken. Headaches may occur due to toxins being flushed
+           from the body.</H3><br><br>
+
+        <H2 (click)="txtClick2()">Q.. Are the products natural?</H2><br>
+        <H3 *ngIf="display2"> A... All products are 100% natural</H3><br><br>
+
+          <H2 (click)="txtClick3()">Q.. Are the products safe to use?</H2><br>
+          <H3 *ngIf="display3"> A... All SAiCS products are safe to use for persons from the ages of +6 years.The products are safe for high blood pressure,
+             diabetes and breast feeding mothers.</H3>
+      </ion-text>
     </ion-card-content>
 
   </ion-card>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
-import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
   selector: 'app-account-faq',
@@ -10,9 +8,8 @@ import { ApiService } from 'src/app/Services/api.service';
   styleUrls: ['./account-faq.page.scss'],
 })
 export class AccountFaqPage implements OnInit {
-  AccountFAQs: FAQ[]
-  showText: any = [];
-  constructor(public popoverController: PopoverController, private api: ApiService){}
+
+  constructor(public popoverController: PopoverController){}
 
   async presentPopover(event)
   {
@@ -24,23 +21,22 @@ export class AccountFaqPage implements OnInit {
   }
 
   ngOnInit() {
-    this.GetAccountFAQ()
   }
   
-  hoverStateIn(index){
-    this.showText[index] = true;
+  display: boolean = false;
+  display2: boolean = false;
+  display3: boolean = false;
+
+  txtClick1(){
+    this.display = !this.display
   }
 
-  hoverStateOut(index){
-    this.showText[index] = false;
+  txtClick2(){
+    this.display2 = !this.display2
   }
 
-  GetAccountFAQ(){
-    this.api.GetAccountFAQ().subscribe(data =>
-      {
-        this.AccountFAQs = data
-        console.log(data)
-      })
+  txtClick3(){
+    this.display3 = !this.display3
   }
 
 }

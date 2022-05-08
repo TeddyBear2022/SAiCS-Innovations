@@ -25,7 +25,7 @@
 
 <ion-content>
   
-    <div>
+    <ion-grid>
       <ion-row class="ion-align-items-center">
         <ion-col>
           <h1 style="font-weight: bold; text-align: center;">Let's get your Feedback!</h1>
@@ -41,38 +41,26 @@
         </ion-col>
 
         <ion-col style="display: flex; align-items: flex-start;" size="5">
-          <form [formGroup]= "feedbackForm" id="clientFeedbackForm" >
+          <form id="clientFeedbackForm">
             <ion-row>
               <ion-col>
                 <br><br><br><br>
-              <ion-select placeholder="Feedback Type" interface="popover" formControlName="feedbackType">
-                <ion-select-option value="1">Product</ion-select-option>
-                <ion-select-option value="2">Ambassador</ion-select-option>
+              <ion-select placeholder="Feedback Type">
+                <ion-select-option value="Product">Product</ion-select-option>
+                <ion-select-option value="Ambassador">Ambassador</ion-select-option>
               </ion-select>
             <br>
 
-            <!--Display if Ambassador-->
-            <ion-item *ngIf="feedbackForm.value.feedbackType  == 2">
-              <ion-input *ngFor="let a of myAmbassador" [value]="a.ambassadorId" formControlName="ambassador" name="ambassador" [disabled]="true">
-                {{a.user.name}}  {{a.user.surname}}
-                </ion-input>
-            </ion-item>
-              
+            <!--Is a cascading select type-->
+              <ion-select placeholder="Ambassador">
+              </ion-select>
             <br>
-            <!--Display if product-->
-            <ion-select placeholder="Product Type" interface="popover" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById(feedbackForm.value.productType)">
-              <ion-select-option value="1">Cosmetics</ion-select-option>
-              <ion-select-option value="2">Lifestyle</ion-select-option>
-                <ion-select-option value="3">Slimming</ion-select-option>
-            </ion-select>
-            <br>
-            <ion-select  placeholder="Product Name" interface="popover" formControlName="productName" *ngIf="feedbackForm.value.feedbackType  == 1">
-              <ion-select-option *ngFor="let p of products" value="{{p.productId}}">{{p.productName}}</ion-select-option>
+            <ion-select placeholder="Product">
             </ion-select>
             <br><br>
 
               <ion-label style="display: block;text-align: center;">Description:</ion-label>
-              <ion-textarea formControlName="description"></ion-textarea>
+              <ion-textarea name="description"></ion-textarea>
 
               </ion-col>
             </ion-row>
@@ -82,7 +70,7 @@
             <ion-row>
               <ion-col></ion-col>
              <ion-col></ion-col>
-             <ion-col><ion-button  (click)="submitForm(feedbackForm.value.feedbackType)" type="submit">Submit</ion-button></ion-col>
+             <ion-col><ion-button>Submit</ion-button></ion-col>
             </ion-row>
             
           </form>
@@ -101,7 +89,7 @@
         </ion-col>
         
       </ion-row>
-    </div>
+    </ion-grid>
    
 </ion-content>
 

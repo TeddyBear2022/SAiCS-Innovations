@@ -57,24 +57,60 @@
       <!--Please change the select syle-->
       <ion-col size="4">  
         
-        <ion-select placeholder="Select category" interface="popover" name="productType" ngModel #productType="ngModel" (ionChange)=" GetProductsById(productType.value)">
-          <ion-select-option value="1">Cosmetics</ion-select-option>
-          <ion-select-option value="2">Slimming</ion-select-option>
-          <ion-select-option value="3">Lifestyle</ion-select-option>
+        <ion-select placeholder="Select category" interface="popover">
+          <ion-select-option value="Cosmetics">Cosmetics</ion-select-option>
+          <ion-select-option value="Slimming">Slimming</ion-select-option>
+          <ion-select-option value="Lifestyle">Lifestyle</ion-select-option>
         </ion-select>
     </ion-col>
     </ion-row>
     
     <!--Product rows-->
     <ion-row>
-      <ion-col *ngFor="let p of Products">
+      <ion-col>
         <ion-card class="productCard">
           <ion-card-header style="text-align: center;">
-            <img  class="img-responsive"/>
+            <img src="./assets/Suptite.png" />
           </ion-card-header>
           <ion-card-content>
-            <ion-card-title>{{p.productName}}</ion-card-title>
-            <ion-card-subtitle>{{p.price1}}</ion-card-subtitle>
+            <ion-card-title>Suptite tablets</ion-card-title>
+            <ion-card-subtitle>R950,00</ion-card-subtitle>
+            <ion-buttons>
+              <ion-button>
+                <ion-icon size="large" class="cartIcon" name="cart"></ion-icon>
+                Add To Cart
+              </ion-button>
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card class="productCard">
+          <ion-card-header>
+            <img src="./assets/SuperBooster.png" />
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title>Super Booster</ion-card-title>
+            <ion-card-subtitle>R275,00</ion-card-subtitle>
+            <ion-buttons>
+              <ion-button>
+                <ion-icon size="large" class="cartIcon" name="cart"></ion-icon>
+                Add To Cart
+              </ion-button>
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card class="productCard">
+          <ion-card-header>
+            <img src="./assets/FatBurner.png" />
+          </ion-card-header>
+          <ion-card-content style="text-align: center;  align-content: center; justify-content: center;">
+            <ion-card-title>Fat Burner Drops</ion-card-title>
+            <ion-card-subtitle>R360,00</ion-card-subtitle>
             <ion-buttons>
               <ion-button>
                 <ion-icon size="large" class="cartIcon" name="cart"></ion-icon>
