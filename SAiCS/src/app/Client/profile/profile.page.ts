@@ -88,7 +88,6 @@ export class ProfilePage implements OnInit {
         //this.tempStorage.clearRegistrationInfo()
         //clear session + delete user
         let deleteUser:DeleteUserVM = new DeleteUserVM(this.profileinfo[0].userId)
-        //this.api.deleteUser(deleteUser).subscribe()
         this.api.deleteUser(deleteUser).subscribe(result=> {
         if(result == true){
         this.tempStorage.logout()
