@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { TemporaryStorage } from '../Services/TemporaryStorage.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { TemporaryStorage } from '../Services/TemporaryStorage.service';
 })
 export class ProfilePopoverComponent implements OnInit {
 
-  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage, private router:Router) { }
+  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage, private router:Router, private alert:AlertController) { }
 
   ngOnInit() {}
 
@@ -26,6 +26,21 @@ export class ProfilePopoverComponent implements OnInit {
    
     this.popoverController.dismiss();
   }
+
+  //Are you sure 
+  async confirm() {
+    const alert = await this.alert.create({
+      header: 'Registration',
+      message: 'Congratulations!  your registration was successful',
+      buttons: [{text: 'OK', handler: ()=> {
+        this.tempStorage.clearRegistrationInfo()
+        this.router.navigate(['home'])}}]
+    });
+
+    await alert.present();
+  }
+
+
   Logout(){
     this.tempStorage.logout()
     this.router.navigate(['home'])

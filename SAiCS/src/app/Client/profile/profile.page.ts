@@ -11,6 +11,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
   profileinfo= []
   title:string
@@ -35,7 +36,7 @@ export class ProfilePage implements OnInit {
 
   constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage){}
 
-  // Show Profile optionss when icon on right of navbar clicked function
+  // Show Profile options when icon on right of navbar clicked function
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
@@ -68,5 +69,4 @@ export class ProfilePage implements OnInit {
 
   console.log(this.profileinfo[0])
   }
-
 }

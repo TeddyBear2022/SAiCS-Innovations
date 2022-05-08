@@ -33,14 +33,25 @@ export class NextPage implements OnInit {
     })
   }  
 
-  //Alert
-  async presentAlert() {
+  //Registtion successful alert
+  async success() {
     const alert = await this.alert.create({
       header: 'Registration',
       message: 'Congratulations!  your registration was successful',
       buttons: [{text: 'OK', handler: ()=> {
         this.tempStorage.clearRegistrationInfo()
         this.route.navigate(['home'])}}]
+    });
+
+    await alert.present();
+  }
+
+  //Registration unsuccessful alert
+  async unsuccessful() {
+    const alert = await this.alert.create({
+      header: 'Registration',
+      message: 'Your registration was sadly unsusccessful. Please ensure all the relevant details are present',
+      buttons: [ {text: 'OK'}]
     });
 
     await alert.present();
@@ -65,7 +76,10 @@ export class NextPage implements OnInit {
     this.api.registerUser(this.registration).subscribe(result => {
       console.log(result)
       if(result == true){
-        this.presentAlert();
+        this.success();
+      }
+      else{
+        this.unsuccessful()
       }
     })
 
