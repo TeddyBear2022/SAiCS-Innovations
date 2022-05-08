@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
   selector: 'app-product-faq',
@@ -8,8 +10,10 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
   styleUrls: ['./product-faq.page.scss'],
 })
 export class ProductFaqPage implements OnInit {
+  ProductFAQs: FAQ[]
+  showText: any = [];
 
-  constructor(public popoverController: PopoverController){}
+  constructor(public popoverController: PopoverController, private api: ApiService){}
 
   async presentPopover(event)
   {
@@ -21,23 +25,24 @@ export class ProductFaqPage implements OnInit {
   }
 
   ngOnInit() {
+    this.GetProductFAQ()
   }
 
    
-  display: boolean = false;
-  display2: boolean = false;
-  display3: boolean = false;
-
-  txtClick1(){
-    this.display = !this.display
+  hoverStateIn(index){
+    this.showText[index] = true;
   }
 
-  txtClick2(){
-    this.display2 = !this.display2
+  hoverStateOut(index){
+    this.showText[index] = false;
   }
 
-  txtClick3(){
-    this.display3 = !this.display3
+  GetProductFAQ(){
+    this.api.GetProductFAQ().subscribe(data =>
+      {
+        this.ProductFAQs = data
+        console.log(data)
+      })
   }
 
 }

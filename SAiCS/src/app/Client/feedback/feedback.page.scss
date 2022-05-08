@@ -30,13 +30,14 @@ ion-content {
       height: 80%;
     }
 
-    #clientFeedbackForm{
-      ion-select{
+      ion-select, ion-input{
         color: black;
-        border-bottom: solid 1pt black ;
-        width:300px;
+        border-bottom: solid 1pt black !important;
+        width:300px !important;
       }
-      ion-select[placeholder]
+
+      
+      ion-select, ion-input[placeholder]
       {
         color: black;
         text-align: center;
@@ -58,7 +59,6 @@ ion-content {
         --background: #062b80;
         --color:white;
       }
-    }
 
     
 

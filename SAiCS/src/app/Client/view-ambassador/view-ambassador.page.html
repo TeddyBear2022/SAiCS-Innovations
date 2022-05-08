@@ -36,15 +36,15 @@
       </ion-col>
 
         <ion-col>
-      <ion-card-content>
-        <p>Mr John Van der Merwe</p>
-        <p>White Mamba</p>
-        <p>johnvanmerwe21@gmail.com</p>
-        <p>South Africa</p>
-        <p>Pretoria</p>
-        <p>1080 Prospect Street</p>
-        <p>1080</p>
-        <p>074 585 2659</p>
+      <ion-card-content *ngFor="let m of myAmbssador">
+        <p>Mr {{m.user.name}} {{m.user.surname}}</p>
+        <p>{{m.aliasName}}</p>
+        <p>{{m.user.emailAddress}}</p>
+        <p>{{m.user.country.countryName}}</p>
+        <p>{{m.user.address.city}}</p>
+        <p>{{m.user.address.address1}}</p>
+        <p>{{m.user.address.postalCode}}</p>
+        <p>0{{m.user.phoneNumber}}</p>
          </ion-card-content>
         </ion-col>
       </ion-row>
@@ -67,33 +67,12 @@
         <th>Address</th>
         <th>Phone Number</th>
       </tr>
-      <tr>
-        <td>Kobus Monahan</td>
-        <td>Koch and Sons</td>
-        <td>Janice_Monahan@yahoo.com</td>
-        <td>Port Beulah, Iowa 90719, United States of America</td>
-        <td>969-068-8439</td>
-      </tr>
-      <tr>
-        <td>Kobus Fadel</td>
-        <td>Steuber LLC/td>
-        <td>Rollin_Fadel@gmail.com</td>
-        <td>Lake Matilde, Tennessee 74062, United States of America</td>
-        <td>(017) 057-6055</td>
-      </tr>
-      <tr>
-        <td>Kobus Stroman</td>
-        <td>Konopelski Group</td>
-        <td>Lera_Stroman3@gmail.com</td>
-        <td>Vicentaview, Mississippi 47576-9639, United States of America</td>
-        <td>166-619-2267</td>
-      </tr>
-      <tr>
-        <td>Kobus Schiller</td>
-        <td>Harber Inc</td>
-        <td>Adan_Schiller19@yahoo.com</td>
-        <td>VonRuedenberg, Delaware 99072-4003, United States of America</td>
-        <td>(699) 824-5724</td>
+      <tr *ngFor="let a of allAmbassador">
+        <td>{{a.user.name}} {{a.user.surname}}</td>
+        <td>{{a.aliasName}}</td>
+        <td>{{a.user.emailAddress}}</td>
+        <td>{{a.user.address.address1}} {{a.user.address.city}}, {{a.user.address.postalCode}}</td>
+        <td>0{{a.user.phoneNumber}}</td>
       </tr>
     </table>
   </ion-col>
