@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, PopoverController } from '@ionic/angular';
+import { DeleteUserVM } from 'src/app/Models/DeleteUserVM';
 import { registerationinfoVM } from 'src/app/Models/registerationinfoVM';
 import { registerVM } from 'src/app/Models/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 
@@ -34,7 +37,7 @@ export class ProfilePage implements OnInit {
   aliasname:string
   aboutmyself:string
 
-  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage){}
+  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage, private alert:AlertController, private route:Router, private api: ApiService){}
 
   // Show Profile options when icon on right of navbar clicked function
   async presentPopover(event)
@@ -68,5 +71,48 @@ export class ProfilePage implements OnInit {
     this.aboutmyself=this.profileinfo[0].aboutmyself
 
   console.log(this.profileinfo[0])
+  }
+
+  close()
+  {
+   
+    this.popoverController.dismiss();
+  }
+
+  //Are you sure 
+  async confirm() {
+    const alert = await this.alert.create({
+      header: 'Delete',
+      message: 'Are you sure?',
+      buttons: [{text: 'Yes', handler: ()=> {
+        //this.tempStorage.clearRegistrationInfo()
+        //clear session + delete user
+        let deleteUser:DeleteUserVM = new DeleteUserVM(this.profileinfo[0].userId)
+        //this.api.deleteUser(deleteUser).subscribe()
+        this.api.deleteUser(deleteUser).subscribe(result=> {
+        if(result == true){
+        this.tempStorage.logout()
+        this.close()
+        this.route.navigate(['home'])
+        console.log("done")
+        }
+        else{
+          console.log(result)
+        }
+      })
+ 
+      }},{text: "No", handler: ()=>
+      this.close()
+    }]
+    });
+
+    await alert.present();
+  }
+
+
+  //delete user
+  Delete(){
+    this.confirm()
+    console.log(this.profileinfo[0].userId)
   }
 }

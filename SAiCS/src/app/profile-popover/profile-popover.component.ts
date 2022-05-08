@@ -30,11 +30,18 @@ export class ProfilePopoverComponent implements OnInit {
   //Are you sure 
   async confirm() {
     const alert = await this.alert.create({
-      header: 'Registration',
-      message: 'Congratulations!  your registration was successful',
-      buttons: [{text: 'OK', handler: ()=> {
+      header: 'Logout',
+      message: 'Are you sure?',
+      buttons: [{text: 'Yes', handler: ()=> {
         this.tempStorage.clearRegistrationInfo()
-        this.router.navigate(['home'])}}]
+        this.router.navigate(['home'])
+        this.tempStorage.logout()
+        //this.router.navigate(['home'])
+        this.close()
+        console.log("logout")
+      }},{text: "No", handler: ()=>
+      this.close()
+    }]
     });
 
     await alert.present();
@@ -42,9 +49,8 @@ export class ProfilePopoverComponent implements OnInit {
 
 
   Logout(){
-    this.tempStorage.logout()
-    this.router.navigate(['home'])
-    this.popoverController.dismiss();
-    console.log("logout")
+    
+    this.confirm()
+    
   }
 }

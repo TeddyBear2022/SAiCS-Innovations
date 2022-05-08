@@ -64,6 +64,26 @@ namespace SAiCS_Innovations_API.Controllers
                     }
                 }
             }
+            if (usertype == 3)
+            {
+                using (MailMessage email = new MailMessage("u20551313@tuks.co.za", emailaddress))
+                {
+                    email.Subject = "Welcome future SAiCs Administrator!!!";
+                    email.Body = "Congratulations on getting thus far, we are happy that you chose to do business with us! The following are the details you can use to login :-). Username:" + username + " Password:" + password + " Please be aware you will only have access to functionality once admin has verified your account";
+                    email.IsBodyHtml = false;
+
+                    using (SmtpClient Smtp = new SmtpClient())
+                    {
+                        Smtp.Host = "smtp.gmail.com";
+                        Smtp.EnableSsl = true;
+                        NetworkCredential credentials = new NetworkCredential("u20551313@tuks.co.za", "FentseT@21");
+                        Smtp.UseDefaultCredentials = false;
+                        Smtp.Credentials = credentials;
+                        Smtp.Port = 587;
+                        Smtp.Send(email);
+                    }
+                }
+            }
         }
 
         //Register User
@@ -532,32 +552,55 @@ namespace SAiCS_Innovations_API.Controllers
         }
 
         //Delete user
-        [HttpDelete("DeleteUser")]
-        public object DeleteUser(int userId)
+        [HttpPost("DeleteUser")]
+        public bool DeleteUser(DeleteUserVM deleteuser)
         {
              
             try
             {
-                var userDelete = db.Users.Where(user => user.UserId == userId).FirstOrDefault();
-                var applicationsstatusdelete = db.UserApplicationStatuses.Where(user => user.UserId == userId).FirstOrDefault();
-                var passwordDelete = db.Passwords.Where(user => user.UserId == userId).FirstOrDefault();
+                var userDelete = db.Users.Where(user => user.UserId == deleteuser.userId).Include(userrole=>userrole.UserRole).Include(client=>client.Clients).Include(ambassador=>ambassador.Ambassadors).Include(admin=>admin.Admins).FirstOrDefault();
+                var applicationsstatusdelete = db.UserApplicationStatuses.Where(user => user.UserId == deleteuser.userId).FirstOrDefault();
+                var passwordDelete = db.Passwords.Where(user => user.UserId == deleteuser.userId).FirstOrDefault();
                 if (userDelete == null)
                 {
-                    return "User Doesnt exist";
+                    return false;
                 }
                 else
                 {
-                    Delete(userDelete);
-                    Delete(applicationsstatusdelete);
-                    Delete(passwordDelete);
-                    db.SaveChanges();
-                    return "user deleted";
+                    if (userDelete.UserRole.UserRoleId==1) {
+                        Delete(userDelete);
+                        Delete(applicationsstatusdelete);
+                        Delete(passwordDelete);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    if (userDelete.UserRole.UserRoleId == 2)
+                    {
+                        Delete(userDelete);
+                        Delete(applicationsstatusdelete);
+                        Delete(passwordDelete);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    if (userDelete.UserRole.UserRoleId == 3)
+                    {
+                        Delete(userDelete);
+                        Delete(applicationsstatusdelete);
+                        Delete(passwordDelete);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    //Delete(userDelete);
+                    //Delete(applicationsstatusdelete);
+                    //Delete(passwordDelete);
+                    //db.SaveChanges();
+                    return false;
                 }
 
             }
             catch (Exception error)
             {
-                return BadRequest(error.InnerException.Message);
+                return false;
             }
         }
 
@@ -605,7 +648,7 @@ namespace SAiCS_Innovations_API.Controllers
             }
             catch
             {
-                return "Invalid AMbassador";
+                return "Invalid Ambassador";
             }
         }
 

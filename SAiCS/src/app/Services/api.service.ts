@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
+import { Options } from 'selenium-webdriver';
 import { AdminVM } from '../Models/AdminVM';
 import { Ambassador } from '../Models/Ambassador';
 import { AmbassadorType } from '../Models/AmbassadorType';
 import { AmbassadorVM } from '../Models/AmbassadorVM';
 import { ClientVM } from '../Models/CientVM';
 import { Country } from '../Models/Country';
+import { DeleteUserVM } from '../Models/DeleteUserVM';
 import { LoginVM } from '../Models/LoginVM';
 import { registerVM } from '../Models/registerVM';
 import { User } from '../Models/User';
@@ -65,5 +67,9 @@ export class ApiService {
   //Register user
   registerUser(registrationinfo:registerVM):Observable<boolean>{
     return this.api.post<boolean>(this.apilink+"User/RegisterUser", registrationinfo );
+  }
+  //delete user
+  deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
   }
 }
