@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'feedback',
     pathMatch: 'full'
   },
   {
@@ -67,6 +67,11 @@ const routes: Routes = [
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
+  {
+    path: 'view-feedback',
+    loadChildren: () => import('./Client/view-feedback/view-feedback.module').then( m => m.ViewFeedbackPageModule)
+  },
+
 
 
 

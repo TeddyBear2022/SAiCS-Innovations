@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-select placeholder="Feedback Type" interface="popover" 
+  name="feedbackType" ngModel #feedbackType="ngModel"
+  >
+    <ion-select-option value="1">Product</ion-select-option>
+    <ion-select-option value="2" >Ambassador</ion-select-option>
+  </ion-select>
+  
+  
+<ion-row>
+  <ion-col>
+    <table id="feedbackTable" *ngIf="feedbackType.value == 1">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Product Type</th>
+          <th>Product Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of ProductFeedback" id="{{f.feedbackId}}">
+          <td>{{f.date}}</td>
+          <td>{{f.productTypeName}}</td>
+          <td>{{f.productName}}</td>
+          <td>{{f.description}}</td>
+          <td>
+            <ion-button (click)=" DeleteFeedback(f.feedbackId)">
+            <ion-icon name="trash" size="large"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <table id="feedbackTable" *ngIf="feedbackType.value == 2">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Ambassador Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr *ngFor="let f of AmbassadorFeedback">
+          <td>{{f.date}}</td>
+          <td>{{f.name}} {{f.surname}}</td>
+          <td>{{f.description}}</td>
+          <td>
+            <ion-button (click)="DeleteFeedback(f.feedbackId)">
+            <ion-icon name="trash" size="large"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+
+    
+</ion-content>

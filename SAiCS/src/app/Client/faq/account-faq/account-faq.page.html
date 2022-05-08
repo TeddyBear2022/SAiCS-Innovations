@@ -35,19 +35,17 @@
     <br> <br>
 
     <ion-card-content>
-      <ion-text>
-        <H2 (click)="txtClick1()">Q.. How do I change my password?</H2><br>
-        <H3 *ngIf="display">  A.. Click on the profile icon, there you will be directed to your profile page. To change your password, click on the
-           "Change password?" link. You will be redirected to the change password page where you can change your current password.</H3><br><br>
-
-        <H2 (click)="txtClick2()" >Q.. What is a SAiCS account?</H2><br>
-        <H3 *ngIf="display2"> A... SAiCS account is a platform that allows you to connect to one of our trusted ambassadors who are put in place 
-          to ease your ordering process.</H3><br><br>
-
-          <H2 (click)="txtClick3()" >Q.. How do I view and update my profile details?</H2><br>
-          <H3 *ngIf="display3"> A... Click on the profile icon which will direct you to your profile page. There you can view your profile details 
-            and choose whether to change or delete your profile.</H3>
-      </ion-text>
+     
+        <ion-list class="txt-block" *ngFor="let a of AccountFAQs; let i = index">
+          <div>
+            <ion-text >
+              <H2 (mouseenter)="hoverStateIn(i)" (mouseleave)="hoverStateOut(i)">Q.. {{a.faqquestion}}</H2><br>
+              <H3 *ngIf = 'showText[i]'>  A.. {{a.faqanswers}}</H3><br><br>
+            </ion-text>
+          </div>
+          </ion-list>
+    
+      
     </ion-card-content>
 
   </ion-card>
