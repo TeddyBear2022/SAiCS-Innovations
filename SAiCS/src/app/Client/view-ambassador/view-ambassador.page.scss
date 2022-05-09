@@ -62,6 +62,17 @@ font-size: 35px;
 font-weight: bold;
 }
 
+#searchAmbassadorBar{
+  align-self: center;
+  --background: #ffffff;
+  --placeholder-color: #000000;
+  --color:var(--placeholder-color);
+  --border-radius: 20px;
+  width: 50%;
+  margin: 0 auto;
+ 
+}
+
 /*Table styling*/
 #ambassadors {
     font-family: Arial, Helvetica, sans-serif;

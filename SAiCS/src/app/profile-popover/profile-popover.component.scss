@@ -1,5 +1,15 @@
 
-ion-item:hover{
-    background-color : #bdbdbd !important;
+  ion-list{ background : #ffffff !important;}
+  ion-item{
+    --background : #ffffff !important;
+    --color: #000000;
+    ion-icon {color: #000000;}
+  
+    &:hover{
+    --background-hover: #3c3c3c!important;
     border-radius: 15px;
   }
+
+  }
+
+  

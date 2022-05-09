@@ -22,13 +22,7 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-buttons left>
-        <button ion-button icon-only style="background: none" routerDirection="forward">
-          <ion-icon size="large" name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-row>
+  
     <ion-row>
       <ion-col>
         <h1 style="font-weight: bold; margin-left: 46%;">Profile</h1>
@@ -38,9 +32,9 @@
     <form id="clientProfileForm" >
       <ion-row>
         <ion-col id="clientProfileFormCol1" style="margin-left: 40%;">
-          <img src="./assets/ProfileImage.png" width="30%" height="80%" />
+          <img src="./assets/ProfileImage.png" width="30%" height="90%" />
           <button ion-button icon-only  style="background: none">
-            <ion-icon name="add-circle-outline" size="large"></ion-icon>
+            <ion-icon name="add-circle-outline" size="large" style="color: black;" disabled ></ion-icon>
           </button>
               
         </ion-col>
@@ -49,8 +43,8 @@
       <ion-row>
         <ion-col id="clientProfileFormCol2" size="5">
           <ion-list>
-            <ion-item-group lines="none" style="display: flex;">
-                <ion-input placeholder="Title"> </ion-input>
+            <ion-item-group lines="none" style="display: flex; width: 90%;margin-left: 5%;">
+                <ion-input placeholder="Title" > </ion-input>
                 <ion-input placeholder="Name"> </ion-input>
             </ion-item-group>
             <ion-item lines="none">
@@ -94,30 +88,28 @@
               <ion-input placeholder="Postal"> </ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-label style="text-align: center;"><a href="">Change Password?</a></ion-label>
+              <ion-label style="text-align: right;color: #3f51b5;"><a href="">Change Password?</a></ion-label>
             </ion-item>
           </ion-list>
-          <div style="display: block;text-align: center; margin-top: 5%;">
-            <ion-button id="update">Update</ion-button>
-            <ion-button id="delete">Delete</ion-button>
-          </div>
+         
         </ion-col>
-
-        
       </ion-row>
-    </form>
-<br>
-    <ion-row> 
-      <ion-col style="margin-top: 2%;">
-        <div id="bubbles">
+      <ion-row>
+        <ion-col> <div id="bubbles">
           <svg >
             <circle id="gray" cx="10" cy="60" r="60" fill="#A6A6A6"  fill-opacity="1" />
             <circle id="teal" cx="50" cy="130" r="60" fill="#0070C0" fill-opacity="0.8"/>
             <circle id="blue" cx="120" cy="165" r="60" fill="#062B80" />
           </svg>
-      </div>
+      </div></ion-col>
+        <ion-col></ion-col>
+        <ion-col style="margin-right: 8%;">
+        <div style="display: block;text-align: center; margin-top: 3%;">
+          <ion-button id="update">Update</ion-button>
+          <ion-button id="delete">Delete</ion-button>
+        </div>
       </ion-col>
-    </ion-row>
-
+      </ion-row>
+    </form>
   </ion-grid>
 </ion-content>

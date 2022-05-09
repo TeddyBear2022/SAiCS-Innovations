@@ -12,42 +12,68 @@ ion-content {
     --color : black;
   }
 
-
-  ion-grid
+  ion-toolbar
   {
+    --background:  #062b80;
+    --color: #FFFFFF;
+
+    .cartIcon
+    {
+      color: #08c10f;
+    }
+  }
+
+
+
     .vl {
       border-left: 1px solid black;
       height: 80%;
     }
 
-    #clientFeedbackForm{
-      ion-select{
+  #myAmbassadorItem{
+    --background: transparent;
+    border-bottom: solid 1pt black !important;
+    width:300px !important;
+    text-align: center;
+  }
+
+      ion-select, ion-input{
         color: black;
-        border-bottom: solid 1pt black ;
-        width:300px;
+        border-bottom: solid 1pt black !important;
+        width:300px !important;
+        
       }
-      ion-select[placeholder]
+
+      
+      ion-select, ion-input[placeholder]
       {
         color: black;
         text-align: center;
+        opacity: 1 !important;
         
       }
 
       ion-textarea
       {
         border: solid 1pt black;
+        border-radius: 11px !important;
         height: 150px;
         background-color: white;
         margin-top: 5pt;
         width:100%;
       }
 
-      ion-button
+      #submitButton
       {
-        --background: #008080;
+        --background: #062b80;
         --color:white;
       }
-    }
+
+      #cancelButton
+      {
+        --background: #f44336;
+        --color:white;
+      }
 
     
 
@@ -56,4 +82,11 @@ ion-content {
       bottom: 0;
       position: absolute;
     }
+
+    .alert-wrapper { 
+      background-color: white;
+      color: red;
+      button{
+          color: red;
+      }
   }

@@ -1,0 +1,37 @@
+ion-select{
+  border: solid 1pt black;
+  border-radius: 12px !important;
+  width: 300px;
+  margin-left: 15px;
+}
+
+#addIcon
+{
+  color: #08c10f;
+}
+
+#deleteIcon{color: #000000;}
+
+/*Table styling*/
+#feedbackTable{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%
+  }
+  
+  #feedbackTable td, #feedbackTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #feedbackTable tr{background-color: #f6ffff;}
+  
+  #feedbackTable tr:hover {background-color: #ddd;}
+  
+  #feedbackTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #008080;
+    color: white;
+  }
+

@@ -12,6 +12,16 @@
     --color : black;
   }
 
+  ion-toolbar
+  {
+    --background: #062b80;
+    --color: #FFFFFF;
+
+    .cartIcon
+    {
+      color: #08c10f;
+    }
+  }
 
 #clientTopSalesCard
 {
@@ -23,34 +33,53 @@
   ion-card
   {
     height:65%; 
-    width: 75%; 
+    width: 70%; 
     padding: 3%;
-    --background:#e0e0e0;
+    --background:#e0e0e0 !important;
   
     ion-card-content
     {
       margin-left: -20%;
       margin-right: 30%;
+      
     }
   }
 
   ion-button{
     text-transform: none;
+       
   --ion-color-secondary: #08c10f;
-      --ion-color-secondary-rgb: 8,193,15;
-      --ion-color-secondary-contrast: #ffffff;
-      --ion-color-secondary-contrast-rgb: 255,255,255;
-      --ion-color-secondary-shade: #07aa0d;
-      --ion-color-secondary-tint: #21c727;
+  --ion-color-secondary-contrast: #ffffff;
+  
   }
 }
 
 #products
 {
-  ion-button
-  {
-    color: #08c10f;
+  #searchProductBar{
+    align-self: center;
+    --background: #ffffff;
+    --placeholder-color: #000000;
+    --color:var(--placeholder-color);
+    --border-radius: 20px;
+   
   }
+
+
+.productCard{
+  --background: #ffffff;
+  width: 18rem;
+  align-items:center; 
+  justify-content: center;
+  
+  margin: 0 auto;
+  ion-card-header{text-align: center;}
+  img{width:70%; height: 50%;}
+  ion-card-content{text-align: center;align-items: center;}
+  ion-button{color: #08c10f;margin: 0 auto;}
+   
+}
+  
 }
 
 ion-input
@@ -67,3 +96,10 @@ ion-input
     --ion-color-secondary-shade: #d8d8d8;
     --ion-color-secondary-tint: #f6f6f6;
 }
+
+ion-select{
+  border: solid 1pt black;
+  border-radius: 12px !important;
+}
+
+

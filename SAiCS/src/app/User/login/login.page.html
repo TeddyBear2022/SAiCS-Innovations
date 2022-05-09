@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
 
 </ion-header>
-
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()" #localForm = ngForm>
 <ion-content id="screen-color" [fullscreen]="true">
   <div id="container">
     <ion-grid>
@@ -20,11 +20,15 @@
           <br> <br> <br> <br> <br> <br><br>
           <ion-label class="Heading"><h1 style="font-size: 21pt;"> <b>Login </b></h1></ion-label>
           <br> <br> <br>
-          <ion-input placeholder="Username"> </ion-input>
+          <ion-input  placeholder="E-mail / Username" formControlName="username" [required]="true" > </ion-input>
           <br>
-          <ion-input placeholder="Password"> </ion-input>
-          <br> <br><br>
-          <ion-button shape="round" color="secondary" routerLink="/landing-page">Login</ion-button>
+          
+          <span *ngIf="localForm.submitted && loginForm.controls['username'].invalid "> Please enter a valid username</span>
+          <ion-input placeholder="Password" name="password"  formControlName="password" [required]="true"  > </ion-input>
+          <br>
+          <span *ngIf="localForm.submitted && loginForm.controls['password'].invalid ">Please enter a valid password </span>
+           <br><br>
+          <ion-button type="submit" shape="round" color="secondary">Login</ion-button>
           <br>  <br>
           <ion-label> <a routerLink="/reset-password">Reset Password </a></ion-label>
           <br> <br>
@@ -35,3 +39,4 @@
     </ion-grid>
     </div>
 </ion-content>
+</form>
