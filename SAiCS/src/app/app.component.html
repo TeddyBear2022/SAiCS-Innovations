@@ -14,12 +14,27 @@
           <ion-label>Home</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
-      <ion-item routerLink="/feedback" lines="none">
-        <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
-        <ion-label>Feedback</ion-label>
-      </ion-item>
-      </ion-menu-toggle>
+        <ion-accordion-group>
+          <ion-accordion value="Feedback" >
+            <ion-item slot="header">
+              <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+              <ion-label>Feedback</ion-label>
+            </ion-item>
+            
+            <ion-list slot="content">
+              <ion-menu-toggle>
+              <ion-item routerLink="/feedback">
+                <ion-label>Provide Feedback</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle>
+              <ion-item routerLink="/view-feedback">
+                <ion-label>View Feedback</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            </ion-list>
+          </ion-accordion>
+        </ion-accordion-group>
       <ion-menu-toggle>
         <ion-item routerLink="/view-ambassador" lines="none">
           <ion-icon name="person-outline" slot="start"></ion-icon>
@@ -32,6 +47,8 @@
           <ion-label>FAQs</ion-label>
         </ion-item>
       </ion-menu-toggle>
+      
+        
     </ion-list>
   </ion-content>
   <ion-footer>

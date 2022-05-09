@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, NgForm, NgModel} from '@angular/forms';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -21,7 +21,10 @@ export class FeedbackPage implements OnInit {
   constructor(
   private api: ApiService,
   public popoverController: PopoverController, 
-  public formBuilder: FormBuilder){
+  public formBuilder: FormBuilder,
+  public alertController: AlertController,
+  public toastController: ToastController){
+    
     this.feedbackForm = formBuilder.group({
       feedbackType: [''],
       clientId: 1,
@@ -68,34 +71,68 @@ export class FeedbackPage implements OnInit {
   submitForm(feedbackType: number){ 
    
 console.log(feedbackType)
-    console.log(this.ambassador)
-  //  if(feedbackType == 1)
-  //  {
-  //   let feedback = {} as Feedback
-  //   feedback.clientId = this.feedbackForm.value.clientId
-  //   feedback.feedbackTypeId = this.feedbackForm.value.feedbackType
-  //   feedback.description = this.feedbackForm.value.description
-  //   feedback.productId = this.feedbackForm.value.productName
-  //   this.api.CreateFeedback(feedback).subscribe(() => {"Feedback created successfully"})
+// To differentiate between the type of feedback
+   if(feedbackType == 1)
+   {
+    let feedback = {} as Feedback
+    feedback.clientId = this.feedbackForm.value.clientId
+    feedback.feedbackTypeId = this.feedbackForm.value.feedbackType
+    feedback.description = this.feedbackForm.value.description
+    feedback.productId = this.feedbackForm.value.productName
+    this.api.CreateFeedback(feedback).subscribe()
 
-  //  }
-  //  else if (feedbackType == 2)
-  //  {
-  //   let feedback = {} as Feedback
-  //   feedback.clientId = this.feedbackForm.value.clientId
-  //   feedback.feedbackTypeId = this.feedbackForm.value.feedbackType
-  //   feedback.description = this.feedbackForm.value.description
-  //   feedback.ambassadorId= this.feedbackForm.value.ambassador
-  //   this.api.CreateFeedback(feedback).subscribe(() => {"Feedback created successfully"})
-  //  }
+   }
+   else if (feedbackType == 2)
+   {
+    let feedback = {} as Feedback
+    feedback.clientId = this.feedbackForm.value.clientId
+    feedback.feedbackTypeId = this.feedbackForm.value.feedbackType
+    feedback.description = this.feedbackForm.value.description
+    feedback.ambassadorId= 1
+    this.api.CreateFeedback(feedback).subscribe()
+   }
     
+   // alert user and reset form
+   this.presentToast()
     this.feedbackForm.reset()
+    this.ngOnInit()
   }
 
-  
+  //alerts
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'alertCancel',
+      header: 'CANCEL REQUEST',
+      message: 'Are you sure you want to cancel?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.feedbackForm.reset()
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();}
+
+    async presentToast() {
+      const toast = await this.toastController.create({
+        message: 'Feedback created successfully',
+        duration: 2000
+      });
+      toast.present();
+    }
 
 }
-
-
 
 

@@ -23,17 +23,25 @@ ion-content {
     }
   }
 
-  ion-grid
-  {
+
+
     .vl {
       border-left: 1px solid black;
       height: 80%;
     }
 
+  #myAmbassadorItem{
+    --background: transparent;
+    border-bottom: solid 1pt black !important;
+    width:300px !important;
+    text-align: center;
+  }
+
       ion-select, ion-input{
         color: black;
         border-bottom: solid 1pt black !important;
         width:300px !important;
+        
       }
 
       
@@ -41,6 +49,7 @@ ion-content {
       {
         color: black;
         text-align: center;
+        opacity: 1 !important;
         
       }
 
@@ -54,9 +63,15 @@ ion-content {
         width:100%;
       }
 
-      ion-button
+      #submitButton
       {
         --background: #062b80;
+        --color:white;
+      }
+
+      #cancelButton
+      {
+        --background: #f44336;
         --color:white;
       }
 
@@ -67,4 +82,11 @@ ion-content {
       bottom: 0;
       position: absolute;
     }
+
+    .alert-wrapper { 
+      background-color: white;
+      color: red;
+      button{
+          color: red;
+      }
   }

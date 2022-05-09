@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'feedback',
+    redirectTo: 'view-feedback',
     pathMatch: 'full'
   },
   {

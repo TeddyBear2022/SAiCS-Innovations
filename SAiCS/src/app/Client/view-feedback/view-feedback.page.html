@@ -24,14 +24,27 @@
 
 <ion-content>
 
-  <ion-select placeholder="Feedback Type" interface="popover" 
-  name="feedbackType" ngModel #feedbackType="ngModel"
-  >
-    <ion-select-option value="1">Product</ion-select-option>
-    <ion-select-option value="2" >Ambassador</ion-select-option>
-  </ion-select>
+  <ion-row class="ion-align-items-center">
+    <ion-col>
+      <h1 style="font-weight: bold; text-align: center;">Your Valuable Feedback!</h1>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-button fill="clear" routerLink="/feedback">
+      <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
+    </ion-button>
+  </ion-row>
   
-  
+
+  <ion-row>
+    <ion-select placeholder="Feedback Type" interface="popover" 
+    name="feedbackType" ngModel #feedbackType="ngModel">
+      <ion-select-option value="1">Product</ion-select-option>
+      <ion-select-option value="2" >Ambassador</ion-select-option>
+    </ion-select>
+  </ion-row>
+
 <ion-row>
   <ion-col>
     <table id="feedbackTable" *ngIf="feedbackType.value == 1">
@@ -51,8 +64,8 @@
           <td>{{f.productName}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)=" DeleteFeedback(f.feedbackId)">
-            <ion-icon name="trash" size="large"></ion-icon>
+            <ion-button (click)="presentAlert(f.feedbackId)" fill="clear">
+            <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>
         </tr>
@@ -78,8 +91,8 @@
           <td>{{f.name}} {{f.surname}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)="DeleteFeedback(f.feedbackId)">
-            <ion-icon name="trash" size="large"></ion-icon>
+            <ion-button (click)="presentAlert(f.feedbackId)" fill="clear">
+            <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>
         </tr>
