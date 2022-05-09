@@ -59,6 +59,9 @@ ion-grid {
         color: black;
         border-bottom: solid 1pt black;
         width: 430px;
+        --placeholder-color: black;
+        --placeholder-opacity: 1;
+
       }
        ion-select[placeholder] {
       color: black;
@@ -72,4 +75,10 @@ ion-grid {
         margin-left: 6%;
         margin-top: 3%;
   }
+}
+:-ms-ion-select-placeholder { /* Internet Explorer 10-11 */
+  color: black;
+}
+ion-select-placeholder { /* Microsoft Edge */
+  color: black;
 }
