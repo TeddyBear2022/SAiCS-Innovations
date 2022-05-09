@@ -5,6 +5,7 @@
 <ion-content id="screen-color" [fullscreen]="true">
   <div id="container">
     <ion-grid>
+      <!-- Bubbles on the right -->
       <ion-row>
         <ion-col style="margin-left: 70%; margin-top: 8%;">
           <div id="bubbles">
@@ -16,37 +17,43 @@
         </div>
         </ion-col>
       </ion-row>
-
+      <!-- Content of the screen -->
       <ion-row>
+        <!-- SAiCS innovations logo + QUote -->
         <ion-col style="align-items: center;">
           <img src="./assets/Innovations.png" alt="SAiCS logo" height="200" width="500">
           <blockquote class="tweet-this">
             <p><q> The future belongs to those who believe in the beauty of their dreams </q><span>-Eleanor Roosevelt</span></p>
           </blockquote>
         </ion-col>
-
+        <!-- Registration completion form inputs -->
         <ion-col>
            <h1>Register</h1>
            <br>
-           <form id="registerNextForm">
+           <form id="registerNextForm" [formGroup] = "register" (ngSubmit)="Register()" #localForm = ngForm>
              <ion-list>
                <ion-item lines="none">
-                <ion-input placeholder="Username"> </ion-input>
+                <ion-input type = "text"placeholder="Username" formControlName="username"> </ion-input>               
                </ion-item>
+               <span *ngIf="localForm.submitted && register.controls['username'].invalid" style="color: red;">Please enter a username</span>
                <br>
                <ion-item lines="none">
-                <ion-input placeholder="Password"> </ion-input>
+                <ion-input type="password" placeholder="Password" formControlName="password"> </ion-input>              
                </ion-item>
+               <span *ngIf="localForm.submitted && register.controls['password'].invalid" style="color: red;">Please enter a password</span>
                <br>
                <ion-item lines="none">
-                <ion-input placeholder="Confirm Password"> </ion-input>
+                <ion-input type="password" placeholder="Confirm Password" formControlName = "confirmpassword"> </ion-input>
                </ion-item>
+               <span *ngIf="localForm.submitted&& register.controls['confirmpassword'].invalid" style="color: red;">Please confirm your password</span>
              <br>
-                <ion-button color="secondary">Register</ion-button>
+                <ion-button color="secondary" type="submit">Register</ion-button>
+                <br><br>
+                <span *ngIf="passwordMatchError"  style="color: red;">Your passwords do not match</span>
              </ion-list>
-           </form>
+            </form>
         </ion-col >
-
+      
       </ion-row>
     </ion-grid>
     </div>

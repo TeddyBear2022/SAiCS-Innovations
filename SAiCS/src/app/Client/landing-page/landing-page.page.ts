@@ -21,6 +21,7 @@ export class LandingPagePage implements OnInit {
   Products: Product[]
   constructor(public popoverController: PopoverController, private api: ApiService, public dms: DomSanitizer){}
   
+  // Show Profile optionss when icon on right of navbar clicked function
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({

@@ -17,11 +17,6 @@ namespace SAiCS_Innovations_API.ViewModels
     public string City { get; set; }
     public string Address { get; set; }
     public int PostalCode { get; set; }
-    public int Idnumber { get; set; }
-    public string RefferalCode { get; set; }
-    public string ProofOfAdderess { get; set; }
-    public string IDPhoto { get; set; }
-    public int AmbassadorRankingID { get; set; }
     public int? Idnumber { get; set; }
     public string referralcode { get; set; }
     public string ProofOfAdderess { get; set; }
