@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { accessInfoVM } from "../Models/accessinfoVM"
-import { LoginVM } from "../Models/LoginVM"
-import { registerationinfoVM } from "../Models/registerationinfoVM"
-import { registerVM } from "../Models/registerVM"
+import { accessInfoVM } from "../Models/ViewModels/accessinfoVM"
+import { LoginVM } from "../Models/ViewModels/LoginVM"
+import { registerationinfoVM } from "../Models/ViewModels/registerationinfoVM"
+import { registerVM } from "../Models/ViewModels/registerVM"
 
 @Injectable({
     providedIn: 'root'
@@ -74,9 +74,14 @@ import { registerVM } from "../Models/registerVM"
 
      //logging out
      logout(){
+      let registerInfo:registerationinfoVM[] = []
+      let accessInfo:accessInfoVM[]=[]      
       let sessioninfo:registerVM[] =[]
+      
        if(localStorage){
-        localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
+      localStorage.setItem('registerInfo', JSON.stringify(registerInfo))
+      localStorage.setItem('accessInfo', JSON.stringify(accessInfo))
+      localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
        }
      }
      //logging out

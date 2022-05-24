@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Options } from 'selenium-webdriver';
-import { AdminVM } from '../Models/AdminVM';
+import { AdminVM } from '../Models/ViewModels/AdminVM';
 import { Ambassador } from '../Models/Ambassador';
 import { AmbassadorType } from '../Models/AmbassadorType';
-import { AmbassadorVM } from '../Models/AmbassadorVM';
-import { ClientVM } from '../Models/CientVM';
+import { AmbassadorVM } from '../Models/ViewModels/AmbassadorVM';
+import { ClientVM } from '../Models/ViewModels/CientVM';
 import { Country } from '../Models/Country';
-import { DeleteUserVM } from '../Models/DeleteUserVM';
-import { LoginVM } from '../Models/LoginVM';
-import { registerVM } from '../Models/registerVM';
+import { DeleteUserVM } from '../Models/ViewModels/DeleteUserVM';
+import { LoginVM } from '../Models/ViewModels/LoginVM';
+import { registerVM } from '../Models/ViewModels/registerVM';
 import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
 
@@ -22,7 +22,7 @@ export class ApiService {
 
   constructor(private api: HttpClient) { }
 
-  apilink:string = "https://localhost:44318/api/"
+  apilink:string = "https://localhost:44326/api/"
   //get title
   getTitles():Observable<Title[]>{
     return this.api.get<Title[]>(this.apilink+"Admin/getTitles")

@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'faq',
@@ -61,7 +61,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'view-ambassador',
