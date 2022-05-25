@@ -35,21 +35,14 @@
     <br>
 
     <ion-card-content>
-      <ion-text>
-        <H2 (click)="txtClick1()">Q.. Can I track the status of my deliveries?</H2><br>
-        <H3 *ngIf="display"> A... Yes, Select the menu item and select orders.</H3><br><br>
-
-        <H2 (click)="txtClick2()">Q.. How long does delivery take?</H2><br>
-        <H3 *ngIf="display2"> A... Approximately 3-5 working days if there aren't any warehouse complications.</H3><br><br>
-
-        <H2 (click)="txtClick3()">Q.. Will I incur any delivery costs for my order?</H2><br>
-        <H3 *ngIf="display3">A... Delivery costs will vary depending on the size of the order and the location of the end user </H3><br><br>
-
-        <H2 (click)="txtClick4()">Q.. Does SAiCS ship internationally?</H2><br>
-        <H3 *ngIf="display4">A... Currently we do not ship outside the borders of South Africa.</H3><br>
-
-
-      </ion-text>
+      <ion-list class="txt-block" *ngFor="let a of DeliveryFAQs; let i = index">
+        <div>
+          <ion-text >
+            <H2 (mouseenter)="hoverStateIn(i)" (mouseleave)="hoverStateOut(i)">Q.. {{a.faqquestion}}</H2><br>
+            <H3 *ngIf = 'showText[i]'>  A.. {{a.faqanswers}}</H3><br><br>
+          </ion-text>
+        </div>
+        </ion-list>
     </ion-card-content>
 
   </ion-card>
