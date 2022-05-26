@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FaqAdminComponent } from './faq-admin.component';
+import { MaintainCategoryModalComponent } from './maintain-category-modal.component';
 
-describe('FaqAdminComponent', () => {
-  let component: FaqAdminComponent;
-  let fixture: ComponentFixture<FaqAdminComponent>;
+describe('MaintainCategoryModalComponent', () => {
+  let component: MaintainCategoryModalComponent;
+  let fixture: ComponentFixture<MaintainCategoryModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FaqAdminComponent ],
+      declarations: [ MaintainCategoryModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FaqAdminComponent);
+    fixture = TestBed.createComponent(MaintainCategoryModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

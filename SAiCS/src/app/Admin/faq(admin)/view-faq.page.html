@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-grid>
+    <br>
+  <ion-row>
+    <ion-button fill="clear" data-backdrop="static" data-keyboard="false" (click)="createFAQ()" >
+      <ion-icon name="add-circle-outline" size="large" id="addIcon" ></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <br>
+  <ion-row>
+    
+    <ion-select placeholder="FAQ Type" [(ngModel)]="faqType" (ionChange)="FAQType()" interface="popover" >
+      <ion-select-option value="1">Client</ion-select-option>
+      <ion-select-option value="2" >Ambassador</ion-select-option>
+    </ion-select>
+    <ion-col></ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <br>
+  <ion-row>
+    <ion-select placeholder="Category" [(ngModel)]="category" (ionChange)="FAQCategory()" interface="popover" >
+       <ion-select-option *ngFor="let dbCategory of dbCategories" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</ion-select-option>
+      <!-- <ion-select-option value="1">Account</ion-select-option>
+      <ion-select-option value="2" >Product</ion-select-option>
+      <ion-select-option value="3" >Delivery</ion-select-option> -->
+    </ion-select>
+    <a (click)="MaintainCategory()"> Maintain Category</a>
+  </ion-row>
+
+  <!-- Product FAQ -->
+  <section *ngIf="chosenCategory == 2">
+  <h2>Product</h2>
+  <ion-row>
+    <br>
+    <ion-card *ngFor="let productFAQ of productFAQs">
+      <ion-card-header>
+        <ion-card-subtitle></ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Quetion:
+        {{productFAQ.faqquestion}}
+        <br>
+        Answer:
+        {{productFAQ.faqanswers}}
+      </ion-card-content>
+      <ion-item>
+        <ion-button>Edit</ion-button>
+        <ion-button (click)="DeleteFAQ(productFAQ)">Delete</ion-button>
+      </ion-item>
+    </ion-card>
+  </ion-row>
+</section>
+
+<!-- Account FAQ -->
+<section *ngIf="chosenCategory == 1">
+    <h2>Account</h2>
+    <ion-row>
+      <br>
+      <ion-card *ngFor="let accountFAQ of accountFAQs">
+        <ion-card-header>
+          <ion-card-subtitle></ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Quetion:
+          {{accountFAQ.faqquestion}}
+          <br>
+          Answer:
+          {{accountFAQ.faqanswers}}
+        </ion-card-content>
+        <ion-item>
+          <ion-button>Edit</ion-button>
+          <ion-button (click)="DeleteFAQ(accountFAQ)">Delete</ion-button>
+        </ion-item>
+      </ion-card>
+    </ion-row>
+  </section>
+
+  <!-- Delivery FAQ -->
+  <section *ngIf="chosenCategory == 3">
+    <h2>Delivery</h2>
+    <ion-row>
+      <br>
+      <ion-card *ngFor="let deliveryFAQ of deliveryFAQs">
+        <ion-card-header>
+          <ion-card-subtitle></ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Quetion:
+          {{deliveryFAQ.faqquestion}}
+          <br>
+          Answer:
+          {{deliveryFAQ.faqanswers}}
+        </ion-card-content>
+        <ion-item  end>
+          <ion-button >Edit</ion-button>
+          <ion-button (click)="DeleteFAQ(deliveryFAQ)">Delete</ion-button>
+        </ion-item>
+      </ion-card>
+    </ion-row>
+  </section>
+</ion-grid>
+</ion-content>

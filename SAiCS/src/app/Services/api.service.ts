@@ -18,6 +18,7 @@ import { Feedback } from '../Models/Feedback';
 import { FeedbackVM } from '../Models/ViewModels/FeedbackVM';
 import { Product } from '../Models/Product';
 import { FAQ } from '../Models/FAQ';
+import { FAQCategory } from '../Models/FAQCategory';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +112,13 @@ export class ApiService {
   }
 
   //FAQs
+
+  CreateFAQ(faq:FAQ){
+    return this.api.post(this.apilink+'Admin/createFAQ',faq )
+  }
+  DeleteFAQ(faq:FAQ){
+    return this.api.post(this.apilink+'Admin/deleteFAQ',faq)
+  }
   GetAccountFAQ(): Observable<FAQ[]>
   {
     return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
@@ -124,6 +132,23 @@ export class ApiService {
   GetDeliveryFAQ(): Observable<FAQ[]>
   {
     return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ')
+  }
+
+  GetAllFAQS(): Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS')
+  }
+
+  //FAQ Category
+  GetFAQategory():Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories')
+  }
+
+  CreateFAQCategory(createFAQ:FAQCategory){
+    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
+  }
+
+  DeleteFAQCategory(deleteFAQ:FAQCategory){
+    return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
   }
 
   //Ambassadors
