@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
-import { ApiService } from 'src/app/Services/api.service';
 
 
 @Component({
@@ -11,10 +10,9 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ViewAmbassadorPage implements OnInit {
 
-  constructor(public popoverController: PopoverController, private api: ApiService){}
+  constructor(public popoverController: PopoverController){}
 
-  myAmbssador = []
-  allAmbassador = []
+  // Show Profile optionss when icon on right of navbar clicked function
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
@@ -26,25 +24,6 @@ export class ViewAmbassadorPage implements OnInit {
 
 
   ngOnInit() {
-    this.MyAmbassador()
-    this.GetAllAmbassadors()
-  }
-
-  MyAmbassador()
-  {
-     this.api.MyAmbassador(1).subscribe(data => {
-       this.myAmbssador = data
-       console.log(this.myAmbssador)
-     }
-   )
-  }
-
-  GetAllAmbassadors()
-  {
-    this.api.GetAllAmbassadors().subscribe(data =>{
-      this.allAmbassador = data
-      console.log(this.allAmbassador)
-    })
   }
 
 }

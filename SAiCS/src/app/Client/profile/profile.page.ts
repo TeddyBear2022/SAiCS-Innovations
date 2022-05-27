@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, PopoverController } from '@ionic/angular';
-import { DeleteUserVM } from 'src/app/Models/DeleteUserVM';
-import { registerationinfoVM } from 'src/app/Models/registerationinfoVM';
-import { registerVM } from 'src/app/Models/registerVM';
+import { DeleteUserVM } from 'src/app/Models/ViewModels/DeleteUserVM';
+import { registerationinfoVM } from 'src/app/Models/ViewModels/registerationinfoVM';
+import { registerVM } from 'src/app/Models/ViewModels/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';

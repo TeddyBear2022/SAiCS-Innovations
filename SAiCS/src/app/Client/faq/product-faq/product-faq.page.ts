@@ -11,9 +11,8 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ProductFaqPage implements OnInit {
   ProductFAQs: FAQ[]
-  showText: any = [];
-
-  constructor(public popoverController: PopoverController, private api: ApiService){}
+  showText: any = []
+  constructor(public popoverController: PopoverController, private api:ApiService){}
 
   async presentPopover(event)
   {
@@ -25,10 +24,25 @@ export class ProductFaqPage implements OnInit {
   }
 
   ngOnInit() {
-    this.GetProductFAQ()
+    this.GetProductFAQ();
   }
 
    
+  // display: boolean = false;
+  // display2: boolean = false;
+  // display3: boolean = false;
+
+  // txtClick1(){
+  //   this.display = !this.display
+  // }
+
+  // txtClick2(){
+  //   this.display2 = !this.display2
+  // }
+
+  // txtClick3(){
+  //   this.display3 = !this.display3
+  // }
   hoverStateIn(index){
     this.showText[index] = true;
   }
