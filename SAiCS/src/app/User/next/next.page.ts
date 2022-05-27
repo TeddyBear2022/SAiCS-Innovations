@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { accessInfoVM } from 'src/app/Models/accessinfoVM';
-import { registerationinfoVM } from 'src/app/Models/registerationinfoVM';
-import { registerVM } from 'src/app/Models/registerVM';
+import { accessInfoVM } from 'src/app/Models/ViewModels/accessinfoVM';
+import { registerationinfoVM } from 'src/app/Models/ViewModels/registerationinfoVM';
+import { registerVM } from 'src/app/Models/ViewModels/registerVM';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 

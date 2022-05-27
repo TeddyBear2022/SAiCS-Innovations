@@ -43,6 +43,7 @@ export class RegisterPage implements OnInit {
 
     })
     
+    
    //Registeration form
    this.register = new FormGroup({
     usertypeID:new FormControl('', Validators.required),
@@ -63,6 +64,26 @@ export class RegisterPage implements OnInit {
     aboutmyself:new FormControl(),
     reasons:new FormControl(),
   })
+  }
+
+  ionViewDidEnter(){
+    this.api.getTitles().subscribe(result => {
+      this.titles= result
+      console.log(result)
+    })
+    this.api.getUserTypes().subscribe(result => {
+      this.userTypes = result
+      console.log(result)
+    })
+    this.api.getCountrys().subscribe(result => {
+      this.countrys = result
+      console.log(result)
+    })   
+    this.api.getAmbassadorRankings().subscribe(result=> {
+      this.AmbassadorTypeIDs= result
+      console.log(result)
+
+    })
   }
  
   // User selected function

@@ -1,27 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Feedback } from '../Models/feedback';
-import { Product } from '../Models/Product';
-import { FeedbackVM } from '../Models/FeedbackVM';
-import { FAQ } from '../Models/FAQ';
-import { AmbassadorVM } from '../Models/AmbassadorVM';
-
-//import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-//import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Options } from 'selenium-webdriver';
-import { AdminVM } from '../Models/AdminVM';
+import { AdminVM } from '../Models/ViewModels/AdminVM';
 import { Ambassador } from '../Models/Ambassador';
 import { AmbassadorType } from '../Models/AmbassadorType';
-//import { AmbassadorVM } from '../Models/AmbassadorVM';
-import { ClientVM } from '../Models/CientVM';
+import { AmbassadorVM } from '../Models/ViewModels/AmbassadorVM';
+import { ClientVM } from '../Models/ViewModels/CientVM';
 import { Country } from '../Models/Country';
-import { DeleteUserVM } from '../Models/DeleteUserVM';
-import { LoginVM } from '../Models/LoginVM';
-import { registerVM } from '../Models/registerVM';
+import { DeleteUserVM } from '../Models/ViewModels/DeleteUserVM';
+import { LoginVM } from '../Models/ViewModels/LoginVM';
+import { registerVM } from '../Models/ViewModels/registerVM';
 import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
+import { Feedback } from '../Models/Feedback';
+import { FeedbackVM } from '../Models/ViewModels/FeedbackVM';
+import { Product } from '../Models/Product';
+import { FAQ } from '../Models/FAQ';
+import { FAQCategory } from '../Models/FAQCategory';
 
 @Injectable({
   providedIn: 'root'
@@ -30,68 +27,8 @@ export class ApiService {
 
   constructor(private api: HttpClient) { }
 
-  apilink:string = "https://localhost:44318/api/"
+  apilink:string = "https://localhost:44326/api/"
 
-  //Feedback
-
-  CreateFeedback(newFeedback: Feedback): Observable<Feedback>
-  {
-    return this.api.post<Feedback>(this.apilink + "Client/CreateFeedback", newFeedback)
-  }
-
-  GetAmbassadorFeedback(): Observable<FeedbackVM[]>
-  {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetAmbassadorFeedback')
-  }
-
-  GetProductFeedback(): Observable<FeedbackVM[]>
-  {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetProductFeedback')
-  }
-
-  DeleteFeedback(id: number): Observable<FeedbackVM[]>
-  {
-    return this.api.delete<FeedbackVM[]>(this.apilink + `Client/DeleteFeedback?id=${id}`)
-  }
-
-  // Catalog
-  GetCatalog()
-  {
-    return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
-  }
-
-  GetProductsById(id: number): Observable<Product[]>
-  {
-    return this.api.get<Product[]>(this.apilink + `User/GetCatalogByCategory?id=${id}`)
-  }
-
-  //FAQs
-  GetAccountFAQ(): Observable<FAQ[]>
-  {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
-  }
-
-  GetProductFAQ(): Observable<FAQ[]>
-  {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ')
-  }
-
-  GetDeliveryFAQ(): Observable<FAQ[]>
-  {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ')
-  }
-
-  //Ambassadors
-  MyAmbassador(id: number): Observable<AmbassadorVM[]>
-  {
-    return this.api.get<AmbassadorVM[]>(this.apilink + `Client/MyAmbassador?id=${id}`)
-  }
-
-  GetAllAmbassadors(): Observable<AmbassadorVM[]>
-  {
-    return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
-  }
-  
   //get title
   getTitles():Observable<Title[]>{
     return this.api.get<Title[]>(this.apilink+"Admin/getTitles")
@@ -140,5 +77,91 @@ export class ApiService {
   //delete user
   deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
     return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
+  }
+  //Feedback
+
+  CreateFeedback(newFeedback: Feedback): Observable<Feedback>
+  {
+    return this.api.post<Feedback>(this.apilink + "Client/CreateFeedback", newFeedback)
+  }
+
+  GetAmbassadorFeedback(): Observable<FeedbackVM[]>
+  {
+    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetAmbassadorFeedback')
+  }
+
+  GetProductFeedback(): Observable<FeedbackVM[]>
+  {
+    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetProductFeedback')
+  }
+
+  DeleteFeedback(id: number): Observable<FeedbackVM[]>
+  {
+    return this.api.delete<FeedbackVM[]>(this.apilink + `Client/DeleteFeedback?id=${id}`)
+  }
+
+  // Catalog
+  GetCatalog()
+  {
+    return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
+  }
+
+  GetProductsById(id: number): Observable<Product[]>
+  {
+    return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
+  }
+
+  //FAQs
+
+  CreateFAQ(faq:FAQ){
+    return this.api.post(this.apilink+'Admin/createFAQ',faq )
+  }
+  DeleteFAQ(faq:FAQ){
+    return this.api.post(this.apilink+'Admin/deleteFAQ',faq)
+  }
+  GetAccountFAQ(): Observable<FAQ[]>
+  {
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
+  }
+
+  GetProductFAQ(): Observable<FAQ[]>
+  {
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ')
+  }
+
+  GetDeliveryFAQ(): Observable<FAQ[]>
+  {
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ')
+  }
+
+  GetAllFAQS(): Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS')
+  }
+
+  //FAQ Category
+  GetFAQategory():Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories')
+  }
+
+  CreateFAQCategory(createFAQ:FAQCategory){
+    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
+  }
+
+  DeleteFAQCategory(deleteFAQ:FAQCategory){
+    return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
+  }
+
+  UpdateFAQ(updateFAQ:FAQ){
+    return this.api.post(this.apilink+'Admin/updateFAQ', updateFAQ)
+  }
+  //Ambassadors
+  MyAmbassador(id: number): Observable<AmbassadorVM[]>
+  {
+    return this.api.get<AmbassadorVM[]>(this.apilink + `Client/MyAmbassador?id=${id}`)
+  }
+
+  GetAllAmbassadors(): Observable<AmbassadorVM[]>
+  {
+    return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
   }
 }

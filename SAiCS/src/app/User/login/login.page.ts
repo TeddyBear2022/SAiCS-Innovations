@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, NgModel } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { LoginVM } from 'src/app/Models/LoginVM';
+import { LoginVM } from 'src/app/Models/ViewModels/LoginVM';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
@@ -44,9 +44,11 @@ export class LoginPage implements OnInit {
       this.api.login(logindetails).subscribe(auth => {
         if(auth == true){
           console.log("Authorized")
+          console.log(logindetails)
           this.api.session(logindetails).subscribe(sessioninfo =>{
-            console.log(sessioninfo)
+            console.log("working")
             this.tempStorage.addSession(sessioninfo)
+            console.log("session info:"+ sessioninfo)
             console.log(this.tempStorage.getSessioninfo())
             let pagenavigation = this.tempStorage.getSessioninfo()
             if(pagenavigation[0].userRoleId == 3){

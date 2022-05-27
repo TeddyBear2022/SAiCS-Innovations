@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/Services/api.service';
   styleUrls: ['./account-faq.page.scss'],
 })
 export class AccountFaqPage implements OnInit {
+
   AccountFAQs: FAQ[]
   showText: any = [];
   constructor(public popoverController: PopoverController, private api: ApiService){}
@@ -27,6 +28,22 @@ export class AccountFaqPage implements OnInit {
     this.GetAccountFAQ()
   }
   
+  // display: boolean = false;
+  // display2: boolean = false;
+  // display3: boolean = false;
+
+  // txtClick1(){
+  //   this.display = !this.display
+  // }
+
+  // txtClick2(){
+  //   this.display2 = !this.display2
+  // }
+
+  // txtClick3(){
+  //   this.display3 = !this.display3
+  // }
+
   hoverStateIn(index){
     this.showText[index] = true;
   }
@@ -42,5 +59,4 @@ export class AccountFaqPage implements OnInit {
         console.log(data)
       })
   }
-
 }
