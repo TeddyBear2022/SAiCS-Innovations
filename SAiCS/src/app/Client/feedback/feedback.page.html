@@ -81,7 +81,7 @@
 
             <ion-row>
               <ion-col></ion-col>
-             <ion-col><ion-button  (click)="submitForm(feedbackForm.value.feedbackType)" [routerLink]="['/view-feedback']" type="submit" id="submitButton">Submit</ion-button></ion-col>
+             <ion-col><ion-button  (click)="submitForm(feedbackForm.value.feedbackType)" [routerLink]="['./view-feedback']" type="submit" id="submitButton">Submit</ion-button></ion-col>
              <ion-col><ion-button (click)="presentAlert()" id="cancelButton">Cancel</ion-button></ion-col>
             </ion-row>
             

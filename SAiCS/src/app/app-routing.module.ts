@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -8,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'view-feedback',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'faq',
@@ -61,28 +62,46 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
   {
-    path: 'view-feedback',
-    loadChildren: () => import('./Client/view-feedback/view-feedback.module').then( m => m.ViewFeedbackPageModule)
+    path: 'landing-page-admin',
+    loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
   },
+  // {
+  //   path: 'view-faq',
+  //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  // },
+  {
+    path: 'view-faq',
+    loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
+  // {
+  //   path: 'faq-add-modal',
+  //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
+  // },
 
+  // {
+  //   path: 'add-faq-modal',
+  //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
+  // },
 
-
-
-
-    
+  // {
+  //   path: 'add-faq',
+  //   loadChildren: () => import('./Admin/modals/add-faq/add-faq.module').then( m => m.AddFaqPageModule)
+  // },
     
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [RouterModule]
 })

@@ -11,6 +11,7 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 export class FAQPage implements OnInit {
   constructor(public popoverController: PopoverController){}
 
+  // Show Profile optionss when icon on right of navbar clicked function
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({

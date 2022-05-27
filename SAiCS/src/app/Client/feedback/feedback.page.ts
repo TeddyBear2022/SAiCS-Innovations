@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
-import { FormBuilder, FormGroup, NgForm, NgModel} from '@angular/forms';
+import { Feedback } from 'src/app/Models/Feedback';
+import { Product } from 'src/app/Models/Product';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { Product } from 'src/app/Models/Product';
-import { Feedback } from 'src/app/Models/feedback';
-import { AmbassadorVM } from 'src/app/Models/AmbassadorVM';
 
 @Component({
   selector: 'app-feedback',
@@ -13,17 +12,13 @@ import { AmbassadorVM } from 'src/app/Models/AmbassadorVM';
   styleUrls: ['./feedback.page.scss'],
 })
 export class FeedbackPage implements OnInit {
-
+  //Variables
   feedbackForm: FormGroup
   myAmbassador = []
-  //for input 
+  products: Product[]
   ambassador: number
   constructor(
-  private api: ApiService,
-  public popoverController: PopoverController, 
-  public formBuilder: FormBuilder,
-  public alertController: AlertController,
-  public toastController: ToastController){
+  private api: ApiService, public popoverController: PopoverController,public formBuilder: FormBuilder,public alertController: AlertController,public toastController: ToastController){
     
     this.feedbackForm = formBuilder.group({
       feedbackType: [''],
@@ -34,10 +29,7 @@ export class FeedbackPage implements OnInit {
       description: ['']
   });
   }
-
-  products: Product[]
-
-  // profile popover 
+  // Show Profile option when icon on right of navbar clicked function
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
@@ -47,7 +39,9 @@ export class FeedbackPage implements OnInit {
     return await popover.present();
   }
 
-  ngOnInit() { this.MyAmbassador()}
+  ngOnInit() {
+    this.MyAmbassador()
+  }
 
   GetProductsById(id: number)
   {
@@ -80,6 +74,7 @@ console.log(feedbackType)
     feedback.description = this.feedbackForm.value.description
     feedback.productId = this.feedbackForm.value.productName
     this.api.CreateFeedback(feedback).subscribe()
+    console.log(feedback)
 
    }
    else if (feedbackType == 2)
@@ -90,6 +85,7 @@ console.log(feedbackType)
     feedback.description = this.feedbackForm.value.description
     feedback.ambassadorId= 1
     this.api.CreateFeedback(feedback).subscribe()
+    console.log(feedback)
    }
     
    // alert user and reset form
@@ -132,7 +128,4 @@ console.log(feedbackType)
       });
       toast.present();
     }
-
 }
-
-

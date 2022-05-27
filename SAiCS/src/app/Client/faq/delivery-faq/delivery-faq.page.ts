@@ -11,9 +11,8 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class DeliveryFaqPage implements OnInit {
   DeliveryFAQs: FAQ[]
-  showText: any = [];
-
-  constructor(public popoverController: PopoverController, private api: ApiService){}
+  showText: any = []
+  constructor(public popoverController: PopoverController, private api:ApiService){}
 
   async presentPopover(event)
   {
@@ -25,9 +24,29 @@ export class DeliveryFaqPage implements OnInit {
   }
 
   ngOnInit() {
-    this.GetDeliveryFAQ()
+    this.GetDeliveryFAQ();
   }
 
+  // display: boolean = false;
+  // display2: boolean = false;
+  // display3: boolean = false;
+  // display4: boolean = false;
+
+  // txtClick1(){
+  //   this.display = !this.display
+  // }
+
+  // txtClick2(){
+  //   this.display2 = !this.display2
+  // }
+
+  // txtClick3(){
+  //   this.display3 = !this.display3
+  // }
+
+  // txtClick4(){
+  //   this.display4 = !this.display4
+  // }
   hoverStateIn(index){
     this.showText[index] = true;
   }
