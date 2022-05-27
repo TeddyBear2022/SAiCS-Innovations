@@ -18,6 +18,11 @@ import { Feedback } from '../Models/Feedback';
 import { FeedbackVM } from '../Models/ViewModels/FeedbackVM';
 import { Product } from '../Models/Product';
 import { FAQ } from '../Models/FAQ';
+import { ProductType } from '../Models/ProductType';
+import { ProductVM } from '../Models/ViewModels/ProductVM';
+import { PackageVM } from '../Models/ViewModels/PackageVM';
+import { PackageType } from '../Models/PackageType';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -135,5 +140,84 @@ export class ApiService {
   GetAllAmbassadors(): Observable<AmbassadorVM[]>
   {
     return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
+  }
+
+  //Product Subsystem
+  // Get all packages
+  GetPackages(): Observable<PackageVM[]>
+  {
+    return this.api.get<PackageVM[]>(this.apilink + 'Product/getPackages')
+  }
+
+  //Get package by name
+  GetPackageByName(name: string): Observable<PackageVM>
+  {
+    return this.api.get<PackageVM>(this.apilink + `Product/getPackageByName?name=${name}`)
+  }
+
+  //Get package types
+  GetPackageTypes(): Observable<PackageType[]>
+  {
+    return this.api.get<PackageType[]>(this.apilink + 'Product/getPackageTypes')
+  }
+
+
+  //Create package
+  CreatePackage(newPackage: PackageVM): Observable<PackageVM>
+  {
+    return this.api.post<PackageVM>(this.apilink + "Product/createPackage", newPackage)
+  }
+
+  
+  //Update package
+  UpdatePackage(name: string, newPackage: PackageVM): Observable<PackageVM>
+  {
+    return this.api.put<PackageVM>(this.apilink + `Product/updatePackage?name=${name}`, newPackage)
+  }
+
+  //Delete package
+  DeletePackage(id: number): Observable<PackageVM>
+  {
+    return this.api.delete<PackageVM>(this.apilink + `Product/deletePackage?id=${id}`)
+  }
+
+ 
+  // Get all products
+  GetProducts(): Observable<ProductVM[]>
+  {
+    return this.api.get<ProductVM[]>(this.apilink + 'Product/getProducts').pipe(map((res) => res))
+  }
+
+  //Get product by name
+  GetProductByName(name: string): Observable<ProductVM>
+  {
+    return this.api.get<ProductVM>(this.apilink + `Product/getProductByName?name=${name}`)
+  }
+
+  //Products
+  //Get product types
+  GetProductTypes(): Observable<ProductType[]>
+  {
+    return this.api.get<ProductType[]>(this.apilink + 'Product/getProductTypes')
+  }
+
+
+  //Create product
+  CreateProduct(newProduct: ProductVM): Observable<ProductVM>
+  {
+    return this.api.post<ProductVM>(this.apilink + "Product/createProduct", newProduct)
+  }
+
+  
+  //Update product
+  UpdateProduct(name: string, newProduct: ProductVM): Observable<ProductVM>
+  {
+    return this.api.put<ProductVM>(this.apilink + `Product/updateProduct?name=${name}`, newProduct)
+  }
+
+  //Delete product
+  DeleteProduct(id: number): Observable<ProductVM>
+  {
+    return this.api.delete<ProductVM>(this.apilink + `Product/deleteProduct?id=${id}`)
   }
 }

@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'view-package',
     pathMatch: 'full'
   },
   {
@@ -66,6 +66,14 @@ const routes: Routes = [
   {
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
+  },
+  {
+    path: 'view-product',
+    loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'view-package',
+    loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
   },
 
 
