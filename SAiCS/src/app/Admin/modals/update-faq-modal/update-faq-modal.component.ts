@@ -104,7 +104,7 @@ export class UpdateFaqModalComponent implements OnInit {
   //Successfully updated
   async Success() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'messageAlert',
       header: 'Successful',
       // subHeader: 'Subtitle',
       message: 'FAQ Has been successfully updated',
