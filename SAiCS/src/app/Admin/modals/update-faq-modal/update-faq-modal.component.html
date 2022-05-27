@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-<form [formGroup]="FAQ" #localForm = 'ngForm' (ngSubmit)="updateFAQ()">
+<form [formGroup]="FAQ" #localForm = 'ngForm' >
 <div align="center">
 
 <div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;margin-top: 10%;"><label ><i><b>Question:</b></i></label></div>
@@ -19,8 +19,8 @@
 
 </div>
   <div align="right" style="margin-top: 20%;">
-  <button type="submit" style=" background-color: #0070c0; margin-right: 10px;" >Update</button> 
-  <button style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
+  <button type="submit"(click)="updateFAQ()" style=" background-color: #0070c0; margin-right: 10px;" >Update</button> 
+  <button inline style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
 </div>
 </form>
 </ion-content>

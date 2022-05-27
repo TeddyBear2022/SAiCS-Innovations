@@ -109,6 +109,7 @@ export class MaintainCategoryModalComponent implements OnInit {
       message: 'Category Has been successfully deleted',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
+        window.location.reload() 
       }
     }]
     });

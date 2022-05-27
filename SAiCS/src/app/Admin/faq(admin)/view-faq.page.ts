@@ -26,8 +26,10 @@ export class ViewFaqPage implements OnInit {
    faqType:NgModel;
    category:NgModel;
    chosenCategory:any;
-   dbCategories=[]
-
+   chosenfaqtype:any;
+   dbCategories=[];
+   filter:boolean = false
+   showCategory
 
   ngOnInit() {
   //  this.api.GetAllFAQS().subscribe(data=> {
@@ -76,19 +78,19 @@ export class ViewFaqPage implements OnInit {
     this.api.GetProductFAQ().subscribe(data =>
       {
         this.productFAQs = data
-        console.log(data)
+        //console.log(data)
       })
 
     this.api.GetAccountFAQ().subscribe(data =>
       {
         this.accountFAQs = data
-        console.log(data)
+        //console.log(data)
       })
       
     this.api.GetDeliveryFAQ().subscribe(data =>
       {
         this.deliveryFAQs = data
-        console.log(data)
+        //console.log(data)
       })
       this.api.GetFAQategory().subscribe(data =>
         {
@@ -154,11 +156,32 @@ export class ViewFaqPage implements OnInit {
   }
    
    FAQType(){
-    console.log(this.faqType)
+     this.chosenfaqtype = this.faqType     
+     if(this.chosenCategory != null && this.chosenfaqtype != null){
+      this.filter = true
+      console.log(this.filter)
+    }
+   else{
+    this.filter = false
+    console.log(this.filter)
+   }
+   console.log(this.chosenfaqtype);
+     
   }
 
   FAQCategory(){
     this.chosenCategory = this.category;
+
+    if(this.chosenCategory != null && this.chosenfaqtype != null){
+      this.filter = true
+      this.showCategory = this.dbCategories[this.chosenCategory-1]
+      console.log(this.showCategory)
+      console.log(this.filter)
+    }
+   else{
+    this.filter = false
+    console.log(this.filter)
+   }
     console.log(this.chosenCategory)
   }
 
@@ -168,7 +191,6 @@ export class ViewFaqPage implements OnInit {
 
   close()
   {
-    
     this.popoverController.dismiss();
   }
 

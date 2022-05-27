@@ -45,6 +45,8 @@ export class UpdateFaqModalComponent implements OnInit {
   updateFAQ(){
     if(this.FAQ.valid){
     this.confirm()
+    console.log('open');
+    
     }
     else{
       console.log("Invalid form")
@@ -53,40 +55,40 @@ export class UpdateFaqModalComponent implements OnInit {
 
    //Are you sure? (confirmation message) 
    async confirm() {
-     console.log("opened");
-     
-    const alert = await this.alert.create({
-      header: 'Update',
-      message: 'Are you sure you want to update this FAQ?',
-      buttons: [{text: 'Confirm', handler: ()=> {
-        let apiUpdateFAQ:FAQ = new FAQ();
-        apiUpdateFAQ.faqid = this.updateFAQs.faqid
-        apiUpdateFAQ.faqcategoryId = this.updateFAQs.faqcategoryId
-        apiUpdateFAQ.faqtypeId = this.updateFAQs.faqtypeId
-        apiUpdateFAQ.faqanswers = this.FAQ.get('answer').value
-        apiUpdateFAQ.faqquestion = this.FAQ.get('question').value
-        
-        this.api.UpdateFAQ(apiUpdateFAQ).subscribe(data =>{
-          if(data == true){
-            this.dissmissModeal()
-            this.Success()
-          }
-          else{
-            this.dissmissModeal()
-            this.UnSuccess()
-          }
-        })
-      }},
-      {text: "Cancel", handler: ()=>{
-      console.log('close')
-       alert.dismiss()
-      //  this.close()
-      }
-    }]
-    });
+    console.log("opened");
+    
+   const alert = await this.alert.create({
+     header: 'Update',
+     message: 'Are you sure you want to update this FAQ?',
+     buttons: [{text: 'Confirm', handler: ()=> {
+       let apiUpdateFAQ:FAQ = new FAQ();
+       apiUpdateFAQ.faqid = this.updateFAQs.faqid
+       apiUpdateFAQ.faqcategoryId = this.updateFAQs.faqcategoryId
+       apiUpdateFAQ.faqtypeId = this.updateFAQs.faqtypeId
+       apiUpdateFAQ.faqanswers = this.FAQ.get('answer').value
+       apiUpdateFAQ.faqquestion = this.FAQ.get('question').value
+       
+       this.api.UpdateFAQ(apiUpdateFAQ).subscribe(data =>{
+         if(data == true){
+           this.dissmissModeal()
+           this.Success()
+         }
+         else{
+           this.dissmissModeal()
+           this.UnSuccess()
+         }
+       })
+     }},
+     {text: "Cancel", handler: ()=>{
+     console.log('close')
+      alert.dismiss()
+     //  this.close()
+     }
+   }]
+   });
 
-    await alert.present();
-  }
+   await alert.present();
+ }
 
   //Close Alert
   close()
