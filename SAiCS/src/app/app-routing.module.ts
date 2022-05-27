@@ -89,6 +89,13 @@ const routes: Routes = [
   //   path: 'add-faq-modal',
   //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
   // },
+    path: 'view-product',
+    loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'view-package',
+    loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
+  },
 
   // {
   //   path: 'add-faq',
