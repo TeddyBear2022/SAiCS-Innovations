@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/Services/api.service';
 import { AddFAQModalComponent } from '../modals/add-faq-modal/add-faq-modal.component';
 // import { FAQAddModalPage } from '../modals/faq-add-modal/faq-add-modal.page';
 import { MaintainCategoryModalComponent } from '../modals/maintain-category-modal/maintain-category-modal.component';
+import { UpdateFaqModalComponent } from '../modals/update-faq-modal/update-faq-modal.component';
 
 
 @Component({
@@ -96,12 +97,34 @@ export class ViewFaqPage implements OnInit {
         })
    }
 
+   ionViewDidEnter(){
+     console.log("new info")
+   }
    //Create FAQ Modal
    async createFAQ(){
-     console.log("Open faw modal")
+     console.log("Open faq modal")
      const modal = await this.modal.create({
        component: AddFAQModalComponent
      });
+     modal.onDidDismiss().then(() => {
+      //  If all else fails
+      // window.location.reload() 
+      // let addFAQ = data.data
+      // if(addFAQ.faqcategoryId == 3){
+      //   this.deliveryFAQs.push(addFAQ)
+      //   console.log("add delvery faq")
+      // }
+      // if(addFAQ.faqcategoryId == 2){
+      //   this.productFAQs.push(addFAQ)
+      //   console.log("add product faq")
+      // }
+      // if(addFAQ.faqcategoryId == 1){
+      //   // addFAQ.faqid = addFAQ.faqid
+      //   this.accountFAQs.push(addFAQ)
+      //   console.log("add account faq")
+      // }
+      // console.log(addFAQ)
+    })
      await modal.present();
    }
    
@@ -111,9 +134,24 @@ export class ViewFaqPage implements OnInit {
      const modal = await this.modal.create({
        component: MaintainCategoryModalComponent,
        keyboardClose :  false
-     })
+     });
+     
      await modal.present();
    }
+
+  //Maintain FAQ categories
+  async UpdateFAQ(faq:FAQ){
+    console.log("Open update FAQ model");
+    const modal = await this.modal.create({
+      component: UpdateFaqModalComponent,
+      componentProps: {
+        updateFAQs: faq,
+      },
+      keyboardClose :  false
+    });
+    
+    await modal.present();
+  }
    
    FAQType(){
     console.log(this.faqType)
@@ -130,6 +168,7 @@ export class ViewFaqPage implements OnInit {
 
   close()
   {
+    
     this.popoverController.dismiss();
   }
 
@@ -139,7 +178,10 @@ export class ViewFaqPage implements OnInit {
       header: 'Success',
       // subHeader: 'Subtitle',
       message: 'FAQ Has been successfully deleted',
-      buttons: ['OK']
+      buttons: [{text: 'Ok', handler: ()=> {
+      window.location.reload() 
+      }
+    }]
     });
     await alert.present();
   }
@@ -166,7 +208,9 @@ export class ViewFaqPage implements OnInit {
           }
         })
       }},{text: "Cancel", handler: ()=>
-      this.close()
+      // this.close()
+      // console.log('close'),
+      alert.dismiss()
     }]
     });
 

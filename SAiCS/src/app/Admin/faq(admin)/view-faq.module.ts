@@ -11,6 +11,7 @@ import { MaintainCategoryModalComponent } from '../modals/maintain-category-moda
 //import { FAQAddModalPage } from '../modals/faq-add-modal/faq-add-modal.page';
 
 import { AddFAQModalComponent } from '../modals/add-faq-modal/add-faq-modal.component';
+import { UpdateFaqModalComponent } from '../modals/update-faq-modal/update-faq-modal.component';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { AddFAQModalComponent } from '../modals/add-faq-modal/add-faq-modal.comp
     ViewFaqPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ViewFaqPage, MaintainCategoryModalComponent, AddFAQModalComponent],
-  entryComponents:[MaintainCategoryModalComponent, AddFAQModalComponent]
+  declarations: [ViewFaqPage, MaintainCategoryModalComponent, AddFAQModalComponent, UpdateFaqModalComponent],
+  entryComponents:[MaintainCategoryModalComponent, AddFAQModalComponent, UpdateFaqModalComponent]
 })
 export class ViewFaqPageModule {}

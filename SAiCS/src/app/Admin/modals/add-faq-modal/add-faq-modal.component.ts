@@ -17,6 +17,7 @@ export class AddFAQModalComponent implements OnInit {
   accountFAQs=[];
   deliveryFAQs=[];
   dbCategories = []
+  lastFAQ=[]
   constructor(private modal: ModalController, private api:ApiService, private alert: AlertController) { }
 
   ngOnInit() {
@@ -26,7 +27,6 @@ export class AddFAQModalComponent implements OnInit {
       question: new FormControl('', Validators.required),
       answer: new FormControl('', Validators.required)
     })
-    
   }
 
   ionViewWillEnter(){
@@ -34,6 +34,10 @@ export class AddFAQModalComponent implements OnInit {
       this.dbCategories = data
       console.log(data)
     })
+    // this.api.GetAllFAQS().subscribe(data => {
+    //   this.lastFAQ = data
+    //   console.log(this.lastFAQ[this.lastFAQ.length-1].faqid)
+    // })
   }
   // ionViewDidLeave(){
   //   this.api.GetAllFAQS().subscribe(data=> {
@@ -61,7 +65,11 @@ export class AddFAQModalComponent implements OnInit {
 
   dissmissModeal(){
     this.modal.dismiss();
+    
   }
+  // sendDataBack(addFAQ:FAQ){
+  //   this.modal.dismiss(addFAQ);
+  // }
 
   createFAQ(){
     //valid form
@@ -74,6 +82,8 @@ export class AddFAQModalComponent implements OnInit {
     // console.log(newFAQ)
     this.api.CreateFAQ(newFAQ).subscribe(data => {
       if(data ==true){
+        // newFAQ.faqid =this.lastFAQ[this.lastFAQ.length-1].faqid +1
+        // this.sendDataBack(newFAQ)
         this.dissmissModeal()
         this.Success()
         // console.log('Success')
@@ -98,7 +108,10 @@ export class AddFAQModalComponent implements OnInit {
       header: 'Success',
       // subHeader: 'Subtitle',
       message: 'FAQ Has been successfully created',
-      buttons: ['OK']
+      buttons: [{text: 'Ok', handler: ()=> {
+        window.location.reload() 
+      }
+    }]
     });
     await alert.present();
 

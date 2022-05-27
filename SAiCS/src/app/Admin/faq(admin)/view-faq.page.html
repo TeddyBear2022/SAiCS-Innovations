@@ -68,7 +68,7 @@
         {{productFAQ.faqanswers}}
       </ion-card-content>
       <ion-item>
-        <ion-button>Edit</ion-button>
+        <ion-button (click)="UpdateFAQ(productFAQ)">Edit</ion-button>
         <ion-button (click)="DeleteFAQ(productFAQ)">Delete</ion-button>
       </ion-item>
     </ion-card>
@@ -92,7 +92,7 @@
           {{accountFAQ.faqanswers}}
         </ion-card-content>
         <ion-item>
-          <ion-button>Edit</ion-button>
+          <ion-button (click)="UpdateFAQ(accountFAQ)">Edit</ion-button>
           <ion-button (click)="DeleteFAQ(accountFAQ)">Delete</ion-button>
         </ion-item>
       </ion-card>
@@ -116,7 +116,7 @@
           {{deliveryFAQ.faqanswers}}
         </ion-card-content>
         <ion-item  end>
-          <ion-button >Edit</ion-button>
+          <ion-button (click)="UpdateFAQ(deliveryFAQ)">Edit</ion-button>
           <ion-button (click)="DeleteFAQ(deliveryFAQ)">Delete</ion-button>
         </ion-item>
       </ion-card>

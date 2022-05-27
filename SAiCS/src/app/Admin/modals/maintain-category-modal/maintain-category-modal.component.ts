@@ -49,6 +49,9 @@ export class MaintainCategoryModalComponent implements OnInit {
         //if confirm clicked
         console.log(deleteFAQ)
         this.api.DeleteFAQCategory(deleteFAQ).subscribe(data =>{
+          if(data == true){
+            this.SuccessDeleted()
+          }
           console.log(data)
         })
       }},{text: "Cancel", handler: ()=>
@@ -71,7 +74,10 @@ export class MaintainCategoryModalComponent implements OnInit {
       newCategory.CategoryName = this.category.get('category').value
       this.api.CreateFAQCategory(newCategory).subscribe(data =>
         {
-          console.log(data)
+          if(data == true){
+            this.SuccessCreated()
+          }
+          
         })
     //  console.log(newCategory)
     }
@@ -80,5 +86,32 @@ export class MaintainCategoryModalComponent implements OnInit {
       this.error = true
     }
     
+  }
+  async SuccessDeleted() {
+    const alert = await this.alert.create({
+      cssClass: 'my-custom-class',
+      header: 'Success',
+      // subHeader: 'Subtitle',
+      message: 'Category Has been successfully deleted',
+      buttons: [{text: 'Ok', handler: ()=> {
+        this.modal.dismiss();
+      }
+    }]
+    });
+    await alert.present();
+  }
+
+  async SuccessCreated() {
+    const alert = await this.alert.create({
+      cssClass: 'my-custom-class',
+      header: 'Success',
+      // subHeader: 'Subtitle',
+      message: 'Category Has been successfully deleted',
+      buttons: [{text: 'Ok', handler: ()=> {
+        this.modal.dismiss();
+      }
+    }]
+    });
+    await alert.present();
   }
 }

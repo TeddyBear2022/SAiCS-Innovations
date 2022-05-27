@@ -151,6 +151,9 @@ export class ApiService {
     return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
   }
 
+  UpdateFAQ(updateFAQ:FAQ){
+    return this.api.post(this.apilink+'Admin/updateFAQ', updateFAQ)
+  }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
   {
