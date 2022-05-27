@@ -57,3 +57,32 @@ ion-menu {
     --color: #FFFFFF;
   }
 
+  .messageAlert .alert-wrapper{
+    max-width: 400px;
+    #alert-1-msg{
+      font-style: italic;
+      color: #333333;
+      text-align: center;
+    }
+
+    .alert-button-group{
+
+      display: flex;
+      justify-content: center;
+
+      button{
+        border: 1px solid;
+        border-radius: 10px;
+        text-align: center;
+        width: 30%;
+        text-transform: none;}
+    }
+
+    .Confirm{color: #0070c0 !important;}
+    .Cancel{color: #f44336 !important;}
+    .alert-button-inner {
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+  }

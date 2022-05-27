@@ -1,0 +1,51 @@
+
+ion-content, ion-toolbar{
+    --background: #f1f1f1;
+    --color : black;
+    ion-title{font-weight: bolder;}
+  }
+
+form
+{
+    --padding-start: 0%;
+    text-align: center;
+    ion-item-group{padding: 10px;}
+    ion-label{font-style: italic;
+        padding: 5px;
+        font-weight: bold;
+        margin-right: 35%;
+        color: #333333;}
+}
+
+ion-input, ion-textarea, select{
+    border: 2px solid #9e9e9e;
+    width: 300px;
+    margin: auto;
+    border-radius: 10px;
+    text-align: left;
+    --background:white;
+    
+}
+
+select{height: 40px;}
+ion-textarea{height: 150px;}
+
+ion-textarea, ion-input[placeholder]
+    {
+      color: black;
+      text-align: left;
+      opacity: 1 !important;
+      
+    }
+
+ion-button{
+  width: 80px;
+  height: 45px;
+  color:white;
+  font-weight: bold;
+  text-transform: none;
+  border-radius: 10px;
+ }
+ #create{--background: #0070c0;}
+ #cancel{ --background: #f44336;}
+
