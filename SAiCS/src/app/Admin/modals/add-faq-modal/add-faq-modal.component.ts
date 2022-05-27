@@ -91,9 +91,7 @@ export class AddFAQModalComponent implements OnInit {
       else{
         console.log('Unsuccessful')
       }
-
-    })
-    
+    })  
   }
   //Invalid Form
   else{
@@ -104,9 +102,7 @@ export class AddFAQModalComponent implements OnInit {
 
   async Success() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
-      header: 'Success',
-      // subHeader: 'Subtitle',
+      cssClass: 'messageAlert',
       message: 'FAQ Has been successfully created',
       buttons: [{text: 'Ok', handler: ()=> {
         window.location.reload() 

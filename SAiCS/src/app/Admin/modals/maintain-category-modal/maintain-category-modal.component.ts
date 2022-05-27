@@ -43,18 +43,23 @@ export class MaintainCategoryModalComponent implements OnInit {
 
   async confirm(deleteFAQ:FAQCategory) {
     const alert = await this.alert.create({
-      header: 'Delete',
+      cssClass: 'messageAlert',
       message: 'Are you sure you want to delete this Category?',
-      buttons: [{text: 'Confirm', handler: ()=> {
+      buttons: [{text: 'Confirm',
+      cssClass: 'Confirm',
+      handler: ()=> {
         //if confirm clicked
         console.log(deleteFAQ)
         this.api.DeleteFAQCategory(deleteFAQ).subscribe(data =>{
           if(data == true){
             this.SuccessDeleted()
           }
+          
           console.log(data)
         })
-      }},{text: "Cancel", handler: ()=>
+      }},{text: "Cancel",
+      cssClass: 'Cancel',
+      handler: ()=>
 
       this.close()
     }]
@@ -89,12 +94,13 @@ export class MaintainCategoryModalComponent implements OnInit {
   }
   async SuccessDeleted() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'messageAlert',
       header: 'Success',
       // subHeader: 'Subtitle',
       message: 'Category Has been successfully deleted',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
+        window.location.reload() 
       }
     }]
     });
@@ -103,10 +109,10 @@ export class MaintainCategoryModalComponent implements OnInit {
 
   async SuccessCreated() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'messageAlert',
       header: 'Success',
       // subHeader: 'Subtitle',
-      message: 'Category Has been successfully deleted',
+      message: 'Category has been successfully created',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
         window.location.reload() 
