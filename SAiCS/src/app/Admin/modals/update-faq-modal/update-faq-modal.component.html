@@ -11,11 +11,11 @@
 
 <div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;margin-top: 10%;"><label ><i><b>Question:</b></i></label></div>
 <ion-input type="text"  formControlName="question" align="left" placeholder="{{updateFAQs.faqquestion}}" value="{{updateFAQs.faqquestion}}"></ion-input>
-<span *ngIf="localForm.submitted && FAQ.controls.question.invalid"> Please enter a valid answer question</span>
+<span *ngIf="localForm.submitted && FAQ.controls.question.invalid"> *Required</span>
 <br>
 <div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>Answer:</b></i></label></div>
 <ion-input type="text"   formControlName="answer"  align="left" placeholder="{{updateFAQs.faqanswers}}" value="{{updateFAQs.faqanswers}}" ></ion-input>
-<span *ngIf="localForm.submitted && FAQ.controls.answer.invalid"> Please enter a valid answer update</span>
+<span *ngIf="localForm.submitted && FAQ.controls.answer.invalid"> *Required</span>
 
 </div>
   <div align="right" style="margin-top: 20%;">

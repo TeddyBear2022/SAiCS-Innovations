@@ -58,9 +58,12 @@ export class UpdateFaqModalComponent implements OnInit {
     console.log("opened");
     
    const alert = await this.alert.create({
-     header: 'Update',
+    //  header: 'Update',
+     cssClass: 'messageAlert',
      message: 'Are you sure you want to update this FAQ?',
-     buttons: [{text: 'Confirm', handler: ()=> {
+     buttons: [{text: 'Confirm',
+     cssClass: 'Confirm',
+     handler: ()=> {
        let apiUpdateFAQ:FAQ = new FAQ();
        apiUpdateFAQ.faqid = this.updateFAQs.faqid
        apiUpdateFAQ.faqcategoryId = this.updateFAQs.faqcategoryId
@@ -79,7 +82,9 @@ export class UpdateFaqModalComponent implements OnInit {
          }
        })
      }},
-     {text: "Cancel", handler: ()=>{
+     {text: "Cancel",
+     cssClass: 'Cancel',
+     handler: ()=>{
      console.log('close')
       alert.dismiss()
      //  this.close()
@@ -99,7 +104,7 @@ export class UpdateFaqModalComponent implements OnInit {
   //Successfully updated
   async Success() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'messageAlert',
       header: 'Successful',
       // subHeader: 'Subtitle',
       message: 'FAQ Has been successfully updated',
