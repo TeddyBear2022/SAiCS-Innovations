@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 import { ProductVM } from 'src/app/Models/ViewModels/ProductVM';
 import { ApiService } from 'src/app/Services/api.service';
@@ -23,7 +23,8 @@ export class UpdateProductModalComponent implements OnInit {
     private modalCtrl: ModalController, 
     private fb: FormBuilder,
     private api: ApiService,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    public toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -47,7 +48,6 @@ export class UpdateProductModalComponent implements OnInit {
     this.api.GetProductByName(name).subscribe(data => {
       this.updateProductForm.controls['productName'].setValue(data.product.productName);
       this.updateProductForm.controls['productTypeId'].setValue(data.product.productTypeId);
-      this.updateProductForm.controls['quantity'].setValue(data.product.quantity);
       this.updateProductForm.controls['description'].setValue(data.product.description);
       this.updateProductForm.controls['price'].setValue(data.price.price1);
     })
@@ -86,7 +86,6 @@ export class UpdateProductModalComponent implements OnInit {
     product.productName = this.updateProductForm.value.productName
     product.description = this.updateProductForm.value.description
     product.productTypeId = this.updateProductForm.value.productTypeId
-    product.quantity = this.updateProductForm.value.quantity
     product.productImage = this.selectedFile
 
     //add price
@@ -101,6 +100,9 @@ export class UpdateProductModalComponent implements OnInit {
     // update product
     this.api.UpdateProduct(this.existingProduct, viewModel).subscribe(()=> {console.log("success")})
     console.log(product)
+
+    //suceess 
+    this.presentToast()
 
     //dismiss modal
     this.dismissModal()
@@ -141,4 +143,13 @@ async ConfirmUpdate() {
     this.modalCtrl.dismiss();
   }
 
+  //success alert
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully Updated Product',
+      cssClass: 'successToaster',
+      duration: 2000
+    });
+    toast.present(); 
+  }
 }

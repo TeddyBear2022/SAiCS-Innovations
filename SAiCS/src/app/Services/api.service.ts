@@ -191,9 +191,9 @@ export class ApiService {
 
 
   //Create package
-  CreatePackage(newPackage: PackageVM): Observable<PackageVM>
+  CreatePackage(newPackage: PackageVM)
   {
-    return this.api.post<PackageVM>(this.apilink + "Product/createPackage", newPackage)
+    return this.api.post(this.apilink + "Product/createPackage", newPackage)
   }
 
   
@@ -231,9 +231,9 @@ export class ApiService {
 
 
   //Create product
-  CreateProduct(newProduct: ProductVM): Observable<ProductVM>
+  CreateProduct(newProduct: ProductVM)
   {
-    return this.api.post<ProductVM>(this.apilink + "Product/createProduct", newProduct)
+    return this.api.post(this.apilink + "Product/createProduct", newProduct)
   }
 
   

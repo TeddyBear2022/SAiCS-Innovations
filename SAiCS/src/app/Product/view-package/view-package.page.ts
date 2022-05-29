@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CreatePackageModalComponent } from '../create-package-modal/create-package-modal.component';
@@ -19,7 +19,8 @@ export class ViewPackagePage implements OnInit {
   public popoverController: PopoverController, 
   private api: ApiService, 
   private modalCtrl: ModalController,
-  public alertController: AlertController) { }
+  public alertController: AlertController,
+  public toastController: ToastController) { }
 
   ngOnInit() {
     this.GetPackages()
@@ -81,6 +82,7 @@ async deletePackage(id: number) {
         cssClass: 'Confirm',
         handler: () => {
           this.api.DeletePackage(id).subscribe(() => console.log("deleted successfully"))
+          this.presentToast()
           console.log('Confirm Ok');
         }
       },
@@ -98,6 +100,16 @@ async deletePackage(id: number) {
 
   await alert.present();
 }
+
+  //success alert
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully deleted Package',
+      cssClass: 'successToaster',
+      duration: 2000
+    });
+    toast.present(); 
+  }
 
    //Profile popover
    async presentPopover(event)

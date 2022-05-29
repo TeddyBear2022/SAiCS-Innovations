@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Package } from 'src/app/Models/Package';
 import { Price } from 'src/app/Models/Price';
 import { PackageVM } from 'src/app/Models/ViewModels/PackageVM';
@@ -22,7 +22,8 @@ export class UpdatePackageModalComponent implements OnInit {
     private modalCtrl: ModalController, 
     private fb: FormBuilder,
     private api: ApiService,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    public toastController: ToastController) { }
 
   ngOnInit() {
     this.GetPackageByName(this.existingPackage)
@@ -31,7 +32,6 @@ export class UpdatePackageModalComponent implements OnInit {
     this.updatePackageForm = this.fb.group({
       packageName:new FormControl('', Validators.required),
       packageTypeId:new FormControl('', Validators.required),
-      quantity:new FormControl('', Validators.required),
       description:new FormControl('', Validators.required),
       packageImage:new FormControl('', Validators.required),
       price:new FormControl('', Validators.required)
@@ -44,7 +44,6 @@ export class UpdatePackageModalComponent implements OnInit {
     this.api.GetPackageByName(name).subscribe(data => {
       this.updatePackageForm.controls['packageName'].setValue(data.package.packageName);
       this.updatePackageForm.controls['packageTypeId'].setValue(data.package.packageTypeId);
-      this.updatePackageForm.controls['quantity'].setValue(data.package.quantity);
       this.updatePackageForm.controls['description'].setValue(data.package.description);
       this.updatePackageForm.controls['price'].setValue(data.price.price1);
     })
@@ -77,7 +76,8 @@ export class UpdatePackageModalComponent implements OnInit {
 
    submitForm()
    {
-     
+
+   
      //add product attributes
      let product = {} as Package;
      product.packageName = this.updatePackageForm.value.packageName
@@ -99,8 +99,13 @@ export class UpdatePackageModalComponent implements OnInit {
      this.api.UpdatePackage(this.existingPackage, viewModel).subscribe(()=> {console.log("success")})
      console.log(product)
  
+     //success
+    this.presentToast()
+
      //dismiss modal
      this.dismissModal()
+  
+    
    } 
 
    
@@ -114,8 +119,11 @@ async ConfirmUpdate() {
         text: 'Confirm',
         cssClass: 'Confirm',
         handler: () => {
-          this.submitForm()
-          console.log('Confirm Ok');
+         
+            this.submitForm()
+            console.log('Confirm Ok');
+           
+           
         }
       },
       {
@@ -131,12 +139,23 @@ async ConfirmUpdate() {
   });
 
   await alert.present();
+
 }
 
   //dismiss modal
   dismissModal()
   {
     this.modalCtrl.dismiss();
+  }
+
+  //success alert
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully Updated Package',
+      cssClass: 'successToaster',
+      duration: 2000
+    });
+    toast.present(); 
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Services/api.service';
 import { Package } from 'src/app/Models/Package';
@@ -15,12 +15,13 @@ export class CreatePackageModalComponent implements OnInit {
   package:FormGroup;
   packageTypes = []
   selectedFile = null
+  isExisting: boolean = false
 
   constructor(
   private modalCtrl: ModalController, 
   private fb: FormBuilder,
-  private api: ApiService
-  ) { }
+  private api: ApiService,
+  public toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -29,7 +30,6 @@ export class CreatePackageModalComponent implements OnInit {
     this.package = this.fb.group({
       packageName:new FormControl('', Validators.required),
       packageTypeId:new FormControl('', Validators.required),
-      quantity:new FormControl('', Validators.required),
       description:new FormControl('', Validators.required),
       packageImage:new FormControl('', Validators.required),
       price:new FormControl('', Validators.required)
@@ -49,12 +49,12 @@ export class CreatePackageModalComponent implements OnInit {
   submitForm()
   {
     
+    if(this.package.valid){
     //add product attributes
     let product = {} as Package;
     product.packageName = this.package.value.packageName
     product.description = this.package.value.description
     product.packageTypeId = this.package.value.packageTypeId
-    product.quantity = this.package.value.quantity
     product.packageImage = this.selectedFile
 
     //add price
@@ -67,10 +67,27 @@ export class CreatePackageModalComponent implements OnInit {
     viewModel.price = price
 
     // create product
-    this.api.CreatePackage(viewModel).subscribe(()=> {console.log("success")})
-    console.log(product)
-    //dismiss modal
-    this.dismissModal()
+    this.api.CreatePackage(viewModel).subscribe((response)=> {
+      if(response == true)
+      {
+        this.isExisting = false
+         // success alert
+         this.presentToast()
+         //dismiss modal
+         this.dismissModal()
+      }
+      else
+      {
+        this.isExisting = true
+        console.log("Product existing")
+      }      
+    })
+    
+    }
+    else
+    {
+      console.log("Invalid form")
+    }
   }
 
     //convert image to base64
@@ -94,5 +111,15 @@ export class CreatePackageModalComponent implements OnInit {
    {
      this.modalCtrl.dismiss();
    }
+
+//success alert
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully created Package',
+      cssClass: 'successToaster',
+      duration: 2000
+    });
+    toast.present(); 
+  }
 
 }

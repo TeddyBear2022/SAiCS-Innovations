@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductVM } from 'src/app/Models/ViewModels/ProductVM';
 import { ApiService } from 'src/app/Services/api.service';
@@ -18,11 +18,13 @@ export class CreateProductModalComponent implements OnInit {
   product:FormGroup;
   productTypes = []
   selectedFile = null
+  isExisting: boolean = false
 
   constructor(
   private modalCtrl: ModalController, 
   private fb: FormBuilder,
-  private api: ApiService) { }
+  private api: ApiService,
+  public toastController: ToastController) { }
 
   ngOnInit() {
     this.GetProductTypes()
@@ -30,7 +32,6 @@ export class CreateProductModalComponent implements OnInit {
     this.product = this.fb.group({
       productName:new FormControl('', Validators.required),
       productTypeId:new FormControl('', Validators.required),
-      quantity:new FormControl('', Validators.required),
       description:new FormControl('', Validators.required),
       productImage:new FormControl('', Validators.required),
       price:new FormControl('', Validators.required)
@@ -50,13 +51,12 @@ export class CreateProductModalComponent implements OnInit {
   
   submitForm()
   {
-    
+    if(this.product.valid){
     //add product attributes
     let product = {} as Product;
     product.productName = this.product.value.productName
     product.description = this.product.value.description
     product.productTypeId = this.product.value.productTypeId
-    product.quantity = this.product.value.quantity
     product.productImage = this.selectedFile
 
     //add price
@@ -69,11 +69,27 @@ export class CreateProductModalComponent implements OnInit {
     viewModel.price = price
 
     // create product
-    this.api.CreateProduct(viewModel).subscribe((response)=> {console.log()})
+    this.api.CreateProduct(viewModel).subscribe((response)=> {
+      if(response == true)
+      {
+        this.isExisting = false
+         // success alert
+         this.presentToast()
+         //dismiss modal
+         this.dismissModal()
+      }
+      else
+      {
+        this.isExisting = true
+        console.log("Product existing")
+      }
+    })
     console.log(product)
-
-    //dismiss modal
-    this.dismissModal()
+  }
+    else
+    {
+      console.log("invalid form")
+    }
   }
 
   //convert image to base64
@@ -98,6 +114,14 @@ export class CreateProductModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  
+  //success alert
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully created Product',
+      cssClass: 'successToaster',
+      duration: 2000
+    });
+    toast.present(); 
+  }
 }
 
