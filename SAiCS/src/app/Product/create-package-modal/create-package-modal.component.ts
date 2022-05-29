@@ -117,9 +117,10 @@ export class CreatePackageModalComponent implements OnInit {
     const toast = await this.toastController.create({
       message: 'Successfully created Package',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
     toast.present(); 
+    window.location.reload() 
   }
 
 }

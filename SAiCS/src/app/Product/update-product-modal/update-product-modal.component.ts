@@ -34,7 +34,6 @@ export class UpdateProductModalComponent implements OnInit {
     this.updateProductForm = this.fb.group({
       productName:new FormControl('', Validators.required),
       productTypeId:new FormControl('', Validators.required),
-      quantity:new FormControl('', Validators.required),
       description:new FormControl('', Validators.required),
       productImage:new FormControl('', Validators.required),
       price:new FormControl('', Validators.required)
@@ -127,7 +126,6 @@ async ConfirmUpdate() {
         role: 'cancel',
         cssClass: 'Cancel',
         handler: () => {
-          
           console.log('Confirm Cancel');
         }
       }
@@ -148,8 +146,9 @@ async ConfirmUpdate() {
     const toast = await this.toastController.create({
       message: 'Successfully Updated Product',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
-    toast.present(); 
+    toast.present();
+    window.location.reload() 
   }
 }

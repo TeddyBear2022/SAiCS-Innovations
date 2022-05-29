@@ -106,9 +106,10 @@ async deletePackage(id: number) {
     const toast = await this.toastController.create({
       message: 'Successfully deleted Package',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
     toast.present(); 
+    window.location.reload() 
   }
 
    //Profile popover

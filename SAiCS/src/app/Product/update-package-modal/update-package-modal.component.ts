@@ -153,9 +153,10 @@ async ConfirmUpdate() {
     const toast = await this.toastController.create({
       message: 'Successfully Updated Package',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
     toast.present(); 
+    window.location.reload() 
   }
 
 }
