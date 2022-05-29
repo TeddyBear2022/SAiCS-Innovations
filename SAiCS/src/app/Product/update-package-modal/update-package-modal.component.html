@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Update Package
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="updatePackageForm"  class="ion-padding" (ngSubmit)="submitForm()">
+   
+      <ion-item-group>
+        <ion-label>Package Name:</ion-label>
+        <ion-input formControlName="packageName"></ion-input>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Package Type:</ion-label> <br>
+        <select placeholder="Pick" formControlName="packageTypeId">
+          <option value="" disabled selected>Select your option</option>
+          <option *ngFor="let pType of packageTypes" value="{{pType.packageTypeId}}">{{pType.packageTypeName}}</option>
+        </select>
+      </ion-item-group>
+
+      
+      <ion-item-group>
+        <ion-label>Package Price:</ion-label>
+        <ion-input formControlName="price" type="number" min="0"></ion-input>
+      </ion-item-group> 
+
+      <ion-item-group>
+        <ion-label>Package Image:</ion-label>
+        <ion-input formControlName="packageImage" type="file" (change)="onFileSelected($event)"></ion-input>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Description:</ion-label>
+        <ion-textarea  formControlName="description"></ion-textarea>
+      </ion-item-group>
+
+        <ion-item-group style="float: right;">
+          <ion-button id="update" slot="end"  (click)="ConfirmUpdate()">Update</ion-button>
+          <ion-button id="cancel" slot="end" (click)="dismissModal()">Cancel</ion-button>
+        </ion-item-group>
+  </form>
+ 
+</ion-content>

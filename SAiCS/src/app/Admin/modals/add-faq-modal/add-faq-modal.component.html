@@ -18,14 +18,11 @@
 <br>
 <span *ngIf="localForm.submitted && FAQ.controls.faqtype.invalid"> Please select a FAQ Type</span>
 
+<section *ngIf="FAQ.controls.faqtype.valid">
 <div align="left"  style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>FAQ Category:</b></i></label></div>
 <select formControlName="category" interface="popover"  align="left">
   <option value="" disabled>Select FAQ Category</option>
   <option *ngFor="let dbCategory of dbCategories" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</option>
-<!-- 
-  <option value="1">Account</option>
-  <option value="2">Product</option>
-  <option value="3">Delivery</option> -->
 </select>
 <br>
 
@@ -39,10 +36,14 @@
 <ion-input type="text"   formControlName="answer" placeholder="Enter Answer" align="left" ></ion-input>
 <span *ngIf="localForm.submitted && FAQ.controls.answer.invalid"> Please enter a valid answer</span>
 
+</section>
 </div>
+<section  *ngIf="FAQ.controls.faqtype.valid">
   <div align="right" style="margin-top: 3%;">
   <button type="submit" style=" background-color: #0070c0; margin-right: 10px;" >Create</button> 
   <button style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
 </div>
+</section>
+
 </form>
 </ion-content>

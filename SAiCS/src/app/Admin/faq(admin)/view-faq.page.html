@@ -44,7 +44,7 @@
     <ion-select placeholder="Category" [(ngModel)]="category" (ionChange)="FAQCategory()" interface="popover" >
        <ion-select-option *ngFor="let dbCategory of dbCategories" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</ion-select-option>
     </ion-select>
-    <a (click)="MaintainCategory()"> Maintain Category</a>
+    <a (click)="MaintainCategory()"><u> Maintain Category?</u></a>
   </ion-row>
 
   <section *ngIf="filter">
@@ -59,16 +59,20 @@
           <ion-card-subtitle></ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Quetion:
+          <label style="color: #008080;">Q...</label>
+          <br>
           {{FAQ.faqquestion}}
           <br>
-          Answer:
+          <label style="color: #08c10f;">A...</label>
+          <br>
           {{FAQ.faqanswers}}
         </ion-card-content>
-        <ion-item  end>
-          <ion-button (click)="UpdateFAQ(FAQ)">Edit</ion-button>
-          <ion-button (click)="DeleteFAQ(FAQ)">Delete</ion-button>
+        <!-- <div >  -->
+        <ion-item  lines="none">
+          <ion-icon slot= "end" (click)="UpdateFAQ(FAQ)" name="create" style="color: #0070c0; "></ion-icon>
+          <ion-icon  slot= "end"(click)="DeleteFAQ(FAQ)" name="trash-outline" size="large" id="addIcon" style="margin-left: 2%;color: black; height: 50%;"></ion-icon>
         </ion-item>
+      <!-- </div> -->
       </ion-card>
     </ng-container>
     </ng-container>
