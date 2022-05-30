@@ -87,3 +87,13 @@ ion-menu {
       justify-content: center;
     }
   }
+
+  //sucesstoaster
+  .successToaster{
+    --color:#199d00;
+    --border-color:#199d00;
+    --border-style:solid;
+    --border-width:1px;    
+    --background:#ffffff;
+     text-align: center;
+  }

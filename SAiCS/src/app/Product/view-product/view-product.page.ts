@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CreateProductModalComponent } from '../create-product-modal/create-product-modal.component';
@@ -13,24 +13,27 @@ import { UpdateProductModalComponent } from '../update-product-modal/update-prod
 export class ViewProductPage implements OnInit {
   products = []
   productTypes = []
+  
 
   constructor(
   public popoverController: PopoverController, 
   private api: ApiService, 
   private modalCtrl: ModalController,
-  public alertController: AlertController) { }
+  public alertController: AlertController,
+  public toastController: ToastController) { }
 
   ngOnInit() {
     this.GetProducts()
     this.GetProductTypes()
   }
+  
 
 //Get products
 GetProducts()
 {
  this.api.GetProducts().subscribe(data => {
    this.products = data; 
-   console.log("Retrieved products");
+   console.log(this.products);
    
   })
 }
@@ -81,6 +84,7 @@ async DeleteProduct(id: number) {
         cssClass: 'Confirm',
         handler: () => {
           this.api.DeleteProduct(id).subscribe(() => console.log("deleted successfully"))
+          this.presentToast()
           console.log('Confirm Ok');
         }
       },
@@ -97,6 +101,17 @@ async DeleteProduct(id: number) {
   });
 
   await alert.present();
+}
+
+//success alert
+async presentToast() {
+  const toast = await this.toastController.create({
+    message: 'Successfully deleted Product',
+    cssClass: 'successToaster',
+    duration: 5000
+  });
+  toast.present(); 
+  window.location.reload() 
 }
 
   //Profile popover

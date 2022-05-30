@@ -6,12 +6,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="product"  class="ion-padding" (ngSubmit)="submitForm()">
+  <form [formGroup]="product" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
    
       <ion-item-group>
         <ion-label>Product Name:</ion-label>
         <ion-input formControlName="productName" placeholder="Enter product name"></ion-input>
-        <ion-label *ngIf="product.controls['productName'].errors.required">Required</ion-label>
+        <span *ngIf="localForm.submitted && product.controls['productName'].invalid">Required</span>
+        <span *ngIf="isExisting" style="margin-left: 15%;">Product already exists</span>
       </ion-item-group>
 
       <ion-item-group>
@@ -19,26 +20,26 @@
         <select placeholder="Pick" formControlName="productTypeId">
           <option value="" disabled selected>Select product type</option>
           <option *ngFor="let pType of productTypes" value="{{pType.productTypeId}}">{{pType.productTypeName}}</option>
-        </select><br>
-        <ion-label *ngIf="product.controls['productTypeId'].errors.required">Required</ion-label>
+        </select><br> 
+        <span *ngIf="localForm.submitted && product.controls['productTypeId'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
         <ion-label>Product Price:</ion-label>
         <ion-input formControlName="price" type="number" min="0"></ion-input>
-        <ion-label *ngIf="product.controls['price'].errors.required">Required</ion-label>
+        <span *ngIf="localForm.submitted && product.controls['price'].invalid">Required</span>
       </ion-item-group> 
 
       <ion-item-group>
         <ion-label>Product Image:</ion-label>
         <ion-input formControlName="productImage" type="file" (change)="onFileSelected($event)"></ion-input>
-        <ion-label *ngIf="product.controls['productImage'].errors.required">Required</ion-label>
+        <span *ngIf="localForm.submitted && product.controls['productImage'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
         <ion-label>Description:</ion-label>
         <ion-textarea formControlName="description" placeholder="Enter product description..."></ion-textarea>
-        <ion-label *ngIf="product.controls['productImage'].errors.required">Required</ion-label>
+        <span *ngIf="localForm.submitted && product.controls['description'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group style="float: right;">
