@@ -98,6 +98,51 @@ const routes: Routes = [
     loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
   },
 
+  {
+    path: 'view-ambassador-faq',
+    loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
+
+  {
+    path: 'view-ambassador-feedback',
+    loadChildren: () => import('./ambassador/view-ambassador-feedback/view-ambassador-feedback/view-ambassador-feedback.module').then( m => m.ViewAmbassadorFeedbackPageModule)
+  },
+
+  {
+    path: 'view-ambassadors',
+    loadChildren: () => import('./ambassador/view-ambassadors/view-ambassadors/view-ambassadors.module').then( m => m.ViewAmbassadorsPageModule)
+  },
+
+  {
+    path: 'view-clients',
+    loadChildren: () => import('./ambassador/view-clients/view-clients/view-clients.module').then( m => m.ViewClientsPageModule)
+  },
+
+  {
+    path: 'view-order-details',
+    loadChildren: () => import('./ambassador/view-order-details/view-order-details/view-order-details.module').then( m => m.ViewOrderDetailsPageModule)
+  },
+
+  {
+    path: 'view-orders',
+    loadChildren: () => import('./ambassador/view-orders/view-orders/view-orders.module').then( m => m.ViewOrdersPageModule)
+  },
+
+  {
+    path: 'ambassador-checkout',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout/ambassador-checkout/ambassador-checkout.module').then( m => m.AmbassadorCheckoutPageModule)
+  },
+
+  {
+    path: 'ambassador-checkout-ii',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout-ii/ambassador-checkout-ii/ambassador-checkout-ii.module').then( m => m.AmbassadorCheckoutIiPageModule)
+  },
+
+  {
+    path: 'ambassador-order-history',
+    loadChildren: () => import('./ambassador-order/ambassador-order-history/ambassador-order-history/ambassador-order-history.module').then( m => m.AmbassadorOrderHistoryPageModule)
+  },
+
   // {
   //   path: 'add-faq',
   //   loadChildren: () => import('./Admin/modals/add-faq/add-faq.module').then( m => m.AddFaqPageModule)
