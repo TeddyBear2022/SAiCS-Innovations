@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <h2 style="margin-left: 10pt;"><b>Update Client FAQ</b> </h2>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+<form [formGroup]="FAQ" #localForm = 'ngForm' >
+<div align="center">
+
+<div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;margin-top: 10%;"><label ><i><b>Question:</b></i></label></div>
+<ion-input type="text"  formControlName="question" align="left" placeholder="{{updateFAQs.faqquestion}}" value="{{updateFAQs.faqquestion}}"></ion-input>
+<span *ngIf="localForm.submitted && FAQ.controls.question.invalid"> *Required</span>
+<br>
+<div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>Answer:</b></i></label></div>
+<ion-input type="text"   formControlName="answer"  align="left" placeholder="{{updateFAQs.faqanswers}}" value="{{updateFAQs.faqanswers}}" ></ion-input>
+<span *ngIf="localForm.submitted && FAQ.controls.answer.invalid"> *Required</span>
+
+</div>
+  <div align="right" style="margin-top: 20%;">
+  <button type="submit"(click)="updateFAQ()" style=" background-color: #0070c0; margin-right: 10px;" >Update</button> 
+  <button inline style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
+</div>
+</form>
+</ion-content>

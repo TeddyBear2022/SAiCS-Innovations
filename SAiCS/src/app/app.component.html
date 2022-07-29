@@ -1,3 +1,51 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- menu -->
+<ion-menu menuId="main-menu" contentId="main-menu" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+     <img src="./assets/Client Navbar logo.png" height="50px">
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-menu-toggle>
+        <ion-item routerLink="/landing-page" lines="none">
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+      <ion-item routerLink="/feedback/view-feedback" lines="none">
+        <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+        <ion-label>Feedback</ion-label>
+      </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item routerLink="/view-ambassador" lines="none">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>Ambassador</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item routerLink="/faq" lines="none">
+          <ion-icon name="help-outline" slot="start"></ion-icon>
+          <ion-label>FAQs</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-icon size="large" name="help-circle-outline" slot="end"></ion-icon>
+        <ion-label slot="end">Help</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-footer>
+</ion-menu>
+
+<!-- Content -->
+  <ion-split-pane contentId="main-menu">
+    <ion-router-outlet id="main-menu" main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

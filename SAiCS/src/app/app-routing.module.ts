@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -8,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'delivery-faq',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'faq',
@@ -59,17 +60,101 @@ const routes: Routes = [
     path: 'waiting',
     loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
   },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'view-ambassador',
+    loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
+  },
+  {
+    path: 'landing-page-admin',
+    loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
+  },
+  // {
+  //   path: 'view-faq',
+  //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  // },
+  {
+    path: 'view-faq',
+    loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
+  // {
+  //   path: 'faq-add-modal',
+  //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
+  // },
 
+  // {
+  //   path: 'add-faq-modal',
+  //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
+  // },
+  {
+    path: 'view-product',
+    loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'view-package',
+    loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
+  },
 
+  {
+    path: 'view-ambassador-faq',
+    loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
 
+  {
+    path: 'view-ambassador-feedback',
+    loadChildren: () => import('./ambassador/view-ambassador-feedback/view-ambassador-feedback/view-ambassador-feedback.module').then( m => m.ViewAmbassadorFeedbackPageModule)
+  },
 
-    
+  {
+    path: 'view-ambassadors',
+    loadChildren: () => import('./ambassador/view-ambassadors/view-ambassadors/view-ambassadors.module').then( m => m.ViewAmbassadorsPageModule)
+  },
+
+  {
+    path: 'view-clients',
+    loadChildren: () => import('./ambassador/view-clients/view-clients/view-clients.module').then( m => m.ViewClientsPageModule)
+  },
+
+  {
+    path: 'view-order-details',
+    loadChildren: () => import('./ambassador/view-order-details/view-order-details/view-order-details.module').then( m => m.ViewOrderDetailsPageModule)
+  },
+
+  {
+    path: 'view-orders',
+    loadChildren: () => import('./ambassador/view-orders/view-orders/view-orders.module').then( m => m.ViewOrdersPageModule)
+  },
+
+  {
+    path: 'ambassador-checkout',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout/ambassador-checkout/ambassador-checkout.module').then( m => m.AmbassadorCheckoutPageModule)
+  },
+
+  {
+    path: 'ambassador-checkout-ii',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout-ii/ambassador-checkout-ii/ambassador-checkout-ii.module').then( m => m.AmbassadorCheckoutIiPageModule)
+  },
+
+  {
+    path: 'ambassador-order-history',
+    loadChildren: () => import('./ambassador-order/ambassador-order-history/ambassador-order-history/ambassador-order-history.module').then( m => m.AmbassadorOrderHistoryPageModule)
+  },
+
+  // {
+  //   path: 'add-faq',
+  //   loadChildren: () => import('./Admin/modals/add-faq/add-faq.module').then( m => m.AddFaqPageModule)
+  // },
     
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [RouterModule]
 })

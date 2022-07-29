@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: FeedbackPage
+  },  {
+    path: 'view-feedback',
+    loadChildren: () => import('./view-feedback/view-feedback.module').then( m => m.ViewFeedbackPageModule)
   }
+
 ];
 
 @NgModule({

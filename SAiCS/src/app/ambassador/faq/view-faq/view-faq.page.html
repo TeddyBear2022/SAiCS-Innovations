@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col> 
+          <ion-label><h1>Let Us Answer Your Questions!</h1></ion-label>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <br><br>
+      <ion-row>
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle><ion-item ><ion-label>Account</ion-label></ion-item></ion-card-subtitle>
+             
+            </ion-card-header>
+            <br>
+            <ion-card-content>
+              Need more information about your account?
+              
+            </ion-card-content>
+            <ion-footer >
+              <div><a routerLink="/account-faq">Learn more</a></div>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle><ion-item ><ion-label>Products</ion-label></ion-item></ion-card-subtitle>
+            </ion-card-header>
+            <br>
+            <ion-card-content>
+              Need more information about products?
+            </ion-card-content>
+            <ion-footer >
+              <div><a routerLink="/product-faq">Learn more</a></div>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle><ion-item ><ion-label>Delivery</ion-label></ion-item></ion-card-subtitle>
+             
+            </ion-card-header>
+            <br>
+            <ion-card-content>
+             Confused about delivery?
+            </ion-card-content>
+            <ion-footer >
+              <div><a routerLink="/delivery-faq">Learn more</a></div>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+ </div>
+
+ <ion-row> 
+  <ion-col style="margin-top: 48%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
+  </div>
+  </ion-col>
+</ion-row>
+
+</ion-content>
