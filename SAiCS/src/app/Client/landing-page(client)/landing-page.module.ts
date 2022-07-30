@@ -8,7 +8,6 @@ import { LandingPagePageRoutingModule } from './landing-page-routing.module';
 
 import { LandingPagePage } from './landing-page.page';
 
-
 @NgModule({
   imports: [
     CommonModule,

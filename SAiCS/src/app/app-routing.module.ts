@@ -61,10 +61,6 @@ const routes: Routes = [
     loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
   },
   {
-    path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
-  },
-  {
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
@@ -97,6 +93,19 @@ const routes: Routes = [
     path: 'view-package',
     loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
   },
+  {
+    path: 'ambassador-landing-page',
+    loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'performance-studio',
+    loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
+  },
+  {
+    path: 'product-details',
+    loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+  },
+
 
   {
     path: 'view-ambassador-faq',
