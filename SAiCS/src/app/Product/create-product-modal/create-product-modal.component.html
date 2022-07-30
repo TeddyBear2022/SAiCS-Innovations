@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Create Product
+      
+      <ion-item color="primary"><h2 style="margin-left: 10pt;"><b>Create Product</b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
+
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -26,8 +28,9 @@
 
       <ion-item-group>
         <ion-label>Product Price:</ion-label>
-        <ion-input formControlName="price" type="number" min="0"></ion-input>
-        <span *ngIf="localForm.submitted && product.controls['price'].invalid">Required</span>
+        <ion-input formControlName="price" type="number"></ion-input>
+        <span *ngIf="localForm.submitted && product.controls['price'].invalid">Required: The minimum price is R30</span>
+        <br>
       </ion-item-group> 
 
       <ion-item-group>
@@ -40,6 +43,12 @@
         <ion-label>Description:</ion-label>
         <ion-textarea formControlName="description" placeholder="Enter product description..."></ion-textarea>
         <span *ngIf="localForm.submitted && product.controls['description'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Status:</ion-label>
+        <ion-input formControlName="status" placeholder="Enter product status..."></ion-input>
+        <span *ngIf="localForm.submitted && product.controls['status'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group style="float: right;">

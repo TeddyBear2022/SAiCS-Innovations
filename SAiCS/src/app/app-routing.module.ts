@@ -163,7 +163,8 @@ const routes: Routes = [
   {
     path: 'rankings-faq',
     loadChildren: () => import('./ambassador/faq/rankings-faq/rankings-faq.module').then( m => m.RankingsFaqPageModule)
-  },  {
+  },
+  {
     path: 'view-ambassador-cart',
     loadChildren: () => import('./ambassador-order/view-ambassador-cart/view-ambassador-cart.module').then( m => m.ViewAmbassadorCartPageModule)
   },
