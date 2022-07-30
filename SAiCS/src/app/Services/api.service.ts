@@ -32,7 +32,7 @@ export class ApiService {
 
   constructor(private api: HttpClient) { }
 
-  apilink:string = "https://localhost:44326/api/"
+  apilink:string = "https://localhost:44343/api/"
 
   //get title
   getTitles():Observable<Title[]>{
@@ -213,7 +213,7 @@ export class ApiService {
   // Get all products
   GetProducts(): Observable<ProductVM[]>
   {
-    return this.api.get<ProductVM[]>(this.apilink + 'Product/getProducts').pipe(map((res) => res))
+    return this.api.get<ProductVM[]>(this.apilink + 'Product/getProducts')
   }
 
   //Get product by name
@@ -248,4 +248,16 @@ export class ApiService {
   {
     return this.api.delete<ProductVM>(this.apilink + `Product/deleteProduct?id=${id}`)
   }
+
+
+  UploadImage(file: FormData)
+  {
+    return this.api.post(this.apilink + "Media/UploadFile", file)
+  }
+  //, {responseType: 'text' as 'json', reportProgress: true, observe: 'events'}
+
+  // GetImage(imageName: string): Observable<Blob>
+  // {
+  //   return this.api.post<Blob>(this.apilink + "Gallery/GetImage?imageName", imageName,{ responseType: 'blob' as 'json'})
+  // }
 }

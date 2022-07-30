@@ -83,7 +83,6 @@ export class UpdatePackageModalComponent implements OnInit {
      product.packageName = this.updatePackageForm.value.packageName
      product.description = this.updatePackageForm.value.description
      product.packageTypeId = this.updatePackageForm.value.packageTypeId
-     product.quantity = this.updatePackageForm.value.quantity
      product.packageImage = this.selectedFile
  
      //add price
@@ -139,7 +138,6 @@ async ConfirmUpdate() {
   });
 
   await alert.present();
-
 }
 
   //dismiss modal
@@ -153,9 +151,10 @@ async ConfirmUpdate() {
     const toast = await this.toastController.create({
       message: 'Successfully Updated Package',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
     toast.present(); 
+    window.location.reload() 
   }
 
 }

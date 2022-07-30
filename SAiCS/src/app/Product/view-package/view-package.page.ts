@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/Services/api.service';
 import { CreatePackageModalComponent } from '../create-package-modal/create-package-modal.component';
 import { UpdatePackageModalComponent } from '../update-package-modal/update-package-modal.component';
 import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-package',
@@ -14,6 +15,7 @@ import { of } from 'rxjs';
 export class ViewPackagePage implements OnInit {
   packages = []
   packageTypes = []
+  file:File
 
   constructor(
   public popoverController: PopoverController, 
@@ -32,10 +34,21 @@ GetPackages()
 {
  this.api.GetPackages().subscribe(data => {
    this.packages = data; 
-   console.log("Retrieved products");
+   //console.log("Retrieved products");
+   console.log(this.packages);
    
   })
 }
+
+
+
+// async GetImage(imageName: string)
+// {
+//   const image = await this.api.GetImage(imageName).toPromise();
+//   var imageUrl = URL.createObjectURL(image)
+//   return console.log(imageUrl);
+
+// }
 
  //product categories
  GetPackageTypes()
@@ -106,9 +119,10 @@ async deletePackage(id: number) {
     const toast = await this.toastController.create({
       message: 'Successfully deleted Package',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000
     });
     toast.present(); 
+    window.location.reload() 
   }
 
    //Profile popover

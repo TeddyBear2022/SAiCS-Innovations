@@ -26,13 +26,14 @@ export class ViewProductPage implements OnInit {
     this.GetProducts()
     this.GetProductTypes()
   }
+  
 
 //Get products
 GetProducts()
 {
  this.api.GetProducts().subscribe(data => {
    this.products = data; 
-   console.log("Retrieved products");
+   console.log(this.products);
    
   })
 }
@@ -107,9 +108,10 @@ async presentToast() {
   const toast = await this.toastController.create({
     message: 'Successfully deleted Product',
     cssClass: 'successToaster',
-    duration: 2000
+    duration: 5000
   });
   toast.present(); 
+  window.location.reload() 
 }
 
   //Profile popover

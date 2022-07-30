@@ -8,7 +8,7 @@ import { AddFAQModalComponent } from '../modals/add-faq-modal/add-faq-modal.comp
 // import { FAQAddModalPage } from '../modals/faq-add-modal/faq-add-modal.page';
 import { MaintainCategoryModalComponent } from '../modals/maintain-category-modal/maintain-category-modal.component';
 import { UpdateFaqModalComponent } from '../modals/update-faq-modal/update-faq-modal.component';
-
+// import{FAQCategory} from 'src/app/Models/FAQCategory'
 
 @Component({
   selector: 'app-view-faq',
@@ -174,9 +174,10 @@ export class ViewFaqPage implements OnInit {
 
     if(this.chosenCategory != null && this.chosenfaqtype != null){
       this.filter = true
-      this.showCategory = this.dbCategories[this.chosenCategory-1]
-      console.log(this.showCategory)
-      console.log(this.filter)
+
+     var index = this.dbCategories.findIndex(x=> x.faqcategoryId==this.chosenCategory)
+      this.showCategory = this.dbCategories[index]
+      console.log('proper index number:'+ index)
     }
    else{
     this.filter = false
@@ -196,9 +197,7 @@ export class ViewFaqPage implements OnInit {
 
   async Success() {
     const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
-      header: 'Success',
-      // subHeader: 'Subtitle',
+      cssClass: 'messageAlert',
       message: 'FAQ Has been successfully deleted',
       buttons: [{text: 'Ok', handler: ()=> {
       window.location.reload() 
@@ -211,9 +210,11 @@ export class ViewFaqPage implements OnInit {
   //Are you sure 
   async confirm(deleteFAQS:FAQ) {
     const alert = await this.alert.create({
-      header: 'Delete',
+      cssClass: 'messageAlert',
       message: 'Are you sure you want to delete this FAQ?',
-      buttons: [{text: 'Confirm', handler: ()=> {
+      buttons: [{text: 'Confirm',
+      cssClass: 'Confirm',
+      handler: ()=> {
         let deleteFAQ:FAQ = new FAQ()
         deleteFAQ.faqanswers = deleteFAQS.faqanswers
         deleteFAQ.faqcategoryId = deleteFAQS.faqcategoryId
@@ -229,9 +230,9 @@ export class ViewFaqPage implements OnInit {
             console.log('error:'+ data)
           }
         })
-      }},{text: "Cancel", handler: ()=>
-      // this.close()
-      // console.log('close'),
+      }},{text: "Cancel",
+      cssClass: 'Cancel',
+      handler: ()=>
       alert.dismiss()
     }]
     });

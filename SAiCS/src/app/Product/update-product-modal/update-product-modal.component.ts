@@ -1,10 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
-import { FormBuilder, FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
+import {
+  AlertController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgModel,
+  Validators,
+} from '@angular/forms';
 import { ProductVM } from 'src/app/Models/ViewModels/ProductVM';
 import { ApiService } from 'src/app/Services/api.service';
 import { Product } from 'src/app/Models/Product';
 import { Price } from 'src/app/Models/Price';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-update-product-modal',
@@ -12,57 +23,60 @@ import { Price } from 'src/app/Models/Price';
   styleUrls: ['./update-product-modal.component.scss'],
 })
 export class UpdateProductModalComponent implements OnInit {
-  
   @Input() existingProduct: string;
- 
-  updateProductForm:FormGroup;
-  productTypes = []
-  selectedFile = null
+
+  updateProductForm: FormGroup;
+  productTypes = [];
+  selectedFile: any;
 
   constructor(
-    private modalCtrl: ModalController, 
+    private modalCtrl: ModalController,
     private fb: FormBuilder,
     private api: ApiService,
     public alertController: AlertController,
-    public toastController: ToastController) { }
+    public toastController: ToastController
+  ) {}
 
   ngOnInit() {
+    this.GetProductByName(this.existingProduct);
+    this.GetProductTypes();
 
-   this.GetProductByName(this.existingProduct)
-   this.GetProductTypes()
- 
     this.updateProductForm = this.fb.group({
-      productName:new FormControl('', Validators.required),
-      productTypeId:new FormControl('', Validators.required),
-      quantity:new FormControl('', Validators.required),
-      description:new FormControl('', Validators.required),
-      productImage:new FormControl('', Validators.required),
-      price:new FormControl('', Validators.required)
-    })
+      productName: new FormControl('', Validators.required),
+      productTypeId: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      productImage: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      status: new FormControl('', Validators.required),
+    });
   }
 
-  GetProductByName(name)
-  {
-    
-
-    this.api.GetProductByName(name).subscribe(data => {
-      this.updateProductForm.controls['productName'].setValue(data.product.productName);
-      this.updateProductForm.controls['productTypeId'].setValue(data.product.productTypeId);
-      this.updateProductForm.controls['description'].setValue(data.product.description);
+  GetProductByName(name) {
+    this.api.GetProductByName(name).subscribe((data) => {
+      this.updateProductForm.controls['productName'].setValue(
+        data.product.productName
+      );
+      this.updateProductForm.controls['productTypeId'].setValue(
+        data.product.productTypeId
+      );
+      this.updateProductForm.controls['description'].setValue(
+        data.product.description
+      );
       this.updateProductForm.controls['price'].setValue(data.price.price1);
-    })
+      this.updateProductForm.controls['status'].setValue(data.product.status);
+
+    });
     
+
   }
 
-  GetProductTypes()
-  {
-    this.api.GetProductTypes().subscribe(data => {
-      this.productTypes = data; 
+  GetProductTypes() {
+    this.api.GetProductTypes().subscribe((data) => {
+      this.productTypes = data;
       console.log(this.productTypes);
-      
-     })
+    });
   }
-  
+
   onFileSelected(event)
   {
     let file = event.target.files[0];
@@ -108,38 +122,36 @@ export class UpdateProductModalComponent implements OnInit {
     this.dismissModal()
   }
 
-//confirm update
-async ConfirmUpdate() {
-  const alert = await this.alertController.create({
-    cssClass: 'messageAlert',
-    message: "Are you sure you would like to update this product's details?",
-    buttons: [
-      {
-        text: 'Confirm',
-        cssClass: 'Confirm',
-        handler: () => {
-          this.submitForm()
-          console.log('Confirm Ok');
-        }
-      },
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'Cancel',
-        handler: () => {
-          
-          console.log('Confirm Cancel');
-        }
-      }
-    ]
-  });
+  //confirm update
+  async ConfirmUpdate() {
+    const alert = await this.alertController.create({
+      cssClass: 'messageAlert',
+      message: "Are you sure you would like to update this product's details?",
+      buttons: [
+        {
+          text: 'Confirm',
+          cssClass: 'Confirm',
+          handler: () => {
+            this.submitForm();
+            console.log('Confirm Ok');
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'Cancel',
+          handler: () => {
+            console.log('Confirm Cancel');
+          },
+        },
+      ],
+    });
 
-  await alert.present();
-}
+    await alert.present();
+  }
 
   //dismiss modal
-  dismissModal()
-  {
+  dismissModal() {
     this.modalCtrl.dismiss();
   }
 
@@ -148,8 +160,9 @@ async ConfirmUpdate() {
     const toast = await this.toastController.create({
       message: 'Successfully Updated Product',
       cssClass: 'successToaster',
-      duration: 2000
+      duration: 5000,
     });
-    toast.present(); 
+    toast.present();
+    window.location.reload();
   }
 }
