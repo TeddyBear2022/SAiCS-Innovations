@@ -24,6 +24,7 @@ import { ProductVM } from '../Models/ViewModels/ProductVM';
 import { PackageVM } from '../Models/ViewModels/PackageVM';
 import { PackageType } from '../Models/PackageType';
 import { map } from 'rxjs/operators';
+import { CartVM } from '../Models/ViewModels/CartVM';
 
 @Injectable({
   providedIn: 'root'
@@ -256,10 +257,15 @@ export class ApiService {
   {
     return this.api.post(this.apilink + "Media/UploadFile", file)
   }
-  //, {responseType: 'text' as 'json', reportProgress: true, observe: 'events'}
 
-  // GetImage(imageName: string): Observable<Blob>
-  // {
-  //   return this.api.post<Blob>(this.apilink + "Gallery/GetImage?imageName", imageName,{ responseType: 'blob' as 'json'})
-  // }
+  //Iteration 6 Amanda
+  ViewCatalog()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
+  }
+
+  AddToCart(newItem: CartVM)
+  {
+    return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
+  }
 }
