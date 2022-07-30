@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <h2 style="margin-left: 10pt;"><b>Maintain FAQ Category</b> </h2>
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content>
+  <div align="center" style="margin-top: 4%;">
+  <div align="left" style="margin-left:70pt;font-size: 12pt; color:#333333;"><label ><i><b>FAQ Category:</b></i></label></div>
+
+  <ion-grid>
+    <form [formGroup]="category">
+    <ion-row style="width: 400px;">  
+  <ion-input formControlName="category"  type="text" placeholder="Enter new FAQ Category" align="left" ></ion-input>
+  <ion-icon  name="add-circle-outline" size="large" id="addIcon" style="margin-left: 2%;" (click)="CreateCategory()"></ion-icon>
+</ion-row>
+</form>
+<span style="color: red;" *ngIf="error">Please enter a Category name</span>
+</ion-grid>
+
+  <div align="left" style="margin-left:70pt;font-size: 12pt; color:#333333;"><label ><i><b>Existing Categories:</b></i></label></div>
+  <ion-list style="width: 380px;background-color: #e5e5e5; border: solid 1px black;border-radius: 12px !important;">
+   <ion-item color="primary" lines="none" *ngFor="let category of categories">{{category.categoryName}}<ion-icon (click)="DeleteCategory(category)" name="trash-outline" size="large" id="addIcon" style="margin-left: 2%;color: black;"></ion-icon></ion-item>
+  </ion-list>
+  
+</div>
+    <div align="right" style="margin-top: 5%;">
+    <button style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
+  </div>
+  
+  </ion-content>

@@ -2,11 +2,9 @@
   <ion-toolbar id="navbar">
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
-    </ion-buttons>
-
-    
+    </ion-buttons>    
     <ion-buttons slot="secondary">
-      <ion-button shape="round">
+      <ion-button shape="round" routerLink="/clients-cart">
         <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -61,29 +59,124 @@
           <ion-select-option value="1">Cosmetics</ion-select-option>
           <ion-select-option value="2">Slimming</ion-select-option>
           <ion-select-option value="3">Lifestyle</ion-select-option>
+          <ion-select-option value="3">Packages</ion-select-option>
+          <ion-select-option value="3">Specials</ion-select-option>
         </ion-select>
     </ion-col>
     </ion-row>
     
     <!--Product rows-->
     <ion-row>
-      <ion-col *ngFor="let p of Products">
-        <ion-card class="productCard">
+      <ion-col>
+        <ion-card class="productCard" >
+          
           <ion-card-header style="text-align: center;">
-            <img  class="img-responsive"/>
+            <ion-buttons slot="end" menu="main-menu"></ion-buttons><img src="./assets/Suptite.png"/>
           </ion-card-header>
           <ion-card-content>
-            <ion-card-title>{{p.productName}}</ion-card-title>
-            <ion-card-subtitle>{{p.price1}}</ion-card-subtitle>
+            <ion-card-title>Suptite tablets</ion-card-title>
+            <ion-card-subtitle>R950,00</ion-card-subtitle>
             <ion-buttons>
-              <ion-button>
-                <ion-icon size="large" class="cartIcon" name="cart"></ion-icon>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="bag" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              <ion-text style="background-color: white;">0</ion-text>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="medkit" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              </ion-buttons><br>
+              <ion-buttons>
+              <ion-button style="background-color: #08c10f; color: white; text-transform: none;" shape="round" routerLink="/clients-cart">
+                <ion-icon shape="round" size="large" class="cartIcon" name="cart" ></ion-icon>
                 Add To Cart
               </ion-button>
+            
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card class="productCard">
+          <ion-card-header>
+            <img src="./assets/SuperBooster.png" />
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-title>Super Booster</ion-card-title>
+            <ion-card-subtitle>R275,00</ion-card-subtitle>
+            <ion-buttons>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="bag" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              <ion-text style="background-color: white;">0</ion-text>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="medkit" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              </ion-buttons><br>
+
+            <ion-buttons>
+            <ion-button style="background-color: #08c10f; color: white; text-transform: none;" shape="round" routerLink="/clients-cart">
+              <ion-icon size="large" class="cartIcon" name="cart" ></ion-icon>
+              Add To Cart
+            </ion-button>
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card class="productCard">
+          <ion-card-header>
+            <img src="./assets/FatBurner.png" />
+          </ion-card-header>
+          <ion-card-content style="text-align: center;  align-content: center; justify-content: center;">
+            <ion-card-title>Fat Burner Drops</ion-card-title>
+            <ion-card-subtitle>R360,00</ion-card-subtitle>
+            <ion-buttons>              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="bag" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              <ion-text style="background-color: white;">0</ion-text>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="medkit" id="toolbarCartIcon"></ion-icon>
+              </ion-button><br>
+            </ion-buttons>
+              <br>
+              <ion-buttons>
+              <ion-button style="background-color: #08c10f; color: white; text-transform: none;" shape="round" routerLink="/clients-cart">
+                <ion-icon size="large" class="cartIcon" name="cart" ></ion-icon>
+                Add To Cart
+              </ion-button>
+
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card class="productCard">
+          <ion-card-header>
+            <img src="./assets/Detox.png" />
+          </ion-card-header>
+          <ion-card-content style="text-align: center;  align-content: center; justify-content: center;">
+            <ion-card-title>Detox Drops</ion-card-title>
+            <ion-card-subtitle>R480,00</ion-card-subtitle>
+            <ion-buttons>
+              <ion-button style="color: #0070c0;" shape="round">
+                <ion-icon size="large" name="bag-remove" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+              <ion-text style="background-color: white;">0</ion-text>
+              <ion-button shape="round" style="color: #0070c0;">
+                <ion-icon size="large" name="bag-add" id="toolbarCartIcon"></ion-icon>
+              </ion-button>
+            </ion-buttons><br>
+              <ion-buttons>
+              <ion-button style="background-color: #08c10f; color: white; text-transform: none;" shape="round" routerLink="/clients-cart">
+                <ion-icon size="large" class="cartIcon" name="cart" ></ion-icon>
+                Add To Cart
+              </ion-button>
+
             </ion-buttons>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-  </div>
-</ion-content>

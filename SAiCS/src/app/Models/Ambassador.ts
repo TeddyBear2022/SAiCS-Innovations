@@ -1,13 +1,12 @@
+//Ambassador class
 export class Ambassador{
-    ambassadorId: number
-    courseId:number
-    bankAccountId:number
-    userId: number
-    ambassadorTypeId: number
-    idNumber:string
-    idPhoto:number
-    proofOfAddressPhoto:number
-    profilePic:number
-    aliasName: string
-    referralCode:number
+    CourseID:number
+    BankaccountID:number
+    UserID: number
+    AmbassadorType: number
+    IDNumber:number
+    IDPhoto:number
+    ProofOfAddressPhoto:number
+    ProfilePic:number
+    ReferralCode:number
 }

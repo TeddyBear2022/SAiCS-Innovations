@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -8,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'view-feedback',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'faq',
@@ -61,28 +62,98 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
   },
   {
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
   {
-    path: 'view-feedback',
-    loadChildren: () => import('./Client/view-feedback/view-feedback.module').then( m => m.ViewFeedbackPageModule)
+    path: 'landing-page-admin',
+    loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
+  },
+  // {
+  //   path: 'view-faq',
+  //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  // },
+  {
+    path: 'view-faq',
+    loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
+  // {
+  //   path: 'faq-add-modal',
+  //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
+  // },
+
+  // {
+  //   path: 'add-faq-modal',
+  //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
+  // },
+  {
+    path: 'view-product',
+    loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'view-package',
+    loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
+  },
+  {
+    path: 'new-course',
+    loadChildren: () => import('./Training/new-course/new-course.module').then( m => m.NewCoursePageModule)
+  },
+  {
+   path: 'client-checkout',
+loadChildren: () => import('./Client Order/client-checkout/client-checkout.module').then( m => m.ClientCheckoutPageModule)},
+
+{
+  path: 'landing-page',
+loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)},
+   
+{
+  path: 'clients-cart',
+loadChildren: () => import('./Client Order/clients-cart/clients-cart.module').then( m => m.ClientsCartPageModule)},
+   
+{
+  path: 'add-address',
+loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)},
+  {
+    path: 'quiz-session',
+    loadChildren: () => import('./Training/quiz-session/quiz-session.module').then( m => m.QuizSessionPageModule)
+  },
+
+  {
+    path: 'access-course',
+    loadChildren: () => import('./Training/access-course/access-course.module').then( m => m.AccessCoursePageModule)
+  },
+
+  {
+    path: 'begin-course',
+    loadChildren: () => import('./Training/begin-course/begin-course.module').then( m => m.BeginCoursePageModule)
+  },
+
+  {
+    path: 'access-course-intro',
+    loadChildren: () => import('./Training/access-course-intro/access-course-intro.module').then( m => m.AccessCourseIntroPageModule)
+  },
+  {
+    path: 'start-quiz',
+    loadChildren: () => import('./Training/start-quiz/start-quiz.module').then( m => m.StartQuizPageModule)
+  },
+
+  {
+    path: 'assign-course',
+    loadChildren: () => import('./Training/assign-course/assign-course.module').then( m => m.AssignCoursePageModule)
   },
 
 
-
-
-
-    
-    
+   
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [RouterModule]
 })

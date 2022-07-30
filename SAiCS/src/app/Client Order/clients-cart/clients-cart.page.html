@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+      <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card id="Cart">
+      <ion-card-content>
+        <ion-col class="col 6">
+            <h1 style="color: 333333;text-align: left;"><b>Shopping Cart</b></h1>
+            <ion-buttons >
+          <ion-button style="background-color: #f44336;color: white; border-radius: 7%; float:right;" >
+            Clear Cart
+          </ion-button>
+        </ion-buttons>
+    <table id="Carttable">
+
+      <thead>
+        <tr>
+          <th>Product Details</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="./assets/FatBurner.png" height="100cm" width="100cm">
+          <p>Suptite tablets</p>
+          <ion-buttons>
+            <ion-button size="small" style="color: red;">Remove</ion-button></ion-buttons></td>
+          <td><ion-icon name="add"></ion-icon><ion-input type="number" min="0" placeholder="0" style="background-color: white; border:black solid 1px; height: 20px; width:40px;"></ion-input><ion-icon name="remove"></ion-icon></td>
+          <td>R</td>
+          <td>R</td>
+        </tr>
+      </tbody>
+    </table>
+  
+        </ion-col><br><br><br>
+        <ion-label><ion-icon name="arrow-back" style="color:#0070c0"></ion-icon><a routerLink="/landing-page" style="color:#0070c0;text-decoration:underline; text-align:right;">Continue Shopping</a></ion-label><br>
+      </ion-card-content>
+    </ion-card>
+    
+    
+    <ion-card id="OrderSummary">
+      <ion-col>
+            <h1 id="Orderh1">Order Summary</h1>
+            <hr style="border: none; border-top: 2px double #333; text-align: center;width: 125%">
+            <ion-label style="color: #333333;margin-left:5%; float: left;">ITEMS:</ion-label>
+            <ion-label style="margin-left: 49%; color:#333333; float: right;">R</ion-label><br><br>
+            <ion-label col  style="float: left; color: #333333;margin-left:5%;" >SHIPPING</ion-label>
+            <ion-toggle style="float: right;" ></ion-toggle>
+            <ion-input type="text" style="border-radius:5%; border: black solid 1px; background-color: white;padding-left:20%;margin-left:5%;" placeholder="Courier - R"></ion-input><br><br><br>
+            <ion-label style="color: #333333">DISCOUNT:</ion-label>
+            <ion-label style="margin-left:54%;color:#333333;">R</ion-label><br>
+            <br><ion-label style="color: #333333;">VAT AMOUNT<br >(Inclusive)</ion-label>
+            <ion-label style="margin-left:59%;color:#333333;">R</ion-label>
+            <br>
+            <br>
+            <br>
+            <hr style="border: none; border-top: 2px double #333; text-align: center;width: 124%">
+            <ion-label style="color:#333333">TOTAL COST:</ion-label>
+            <ion-label style="margin-left:49%; color:#333333;padding-bottom: 90px; margin-top:50%;">R</ion-label>
+            <br>
+            <br>
+            <br>
+
+            <ion-buttons>
+              <ion-button  shape="round" style="border-radius: 5px; background-color: #08c10f; color:white;width:850px; margin-left: 28%;" routerLink="/client-checkout" >
+               Checkout
+              </ion-button>
+            </ion-buttons>
+      </ion-col>
+    </ion-card>
+
+  
+

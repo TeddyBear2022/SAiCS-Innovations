@@ -1,0 +1,43 @@
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Add Quiz 
+      </ion-title>
+      <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+ 
+  <ion-content>
+    <ng-form [formGroup]="AddQuiz" #localForm = 'ngForm' id="AddQuizModal">   
+           
+          <ion-label>Quiz Name:</ion-label>
+           <ion-input formControlName="quizname" type="text" placeholder="Enter quiz name"></ion-input>
+          <span *ngIf="localForm.submitted && AddQuiz.controls['quizname'].invalid">*Required</span>
+          <span *ngIf="isExisting" style="margin-left: 15%;">Quiz name already exists</span>
+<br>
+          <ion-label>Question:</ion-label>
+          <ion-input formControlName="quizquestion" type="text" placeholder="Enter a question"></ion-input> 
+          <span *ngIf="localForm.submitted && AddQuiz.controls['quizquestion'].invalid">*Required</span><br>
+          <span *ngIf="isExisting" style="margin-left: 15%;">Quiz question already exists</span>
+          
+<br>
+          <ion-label>Answer:</ion-label>
+           <ion-input formControlName="quizanswer" type="text" placeholder="Enter the answer"></ion-input>
+           <span *ngIf="localForm.submitted && AddQuiz.controls['quizanswer'].invalid">*Required</span>
+           <span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+<br>
+           <ion-label>Other options:</ion-label>
+           <ion-textarea formControlName="otheroptions" placeholder="Enter the other options"></ion-textarea><br>
+           <span *ngIf="localForm.submitted && AddQuiz.controls['otheroptions'].invalid">*Required</span>
+
+           <br> <br>
+          <ion-buttons>
+            <ion-button id="ModalBlueButtons">
+              Save Changes
+            </ion-button>
+            <ion-button id="ModalRedButtons" (click)="dismissModal()">
+              Close
+            </ion-button>
+          </ion-buttons>
+    </ng-form>   
+  </ion-content>

@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>  
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 style="text-align: center;font-size: 50px;color: #333333;">Ambassador Intro Course</h1>
+  <h3>Quizzes</h3>
+
+  <ion-card style="width: 20%;border: black solid 1px; border-radius: 11%; height: 25%;">
+    <ion-card-content>
+      <ion-card-subtitle style="color: 333333; text-align: center;">Marketing</ion-card-subtitle><br><br><br>
+      <ion-buttons>
+      <ion-button style="border-radius: 10% ; margin-left:80%;background-color: #08c10f;color:white;" shape="round" routerLink="/begin-course">
+        start
+      </ion-button>
+    </ion-buttons>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card style="width: 20%;border: black solid 1px; border-radius: 11%; height: 25%;">
+    <ion-card-content>
+      <ion-card-subtitle style="color: 333333; text-align: center;">Closing deals</ion-card-subtitle><br><br><br>
+      <ion-buttons>
+      <ion-button style="border-radius: 10% ; margin-left:80%;background-color: #08c10f;color:white;" shape="round" routerLink="/begin-course">
+        start
+      </ion-button>
+    </ion-buttons>
+    </ion-card-content>
+  </ion-card><br><ion-card style="width: 20%;border: black solid 1px; border-radius: 11%; height: 25%;">
+    <ion-card-content>
+      <ion-card-subtitle style="color: 333333; text-align: center;">Ambassador responsibilities</ion-card-subtitle><br><br><br>
+      <ion-buttons>
+      <ion-button style="border-radius: 10% ; margin-left:80%;background-color: #08c10f;color:white;" shape="round" routerLink="/begin-course">
+        start
+      </ion-button>
+    </ion-buttons>
+    </ion-card-content>
+  </ion-card>
+
+    <ion-card style="width: 20%;border: black solid 1px; border-radius: 11%; height: 25%;">
+      <ion-card-content>
+        <ion-card-subtitle style="color: 333333; text-align: center;">SAiCS products</ion-card-subtitle><br><br><br>
+        <ion-buttons>
+        <ion-button style="border-radius: 10% ; margin-left:80%;background-color: #08c10f;color:white;" shape="round" routerLink="/begin-course">
+          start
+        </ion-button>
+      </ion-buttons>
+      </ion-card-content>
+     </ion-card>
+  <h2>Course Content</h2>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 1- Introduction</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label><a routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</a></ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 2- Marketing</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label><a routerLink="/" style="color:#0070c0;text-decoration:underline;padding-left: 80%;">Use Existing Address</a></ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 3- Closing Deals</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Third Content
+      </div>
+    </ion-accordion>
+    <ion-accordion value="fourth">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon ios="ios-arrow-down"></ion-icon>Step 4- Ambassadors</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="start">
+        Third Content
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>

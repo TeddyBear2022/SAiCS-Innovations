@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card style="margin-left:70px;width: 80%; border-radius: 5%; height: 80%;">
+  <ion-card-content>
+    <ion-card-header style="color: #333; text-align: center; font-size: xx-large;">How many ambassador ranking are there in total?</ion-card-header>
+    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px; width: 93%; ">
+    <ion-list>
+      <ion-radio-group>
+        <ion-list-header>    
+        <ion-item>
+          <ion-radio ></ion-radio>
+          <ion-label style="font-size:xx-large; text-align:center;">6 Rankings</ion-label>
+        </ion-item><br>
+   
+          <ion-item>
+            <ion-radio ></ion-radio>
+            <ion-label style="font-size:xx-large; text-align:center;">2 Rankings</ion-label>
+          </ion-item>
+          <br><br>
+          <ion-item>
+            <ion-radio ></ion-radio>
+            <ion-label style="font-size:xx-large; text-align:center;">5 Rankings</ion-label>
+          </ion-item><br>
+
+          <ion-item>
+            <ion-radio ></ion-radio>
+            <ion-label style="font-size:xx-large; text-align:center;">Just Once</ion-label>
+          </ion-item>
+      </ion-list-header>
+      </ion-radio-group>
+    </ion-list>
+    
+    <ion-buttons>
+      <ion-button id="ModalBlueButtons" >
+        Next
+      </ion-button>
+      <ion-button id="ModalRedButtons"routerLink="/start-quiz" >
+        Stop
+      </ion-button>
+    </ion-buttons>

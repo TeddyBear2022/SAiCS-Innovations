@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons> 
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+  <ion-col>
+  <ion-select placeholder="Select Agent Rank" interface="popover">
+    <ion-select-option>Junior Agent</ion-select-option>
+    <ion-select-option>Agent</ion-select-option>
+    <ion-select-option>Senior Agent</ion-select-option>
+    <ion-select-option>Manager</ion-select-option>
+    <ion-select-option>Entrepreneur</ion-select-option>
+    <ion-select-option>Distributor</ion-select-option>
+  </ion-select>
+</ion-col>
+</ion-row>
+<ion-searchbar placeholder="Search Agent"></ion-searchbar>
+
+<ion-row>
+  <ion-col>
+    <table id="AssignCourseTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Full Name</th>
+          <th>Alias Name</th>
+          <th>Ranking</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Phone Number</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>Mr</td>
+          <td>Roi Patullo</td>
+          <td>White Mbamba</td>
+          <td>Senior agent</td>
+          <td>patullob@gmail.com</td>
+          <td>South St, Centurion</td>
+          <td>0658976295</td>
+          <td><ion-button>Assign Course</ion-button></td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+</ion-content>

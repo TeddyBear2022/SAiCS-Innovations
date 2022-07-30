@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create Product
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="product" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
+   
+      <ion-item-group>
+        <ion-label>Product Name:</ion-label>
+        <ion-input formControlName="productName" placeholder="Enter product name"></ion-input>
+        <span *ngIf="localForm.submitted && product.controls['productName'].invalid">Required</span>
+        <span *ngIf="isExisting" style="margin-left: 15%;">Product already exists</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Product Type:</ion-label>
+        <select placeholder="Pick" formControlName="productTypeId">
+          <option value="" disabled selected>Select product type</option>
+          <option *ngFor="let pType of productTypes" value="{{pType.productTypeId}}">{{pType.productTypeName}}</option>
+        </select><br> 
+        <span *ngIf="localForm.submitted && product.controls['productTypeId'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Product Price:</ion-label>
+        <ion-input formControlName="price" type="number" min="0"></ion-input>
+        <span *ngIf="localForm.submitted && product.controls['price'].invalid">Required</span>
+      </ion-item-group> 
+
+      <ion-item-group>
+        <ion-label>Product Image:</ion-label>
+        <ion-input formControlName="productImage" type="file" (change)="onFileSelected($event)"></ion-input>
+        <span *ngIf="localForm.submitted && product.controls['productImage'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Description:</ion-label>
+        <ion-textarea formControlName="description" placeholder="Enter product description..."></ion-textarea>
+        <span *ngIf="localForm.submitted && product.controls['description'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group style="float: right;">
+        <ion-button id="create" slot="end"  type="submit">Create</ion-button>
+        <ion-button id="cancel" slot="end" (click)="dismissModal()">Cancel</ion-button>
+      </ion-item-group>
+
+      
+  </form>
+ 
+</ion-content>

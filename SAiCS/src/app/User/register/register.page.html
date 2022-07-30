@@ -1,49 +1,50 @@
 <ion-header [translucent]="true">
 
 </ion-header>
-<form [formGroup] = "registerForm"></form>
+
 <ion-content id="screen-color" [fullscreen]="true">
   <div id="container">
    <ion-grid>
-   
+   <!-- Contents of the screen -->
      <ion-row>
        <ion-col><ion-label style="color: black;"><h1><b>Register</b></h1></ion-label></ion-col>
      </ion-row>
      <br>
+     <form [formGroup]="register" (ngSubmit)="Next()">
      <ion-row>
        <ion-col size="5.5">
          <br><br>
-        <ion-select [(ngModel)]="userType" (ionChange)="UserTypeSelected()" placeholder="User type">
-          <ion-select-option value="Admin">Admin</ion-select-option>
-          <ion-select-option value="Ambassador">Ambassador</ion-select-option>
-          <ion-select-option value="Client">Client</ion-select-option>
-        </ion-select>
-        
-        <br>
-        <ion-select placeholder="Title" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">
-          <ion-select-option value="Mr">Mr</ion-select-option>
-          <ion-select-option value="Mrs">Mrs</ion-select-option>
+        <ion-select formControlName="usertypeID" [(ngModel)]= "userTypeID" (ionChange)="UserTypeSelected()" placeholder="User type">
+          <ion-select-option *ngFor="let userType of userTypes" value={{userType.userRoleId}}>
+            {{userType.userRoleName}}
+          </ion-select-option>
         </ion-select>
         <br>
-        <ion-input  placeholder="Name"> </ion-input>
-        <br>
-        <ion-input placeholder="Surname"> </ion-input>
-        <br>
-        <ion-input  placeholder="Email Address"> </ion-input>
-        <br>
-        <ion-input  placeholder="Phone Number"> </ion-input>
-        <br>
-        <ion-select   placeholder="Country" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">
-          <!-- Add through database -->
+        <ion-select formControlName="titleID" placeholder="Title" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">
+          <ion-select-option *ngFor=" let title of titles" value={{title.titleId}}>
+           <ion-item> {{title.titleName}}</ion-item> 
+          </ion-select-option>
         </ion-select>
         <br>
-        <ion-select placeholder="City" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important; width:65%; margin-left: 25%;margin-right: 25%;">
-          <!-- Add through database -->
+        <ion-input  placeholder="Name" formControlName="name"> </ion-input>
+        <br>
+        <ion-input placeholder="Surname" formControlName="surname"> </ion-input>
+        <br>
+        <ion-input  placeholder="Email Address" formControlName="emailaddress"> </ion-input>
+        <br>
+        <ion-input type="number"  placeholder="Phone Number" formControlName="phonenumber"> </ion-input>
+        <br>
+        <ion-select formControlName="countryID" placeholder="Country" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">       
+          <ion-select-option *ngFor="let country of countrys"   value={{country.countryId}}>
+            <ion-item> {{country.countryName}}</ion-item> 
+           </ion-select-option>
         </ion-select>
         <br>
-        <ion-input  placeholder="Address"> </ion-input>
+        <ion-input  placeholder="City" formControlName="city"> </ion-input>
         <br>
-        <ion-input  placeholder="Postal"> </ion-input>
+        <ion-input  placeholder="Address" formControlName="address"> </ion-input>
+        <br>
+        <ion-input  placeholder="Postal" formControlName="postalcode"> </ion-input>
         <br>
 
        </ion-col>
@@ -52,84 +53,84 @@
         <img src="./assets/SAiCS line.png" alt="SAiCS logo" style="height: 100%; margin-top: 0%;">
        </ion-col>
 
-       <!-- If Ambassador selected -->
-      
-       <ion-col size="5.5" *ngIf="userTypeReg== 'Ambassador'">
+       <!-- If Ambassador selected --> 
+       <ion-col size="5.5" *ngIf="userTypeReg == 2">
         <br><br>
-         <ion-select placeholder="Select Ambassador Ranking" >
-          <!-- Add through database -->
+         <ion-select formControlName="ambassadorType" placeholder="Select Ambassador Ranking"  >
+          <ion-select-option  *ngFor="let AmbassadorTypeID of AmbassadorTypeIDs" value={{AmbassadorTypeID.ambassadorTypeId}}>
+            <ion-item>
+              {{AmbassadorTypeID.ambassadorTypeName}}
+            </ion-item>
+          </ion-select-option>
         </ion-select>
         <br>
         <ion-label>
           Alias Name:
         </ion-label>
-        <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+        <ion-input  formControlName="aliasname" style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
         <label style="color: #3f51b5; margin-right: 40%;">*Optional</label>
         <br>
         <ion-label>
           Referral Code:
         </ion-label>
-        <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+        <ion-input formControlName="referralcode" style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
         <br>
         
         <ion-label>
           ID Number :
         </ion-label>
-        <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+        <ion-input formControlName="idnumber" style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
       <br>
       <ion-label style="margin-left: 17%;margin-right: 0%;">
         Upload ID and Proof of Residence
       </ion-label>
-      <input   type="file" >
+      <input formControlName="idphotoANDAddress"  type="file" >
       <br><br>
       <ion-label>
         About Myself :
       </ion-label>
-      <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 60pt;background-color: white;margin-top: 5pt;"></ion-input>
+      <ion-input formControlName="aboutmyself" style="border: solid 1pt black;border-radius: 11px !important; height: 60pt;background-color: white;margin-top: 5pt;"></ion-input>
       <br><br>
       <ion-label>
         My reason for becoming an ambassador:
       </ion-label>
-      <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 60pt;background-color: white;margin-top: 5pt;"></ion-input>
+      <ion-input formControlName="reasons" style="border: solid 1pt black;border-radius: 11px !important; height: 60pt;background-color: white;margin-top: 5pt;"></ion-input>
       </ion-col>
-  
-   
+
        <!-- If Admin selected -->       
-    
       <br>
-      <ion-col size="5.5" *ngIf="userTypeReg== 'Admin'">
+      <ion-col size="5.5" *ngIf="userTypeReg== 3">
       <ion-label>
         ID Number :
       </ion-label>
-      <ion-input formControlName="IdNoAdm" style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+      <ion-input formControlName="idnumber" style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
     <br>
     <ion-label style="margin-left: 17%;margin-right: 0%;">
       Upload ID and Proof of Residence
     </ion-label>
-    <input type="file" >
+    <input formControlName="idphotoANDAddress" type="file" >
     <br><br>
   </ion-col>
 
 
     <!-- If Client selected -->
       <br>
-      <ion-col size="5.5" *ngIf="userTypeReg == 'Client'">
+      <ion-col size="5.5" *ngIf="userTypeReg == 1">
         <ion-label>
           Referral Code:
         </ion-label>
-        <ion-input style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
+        <ion-input formControlName="referralcode"  style="border: solid 1pt black;border-radius: 11px !important; height: 27pt;background-color: white;margin-top: 5pt;"></ion-input>
         <br>
         <ion-label style="color: #3f51b5;"><u>Do you have a referal Code?</u></ion-label>
   </ion-col>
-
-
      </ion-row>
 
      <ion-row>
        <ion-col></ion-col>
        <ion-col></ion-col>
-       <ion-col><ion-button color="secondary" routerLink="/next">Next</ion-button></ion-col>
+       <ion-col><ion-button type="submit " color="secondary">Next</ion-button></ion-col>
      </ion-row>
+    </form>
    </ion-grid>
     </div>
 </ion-content>

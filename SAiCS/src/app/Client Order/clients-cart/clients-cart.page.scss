@@ -1,0 +1,43 @@
+#Carttable{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+        
+}
+#Carttable th {
+    padding-top: 16px;
+    padding-bottom: 20px;
+    color: #333333;
+}
+#Carttable td, #feedbackTable th {
+    border: 1px solid #ddd;
+    padding: 1px;
+}
+#ClearCartButton
+{
+    background-color: #f44336;
+    color: white;
+    float: right;
+}
+#Cart {
+    float:left;
+    width:70%;
+    height:650px;
+    background-color: #fafafa;
+    
+}
+
+#OrderSummary{
+    float:left;
+    padding-right: 4%;
+    width:20%;
+    height:650px;
+    background-color: #e0e0e0;
+    
+}
+h1{
+    color:#333333;
+    text-align:center;
+    padding-left: 50px;
+}
