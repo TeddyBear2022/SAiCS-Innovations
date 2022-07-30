@@ -58,15 +58,15 @@ export class LoginPage implements OnInit {
           console.log("go to client page")
           this.router.navigate(['landing-page'])
         }
-        else{
-          console.log("no page prolly an ambassador");
-          
+        if(pagenavigation[0].userRoleId == 2){
+          console.log("go to ambassador page")
+          this.router.navigate(['ambassador-landing-page'])
         }
       })}
       ,(response: HttpErrorResponse) => {
         
         if (response.status === 404) {
-          console.log("User doesnt exist")
+          console.log("User doesnt exist or wrong password")
         }
         if (response.status === 500){
           console.log("Encountered an error")

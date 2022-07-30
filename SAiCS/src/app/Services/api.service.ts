@@ -24,6 +24,7 @@ import { ProductVM } from '../Models/ViewModels/ProductVM';
 import { PackageVM } from '../Models/ViewModels/PackageVM';
 import { PackageType } from '../Models/PackageType';
 import { map } from 'rxjs/operators';
+import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 
 @Injectable({
   providedIn: 'root'
@@ -250,4 +251,13 @@ export class ApiService {
   {
     return this.api.delete<ProductVM>(this.apilink + `Product/deleteProduct?id=${id}`)
   }
+
+  //View Ambassadors
+  ViewAmbassadors(credentials: credentialsVM){
+    return this.api.post(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials)
+  }
+  ViewClients(credentials: credentialsVM){
+    return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials)
+  }
+
 }

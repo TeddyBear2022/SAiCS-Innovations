@@ -91,7 +91,7 @@ export class NextPage implements OnInit {
         this.unsuccessful()
       }
       if (response.status === 400){
-        console.log(response.error.text)
+        console.log(response.error.text+"something went wrong")
         this.unsuccessful()
       }
       
