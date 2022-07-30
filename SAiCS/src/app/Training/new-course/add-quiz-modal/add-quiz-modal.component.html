@@ -9,7 +9,7 @@
  
   <ion-content>
     <ng-form [formGroup]="AddQuiz" #localForm = 'ngForm' id="AddQuizModal">   
-           
+
           <ion-label>Quiz Name:</ion-label>
            <ion-input formControlName="quizname" type="text" placeholder="Enter quiz name"></ion-input>
           <span *ngIf="localForm.submitted && AddQuiz.controls['quizname'].invalid">*Required</span>
