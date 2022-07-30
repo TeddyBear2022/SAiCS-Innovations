@@ -74,7 +74,7 @@
         <ng-container *ngFor="let p of products">
           <tr *ngIf="p.product.productTypeId == productType.value || productType.value == 'All'">
             <td>{{p.product.productId}}</td>
-            <td><img src='data:image/png;base64,{{p.product.productImage}}' height="100px" alt='The Image' /></td>
+            <td><img src="data:image/png;base64,{{p.product.productImage}}" height="100px" alt='The Image' /></td>
             <td>{{p.product.productName}}</td>
             <td>{{p.productType.productTypeName}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{p.product.description}}</td>

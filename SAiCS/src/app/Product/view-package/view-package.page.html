@@ -73,7 +73,7 @@
         <ng-container *ngFor="let p of packages">
           <tr *ngIf="p.package.packageTypeId == packageType.value || packageType.value == 'All'">
             <td>{{p.package.packageId}}</td>
-            <td><img src='data:image/png;base64,{{p.package.packageImage}}' height="100px" alt='The Image' /></td>
+            <td><img src="data:image/png;base64,{{p.package.packageImage}}"  height="100px" alt='The Image'/></td>
             <td>{{p.package.packageName}}</td>
             <td>{{p.packageType.packageTypeName}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{p.package.description}}</td>
