@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./User/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
-  },
-  {
     path: 'faq',
     loadChildren: () => import('./Client/faq/faq.module').then( m => m.FAQPageModule)
   },
@@ -60,10 +56,6 @@ const routes: Routes = [
     loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
   },
   {
-    path: 'landing-page',
-    loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
-  },
-  {
     path: 'view-ambassador',
     loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
   },
@@ -71,6 +63,19 @@ const routes: Routes = [
     path: 'view-feedback',
     loadChildren: () => import('./Client/view-feedback/view-feedback.module').then( m => m.ViewFeedbackPageModule)
   },
+  {
+    path: 'ambassador-landing-page',
+    loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'performance-studio',
+    loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
+  },
+  {
+    path: 'product-details',
+    loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+  },
+
 
 
 

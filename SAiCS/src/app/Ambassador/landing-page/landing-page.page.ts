@@ -11,13 +11,8 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './landing-page.page.html',
   styleUrls: ['./landing-page.page.scss'],
 })
-
-
 export class LandingPagePage implements OnInit {
-  
-  @Pipe({name: 'safeHtml'})
 
-  
   Products: Product[]
   constructor(public popoverController: PopoverController, private api: ApiService, public dms: DomSanitizer){}
   
@@ -28,14 +23,6 @@ export class LandingPagePage implements OnInit {
       event
     });
     return await popover.present();
-  }
-
-  ngOnInit() {
-   
-  }
-  GetCatalog()
-  {
-    this.api.GetCatalog().subscribe()
   }
 
   GetProductsById(id: number)
@@ -49,9 +36,10 @@ export class LandingPagePage implements OnInit {
       })
   }
 
-  display(b64: string) {
-    const image =  this.dms.bypassSecurityTrustUrl("data:image/jpeg;base64," + b64);
-    return image
+
+
+
+  ngOnInit() {
   }
 
 }
