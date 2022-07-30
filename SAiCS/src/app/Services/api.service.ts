@@ -32,7 +32,8 @@ export class ApiService {
 
   constructor(private api: HttpClient) { }
 
-  apilink:string = "https://localhost:44326/api/"
+  apilink:string = "https://localhost:44343/api/"
+  token:any
 
   //get title
   getTitles():Observable<Title[]>{
@@ -62,8 +63,8 @@ export class ApiService {
     return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
   }
   //login
-  login(logindetails:LoginVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink+"User/Login",logindetails)
+  login(logindetails:LoginVM){
+    return this.api.post(this.apilink+"User/Login",logindetails)
   }
   //get Users session info
   session(logindetails:LoginVM){
@@ -76,13 +77,14 @@ export class ApiService {
     return this.api.get<AmbassadorType[]>(this.apilink+"Admin/getAmbassadorTypes")
   }
   //Register user
-  registerUser(registrationinfo:registerVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink+"User/RegisterUser", registrationinfo );
+  registerUser(registrationinfo:registerVM){
+    return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
   }
   //delete user
   deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
     return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
   }
+ 
   //Feedback
 
   CreateFeedback(newFeedback: Feedback): Observable<Feedback>

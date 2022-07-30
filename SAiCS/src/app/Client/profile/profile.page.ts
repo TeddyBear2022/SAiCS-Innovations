@@ -50,17 +50,19 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
+
     this.profileinfo = this.tempStorage.getSessioninfo()
+    console.log(this.profileinfo[0])
     this.name = this.profileinfo[0].name
     this.Surname = this.profileinfo[0].surname
     this.title = this.profileinfo[0].title.titleName
-    this.emailaddress = this.profileinfo[0].emailAddress
-    this.country = this.profileinfo[0].country.countryName
-    this.city = this.profileinfo[0].address.city
-    this.address = this.profileinfo[0].address.address1
-    this.postal = this.profileinfo[0].address.postalCode
+    this.emailaddress = this.profileinfo[0].email
+    this.country = this.profileinfo[0].addresses[0].country.countryName
+    this.city = this.profileinfo[0].addresses[0].city
+    this.address = this.profileinfo[0].addresses[0].address1
+    this.postal = this.profileinfo[0].addresses[0].postalCode
     this.phonenumber = this.profileinfo[0].phoneNumber
-    this.username = this.profileinfo[0].username
+    this.username = this.profileinfo[0].userName
     this.userID = this.profileinfo[0].userId
     this.userRoleID = this.profileinfo[0].userRoleId
     this.refferalcode = this.profileinfo[0].userRoleId 
@@ -70,7 +72,7 @@ export class ProfilePage implements OnInit {
     this.aliasname=this.profileinfo[0].aliasname
     this.aboutmyself=this.profileinfo[0].aboutmyself
 
-  console.log(this.profileinfo[0])
+  
   }
 
   close()

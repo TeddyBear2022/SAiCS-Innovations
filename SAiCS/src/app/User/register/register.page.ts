@@ -25,23 +25,23 @@ export class RegisterPage implements OnInit {
   
   constructor(private api: ApiService, private route : Router, private registerInfo: TemporaryStorage) { }
   ngOnInit() {
-    this.api.getTitles().subscribe(result => {
-      this.titles= result
-      console.log(result)
-    })
-    this.api.getUserTypes().subscribe(result => {
-      this.userTypes = result
-      console.log(result)
-    })
-    this.api.getCountrys().subscribe(result => {
-      this.countrys = result
-      console.log(result)
-    })   
-    this.api.getAmbassadorRankings().subscribe(result=> {
-      this.AmbassadorTypeIDs= result
-      console.log(result)
+    // this.api.getTitles().subscribe(result => {
+    //   this.titles= result
+    //   console.log(result)
+    // })
+    // this.api.getUserTypes().subscribe(result => {
+    //   this.userTypes = result
+    //   console.log(result)
+    // })
+    // this.api.getCountrys().subscribe(result => {
+    //   this.countrys = result
+    //   console.log(result)
+    // })   
+    // this.api.getAmbassadorRankings().subscribe(result=> {
+    //   this.AmbassadorTypeIDs= result
+    //   console.log(result)
 
-    })
+    // })
     
     
    //Registeration form
@@ -67,23 +67,23 @@ export class RegisterPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    this.api.getTitles().subscribe(result => {
-      this.titles= result
-      console.log(result)
-    })
-    this.api.getUserTypes().subscribe(result => {
-      this.userTypes = result
-      console.log(result)
-    })
-    this.api.getCountrys().subscribe(result => {
-      this.countrys = result
-      console.log(result)
-    })   
-    this.api.getAmbassadorRankings().subscribe(result=> {
-      this.AmbassadorTypeIDs= result
-      console.log(result)
+    // this.api.getTitles().subscribe(result => {
+    //   this.titles= result
+    //   console.log(result)
+    // })
+    // this.api.getUserTypes().subscribe(result => {
+    //   this.userTypes = result
+    //   console.log(result)
+    // })
+    // this.api.getCountrys().subscribe(result => {
+    //   this.countrys = result
+    //   console.log(result)
+    // })   
+    // this.api.getAmbassadorRankings().subscribe(result=> {
+    //   this.AmbassadorTypeIDs= result
+    //   console.log(result)
 
-    })
+    // })
   }
  
   // User selected function
