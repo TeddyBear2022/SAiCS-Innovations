@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,16 +22,17 @@ export class NextPage implements OnInit {
   userRegistration:registerVM
   registration: registerVM
   registrationinfo:registerationinfoVM[]= this.tempStorage.getRegisterInfo()
-
+  
   constructor(private tempStorage: TemporaryStorage, private api:ApiService, private route:Router, private alert:AlertController) { }
 
   ngOnInit() {
     this.register = new FormGroup({
-    username: new FormControl('', Validators.required),
+    //username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirmpassword: new FormControl('', Validators.required)
     
     })
+   
   }  
 
   //Registtion successful alert
@@ -61,6 +63,7 @@ export class NextPage implements OnInit {
   Register(){
     if(this.register.invalid){
       console.log("Invalid")
+      console.log(this.register.value)
     }
     else{
       if(this.register.get('password').value != this.register.get('confirmpassword').value){
@@ -71,16 +74,27 @@ export class NextPage implements OnInit {
      else
      {
     this.passwordMatchError = false  
-    var test:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.register.get('username').value)
+    var test:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.registrationinfo[0].emailaddress)
     this.registration= new registerVM(test, this.registrationinfo[0])
+    console.log(this.registration)
     this.api.registerUser(this.registration).subscribe(result => {
       console.log(result)
-      if(result == true){
-        this.success();
-      }
-      else{
+      this.success();
+    },(response: HttpErrorResponse) => {
+        
+      if (response.status === 404) {
+        console.log("User doesnt exist")
         this.unsuccessful()
       }
+      if (response.status === 500){
+        console.log("Encountered an error")
+        this.unsuccessful()
+      }
+      if (response.status === 400){
+        console.log(response.error.text)
+        this.unsuccessful()
+      }
+      
     })
 
      }

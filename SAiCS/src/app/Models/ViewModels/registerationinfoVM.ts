@@ -3,13 +3,13 @@ export class registerationinfoVM{
     TitleID:number
     Name:string
     Surname:string
-    EmailAddress:string
+    emailaddress:string
     PhoneNumber:number
     CountryID:number
     City:number // change to string
-    Address:string
+    address:string
     PostalCode:number
-    Idnumber:number| null
+    Idnumber:string| null
     referralcode:string;
     ProofOfAdderess:File
     IDPhoto:File;
