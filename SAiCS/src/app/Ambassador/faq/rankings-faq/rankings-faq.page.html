@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true">
+
+  <br> <br> <br>
+    <ion-label class="Heading"><h1 style="font-size: 25pt; text-align: center; font-style: normal;"> <b>Let Us Answer Your Questions!</b></h1></ion-label>
+    <br>
+
+  <div class="container">
+
+  <ion-card class="accfaq-margin">
+    <ion-card-header>
+      <ion-card-title><ion-label>Rankings</ion-label></ion-card-title>
+    </ion-card-header>
+
+
+    <br> <br>
+
+    <ion-card-content>
+     
+        <ion-list class="txt-block">
+          <div>
+            <ion-text >
+              <H2>Q.. </H2><br>
+              <H3>  A.. </H3><br><br>
+            </ion-text>
+          </div>
+          </ion-list>
+    
+      
+    </ion-card-content>
+
+  </ion-card>
+</div>
+
+<ion-row> 
+  <ion-col style="margin-top: 8%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
+  </div>
+  </ion-col>
+</ion-row>
+</ion-content>
