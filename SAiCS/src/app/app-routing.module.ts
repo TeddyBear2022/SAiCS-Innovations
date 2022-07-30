@@ -151,6 +151,25 @@ const routes: Routes = [
     path: 'ambassador-order-history',
     loadChildren: () => import('./ambassador-order/ambassador-order-history/ambassador-order-history/ambassador-order-history.module').then( m => m.AmbassadorOrderHistoryPageModule)
   },
+ 
+  {
+    path: 'orders-faq',
+    loadChildren: () => import('./ambassador/faq/orders-faq/orders-faq.module').then( m => m.OrdersFaqPageModule)
+  },
+  {
+    path: 'agents-faq',
+    loadChildren: () => import('./ambassador/faq/agents-faq/agents-faq.module').then( m => m.AgentsFaqPageModule)
+  },
+  {
+    path: 'rankings-faq',
+    loadChildren: () => import('./ambassador/faq/rankings-faq/rankings-faq.module').then( m => m.RankingsFaqPageModule)
+  },
+  {
+    path: 'view-ambassador-cart',
+    loadChildren: () => import('./ambassador-order/view-ambassador-cart/view-ambassador-cart.module').then( m => m.ViewAmbassadorCartPageModule)
+  },
+
+
 
   // {
   //   path: 'add-faq',
