@@ -50,3 +50,14 @@ select{
 span{
   color: red;
 }
+
+ion-item{
+  --ion-color-primary: #e5e5e5;
+	--ion-color-primary-rgb: 229,229,229;
+	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast-rgb: 0,0,0;
+	--ion-color-primary-shade: #cacaca;
+	--ion-color-primary-tint: #e8e8e8;
+
+  background-color: #e5e5e5;
+}
