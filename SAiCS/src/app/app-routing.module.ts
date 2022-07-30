@@ -109,7 +109,7 @@ const routes: Routes = [
 
   {
     path: 'view-ambassador-faq',
-    loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+    loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then(m=>m.ViewFaqPageModule)
   },
 
   {
