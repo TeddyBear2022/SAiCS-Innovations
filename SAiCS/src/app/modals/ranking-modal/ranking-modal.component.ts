@@ -11,4 +11,11 @@ export class RankingModalComponent implements OnInit {
 
   ngOnInit() {}
 
+  Promote(){
+    console.log("promote request")
+  }
+  Demote(){
+    console.log("demote request");
+    
+  }
 }

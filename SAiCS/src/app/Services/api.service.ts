@@ -253,8 +253,8 @@ export class ApiService {
   }
 
   //View Ambassadors
-  ViewAmbassadors(credentials: credentialsVM){
-    return this.api.post(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials)
+  ViewAmbassadors(credentials: credentialsVM):Observable<any[]>{
+    return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials)
   }
   ViewClients(credentials: credentialsVM){
     return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials)
