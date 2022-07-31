@@ -26,6 +26,7 @@ import { PackageType } from '../Models/PackageType';
 import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
+import { Order } from '../Models/Order';
 
 @Injectable({
   providedIn: 'root'
@@ -295,5 +296,15 @@ export class ApiService {
   ClearCart(id: number)
   {
     return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`)
+  }
+
+  GetAddress(id: string)
+  {
+    return this.api.get(this.apilink +`AmbassadorOrder/GetAddress?userID=${id}`)
+  }
+
+  Checkout(order: Order)
+  {
+    return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
   }
 }

@@ -22,7 +22,6 @@ export class CreateProductModalComponent implements OnInit {
   productTypes = [];
   selectedFile: any;
   isExisting: boolean = false;
-  file: any;
 
   constructor(
     private modalCtrl: ModalController,

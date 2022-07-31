@@ -76,4 +76,14 @@ toggleValue()
   console.log(this.totalCost)
     return this.totalCost 
  }  
+
+PlaceOrder()
+{
+
+  var orderdetails = {cartId: this.products[0].cartID, 
+    'itemCount': this.itemCount, 'discount': this.discount,
+    'vat': this.vat, 'subtotal': this.subtotal, 'totalCost': this.totalCost, 'deliveryOption': this.deliveryOption}
+  localStorage.setItem('checkout', JSON.stringify(orderdetails))
+}
+
 }
