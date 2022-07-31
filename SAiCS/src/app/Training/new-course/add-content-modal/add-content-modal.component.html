@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add Content 
+    </ion-title>
+    <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ng-form [formGroup]="AddContent" #localForm = 'ngForm' id="AddContentModal">         
+        <ion-label>Content section name:</ion-label>
+        <ion-input formControlName="contentsectionname" type="text" placeholder="Enter the answer"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls['contentsectionname'].invalid">*Required</span>
+           <span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+      <br>
+        <ion-label>Estimated Duration:</ion-label>
+        <ion-input formControlName=" estimatedduration" type="text" placeholder="Enter the answer"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls[' estimatedduration'].invalid">*Required</span>
+           <span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+           <br>
+        <ion-label>Upload document(s):</ion-label>
+        <ion-input formControlName="uploadDocs" type="file" placeholder="Enter the answer"></ion-input>
+        <span *ngIf="localForm.submitted && AddContent.controls['uploadDocs'].invalid">*Required</span>
+        <span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+        <br>
+
+        <ion-label>Upload Video(s)</ion-label>
+           <ion-input formControlName="UploadVids" type="file" placeholder="Enter the answer"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls['UploadVids'].invalid">*Required</span>
+           <span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+<br>
+
+<ion-label>Content Section Information:</ion-label>
+<ion-input formControlName="ContentSectionInfo" type="text" placeholder="Enter the answer"></ion-input>
+<span *ngIf="localForm.submitted && AddContent.controls['ContentSectionInfo'].invalid">*Required</span>
+<span *ngIf="isExisting" style="margin-left: 15%;">Quiz answer already exists</span>
+<br>
+        <ion-buttons>
+          <ion-button id="ModalBlueButtons" >
+            Save Changes
+          </ion-button>
+          <ion-button id="ModalRedButtons" (click)="dismissModal()">
+            Close
+          </ion-button>
+        </ion-buttons>
+<br>
+</ng-form>

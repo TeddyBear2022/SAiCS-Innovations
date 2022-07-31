@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Assign Course 
+    </ion-title>
+    <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <div class="modal"  id="ModalContent"  >
+  <h3>Courses:</h3>
+  <br> 
+    <ion-radio-group>
+      <ion-list-header>    
+        <ion-radio ></ion-radio>
+        <ion-label >Ambassador Intro Course</ion-label>
+    </ion-list-header>
+
+    <ion-list-header>    
+        <ion-radio ></ion-radio>
+        <ion-label >Advanced Training</ion-label>
+    </ion-list-header>
+
+    <ion-list-header>    
+        <ion-radio ></ion-radio>
+        <ion-label >Selling 101</ion-label>
+    </ion-list-header>
+  </ion-radio-group>
+
+  <ion-buttons>
+    <ion-button id="ModalBlueButtons" >
+      Assign
+    </ion-button>
+    <ion-button id="ModalRedButtons" (click)="dismissModal()">
+      Close
+    </ion-button>
+  </ion-buttons>
+</div>
+</ion-content>

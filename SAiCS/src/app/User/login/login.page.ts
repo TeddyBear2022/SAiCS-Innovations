@@ -119,8 +119,8 @@ export class LoginPage implements OnInit {
     {
       console.log("invalid form")
     }
+    
   }
-  
 
   //Password eye toggle
   passwordToggle():void{
@@ -133,4 +133,17 @@ export class LoginPage implements OnInit {
       this.passwordToggleIcon='eye'
     }
   }
+  
+
+  //Password eye toggle
+  // passwordToggle():void{
+  //   console.log("working")
+  //   this.showPassword= !this.showPassword
+  //   if(this.passwordToggleIcon== 'eye'){
+  //     this.passwordToggleIcon = 'eye-off'
+  //   }
+  //   else{
+  //     this.passwordToggleIcon='eye'
+  //   }
+  // }
 }

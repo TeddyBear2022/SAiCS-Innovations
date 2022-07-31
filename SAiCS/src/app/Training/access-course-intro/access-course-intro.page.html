@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round" id="ProfileIcon">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 align = "center" ><b>Ambassador Intro Course</b></h1>
+
+  <h3>Course Content</h3>
+<ion-row>
+  <ion-item style="width: 800px;">
+    <ion-col>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 1- Introduction</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label>SAiCS Innovation Intro PDF</ion-label><br>
+        <ion-label>How to be an ambassador</ion-label>
+        <ion-label >Intro Quiz</ion-label>
+        
+        <ion-label routerLink="/begin-course" style="color:#08c10f;padding-left: 80%;">Start</ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 2- Marketing</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label><a routerLink="/begin-course" style="color:#0070c0;text-decoration:underline;padding-left: 80%;">Use Existing Address</a></ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 3- Closing Deals</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Third Content
+      </div>
+    </ion-accordion>
+    <ion-accordion value="fourth">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon ios="ios-arrow-down"></ion-icon>Step 4- Ambassadors</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="start">
+        Third Content
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-col>
+</ion-item>
+
+<ion-item style="width: 500px;">
+  <ion-row>
+  <ion-card class="IntroCourseSide">
+    <ion-card-content>
+      <img src="./assets/trainingImage.jpg" height='350' width='350' />
+      <ion-row><ion-progress-bar value="0.2" id="IntroCourseSideProgressBar" ></ion-progress-bar></ion-row><br>
+      <ion-buttons>
+
+  <ion-row><ion-button routerLink="/start-quiz" id="begincoursebtn">
+        Begin Course
+      </ion-button></ion-row>
+    </ion-buttons>
+        <br><br>
+        <p>This course was designed with the intention of equiping you to be the best SAiCS ambassador you can be.<br>
+          Included:<br>          
+          -5 Pdfs<br>         
+          -4 Quizzes<br>
+          -16 Videos</p>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-row>
+</ion-item>
+</ion-row>
+</ion-content>

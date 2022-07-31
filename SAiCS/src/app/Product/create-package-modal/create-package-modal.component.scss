@@ -5,19 +5,16 @@ ion-content, ion-toolbar{
     ion-title{font-weight: bolder;}
   }
 
+
   ion-toolbar{
     ion-item{--background: #f1f1f1 !important;}}
 
 form
 {
-    --padding-start: 0%;
-    text-align: center;
     ion-item-group{padding: 10px;}
-    ion-label, span{font-style: italic;
-        padding: 5px;
         font-weight: bold;
         margin-right: 35%;
-        color: #333333;}
+        color: #333333;
         span{color: #f44336; margin-right: 40%;}
 }
 

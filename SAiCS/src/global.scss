@@ -97,3 +97,12 @@ ion-menu {
     --background:#ffffff;
      text-align: center;
   }
+  .small-modal{
+    &::part(content){
+      width: 370px;
+      height: 350px;
+      border-radius: 10px;
+      background-color: #f1f1f1;
+  
+    }
+  }

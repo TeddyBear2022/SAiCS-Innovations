@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>   
+    </ion-buttons>
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+ 
+    <ion-row>
+    <ion-card id="Cart">
+      <ion-card-content>
+        <ion-row>
+            <h1 style="color: 333333;text-align: left;"><b>Shopping Cart</b></h1>
+            <ion-buttons >
+          <ion-button id="clearcart">
+            Clear Cart
+          </ion-button>
+        </ion-buttons>
+      </ion-row>
+    <table id="Carttable">
+
+      <thead>
+        <tr>
+          <th>Product Details</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="./assets/FatBurner.png" height="100cm" width="100cm">
+          <p>Suptite tablets</p>
+          <ion-buttons>
+            <ion-button size="small" style="color: red;">Remove</ion-button></ion-buttons></td>
+          <td><ion-row><ion-icon name="add"></ion-icon><ion-input id="Quantitybox" type="number" min="0" placeholder="0" ></ion-input><ion-icon name="remove"></ion-icon></ion-row></td>
+          <td>R</td>
+          <td>R</td>
+        </tr>
+      </tbody>
+    </table>
+  
+<br><br><br>
+        <ion-label><ion-icon name="arrow-back" style="color:#0070c0"></ion-icon><a routerLink="/landing-page" style="color:#0070c0;text-decoration:underline; text-align:right;">Continue Shopping</a></ion-label><br>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card id="OrderSummary">
+
+                <h1 id="Orderh1">Order Summary</h1>
+            <hr style="border: none; border-top: 1px double #333; text-align: center; width: 320px">
+           
+            <ion-row> 
+              <ion-label style="color: #333333;margin-left:5px;">ITEMS:</ion-label>
+            <ion-label id="R">R</ion-label>
+          </ion-row>
+            <br><br>
+            <ion-row> 
+              <ion-label style="color: #333333;margin-left:5px;">SHIPPING:</ion-label>
+            <ion-toggle></ion-toggle>
+          </ion-row>
+            <ion-input id="Couriertext" type="text" placeholder="Courier - R"></ion-input><br><br><br>
+           <ion-row> <ion-label style="color: #333333">DISCOUNT:</ion-label>
+            <ion-label id="R" >R</ion-label>
+          </ion-row><br>
+
+          <ion-row>
+            <ion-label style="color: #333333;">VAT AMOUNT<br >(Inclusive)</ion-label>
+            <ion-label id="R" >R</ion-label>
+
+          </ion-row>
+            <br>
+            <br>
+            <br>
+            <hr style="border: none; border-top: 1px double #333; text-align: center;width: 320px">
+
+            <ion-row>
+            <ion-label style="color:#333333">TOTAL COST:</ion-label>
+            <ion-label  id="R" >R</ion-label>
+          </ion-row>
+            <br>
+            
+
+            <ion-buttons>
+              <ion-button  id="checkoutbtn"  routerLink="/client-checkout" ><b>
+               Checkout
+              </b></ion-button>
+            </ion-buttons>
+      
+    
+  </ion-card>
+</ion-row>
+</ion-content>
+
+  
+

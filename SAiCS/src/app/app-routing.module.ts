@@ -167,15 +167,67 @@ const routes: Routes = [
   {
     path: 'view-ambassador-cart',
     loadChildren: () => import('./ambassador-order/view-ambassador-cart/view-ambassador-cart.module').then( m => m.ViewAmbassadorCartPageModule)
+    path: 'new-course',
+    loadChildren: () => import('./Training/new-course/new-course.module').then( m => m.NewCoursePageModule)
+  },
+  {
+   path: 'client-checkout',
+loadChildren: () => import('./Client Order/client-checkout/client-checkout.module').then( m => m.ClientCheckoutPageModule)},
+
+{
+  path: 'landing-page',
+loadChildren: () => import('./Client/landing-page/landing-page.module').then( m => m.LandingPagePageModule)},
+   
+{
+  path: 'clients-cart',
+loadChildren: () => import('./Client Order/clients-cart/clients-cart.module').then( m => m.ClientsCartPageModule)},
+   
+{
+  path: 'add-address',
+loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)},
+  {
+    path: 'quiz-session',
+    loadChildren: () => import('./Training/quiz-session/quiz-session.module').then( m => m.QuizSessionPageModule)
   },
 
+  {
+    path: 'access-course',
+    loadChildren: () => import('./Training/access-course/access-course.module').then( m => m.AccessCoursePageModule)
+  },
 
+  {
+    path: 'begin-course',
+    loadChildren: () => import('./Training/begin-course/begin-course.module').then( m => m.BeginCoursePageModule)
+  },
 
   // {
   //   path: 'add-faq',
   //   loadChildren: () => import('./Admin/modals/add-faq/add-faq.module').then( m => m.AddFaqPageModule)
   // },
     
+  {
+    path: 'access-course-intro',
+    loadChildren: () => import('./Training/access-course-intro/access-course-intro.module').then( m => m.AccessCourseIntroPageModule)
+  },
+  {
+    path: 'start-quiz',
+    loadChildren: () => import('./Training/start-quiz/start-quiz.module').then( m => m.StartQuizPageModule)
+  },
+
+  {
+    path: 'item-details',
+    loadChildren: () => import('./Client Order/item-details/item-details.module').then( m => m.ItemDetailsPageModule)
+  },
+  {
+    path: 'assign-course',
+    loadChildren: () => import('./Training/assign-course/assign-course.module').then( m => m.AssignCoursePageModule)
+  },
+
+  {
+    path: 'add-address',
+    loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
+  },
+  
 ];
 
 @NgModule({
