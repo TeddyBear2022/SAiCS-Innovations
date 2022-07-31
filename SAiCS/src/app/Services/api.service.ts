@@ -276,6 +276,11 @@ export class ApiService {
 
   RemoveFromCart(id: number)
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/RemoveFromCart", id)
+    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`)
+  }
+
+  ClearCart(id: number)
+  {
+    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`)
   }
 }

@@ -50,7 +50,7 @@
                   <img src="data:image/png;base64,{{p.itemImage}}"  height="80cm" width="30cm" >
                   <p><br>
                     <span style="color: black; font-size: 15px;">{{p.itemName}}</span><br>
-                    <span style="color: #f44336; font-size: 14px;"><a>Remove</a></span>
+                    <ion-button fill="clear" style="color: #f44336; font-size: 14px; text-transform: none;" (click)=" RemoveFromCart(p.cartItemID)">Remove</ion-button >
                   </p>      
                 </div>
                 </td>
@@ -87,24 +87,27 @@
         <ion-list>
           <ion-item lines="none">
             <ion-label>Items: {{itemCount}}</ion-label>
-            <ion-label slot="end">R3950</ion-label>
+            <ion-label slot="end">R{{subtotal}}</ion-label>
           </ion-item>
           <ion-item lines="none">
-            <ion-label>Shipping</ion-label>
-            <ion-toggle slot="end"></ion-toggle>
+            <ion-label slot="start">Shipping</ion-label>
+            <ion-toggle slot="end" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption" (ngModelChange)="toggleValue()"></ion-toggle><br>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input *ngIf="deliveryOption" id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Discount</ion-label>
-            <ion-label slot="end">R3950</ion-label>
+            <ion-label slot="end">R{{discount}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-label>VAT Amount</ion-label>
-            <ion-label slot="end">R3950</ion-label>
+            <ion-label slot="end">R{{vat}}</ion-label>
           </ion-item>
           <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
           <ion-item lines="none">
             <ion-label>Total Cost</ion-label>
-            <ion-label slot="end">R3950</ion-label>
+            <ion-label slot="end">R{{totalCost}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <button style="background-color: #08c10f; width: 60%;" id="button">Place Order</button>

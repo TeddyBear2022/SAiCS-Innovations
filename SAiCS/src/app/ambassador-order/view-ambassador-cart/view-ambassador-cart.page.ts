@@ -8,16 +8,21 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ViewAmbassadorCartPage implements OnInit {
   products: any
+  deliveryOption=false
   //For totals to reflect
-  
   itemTotal=[]
-  itemCount
+  itemCount = 0
+  totalCost = 0
+  subtotal = 0
+  discount = 0
+  vat = 0
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
       this.ViewCart()
-      console.log(localStorage.getItem('userID'));
+      //console.log(localStorage.getItem('userID'));
+      
       
   }
 
@@ -31,21 +36,44 @@ export class ViewAmbassadorCartPage implements OnInit {
           console.log(this.products)
           for(let i=0; i<this.products.length; i++){
 
-            this.itemTotal[i] = this.products[i].quantity * this.products[i].price
-            ; //use i instead of 0
-        }
-          
-        })
+            this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
+          }
+        
+        for (var i = 0; i< this.itemTotal.length; i++){
+          this.subtotal += this.itemTotal[i];
+         }
+        
+         //calculate disicout, vat and totalCost
+         this.discount = this.products[0].itemDiscount.discount * this.subtotal
+         this.vat = this.products[0].vaT * this.subtotal
+          this.totalCost = this.subtotal - this.discount 
+          console.log(this.totalCost)
+        });    
+        
+        
   }
 
-  ClearCart(id: any)
+  RemoveFromCart(id: number)
   {
-      return id
+      this.api.RemoveFromCart(id).subscribe();
+      this.ViewCart()
+  }
+
+  ClearCart(id: number)
+  {
+    this.api.ClearCart(id).subscribe()
+    this.ViewCart()
   }
 
 
-//  Calculation(quantity:any, price: any)
-//  {
-//     this.itemTotal = quantity * price
-//  }  
+toggleValue()
+ {
+  if(this.deliveryOption == true)
+  this.totalCost += 200
+  else
+  this.totalCost -= 200
+
+  console.log(this.totalCost)
+    return this.totalCost 
+ }  
 }

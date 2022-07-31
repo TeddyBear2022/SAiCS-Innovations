@@ -68,3 +68,12 @@ ion-list {
     float: right;
   }
 }
+
+#deliveryInput{
+  border-radius: 3px;
+  border:black solid 2px; 
+  margin-left: 25px; 
+  margin-right: 15px;
+  height: 30px; width: 250px;
+  --background: white;
+}
