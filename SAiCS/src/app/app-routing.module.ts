@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'ambassador-landing-page',
+    redirectTo: 'view-ambassador-cart',
     pathMatch: 'full'
   },
   {

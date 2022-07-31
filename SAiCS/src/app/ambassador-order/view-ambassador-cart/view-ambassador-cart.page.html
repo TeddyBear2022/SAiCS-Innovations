@@ -21,83 +21,126 @@
 </ion-header>
 
 <ion-content><br><br>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="9">
+        <ion-card id="Cart" style="float: left; width: 85%; height: 650px; margin-left: 4%"><br>
+
+          <p style="font-size: 27px; font-weight: 150; color: black; text-decoration-color: black; text-align: left; margin-left: 7%; float: left;">Shopping Cart</p>
+           <button id="button" style="background-color: #f44336;color: white; border-radius: 5px; float:right; margin-right: 5%; width: 150px; margin-top: 6px; " (click)=" ClearCart(products[0].cartID)">Clear Cart</button><br><br>
+           <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 93%; margin-left: 3%;"><br>
+     
+     
+     <table id="Carttable">
+     
+           <thead>
+             <tr>
+               <th width="40%">PRODUCT DETAILS</th>
+               <th width="20%">QUANTITY</th>
+               <th width="20%">PRICE</th>
+               <th width="20%">TOTAL</th>
+             </tr>
+           </thead>
+           <tbody>
+            <ng-container *ngFor="let p of products; let i = index">
+              <tr>
+                <td>
+                  <div class="containerItem">
+                    <br><br>
+                  <img src="data:image/png;base64,{{p.itemImage}}"  height="80cm" width="30cm" >
+                  <p><br>
+                    <span style="color: black; font-size: 15px;">{{p.itemName}}</span><br>
+                    <span style="color: #f44336; font-size: 14px;"><a>Remove</a></span>
+                  </p>      
+                </div>
+                </td>
+                <td>
+   
+                  <button type="button" style="font-size: 20px; background-color: white; margin-top: 51px;" >
+                   <ion-icon name="remove-outline"></ion-icon>
+                 </button>
+                  <input style="width: 30px; margin-bottom: 5px;" type="text" value="{{p.quantity}}">
+                  <button type="button" style="font-size: 20px; background-color: white;">
+                   <ion-icon name="add-outline"></ion-icon>
+                 </button>
+                   
+            
+                </td>
+                <td>  <span>R{{p.price}} </span>  </td>
+                <td> <span>R{{itemTotal[i]}}</span>  </td>
+              </tr>
+            </ng-container>
+             
+           </tbody>
+         </table>  
+         <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
+           <br><br><br><br>
+           <span><a style="font-size: 15px; margin-left: 25px;" href=""> <ion-icon name="arrow-back-outline"></ion-icon>Continue Shopping</a> </span> 
+         </ion-card>
+      </ion-col>
+
+      <ion-col size="2">
+    
+        <ion-card id="ordersummary" style="margin-left: 50%; width:150%; height: 650px">
+          <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
+          <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>Items: {{itemCount}}</ion-label>
+            <ion-label slot="end">R3950</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Shipping</ion-label>
+            <ion-toggle slot="end"></ion-toggle>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Discount</ion-label>
+            <ion-label slot="end">R3950</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>VAT Amount</ion-label>
+            <ion-label slot="end">R3950</ion-label>
+          </ion-item>
+          <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
+          <ion-item lines="none">
+            <ion-label>Total Cost</ion-label>
+            <ion-label slot="end">R3950</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <button style="background-color: #08c10f; width: 60%;" id="button">Place Order</button>
+          </ion-item>
+        </ion-list>
+          <!-- <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
+          <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
+         
+          <p class="textLabels">Items: 4</p>
+          <p style="float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;">R3950</p>
+    
+          <p class="textLabels">Shipping</p>
+          <ion-toggle style="float: right; margin-right: 15px; color: black; margin-top: 11px;"></ion-toggle>
+    
+          <input style="border-radius: 3px; border:black solid 2px; margin-left: 25px; margin-right: 15px;height: 30px; width: 250px;" type="text" placeholder="Courier - R"><br><br>
+    
+          <p class="textLabels">Discount</p>
+          <p class="valueLabels">R375</p>
+    
+          <p class="textLabels">VAT Amount</p>
+          <p class="valueLabels">R562</p>
+    
+          <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
+    
+          <p class="textLabels">Total Cost</p>
+          <p class="valueLabels">R3975</p> -->
+    
+          
+      </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   
-    <ion-card id="Cart" style="float: left; width: 65%; height: 650px; margin-left: 4%"><br>
-
-     <p style="font-size: 27px; font-weight: 150; color: black; text-decoration-color: black; text-align: left; margin-left: 7%; float: left;">Shopping Cart</p>
-      <button id="button" style="background-color: #f44336;color: white; border-radius: 5px; float:right; margin-right: 5%; width: 150px; margin-top: 6px; ">Clear Cart</button><br><br>
-      <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 93%; margin-left: 3%;"><br>
-
-
-<table id="Carttable">
-
-      <thead>
-        <tr>
-          <th>Product Details</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="container">
-              <br><br>
-            <img src="./assets/FatBurner.png" height="80cm" width="80cm" >
-            <p><br><br>
-              <span style="color: black; font-size: 17px;">Suptite Tablets</span><br><br>
-              <span style="color: #f44336; font-size: 14px;">Remove</span>
-            </p>      
-          </div>
-          </td>
-          <td>
-            <div class="container"  > 
-              <div class="container">
-            <button type="button" style="font-size: 20px; background-color: white; margin-top: 51px;" >-</button>
-            <input style="width: 30px; margin-bottom: 5px;" type="text" value="1">
-            <button type="button" style="font-size: 20px; background-color: white;">+</button>
-             </div>
-           </div>
-      
-          </td>
-          <td>  <span>R</span>  </td>
-          <td> <span>R</span>  </td>
-        </tr>
-      </tbody>
-    </table>  
-    <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
-      <br><br><br><br>
-      <span><a style="font-size: 15px; margin-left: 25px;" href=""> <ion-icon name="arrow-back-outline"></ion-icon>Continue Shopping</a> </span> 
-      
-  
-    </ion-card>
     
     
-    <ion-card id="ordersummary">
-      <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
-      <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
-      <p style="float: left; font-weight: 150;  margin-left: 20px; color: black; font-size: 18px;">Items: 4</p>
-      <p style="float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;">R3950</p><br><br><br><br>
 
-      <p style="float: left; font-weight: 150; margin-left: 20px; color: black; font-size: 18px;">Shipping</p>
-      <ion-toggle style="float: right; margin-right: 15px; color: black; margin-top: 11px;"></ion-toggle><br><br><br><br><br>
-
-      <input style="border-radius: 3px; border:black solid 2px; margin-left: 25px; margin-right: 15px;height: 30px; width: 250px;" type="text" placeholder="Courier - R"><br><br>
-
-      <p style="float: left; font-weight: 150;  margin-left: 20px; color: black; font-size: 18px;">Discount</p>
-      <p style="float: right; font-weight: 150; margin-right: 20px; color: black; font-size: 18px;">R375</p><br><br><br><br>
-
-      <p style="float: left; font-weight: 150; margin-left: 20px; color: black; font-size: 18px;">VAT Amount</p>
-      <p style="float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;">R562</p><br><br><br><br><br>
-
-      <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
-
-      <p style="float: left; font-weight: 150;  margin-left: 20px; color: black; font-size: 18px;">Total Cost</p>
-      <p style="float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;">R3975</p><br><br><br><br><br>
-
-      <button style="background-color: #08c10f; width: 60%;" id="button">Place Order</button>
-  </ion-card>
-
+</ion-content>
   
 

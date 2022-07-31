@@ -78,6 +78,8 @@ AddToCart(item: any)
  
 this.api.AddToCart(cartvm).subscribe((res) => {
   console.log(res);
+  var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
+  localStorage.setItem('MarkedItem',JSON.stringify(marked))
 });
 
  console.log(newItem)

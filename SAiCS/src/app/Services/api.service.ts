@@ -268,4 +268,14 @@ export class ApiService {
   {
     return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
   }
+
+  ViewCart()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
+  }
+
+  RemoveFromCart(id: number)
+  {
+    return this.api.post(this.apilink + "AmbassadorOrder/RemoveFromCart", id)
+  }
 }
