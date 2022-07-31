@@ -60,12 +60,14 @@ RemoveFromCart(id: number)
 {
     this.api.RemoveFromCart(id).subscribe();
     this.ViewCart()
+    window.location.reload()
 }
 
 ClearCart(id: number)
 {
   this.api.ClearCart(id).subscribe()
   this.ViewCart()
+  window.location.reload()
 }
 
 
@@ -100,8 +102,13 @@ console.log(this.totalCost)
       ]
     });
     await alert.present();}
+    PlaceOrder()
+{
 
-    PlaceOrder(){
-      this.route.navigate(['client-checkout'])
-    }
+  var orderdetails = {cartId: this.products[0].cartID, 
+    'itemCount': this.itemCount, 'discount': this.discount,
+    'vat': this.vat, 'subtotal': this.subtotal, 'totalCost': this.totalCost, 'deliveryOption': this.deliveryOption}
+  localStorage.setItem('checkout', JSON.stringify(orderdetails))
+  this.route.navigate(['client-checkout'])
+}
 }

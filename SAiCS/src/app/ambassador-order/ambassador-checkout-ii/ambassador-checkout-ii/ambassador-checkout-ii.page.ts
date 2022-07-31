@@ -86,8 +86,6 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     }
   }
 
- 
-
   async showAlert() {
     const alert = await this.alert.create({
       header: 'Thank You For Your Order!',
