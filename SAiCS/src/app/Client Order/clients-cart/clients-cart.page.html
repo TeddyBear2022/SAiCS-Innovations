@@ -13,93 +13,131 @@
   </ion-toolbar>
   </ion-header>
 
-<ion-content>
- 
-    <ion-row>
-    <ion-card id="Cart">
-      <ion-card-content>
-        <ion-row>
-            <h1 style="color: 333333;text-align: left;"><b>Shopping Cart</b></h1>
-            <ion-buttons >
-          <ion-button id="clearcart">
-            Clear Cart
-          </ion-button>
-        </ion-buttons>
-      </ion-row>
-    <table id="Carttable">
-
-      <thead>
-        <tr>
-          <th>Product Details</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><img src="./assets/FatBurner.png" height="100cm" width="100cm">
-          <p>Suptite tablets</p>
-          <ion-buttons>
-            <ion-button size="small" style="color: red;">Remove</ion-button></ion-buttons></td>
-          <td><ion-row><ion-icon name="add"></ion-icon><ion-input id="Quantitybox" type="number" min="0" placeholder="0" ></ion-input><ion-icon name="remove"></ion-icon></ion-row></td>
-          <td>R</td>
-          <td>R</td>
-        </tr>
-      </tbody>
-    </table>
+  <ion-content><br><br>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9">
+          <ion-card id="Cart" style="float: left; width: 85%; height: 650px; margin-left: 4%"><br>
   
-<br><br><br>
-        <ion-label><ion-icon name="arrow-back" style="color:#0070c0"></ion-icon><a routerLink="/landing-page" style="color:#0070c0;text-decoration:underline; text-align:right;">Continue Shopping</a></ion-label><br>
-      </ion-card-content>
-    </ion-card>
-    
-    <ion-card id="OrderSummary">
-
-                <h1 id="Orderh1">Order Summary</h1>
-            <hr style="border: none; border-top: 1px double #333; text-align: center; width: 320px">
-           
-            <ion-row> 
-              <ion-label style="color: #333333;margin-left:5px;">ITEMS:</ion-label>
-            <ion-label id="R">R</ion-label>
-          </ion-row>
-            <br><br>
-            <ion-row> 
-              <ion-label style="color: #333333;margin-left:5px;">SHIPPING:</ion-label>
-            <ion-toggle></ion-toggle>
-          </ion-row>
-            <ion-input id="Couriertext" type="text" placeholder="Courier - R"></ion-input><br><br><br>
-           <ion-row> <ion-label style="color: #333333">DISCOUNT:</ion-label>
-            <ion-label id="R" >R</ion-label>
-          </ion-row><br>
-
-          <ion-row>
-            <ion-label style="color: #333333;">VAT AMOUNT<br >(Inclusive)</ion-label>
-            <ion-label id="R" >R</ion-label>
-
-          </ion-row>
-            <br>
-            <br>
-            <br>
-            <hr style="border: none; border-top: 1px double #333; text-align: center;width: 320px">
-
-            <ion-row>
-            <ion-label style="color:#333333">TOTAL COST:</ion-label>
-            <ion-label  id="R" >R</ion-label>
-          </ion-row>
-            <br>
-            
-
-            <ion-buttons>
-              <ion-button  id="checkoutbtn"  routerLink="/client-checkout" ><b>
-               Checkout
-              </b></ion-button>
-            </ion-buttons>
+            <p style="font-size: 27px; font-weight: 150; color: black; text-decoration-color: black; text-align: left; margin-left: 7%; float: left;">Shopping Cart</p>
+             <button id="button" style="background-color: #f44336;color: white; border-radius: 5px; float:right; margin-right: 5%; width: 150px; margin-top: 6px; " (click)=" ClearCart(products[0].cartID)">Clear Cart</button><br><br>
+             <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 93%; margin-left: 3%;"><br>
+       
+       
+       <table id="Carttable">
+       
+             <thead>
+               <tr>
+                 <th width="40%">PRODUCT DETAILS</th>
+                 <th width="20%">QUANTITY</th>
+                 <th width="20%">PRICE</th>
+                 <th width="20%">TOTAL</th>
+               </tr>
+             </thead>
+             <tbody>
+              <ng-container *ngFor="let p of products; let i = index">
+                <tr>
+                  <td>
+                    <div class="containerItem">
+                      <br><br>
+                    <img src="data:image/png;base64,{{p.itemImage}}"  height="80cm" width="30cm" >
+                    <p><br>
+                      <span style="color: black; font-size: 15px;">{{p.itemName}}</span><br>
+                      <ion-button fill="clear" style="color: #f44336; font-size: 14px; text-transform: none;" (click)=" RemoveFromCart(p.cartItemID)">Remove</ion-button >
+                    </p>      
+                  </div>
+                  </td>
+                  <td>
+     
+                    <button type="button" style="font-size: 20px; background-color: white; margin-top: 51px;" >
+                     <ion-icon name="remove-outline"></ion-icon>
+                   </button>
+                    <input style="width: 30px; margin-bottom: 5px;" type="text" value="{{p.quantity}}">
+                    <button type="button" style="font-size: 20px; background-color: white;">
+                     <ion-icon name="add-outline"></ion-icon>
+                   </button>
+                     
+              
+                  </td>
+                  <td>  <span>R{{p.price}} </span>  </td>
+                  <td> <span>R{{itemTotal[i]}}</span>  </td>
+                </tr>
+              </ng-container>
+               
+             </tbody>
+           </table>  
+           <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
+             <br><br><br><br>
+             <span><a style="font-size: 15px; margin-left: 25px;" href="/landing-page"> <ion-icon name="arrow-back-outline"></ion-icon>Continue Shopping</a> </span> 
+           </ion-card>
+        </ion-col>
+  
+        <ion-col size="2">
       
+          <ion-card id="ordersummary" style="margin-left: 50%; width:150%; height: 650px">
+            <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
+            <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label>Items: {{itemCount}}</ion-label>
+              <ion-label slot="end">R{{subtotal}}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label slot="start">Shipping</ion-label>
+              <ion-toggle slot="end" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption" (ngModelChange)="toggleValue()"></ion-toggle><br>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-input *ngIf="deliveryOption" id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Discount</ion-label>
+              <ion-label slot="end">R{{discount}}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>VAT Amount</ion-label>
+              <ion-label slot="end">R{{vat}}</ion-label>
+            </ion-item>
+            <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
+            <ion-item lines="none">
+              <ion-label>Total Cost</ion-label>
+              <ion-label slot="end">R{{totalCost}}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <button style="background-color: #08c10f; width: 60%;" id="button" (click)="PlaceOrder()">Place Order</button>
+            </ion-item>
+          </ion-list>
+            <!-- <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
+            <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
+           
+            <p class="textLabels">Items: 4</p>
+            <p style="float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;">R3950</p>
+      
+            <p class="textLabels">Shipping</p>
+            <ion-toggle style="float: right; margin-right: 15px; color: black; margin-top: 11px;"></ion-toggle>
+      
+            <input style="border-radius: 3px; border:black solid 2px; margin-left: 25px; margin-right: 15px;height: 30px; width: 250px;" type="text" placeholder="Courier - R"><br><br>
+      
+            <p class="textLabels">Discount</p>
+            <p class="valueLabels">R375</p>
+      
+            <p class="textLabels">VAT Amount</p>
+            <p class="valueLabels">R562</p>
+      
+            <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
+      
+            <p class="textLabels">Total Cost</p>
+            <p class="valueLabels">R3975</p> -->
+      
+            
+        </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     
-  </ion-card>
-</ion-row>
-</ion-content>
-
+      
+      
   
-
+  </ion-content>
+    
+  
+  

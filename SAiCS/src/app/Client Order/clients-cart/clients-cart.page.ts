@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ApiService } from 'src/app/Services/api.service';
 
 
 @Component({
@@ -12,10 +13,72 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class ClientsCartPage implements OnInit {
 
-  constructor(public popoverController:PopoverController,private alertController: AlertController) { }
+  products: any
+  deliveryOption=false
+  //For totals to reflect
+  itemTotal=[]
+  itemCount = 0
+  totalCost = 0
+  subtotal = 0
+  discount = 0
+  vat = 0
+  constructor(public popoverController:PopoverController,private alertController: AlertController,private api: ApiService, private route:Router) { }
 
   ngOnInit() {
-  }
+    this.ViewCart()
+    //console.log(localStorage.getItem('userID'));
+    
+    
+}
+ViewCart()
+{
+    this.api.ViewCart().subscribe((data) =>
+      {
+        this.products = data
+        this.itemCount = this.products.length
+        console.log(this.products)
+        for(let i=0; i<this.products.length; i++){
+
+          this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
+        }
+      
+      for (var i = 0; i< this.itemTotal.length; i++){
+        this.subtotal += this.itemTotal[i];
+       }
+      
+       //calculate disicout, vat and totalCost
+       this.discount = this.products[0].itemDiscount.discount * this.subtotal
+       this.vat = this.products[0].vaT * this.subtotal
+        this.totalCost = this.subtotal - this.discount 
+        console.log(this.totalCost)
+      });    
+      
+      
+}
+
+RemoveFromCart(id: number)
+{
+    this.api.RemoveFromCart(id).subscribe();
+    this.ViewCart()
+}
+
+ClearCart(id: number)
+{
+  this.api.ClearCart(id).subscribe()
+  this.ViewCart()
+}
+
+
+toggleValue()
+{
+if(this.deliveryOption == true)
+this.totalCost += 200
+else
+this.totalCost -= 200
+
+console.log(this.totalCost)
+  return this.totalCost 
+}   
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
@@ -37,4 +100,8 @@ export class ClientsCartPage implements OnInit {
       ]
     });
     await alert.present();}
+
+    PlaceOrder(){
+      this.route.navigate(['client-checkout'])
+    }
 }
