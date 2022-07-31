@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController} from '@ionic/angular';
-import { BankingDetailsComponent } from '../banking-details/banking-details.component';
+import { BankingDetailsComponent } from './banking-details/banking-details.component';
 @Component({
   selector: 'app-client-checkout',
   templateUrl: './client-checkout.page.html',
@@ -11,6 +11,7 @@ export class ClientCheckoutPage implements OnInit {
 
   ngOnInit() {
   }
+
   BankingDetails(){
     this.bankingdetails()
    }
@@ -18,7 +19,7 @@ export class ClientCheckoutPage implements OnInit {
   {
    const modals = await this.modal.create({
       component: BankingDetailsComponent,      
-      id: 'bankingdetailsClass',
+      cssClass:"small-modal",
     });
     modals.onDidDismiss().then(() => {
     

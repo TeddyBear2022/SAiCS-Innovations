@@ -15,10 +15,9 @@
 </ion-header>
 
 <ion-content>
-
+<div id="TopSection">
   <ion-row>
-  <ion-col>
-  <ion-select placeholder="Select Agent Rank" interface="popover">
+  <ion-col><ion-select id="SelectAgent" placeholder="Select Agent Rank" interface="popover">
     <ion-select-option>Junior Agent</ion-select-option>
     <ion-select-option>Agent</ion-select-option>
     <ion-select-option>Senior Agent</ion-select-option>
@@ -27,9 +26,11 @@
     <ion-select-option>Distributor</ion-select-option>
   </ion-select>
 </ion-col>
-</ion-row>
-<ion-searchbar placeholder="Search Agent"></ion-searchbar>
 
+<ion-col><ion-searchbar placeholder="Search Agent"></ion-searchbar></ion-col>
+</ion-row>
+
+</div>
 <ion-row>
   <ion-col>
     <table id="AssignCourseTable">
@@ -52,7 +53,7 @@
           <td>patullob@gmail.com</td>
           <td>South St, Centurion</td>
           <td>0658976295</td>
-          <td><ion-button>Assign Course</ion-button></td>
+          <td><ion-button (click)="AssignCourse()">Assign Course</ion-button></td>
         </tr>
       </thead>
       <tbody>

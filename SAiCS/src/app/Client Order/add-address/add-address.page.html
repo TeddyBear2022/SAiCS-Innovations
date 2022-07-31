@@ -29,27 +29,35 @@
            <h1><b>Checkout</b></h1><br>
            <hr style="border: none; border-top:2px double;">
            <h1><b>Add New Address</b></h1>
+           <hr style="border: none; border-top:1px double;">
            <ion-label><a routerLink="/client-checkout" style="color:#0070c0;text-decoration:underline;padding-left: 80%;">Use Existing Address</a></ion-label><br>
            <h3>Shipping Address</h3><br>
            <ion-label>Country</ion-label>
-           <br><ion-select placeholder="Select Your Country" style="background-color: white; width:50%; border: black solid 1px;">
+           <br>
+           
+           <ion-select placeholder="Select Your Country" style="background-color: white; width:50%; border: black solid 1px;">
             <ion-select-option value="1">South Africa</ion-select-option>
         <ion-select-option value="2">Zimbabwe</ion-select-option>
         <ion-select-option value="3">Kenya</ion-select-option>
         <ion-select-option value="4">botswana</ion-select-option>
       </ion-select>
+      
            <ion-label>Address</ion-label>
            <br>
            <ion-input type="Address" placeholder="Enter Your Address" style="background-color: white; width:50%;border: black solid 1px;"></ion-input>
            <ion-label>City</ion-label>
            <ion-input type="text" placeholder="Enter Your City" style="background-color: white; width:50%; border: black solid 1px;"></ion-input>
            <br>
+           <ion-row>
            <ion-label>Postal Code</ion-label>
-           
+           <ion-label style="margin-left:450px ;">Phone Number</ion-label>
+          </ion-row>
+          <ion-row>
+           <ion-input  placeholder="Enter Your Postal Code" style="background-color: white; text-align: center; width:50%; border: black solid 1px;"></ion-input>
+           <ion-input  placeholder="xxx-xxx-xxxx" style="background-color: white;border: black solid 1px; text-align: center; margin-left: 30px;"></ion-input>
+          </ion-row>
+          <br>
            <br>
-           <ion-input  placeholder="Enter Your Postal Code" style="background-color: white; width:50%; border: black solid 1px;"></ion-input><br>
-           <ion-label>Phone Number</ion-label>
-           <ion-input  placeholder="Enter Your Phone Number" style="background-color: white; width:50%;border: black solid 1px;"></ion-input>
            <br>
            <br>
            <ion-buttons>
@@ -66,28 +74,28 @@
         <ion-card id="OrderSummary">
           <ion-col>
                 <h1 id="Orderh1">Order Summary</h1>
-                <hr style="border: none; border-top: 2px double #333; text-align: center;width: 125%">
+                <hr style="border: none; border-top: 1px double #333; text-align: center;width: 125%">
                 <ion-label style="color: #333333;margin-left:5%; float: left;">ITEMS:</ion-label>
-                <ion-label style="margin-left: 49%; color:#333333; float: right;">R</ion-label><br><br>
+                <ion-label>R</ion-label><br><br>
                 <ion-label col  style="float: left; color: #333333;margin-left:5%;" >SHIPPING</ion-label>
                 <ion-toggle style="float: right;" ></ion-toggle>
                 <ion-input type="text" style="border-radius:5%; border: black solid 1px; background-color: white;padding-left:20%;margin-left:5%;" placeholder="Courier - R"></ion-input><br><br><br>
                 <ion-label style="color: #333333">DISCOUNT:</ion-label>
-                <ion-label style="margin-left:54%;color:#333333;">R</ion-label><br>
+                <ion-label>R</ion-label><br>
                 <br><ion-label style="color: #333333;">VAT AMOUNT<br >(Inclusive)</ion-label>
-                <ion-label style="margin-left:59%;color:#333333;">R</ion-label>
+                <ion-label>R</ion-label>
                 <br>
                 <br>
                 <br>
-                <hr style="border: none; border-top: 2px double #333; text-align: center;width: 124%">
+                <hr style="border: none; border-top: 1px double #333; text-align: center;width: 124%">
                 <ion-label style="color:#333333">TOTAL COST:</ion-label>
-                <ion-label style="margin-left:49%; color:#333333;padding-bottom: 90px; margin-top:50%;">R</ion-label>
+                <ion-label>R</ion-label>
                 <br>
                 <br>
                 <br>
 
                 <ion-buttons>
-                  <ion-button  (click)="presentAlert()" shape="round" style="border-radius: 5px; background-color: #08c10f; color:white;width:850px; margin-left: 28%;" routerLink="/client-checkout" >
+                  <ion-button   shape="round" style="border-radius: 5px; background-color: #08c10f; color:white;width:850px; margin-left: 28%;" routerLink="/client-checkout" >
                     Place Order
                   </ion-button>
                 </ion-buttons>

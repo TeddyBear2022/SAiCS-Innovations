@@ -26,24 +26,17 @@
 <ion-content>
   <div>
   <ion-row>
-    <ion-col>
-      <h1 style="color: 33333;text-align: center;">Step1 -Introduction</h1>
-    </ion-col>
-  </ion-row>
-</div>
-      <ion-progress-bar  value="0.2" style="border-radius: 10px; background-color: white; border: black solid 1px; height: 2%; width: 250px;" ></ion-progress-bar>
-    <div>
-      <ion-row>
-        <ion-col>
-
-        <ion-buttons>
-   <ion-button style="border-radius:10%; margin-left:90%; background-color: #08c10f;color:white" routerLink="/quiz-session">
-      Next
-    </ion-button>
-  </ion-buttons>
-</ion-col>
+     <ion-col><ion-progress-bar value="0.1"></ion-progress-bar></ion-col> 
+      <ion-col><h1 style="color: 33333;text-align: center;">Step1 -Introduction</h1></ion-col>
+        <ion-col><ion-buttons>
+         <ion-button id="Nextbtn" routerLink="/quiz-session">
+           Next
+         </ion-button>
+        </ion-buttons>
+      </ion-col>
 </ion-row>
-</div>
-<br>
-  <img src="assets/coursepic.png" height="600" width="1500"/>
+<ion-row>
+  <img src="assets/quiz.jpg" height="600" width="1500"/>
+</ion-row>
+  </div>
 </ion-content>

@@ -8,7 +8,7 @@ import { ClientCheckoutPageRoutingModule } from './client-checkout-routing.modul
 
 import { ClientCheckoutPage } from './client-checkout.page';
 import { AddAddressPage } from '../add-address/add-address.page';
-import { BankingDetailsComponent } from '../banking-details/banking-details.component';
+import { BankingDetailsComponent } from './banking-details/banking-details.component';
 
 @NgModule({
   imports: [

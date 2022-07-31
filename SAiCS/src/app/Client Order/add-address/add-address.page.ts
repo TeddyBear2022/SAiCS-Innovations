@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Style } from '@capacitor/status-bar';
 import { AlertController} from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 
 @Component({
   selector: 'app-add-address',
@@ -9,20 +11,17 @@ import { AlertController} from '@ionic/angular';
 })
 export class AddAddressPage implements OnInit {
 
-  constructor(public alertController: AlertController) { }
+  constructor(public popoverController:PopoverController, public alertController: AlertController) { }
 
   ngOnInit() {
   }
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header:'Thank You For Your Order!',
-      message: 'At SAiCS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintable lifestyle with our top of the range and clinically tested products!',
-      cssClass : 'ThankYouAlert',
-      buttons: [
-        {
-            text: 'Back to home'
-        },
-      ]
+  
+    async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
     });
-    await alert.present();}
+    return await popover.present();
+  }
 }

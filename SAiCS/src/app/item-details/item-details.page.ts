@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ProfilePopoverComponent } from '../profile-popover/profile-popover.component';
+
 
 @Component({
-  selector: 'app-access-course-intro',
-  templateUrl: './access-course-intro.page.html',
-  styleUrls: ['./access-course-intro.page.scss'],
+  selector: 'app-item-details',
+  templateUrl: './item-details.page.html',
+  styleUrls: ['./item-details.page.scss'],
 })
-export class AccessCourseIntroPage implements OnInit {
+export class ItemDetailsPage implements OnInit {
 
   constructor(public popoverController: PopoverController) { }
 
   ngOnInit() {
   }
-
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({

@@ -4,18 +4,10 @@
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
 
-    
-    <ion-buttons slot="secondary">
-      <ion-button shape="round" routerLink="/clients-cart">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
-
     <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button (click)="presentPopover($event)" shape="round" id="ProfileIcon">
         <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -24,14 +16,22 @@
 
 <ion-content>
   <h1 align = "center" ><b>Ambassador Intro Course</b></h1>
+
   <h3>Course Content</h3>
-  <ion-accordion-group id="Accordion"width="100px">
+<ion-row>
+  <ion-item style="width: 800px;">
+    <ion-col>
+  <ion-accordion-group>
     <ion-accordion value="first">
       <ion-item slot="header" color="light">
         <ion-label>Step 1- Introduction</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <ion-label><a routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</a></ion-label>
+        <ion-label>SAiCS Innovation Intro PDF</ion-label><br>
+        <ion-label>How to be an ambassador</ion-label>
+        <ion-label >Intro Quiz</ion-label>
+        
+        <ion-label routerLink="/begin-course" style="color:#08c10f;padding-left: 80%;">Start</ion-label>
       </div>
     </ion-accordion>
     <ion-accordion value="second">
@@ -39,7 +39,7 @@
         <ion-label>Step 2- Marketing</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <ion-label routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</ion-label>
+        <ion-label><a routerLink="/begin-course" style="color:#0070c0;text-decoration:underline;padding-left: 80%;">Use Existing Address</a></ion-label>
       </div>
     </ion-accordion>
     <ion-accordion value="third">
@@ -47,8 +47,7 @@
         <ion-label>Step 3- Closing Deals</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <ion-label>-</ion-label>
-        <ion-label><a routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</a></ion-label>
+        Third Content
       </div>
     </ion-accordion>
     <ion-accordion value="fourth">
@@ -56,38 +55,35 @@
         <ion-label><ion-icon ios="ios-arrow-down"></ion-icon>Step 4- Ambassadors</ion-label>
       </ion-item>
       <div class="ion-padding" slot="start">
-        T<ion-label><a routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</a></ion-label>
-      </div>
-    </ion-accordion>
-    <ion-accordion value="fifth">
-      <ion-item slot="header" color="light">
-        <ion-label><ion-icon ios="ios-arrow-down"></ion-icon>Step 5- Money flow</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="start">
-        <ion-label><a routerLink="/start-quiz" style="color:#08c10f;padding-left: 80%;">Start</a></ion-label>
+        Third Content
       </div>
     </ion-accordion>
   </ion-accordion-group>
+</ion-col>
+</ion-item>
 
-  <ion-card class="IntroCourseSide" style="width:15%;border-style: solid;border-color:black;border: width 50cm;">
+<ion-item style="width: 500px;">
+  <ion-row>
+  <ion-card class="IntroCourseSide">
     <ion-card-content>
-      <img src="./assets/trainingImage.jpg" height='150' width='150' />
-      <ion-progress-bar value="0.2" width="50px" height="50px">0%</ion-progress-bar><br>
-      <div>
-        <ion-buttons>
-        <ion-button routerLink="/start-quiz" style="background-color: #0070c0; color: white; width: 90%;" shape="round">
-          Begin Course
-        </ion-button>
-        </ion-buttons>
-      </div>
+      <img src="./assets/trainingImage.jpg" height='350' width='350' />
+      <ion-row><ion-progress-bar value="0.2" id="IntroCourseSideProgressBar" ></ion-progress-bar></ion-row><br>
+      <ion-buttons>
+
+  <ion-row><ion-button routerLink="/start-quiz" id="begincoursebtn">
+        Begin Course
+      </ion-button></ion-row>
+    </ion-buttons>
         <br><br>
         <p>This course was designed with the intention of equiping you to be the best SAiCS ambassador you can be.<br>
           Included:<br>          
-          -5 Pdfs<br>          
+          -5 Pdfs<br>         
           -4 Quizzes<br>
           -16 Videos</p>
       
     </ion-card-content>
   </ion-card>
-
+</ion-row>
+</ion-item>
+</ion-row>
 </ion-content>

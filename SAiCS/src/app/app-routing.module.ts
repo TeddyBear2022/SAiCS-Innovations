@@ -141,12 +141,19 @@ loadChildren: () => import('./Client Order/add-address/add-address.module').then
   },
 
   {
+    path: 'item-details',
+    loadChildren: () => import('./Client Order/item-details/item-details.module').then( m => m.ItemDetailsPageModule)
+  },
+  {
     path: 'assign-course',
     loadChildren: () => import('./Training/assign-course/assign-course.module').then( m => m.AssignCoursePageModule)
   },
 
-
-   
+  {
+    path: 'add-address',
+    loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
+  },
+  
 ];
 
 @NgModule({

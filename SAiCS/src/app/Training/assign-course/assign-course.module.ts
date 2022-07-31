@@ -8,6 +8,9 @@ import { AssignCoursePageRoutingModule } from './assign-course-routing.module';
 
 import { AssignCoursePage } from './assign-course.page';
 
+import { AssignCourseModalComponent } from './assign-course-modal/assign-course-modal.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +18,7 @@ import { AssignCoursePage } from './assign-course.page';
     IonicModule,
     AssignCoursePageRoutingModule
   ],
-  declarations: [AssignCoursePage]
+  declarations: [AssignCoursePage,AssignCourseModalComponent],
+  entryComponents:[AssignCourseModalComponent]
 })
 export class AssignCoursePageModule {}

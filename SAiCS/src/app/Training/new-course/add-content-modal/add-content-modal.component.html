@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ng-form [formGroup]="AddContent" #localForm = 'ngForm' id="AddQuizModal">         
+<ng-form [formGroup]="AddContent" #localForm = 'ngForm' id="AddContentModal">         
         <ion-label>Content section name:</ion-label>
         <ion-input formControlName="contentsectionname" type="text" placeholder="Enter the answer"></ion-input>
            <span *ngIf="localForm.submitted && AddContent.controls['contentsectionname'].invalid">*Required</span>

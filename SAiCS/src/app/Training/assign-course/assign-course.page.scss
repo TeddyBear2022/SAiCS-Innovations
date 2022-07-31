@@ -23,16 +23,12 @@
       --placeholder-color: #000000;
       --color:var(--placeholder-color);
       --border-radius: 20px;
-      margin-left: 980px; 
-      width:30%;
+      margin-left: 780px; 
+      width:480px;
   }
 
-  ion-select{
-    align-self: center;
-      background: #ffffff;
-      border-radius: 20px;
-      margin-right: 980px; 
-      width:30%;
-      border: grey solid 1px;
-    
-  }
+#TopSection{
+   display: flex; 
+    align-items: center; 
+    justify-content: center;
+}

@@ -2,15 +2,7 @@
   <ion-toolbar id="navbar">
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
-    </ion-buttons>
-
-    
-    <ion-buttons slot="secondary">
-      <ion-button shape="round" routerLink="/clients-cart">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
+    </ion-buttons> 
 
     <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
@@ -24,27 +16,29 @@
 
 <ion-content>
 
-  <h1 style="text-align: center;font-size: 50px;color: #333333;">Courses</h1>
+  <h1>Courses</h1>
 
   <ion-button fill="white" data-backdrop="static" data-keyboard="false" routerLink="/new-course">
     <ion-icon name="add-circle-outline" size="large" id="addIcon" style="color: #08c10f;" ></ion-icon>
   </ion-button><br>
 
- 
- <ion-card style="width: 20%; border-radius: 15%; height: 45%;">
+ <ion-row>
+ <ion-card>
   <ion-card-content>
-    <ion-card-header style="color: #008080; text-align: center;">Ambassador Intro Course</ion-card-header>
-    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px; width: 93%; ">
-    <col><img slot="start" src="./assets/trainingImage.jpg" height='97' width='97' style="margin-bottom: 2px" />
-    <ion-label style=" margin-bottom: 50px;">-16 Videos</ion-label><br>
-    <ion-label style="margin-left: 100px; margin-bottom: 50px;">-16 Videos</ion-label><br>
-    <ion-label style="margin-left: 100px;">-16 Videos</ion-label>
+    <ion-card-header>Ambassador Intro Course</ion-card-header>
+    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px">
+    
+   <ion-row>
+     <ion-item style="width: 250px;"> <img src="./assets/trainingImage.jpg" /></ion-item>
+       
+     <p>16 Videos<br> <br>5 Quizzes<br><br> 5 PDFs</p>   
+   </ion-row>
     <ion-buttons>
-    <ion-button style="margin-left: 70%; border-radius: 10%; background-color: #08c10f;color:white" shape="round" routerLink="/access-course-intro">
+    <ion-button id="Accessbtn" routerLink="/access-course-intro">
       Access
     </ion-button>
   </ion-buttons>
   </ion-card-content>
  </ion-card>
-
+</ion-row>
 </ion-content>

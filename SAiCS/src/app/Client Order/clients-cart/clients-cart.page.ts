@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+
 
 @Component({
   selector: 'app-clients-cart',
@@ -9,10 +12,19 @@ import { AlertController } from '@ionic/angular';
 })
 export class ClientsCartPage implements OnInit {
 
-  constructor(private alertController: AlertController) { }
+  constructor(public popoverController:PopoverController,private alertController: AlertController) { }
 
   ngOnInit() {
   }
+  async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
+    });
+    return await popover.present();
+  }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header:'Thank You For Your Order!',
