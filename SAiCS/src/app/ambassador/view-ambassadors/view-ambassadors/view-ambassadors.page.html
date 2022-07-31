@@ -36,13 +36,7 @@
 
       <ion-searchbar id="searchbar" placeholder="Search Agent" ></ion-searchbar>
     </ion-row>
-  
-
-
-   
-
-
-  <br><br><br><br><br> 
+<br><br> 
   <table>
     <thead>
     <th>Title</th>
@@ -54,47 +48,16 @@
     <th>Phone Number</th>
     <th>Ranking Requests</th>
     </thead>
-    <tbody>
-    <tr>
-    <td>Mr</td>
-    <td>Matt Hardy</td>
-    <td>Drako</td>
-    <td>Junior Agent</td>
-    <td>matthy@artisteer.com</td>
-    <td>South St, Centurion</td>
-    <td>0658976295</td>
-    <td><button id="button" (click)="rankingrequest()">Request Change</button></td>
-    </tr>
-    <tr>
-    <td>Mr</td>
-    <td>Randy Orton</td>
-    <td>Key</td>
-    <td>Senior Agent</td>
-    <td>randyo@hao123.com</td>
-    <td>North St, Centurion</td>
-    <td>0862563698</td>
-    <td><button id="button">Request Change</button></td>
-    </tr>
-    <tr>
-    <td>Ms</td>
-    <td>Patrice Waller</td>
-    <td>Glizzy</td>
-    <td>Manager</td>
-    <td>patwal@mac.com</td>
-    <td>East St, Centurion</td>
-    <td>0722561998</td>
-    <td><button id="button">Request Change</button></td>
-    </tr>
-    <tr>
-    <td>Mr</td>
-    <td>Sergio Kitchens</td>
-    <td>Wunna</td>
-    <td>Junior Distributer</td>
-    <td>skithcens@gmail.com</td>
-    <td>West St, Centurion</td>
-    <td>0867583698</td> 
-    <td><button id="button">Request Change</button></td>
-    </tr>
+    <tbody >
+    <tr *ngFor="let ambassador of ambassadorsList">
+    <td>mr</td>
+    <td>{{ambassador.user.name}} {{ambassador.user.surname}}</td>
+    <td>alias</td> 
+    <td>{{ambassador.user.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>
+    <td>{{ambassador.user.email}}</td>
+    <td>remove from design</td>
+    <td>{{ambassador.user.phoneNumber}}</td> 
+     <td><button id="button" (click)="rankingrequest()">Request Change</button></td>
     </tbody>
     </table>
 

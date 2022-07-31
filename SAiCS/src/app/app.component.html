@@ -6,8 +6,9 @@
      <img src="./assets/Client Navbar logo.png" height="50px">
     </ion-toolbar>
   </ion-header>
+  <!-- Client sub-system -->
   <ion-content>
-    <ion-list>
+    <ion-list *ngIf="userRole == 1">
       <ion-menu-toggle>
         <ion-item routerLink="/landing-page" lines="none">
           <ion-icon name="home-outline" slot="start"></ion-icon>
@@ -33,7 +34,72 @@
         </ion-item>
       </ion-menu-toggle>
     </ion-list>
-  </ion-content>
+  
+
+  <!-- ambassador sub system -->
+  <ion-list *ngIf="userRole == 2">
+    <ion-menu-toggle>
+      <ion-item routerLink="/ambassador-landing-page" lines="none">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+    <ion-item routerLink="/feedback/view-feedback" lines="none">
+      <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+      <ion-label>Position Requests</ion-label>
+    </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-ambassadors" lines="none">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Ambassadors</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-clients" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Clients</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-orders" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Orders</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="performance-studio" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Performance studio</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="/faq" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Training</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="ambassador-order-history" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Order History</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-ambassador-feedback" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Feedback</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-ambassador-faq" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>FAQs</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+</ion-content>
   <ion-footer>
     <ion-list>
       <ion-item lines="none">
