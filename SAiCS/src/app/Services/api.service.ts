@@ -25,6 +25,7 @@ import { PackageVM } from '../Models/ViewModels/PackageVM';
 import { PackageType } from '../Models/PackageType';
 import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
+import { CartVM } from '../Models/ViewModels/CartVM';
 
 @Injectable({
   providedIn: 'root'
@@ -257,7 +258,6 @@ export class ApiService {
   {
     return this.api.post(this.apilink + "Media/UploadFile", file)
   }
-  //, {responseType: 'text' as 'json', reportProgress: true, observe: 'events'}
 
   // GetImage(imageName: string): Observable<Blob>
   // {
@@ -271,4 +271,29 @@ export class ApiService {
     return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials)
   }
 
+  //Iteration 6 Amanda
+  ViewCatalog()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
+  }
+
+  AddToCart(newItem: CartVM)
+  {
+    return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
+  }
+
+  ViewCart()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
+  }
+
+  RemoveFromCart(id: number)
+  {
+    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`)
+  }
+
+  ClearCart(id: number)
+  {
+    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`)
+  }
 }
