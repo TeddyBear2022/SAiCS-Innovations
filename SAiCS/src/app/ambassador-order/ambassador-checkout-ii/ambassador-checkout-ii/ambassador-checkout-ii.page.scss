@@ -54,3 +54,37 @@ ion-toolbar
     display: block;
 }
 
+//Amanda
+.textLabels{
+  margin-left: 20px; color: black; font-size: 18px;
+}
+
+.valueLabels{
+  float: right; font-weight: 150;  margin-right: 20px; color: black; font-size: 18px;
+}
+
+ion-list {
+  --ion-item-background: transparent;
+  ion-label{font-weight: 150;}
+
+}
+
+.containerItem{
+  img {
+    width: 30%; /*image width*/
+    float: left; /*image position*/
+  }
+  p {
+    width: 60%;
+    float: right;
+  }
+}
+
+#deliveryInput{
+  border-radius: 3px;
+  border:black solid 2px; 
+  margin-left: 25px; 
+  margin-right: 15px;
+  height: 30px; width: 250px;
+  --background: white;
+}
