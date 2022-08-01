@@ -22,6 +22,11 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   checkout: FormGroup;
   OdrSmry: any;
   one = 1; //got testing
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   constructor(
     private alert: AlertController,
@@ -57,17 +62,20 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   onFileSelected(event) {
-    let file = event.target.files[0];
-     let reader = new FileReader();
-     reader.readAsDataURL(file);
-     reader.onload = () => {
-       let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-       if ((encoded.length % 4) > 0) {
-         encoded += '='.repeat(4 - (encoded.length % 4));
-       }
-     this.selectedFile = encoded
-     console.log("encoded successfully")
-  }}
+     let file = event.target.files[0];
+    //  let reader = new FileReader();
+    //  reader.readAsDataURL(file);
+    //  reader.onload = () => {
+    //    let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+    //    if ((encoded.length % 4) > 0) {
+    //      encoded += '='.repeat(4 - (encoded.length % 4));
+    //    }
+    //  this.selectedFile = encoded
+    //  console.log("encoded successfully")
+
+    console.log('size', file.size);
+    
+  }
 
   submitForm() {
    if(this.deliveryOption == false) this.checkout.setValidators(null)
