@@ -27,6 +27,7 @@ import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
+import { Address } from '../Models/Address';
 
 @Injectable({
   providedIn: 'root'
@@ -306,5 +307,10 @@ export class ApiService {
   Checkout(order: Order)
   {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
+  }
+
+  NewAddress(address: Address)
+  {
+    return this.api.post(this.apilink + "AmbassadorOrder/NewAddress", address)
   }
 }

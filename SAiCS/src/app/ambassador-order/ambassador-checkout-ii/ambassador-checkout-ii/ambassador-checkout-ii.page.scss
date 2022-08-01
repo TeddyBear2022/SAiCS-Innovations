@@ -88,3 +88,13 @@ ion-list {
   height: 30px; width: 250px;
   --background: white;
 }
+
+ion-modal{
+  --width: 441px;
+  --height: 362px;
+  ion-toolbar,ion-content{--background: #f1f1f1;}
+  button{
+    text-transform: none;
+    font-weight: bold;
+  }
+}
