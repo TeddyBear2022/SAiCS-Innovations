@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class ViewAmbassadorCartPage implements OnInit {
   discount = 0
   vat = 0
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
       this.ViewCart()
@@ -56,13 +57,13 @@ export class ViewAmbassadorCartPage implements OnInit {
   RemoveFromCart(id: number)
   {
       this.api.RemoveFromCart(id).subscribe();
-      this.ViewCart()
+      window.location.reload();
   }
 
   ClearCart(id: number)
   {
     this.api.ClearCart(id).subscribe()
-    this.ViewCart()
+    window.location.reload();
   }
 
 
@@ -83,7 +84,9 @@ PlaceOrder()
   var orderdetails = {cartId: this.products[0].cartID, 
     'itemCount': this.itemCount, 'discount': this.discount,
     'vat': this.vat, 'subtotal': this.subtotal, 'totalCost': this.totalCost, 'deliveryOption': this.deliveryOption}
-  localStorage.setItem('checkout', JSON.stringify(orderdetails))
+    localStorage.setItem('checkout', JSON.stringify(orderdetails))
+    this.router.navigate(['/ambassador-checkout-ii'])
+    
 }
 
 }

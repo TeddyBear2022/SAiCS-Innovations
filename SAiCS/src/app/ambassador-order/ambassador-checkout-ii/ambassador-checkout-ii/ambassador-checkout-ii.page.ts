@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
 import { ApiService } from 'src/app/Services/api.service';
@@ -31,7 +32,8 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   constructor(
     private alert: AlertController,
     private api: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -89,6 +91,9 @@ export class AmbassadorCheckoutIiPage implements OnInit {
             order.proofOfPayment = this.selectedFile
             this.api.Checkout(order).subscribe();
             console.log(order);
+            this.showAlert();
+            this.router.navigate(['/ambassador-landing-page'])
+
     } else {
       console.log('invalid form');
     }
