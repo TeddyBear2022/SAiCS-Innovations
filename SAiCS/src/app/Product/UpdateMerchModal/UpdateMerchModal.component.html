@@ -6,30 +6,38 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="updateProductForm"  class="ion-padding" (ngSubmit)="submitForm()">
+  <form [formGroup]="updateMerch"  class="ion-padding" (ngSubmit)="submitForm()">
    
       <ion-item-group>
         <ion-label>Product Name:</ion-label>
-        <ion-input formControlName="productName"></ion-input>
+        <ion-input formControlName="merchName"></ion-input>
       </ion-item-group>
 
       <ion-item-group>
-        <ion-label>Product Type:</ion-label> <br>
-        <select placeholder="Pick" formControlName="productTypeId">
-          <option value="" disabled selected>Select your option</option>
-          <option *ngFor="let pType of productTypes" value="{{pType.productTypeId}}">{{pType.productTypeName}}</option>
+        <ion-label>Merchandise Type:</ion-label>
+        <select placeholder="Pick" formControlName="merchTypeId">
+          <option value="" disabled selected>Select product type</option>
+          <option *ngFor="let m of merchTypes" value="{{m.merchTypeId}}">{{m.merchTypeName}}</option>
+        </select>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Merchandise Category:</ion-label>
+        <select placeholder="Pick" formControlName="merchCatId">
+          <option value="" disabled selected>Select product type</option>
+          <option *ngFor="let m of merchCat" value="{{m.merchCategoryId}}">{{m.merchCategoryName}}</option>
         </select>
       </ion-item-group>
 
       
       <ion-item-group>
-        <ion-label>Product Price:</ion-label>
+        <ion-label>Merchandise Price:</ion-label>
         <ion-input formControlName="price" type="number" min="0"></ion-input>
       </ion-item-group> 
 
       <ion-item-group>
-        <ion-label>Product Image:</ion-label>
-        <ion-input formControlName="productImage" type="file" (change)="onFileSelected($event)"></ion-input>
+        <ion-label>Merchandise Image:</ion-label>
+        <ion-input formControlName="merchImage" type="file" (change)="onFileSelected($event)"></ion-input>
       </ion-item-group>
 
       <ion-item-group>

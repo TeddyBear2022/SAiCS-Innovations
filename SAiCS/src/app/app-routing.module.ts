@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'view-ambassador-cart',
+    redirectTo: 'view-merch',
     pathMatch: 'full'
   },
   {
@@ -86,12 +86,8 @@ const routes: Routes = [
   //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
   // },
   {
-    path: 'view-product',
-    loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
-  },
-  {
-    path: 'view-package',
-    loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
+    path: 'view-merch',
+    loadChildren: () => import('./Product/ViewMerch/ViewMerch.module').then( m => m.ViewProductPageModule)
   },
   {
     path: 'ambassador-landing-page',

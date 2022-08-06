@@ -6,20 +6,19 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ProductVM } from 'src/app/Models/ViewModels/ProductVM';
 import { ApiService } from 'src/app/Services/api.service';
-import { Product } from 'src/app/Models/Product';
-import { Price } from 'src/app/Models/Price';
 import { HttpErrorResponse} from '@angular/common/http';
+import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
 
 @Component({
-  selector: 'app-create-product-modal',
-  templateUrl: './create-product-modal.component.html',
-  styleUrls: ['./create-product-modal.component.scss'],
+  selector: 'app-create-merch-modal',
+  templateUrl: './CreateMerchModal.component.html',
+  styleUrls: ['./CreateMerchModal.component.scss'],
 })
-export class CreateProductModalComponent implements OnInit {
-  product: FormGroup;
-  productTypes = [];
+export class CreateMerchModalComponent implements OnInit {
+  merch: FormGroup;
+  merchTypes = [];
+  merchCat = [];
   selectedFile: any;
   isExisting: boolean = false;
 
@@ -31,13 +30,15 @@ export class CreateProductModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.GetProductTypes();
+    this.GetMerchTypes();
+    this.GetMerchCat();
 
-    this.product = this.fb.group({
-      productName: new FormControl('', Validators.required),
-      productTypeId: new FormControl('', Validators.required),
+    this.merch = this.fb.group({
+      merchName: new FormControl('', Validators.required),
+      merchTypeId: new FormControl('', Validators.required),
+      merchCatId: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      productImage: new FormControl('', Validators.required),
+      merchImage: new FormControl('', Validators.required),
       price: new FormControl('', [
         Validators.required,
       ]),
@@ -46,10 +47,17 @@ export class CreateProductModalComponent implements OnInit {
   }
 
   //product categories
-  GetProductTypes() {
-    this.api.GetProductTypes().subscribe((data) => {
-      this.productTypes = data;
-      console.log(this.productTypes);
+  GetMerchTypes() {
+    this.api.GetMerchTypes().subscribe((data) => {
+      this.merchTypes = data;
+      console.log(this.merchTypes);
+    });
+  }
+
+  GetMerchCat() {
+    this.api.GetMerchCat().subscribe((data) => {
+      this.merchCat = data;
+      console.log(this.merchCat);
     });
   }
 
@@ -61,7 +69,7 @@ export class CreateProductModalComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.product.valid) {
+    if (this.merch.valid) {
 
         const formData: FormData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -69,33 +77,26 @@ export class CreateProductModalComponent implements OnInit {
           this.api.UploadImage(formData).subscribe(data => { 
             console.log(data)}, (res: HttpErrorResponse) =>{
               if(res.status === 200)
-              {     
-                //add product attributes
-                let product = {} as Product;
-                product.productName = this.product.value.productName;
-                product.description = this.product.value.description;
-                product.productTypeId = this.product.value.productTypeId;
-                product.productImage = res.error.text;
-                product.status = this.product.value.status;
-          
-                //add price
-                let price = {} as Price;
-                price.price1 = this.product.value.price;
-          
-                //add to viewmodel
-                let viewModel = {} as ProductVM;
-                viewModel.product = product;
-                viewModel.price = price;
+              {    
+                let nMerch = {} as MerchVM;
+                nMerch.merchName = this.merch.value.merchName;
+                nMerch.description = this.merch.value.description;
+                nMerch.merchImage = res.error.text;
+                nMerch.price = this.merch.value.price;
+                nMerch.status = this.merch.value.status;
+                nMerch.merchTypeId = this.merch.value.merchTypeId;
+                nMerch.merchCategoryId = this.merch.value.merchCatId;
           
                 // create product
-                this.api.CreateProduct(viewModel).subscribe((response)=> {
+                this.api.CreateMerch(nMerch).subscribe((response)=> {
                   if(response == true)
                   {
                     this.isExisting = false
+                    //dismiss modal
+                    this.dismissModal()
                      // success alert
                      this.presentToast()
-                     //dismiss modal
-                     this.dismissModal()
+                     
                   }
                   else
                   {
@@ -103,7 +104,6 @@ export class CreateProductModalComponent implements OnInit {
                     console.log("Product existing")
                   }      
                 });
-                console.log(product);
               }
             })
 

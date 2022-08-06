@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { CreateProductModalComponent } from '../create-product-modal/create-product-modal.component';
-import { UpdateProductModalComponent } from '../update-product-modal/update-product-modal.component';
+import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
+import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.component';
 
 @Component({
-  selector: 'app-view-product',
-  templateUrl: './view-product.page.html',
-  styleUrls: ['./view-product.page.scss'],
+  selector: 'app-view-merch',
+  templateUrl: './ViewMerch.page.html',
+  styleUrls: ['./ViewMerch.page.scss'],
 })
-export class ViewProductPage implements OnInit {
-  products = []
-  productTypes = []
+export class ViewMerchPage implements OnInit {
+  merch = []
+  merchCat = [];
   
 
   constructor(
@@ -23,36 +23,42 @@ export class ViewProductPage implements OnInit {
   public toastController: ToastController) { }
 
   ngOnInit() {
-    this.GetProducts()
-    this.GetProductTypes()
+    this.GetAllMerch()
+    this.GetMerchCat()
   }
   
+  GetMerchCat() {
+    this.api.GetMerchCat().subscribe((data) => {
+      this.merchCat = data;
+      console.log(this.merchCat);
+    });
+  }
 
 //Get products
-GetProducts()
+GetAllMerch()
 {
- this.api.GetProducts().subscribe(data => {
-   this.products = data; 
-   console.log(this.products);
-   
-  })
+  this.api.GetAllMerch().subscribe(data =>
+    {
+      this.merch = data
+      console.log(this.merch);
+    })
 }
   
   //product categories
   GetProductTypes()
   {
-    this.api.GetProductTypes().subscribe(data => {
-      this.productTypes = data; 
-      console.log("Retrieved product types");
+    // this.api.GetProductTypes().subscribe(data => {
+    //   this.productTypes = data; 
+    //   console.log("Retrieved product types");
       
-     })
+    //  })
   }
 
 //create product
  async createProduct()
 {
  const modal = await this.modalCtrl.create({
-    component: CreateProductModalComponent,
+    component: CreateMerchModalComponent,
     id: 'createProductClass',
     
   });
@@ -61,20 +67,20 @@ GetProducts()
 }
 
 //Update product
-async updateProduct(name)
+async updateProduct(id: number)
 {
   
  const modal = await this.modalCtrl.create({
-    component: UpdateProductModalComponent,
+    component: UpdateMerchModalComponent,
     componentProps: {
-     existingProduct: name
+     existingProduct: id
     }
   });
   await modal.present();
 }
 
 //Delete product
-async DeleteProduct(id: number) {
+async DeleteMerch(id: number) {
   const alert = await this.alertController.create({
     cssClass: 'messageAlert',
     message: 'Are you sure you would like to permanently remove this product? ',
@@ -83,7 +89,7 @@ async DeleteProduct(id: number) {
         text: 'Confirm',
         cssClass: 'Confirm',
         handler: () => {
-          this.api.DeleteProduct(id).subscribe(() => console.log("deleted successfully"))
+          this.api.DeleteMerch(id).subscribe(() => console.log("deleted successfully"))
           this.presentToast()
           console.log('Confirm Ok');
         }
