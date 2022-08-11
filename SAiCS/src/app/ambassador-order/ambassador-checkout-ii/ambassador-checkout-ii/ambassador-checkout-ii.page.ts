@@ -65,17 +65,17 @@ export class AmbassadorCheckoutIiPage implements OnInit {
 
   onFileSelected(event) {
      let file = event.target.files[0];
-    //  let reader = new FileReader();
-    //  reader.readAsDataURL(file);
-    //  reader.onload = () => {
-    //    let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-    //    if ((encoded.length % 4) > 0) {
-    //      encoded += '='.repeat(4 - (encoded.length % 4));
-    //    }
-    //  this.selectedFile = encoded
-    //  console.log("encoded successfully")
-
-    console.log('size', file.size);
+     let reader = new FileReader();
+     reader.readAsDataURL(file);
+     reader.onload = () => {
+       let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+       if ((encoded.length % 4) > 0) {
+         encoded += '='.repeat(4 - (encoded.length % 4));
+       }
+     this.selectedFile = encoded
+     console.log("encoded successfully")
+      }
+    //console.log('size', file.size);
     
   }
 
@@ -87,7 +87,6 @@ export class AmbassadorCheckoutIiPage implements OnInit {
             order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
             order.userId = this.one.toString();
             order.orderStatusId = 1;
-            order.cartId = this.OdrSmry.cartId
             order.proofOfPayment = this.selectedFile
             this.api.Checkout(order).subscribe();
             console.log(order);

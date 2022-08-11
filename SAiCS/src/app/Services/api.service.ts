@@ -22,6 +22,7 @@ import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
 import { Address } from '../Models/Address';
 import { MerchVM } from '../Models/ViewModels/MerchVM';
+import { CartItem } from '../Models/CartItem';
 
 @Injectable({
   providedIn: 'root'
@@ -170,6 +171,7 @@ export class ApiService {
     return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
   }
 
+  
   //Product Subsystem
   //Get MerchTypes
   GetMerchTypes(): Observable<any>
@@ -211,6 +213,16 @@ export class ApiService {
     return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`)
   }
 
+  AmbassadorDiscount(id)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`)
+  }
+
+  GetVAT()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
+  }
+
 
   UploadImage(file: FormData)
   {
@@ -223,12 +235,12 @@ export class ApiService {
     return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
   }
 
-  AddToCart(newItem: CartVM)
+  AddToCart(id: string,newItem: CartItem[])
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem)
   }
 
-  ViewCart()
+  GetCartItems()
   {
     return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
   }

@@ -44,15 +44,6 @@ GetAllMerch()
     })
 }
   
-  //product categories
-  GetProductTypes()
-  {
-    // this.api.GetProductTypes().subscribe(data => {
-    //   this.productTypes = data; 
-    //   console.log("Retrieved product types");
-      
-    //  })
-  }
 
 //create product
  async createProduct()

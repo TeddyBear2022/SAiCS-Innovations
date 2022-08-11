@@ -1,6 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
+import { share } from 'rxjs/operators';
+import { CartItem } from 'src/app/Models/CartItem';
 
 @Component({
   selector: 'app-view-ambassador-cart',
@@ -8,85 +21,148 @@ import { ApiService } from 'src/app/Services/api.service';
   styleUrls: ['./view-ambassador-cart.page.scss'],
 })
 export class ViewAmbassadorCartPage implements OnInit {
-  products: any
-  deliveryOption=false
+  cartImages: any;
+  items = [];
+  deliveryOption = false;
   //For totals to reflect
-  itemTotal=[]
-  itemCount = 0
-  totalCost = 0
-  subtotal = 0
-  discount = 0
-  vat = 0
+  @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
+ 
+ 
+  discount = 0;
+  vat = 0;
 
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(
+    private api: ApiService,
+    private cartService: CartService,
+    private currencyPipe: CurrencyPipe,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.cartImages = this.cartService.GetImage;
+  }
 
   ngOnInit() {
-      this.ViewCart()
-      //console.log(localStorage.getItem('userID'));
-      
-      
+    this.cartService.loadCart();
+    this.items = this.cartService.getItems();
+    this.ViewCart();
   }
 
+  //Cart funtionalities
 
-  ViewCart()
-  {
-      this.api.ViewCart().subscribe((data) =>
-        {
-          this.products = data
-          this.itemCount = this.products.length
-          console.log(this.products)
-          for(let i=0; i<this.products.length; i++){
-
-            this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
-          }
-        
-        for (var i = 0; i< this.itemTotal.length; i++){
-          this.subtotal += this.itemTotal[i];
-         }
-        
-         //calculate disicout, vat and totalCost
-         this.discount = this.products[0].itemDiscount.discount * this.subtotal
-         this.vat = this.products[0].vaT * this.subtotal
-          this.totalCost = this.subtotal - this.discount 
-          console.log(this.totalCost)
-        });    
-        
-        
+  getImage(id) {
+    var image = this.cartImages.find((x) => x.id === id);
+    if (image) {
+      return `data:image/png;base64,${image.image}`;
+    } else {
+      return './assets/noImage.png';
+    }
   }
 
-  RemoveFromCart(id: number)
-  {
-      this.api.RemoveFromCart(id).subscribe();
-      window.location.reload();
+  async ViewCart() {
+    var data = await this.api.AmbassadorDiscount(2).toPromise();
+    var dataObj = JSON.parse(JSON.stringify(data[0].discount));
+    this.discount = dataObj;
+    console.log(`discount: ${this.discount}`);
+    
+    var vatData = await this.api.GetVAT().toPromise();
+    var vatObj = JSON.parse(JSON.stringify(vatData));
+    this.vat = vatObj;
+    console.log(`discount: ${this.vat}`);
   }
 
-  ClearCart(id: number)
-  {
-    this.api.ClearCart(id).subscribe()
+  increment(item) {
+    // the quantity and price and get new subtotal
+    item.quantity += 1;
+    this.cartService.saveCart();
+    var i = this.items.findIndex((x) => x.id === item.id);
+    this.ChangeItemTotal(item, i);
+  }
+
+  decrement(item) {
+    // the quantity and price and get new subtotal
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+      this.cartService.saveCart();
+      var i = this.items.findIndex((x) => x.id === item.id);
+      this.ChangeItemTotal(item, i);
+    }
+  }
+
+  RemoveFromCart(item) {
+    this.cartService.removeItem(item);
+    this.items = this.cartService.getItems();
+  }
+
+  ClearCart(id: number) {
+    this.api.ClearCart(id).subscribe();
     window.location.reload();
   }
 
+  ChangeItemTotal(item, index) {
+    const subTotal = item.price * item.quantity;
+    this.itemTotal.toArray()[index].nativeElement.innerHTML = subTotal;
+    this.cartService.saveCart();
+  }
 
-toggleValue()
- {
-  if(this.deliveryOption == true)
-  this.totalCost += 200
-  else
-  this.totalCost -= 200
+//Calculations
+  get total() {
+    return this.items.reduce(
+      (sum, x) => ({
+        quantity: 1,
+        price: sum.price + x.quantity * x.price,
+      }),
+      { quantity: 1, price: 0 }
+    ).price;
+  }
 
-  console.log(this.totalCost)
-    return this.totalCost 
- }  
+ get AmbassadorDiscount() {
+    return  this.total * this.discount
+    //return "hello"
+  }
 
-PlaceOrder()
-{
+  get CalculatedVAT()
+  {
+    return this.vat * this.total
+  }
 
-  var orderdetails = {cartId: this.products[0].cartID, 
-    'itemCount': this.itemCount, 'discount': this.discount,
-    'vat': this.vat, 'subtotal': this.subtotal, 'totalCost': this.totalCost, 'deliveryOption': this.deliveryOption}
-    localStorage.setItem('checkout', JSON.stringify(orderdetails))
-    this.router.navigate(['/ambassador-checkout-ii'])
+  get OrderTotal()
+  {
+    if(this.deliveryOption == true)
+    {
+      return (this.total + 200) - this.AmbassadorDiscount
+    }
+    else{
+      return this.total - this.AmbassadorDiscount
+    }
     
-}
+  }
 
+  get TotalItems()
+  {
+    return this.items.length
+  }
+
+  //Place order
+  PlaceOrder() {
+    var itemArray = []
+    for(let item of this.items)
+    {
+      let cart = {} as CartItem
+      cart.merchandiseId = item.id
+      cart.quantity = item.quantity
+      cart.specialId = null
+      itemArray.push(cart)
+    }
+    console.log(itemArray);
+    
+    var one = 1   
+    this.api.AddToCart(one.toString(), itemArray).subscribe();
+
+    var orderdetails = {
+      'itemCount': this.TotalItems, 'discount': this.AmbassadorDiscount,
+      'vat': this.CalculatedVAT, 'subtotal': this.total, 'totalCost': this.OrderTotal, 'deliveryOption': this.deliveryOption}
+      localStorage.setItem('checkout', JSON.stringify(orderdetails))
+
+    this.router.navigate(['/ambassador-checkout-ii'])
+  }
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'view-merch',
+    redirectTo: 'add-special',
     pathMatch: 'full'
   },
   {
@@ -164,6 +164,19 @@ const routes: Routes = [
     path: 'view-ambassador-cart',
     loadChildren: () => import('./ambassador-order/view-ambassador-cart/view-ambassador-cart.module').then( m => m.ViewAmbassadorCartPageModule)
   },
+  {
+    path: 'view-special',
+    loadChildren: () => import('./Admin/Special/view-special/view-special.module').then( m => m.ViewSpecialPageModule)
+  },
+  {
+    path: 'add-special',
+    loadChildren: () => import('./Admin/Special/add-special/add-special.module').then( m => m.AddSpecialPageModule)
+  },
+  {
+    path: 'update-special',
+    loadChildren: () => import('./Admin/Special/update-special/update-special.module').then( m => m.UpdateSpecialPageModule)
+  },
+
 
 
 
