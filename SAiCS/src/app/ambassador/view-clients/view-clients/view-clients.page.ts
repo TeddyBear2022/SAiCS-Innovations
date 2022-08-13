@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
@@ -10,12 +11,15 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class ViewClientsPage implements OnInit {
 
-  constructor( private tmpStorage:TemporaryStorage, private api:ApiService) { }
+  constructor( private tmpStorage:TemporaryStorage,
+    private api:ApiService,
+    private menu:MenuController) { }
 
   ambassadorsList= [];
   userSesionInfo = [];
   
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
     this.userSesionInfo = this.tmpStorage.getSessioninfo();
     // this.ambassadorsList.push(this.userSesionInfo)
     console.log("testing")

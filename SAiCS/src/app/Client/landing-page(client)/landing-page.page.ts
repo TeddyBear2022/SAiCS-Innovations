@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { CartVM } from 'src/app/Models/ViewModels/CartVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
@@ -25,7 +25,8 @@ export class LandingPagePage implements OnInit {
   public popoverController: PopoverController, 
   private api: ApiService, private fb: FormBuilder,
   private route:Router,
-  private tmpStorage:TemporaryStorage){}
+  private tmpStorage:TemporaryStorage,
+  private menu:MenuController){}
   
   async presentPopover(event)
   {
@@ -38,6 +39,9 @@ export class LandingPagePage implements OnInit {
 
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
+    // this.menu.open('client-menu')
+    // this.menu.close()
     this.GetCatalog()
 
     this.ItemQuantity = this.fb.group({

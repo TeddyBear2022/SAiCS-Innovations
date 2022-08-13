@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';;
 import { CartVM } from 'src/app/Models/ViewModels/CartVM';
@@ -23,7 +23,8 @@ export class LandingPagePage implements OnInit {
   constructor(
   public popoverController: PopoverController, 
   private api: ApiService, private fb: FormBuilder,
-  private tmpStorage:TemporaryStorage){}
+  private tmpStorage:TemporaryStorage,
+  private menu:MenuController){}
   
   async presentPopover(event)
   {
@@ -45,6 +46,7 @@ export class LandingPagePage implements OnInit {
   //     })
   // }
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog()
 
     this.ItemQuantity = this.fb.group({

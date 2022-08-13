@@ -27,12 +27,10 @@ export class NextPage implements OnInit {
 
   ngOnInit() {
     this.register = new FormGroup({
-    //username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirmpassword: new FormControl('', Validators.required)
     
     })
-   
   }  
 
   //Registtion successful alert
@@ -53,9 +51,10 @@ export class NextPage implements OnInit {
     const alert = await this.alert.create({
       header: 'Registration',
       message: 'Your registration was sadly unsusccessful. Please ensure all the relevant details are present',
-      buttons: [ {text: 'OK'}]
+      buttons: [ {text: 'OK', handler: ()=> {
+        this.tempStorage.clearRegistrationInfo()
+        this.route.navigate(['home'])}}]
     });
-
     await alert.present();
   }
   
@@ -68,8 +67,7 @@ export class NextPage implements OnInit {
     else{
       if(this.register.get('password').value != this.register.get('confirmpassword').value){
         this.passwordMatchError = true
-        console.log("Passwords dont match")
-        
+        console.log("Passwords dont match") 
       }
      else
      {

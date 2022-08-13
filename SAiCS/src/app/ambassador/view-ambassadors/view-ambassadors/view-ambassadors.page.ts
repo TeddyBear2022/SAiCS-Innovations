@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { RankingModalComponent } from 'src/app/modals/ranking-modal/ranking-modal.component';
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
 import { ApiService } from 'src/app/Services/api.service';
@@ -17,9 +17,13 @@ export class ViewAmbassadorsPage implements OnInit {
   userSesionInfo =[];
   closeResult: string;
 
-  constructor(private modal: ModalController , private tmpStorage:TemporaryStorage, private api:ApiService) { }
+  constructor(private modal: ModalController , 
+    private tmpStorage:TemporaryStorage, 
+    private api:ApiService,
+    private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
     this.userSesionInfo = this.tmpStorage.getSessioninfo();
     // this.ambassadorsList.push(this.userSesionInfo)
     let credentials:credentialsVM = new credentialsVM()

@@ -27,6 +27,11 @@ import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
+import { loginToken } from '../Models/ViewModels/loginToken';
+import { ProfileVM } from '../Models/ViewModels/ProfileVM';
+import { PositionRequestsVM } from '../Models/ViewModels/PositionRequestVM';
+import { NewCourseVM } from '../Models/ViewModels/NewCourseVM';
+import { SectionContent } from '../Models/SectionContent';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +42,7 @@ export class ApiService {
 
   apilink:string = "https://localhost:44343/api/"
   token:any
+  updateCourseId:number;
 
   //get title
   getTitles():Observable<Title[]>{
@@ -66,8 +72,8 @@ export class ApiService {
     return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
   }
   //login
-  login(logindetails:LoginVM){
-    return this.api.post(this.apilink+"User/Login",logindetails)
+  login(logindetails:LoginVM):Observable<loginToken>{
+    return this.api.post<loginToken>(this.apilink+"User/Login",logindetails)
   }
   //get Users session info
   session(logindetails:LoginVM){
@@ -84,8 +90,8 @@ export class ApiService {
     return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
   }
   //delete user
-  deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
+  deleteUser(userID:string){
+    return this.api.delete(this.apilink+ `User/DeleteUser?userID=${userID}`)
   }
  
   //Feedback
@@ -126,9 +132,11 @@ export class ApiService {
   CreateFAQ(faq:FAQ){
     return this.api.post(this.apilink+'Admin/createFAQ',faq )
   }
-  DeleteFAQ(faq:FAQ){
-    return this.api.post(this.apilink+'Admin/deleteFAQ',faq)
+  // faqID
+  DeleteFAQ(faqID:number):Observable<boolean>{
+    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`)
   }
+
   GetAccountFAQ(): Observable<FAQ[]>
   {
     return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
@@ -157,12 +165,12 @@ export class ApiService {
     return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
   }
 
-  DeleteFAQCategory(deleteFAQ:FAQCategory){
-    return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
+  DeleteFAQCategory(faqCategoryID:number){
+    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`)
   }
 
-  UpdateFAQ(updateFAQ:FAQ){
-    return this.api.post(this.apilink+'Admin/updateFAQ', updateFAQ)
+  UpdateFAQ(updateFAQ:FAQ):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ)
   }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
@@ -307,4 +315,55 @@ export class ApiService {
   {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
   }
+
+  ValidateRefferralCode(refferalCode: string)
+  {
+    return this.api.get(this.apilink + `User/ValidateRefferralCode?refferalCode=${refferalCode}`)
+  }
+  SetToken(token:string){
+    this.token = token
+    localStorage.setItem("token",token)
+  }
+  ClearToken(){
+    this.token=""
+    localStorage.removeItem("token")
+  }
+  ApplicationStatus(id: string)
+  {
+    return this.api.get(this.apilink + `User/applicationStatus?id=${id}`)
+  }
+  Logout()
+  {
+    return this.api.get(this.apilink + `User/Logout`)
+  }
+
+  UpdateUser(user: ProfileVM):Observable<boolean>
+  {
+    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user)
+  }
+  PositionRequests():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+`Admin/PositionRequests`)
+  }
+  
+  //Course
+  CreateCourse(newCourse:NewCourseVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink + `Training/CreateCourse`, newCourse )
+  }
+
+  GetAllCourses():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+ `Training/GetAllCourses`)
+  }
+
+  setCourseId(courseId :number){
+    this.updateCourseId = courseId;
+  }
+
+  GetCourseDetails(id=this.updateCourseId){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+  }
+
+  UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+`Training/UpdateSectionContent`, sectionContent)
+  }
+  
 }

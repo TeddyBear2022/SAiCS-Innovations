@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup,Validators } from '@angular/forms';
 import { AlertController, ModalController,ToastController} from '@ionic/angular';
 import { ApiService } from 'src/app/Services/api.service';
 import {HttpClient,HttpResponse} from '@angular/common/http';
+import { NewCourseVM } from 'src/app/Models/ViewModels/NewCourseVM';
+import { SectionContent } from 'src/app/Models/SectionContent';
 
 
 
@@ -13,24 +15,50 @@ import {HttpClient,HttpResponse} from '@angular/common/http';
 })
 export class AddContentModalComponent implements OnInit {
 
+  newContent;
   AddContent:FormGroup;
   selectedFile = null
   isExisting: boolean = false
-  constructor(private modal: ModalController, private api:ApiService, private alert: AlertController,public toastController: ToastController, private fb: FormBuilder,) { }
+  constructor(private modal: ModalController, 
+    private api:ApiService, 
+    private alert: AlertController,
+    public toastController: ToastController, 
+    private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.AddContent = this.fb.group
+    this.AddContent = new FormGroup
     ({
       contentsectionname:new FormControl('', Validators.required),
-      estimatedduration:new FormControl('', Validators.required),
-      uploadDocs:new FormControl('', Validators.required),
-      UploadVids:new FormControl('', Validators.required),
-      ContentSectionInfo:new FormControl('', Validators.required),
+      contentheading:new FormControl('', Validators.required),
+      googledrivelink: new FormControl('', Validators.required),
+      youtubevideoheading: new FormControl('', Validators.required),
+      youtubeLink:new FormControl('', Validators.required)
     });
   }
     dismissModal()
     {
-      this.modal.dismiss();
+      // if(this.AddContent.invalid){
+
+      // }
+      this.modal.dismiss({newContent: this.newContent});
+    }
+    CreateContent(){
+      if(this.AddContent.valid){
+
+        // console.log(this.AddContent.value)
+        let content:SectionContent = new SectionContent
+        content.SectionName = this.AddContent.get(['contentsectionname']).value
+        content.ContentHeading = this.AddContent.get(['contentheading']).value
+        content.ContentLink = this.AddContent.get(['googledrivelink']).value
+        content.YoutubeHeading = this.AddContent.get(['youtubevideoheading']).value
+        content.YoutubeLink = this.AddContent.get(['youtubeLink']).value
+        this.newContent = content
+        this.dismissModal()
+      }
+      else{
+        console.log('Invalid form')
+      }
+      
     }
   }
 
