@@ -9,7 +9,8 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
   styleUrls: ['./faq.page.scss'],
 })
 export class FAQPage implements OnInit {
-  constructor(public popoverController: PopoverController){}
+  constructor(public popoverController: PopoverController,
+    private menu:MenuController){}
 
   // Show Profile optionss when icon on right of navbar clicked function
   async presentPopover(event)
@@ -22,6 +23,7 @@ export class FAQPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
   }
 
 }

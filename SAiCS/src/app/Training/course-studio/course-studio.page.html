@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons> 
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Courses</h1>
+  <ion-button fill="white" data-backdrop="static" data-keyboard="false" routerLink="/new-course">
+    <ion-icon name="add-circle-outline" size="large" id="addIcon" style="color: #08c10f;" ></ion-icon>
+  </ion-button><br>
+
+ <ion-row>
+ <!-- <ion-card>
+  <ion-card-content>
+    <ion-card-header>Ambassador Intro Course</ion-card-header>
+    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px">
+    
+   <ion-row>
+     <ion-item style="width: 250px;"> <img src="./assets/trainingImage.jpg" /></ion-item>
+       
+     <p>16 Videos<br> <br>5 Quizzes<br><br> 5 PDFs</p>   
+   </ion-row>
+   <ion-item style="margin-left: 50%;">
+   <ion-button (click)="UpdateCourse()" >Edit</ion-button>
+   <ion-button (click)="DeleteCourse()">Delete</ion-button>
+   </ion-item>
+  </ion-card-content>
+ </ion-card> -->
+
+ <ion-card *ngFor="let course of courses">
+  <ion-card-content>
+    <ion-card-header>{{course.courseName}}</ion-card-header>
+    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px">
+    
+   <ion-row>
+     {{course.description}}
+   </ion-row>
+   
+   <div align="right">
+   <ion-button (click)="UpdateCourse(course.courseId)" >Edit</ion-button>
+   <ion-button (click)="DeleteCourse(course.courseId)">Delete</ion-button>
+  </div>
+  </ion-card-content>
+ </ion-card>
+
+</ion-row>
+
+</ion-content>

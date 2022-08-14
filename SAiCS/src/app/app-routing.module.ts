@@ -68,10 +68,10 @@
       path: 'landing-page-admin',
       loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
     },
-    // {
-    //   path: 'view-faq',
-    //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
-    // },
+    {
+      path: 'view-faq',
+      loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+    },
     {
       path: 'view-faq',
       loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
@@ -81,37 +81,32 @@
     //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
     // },
 
-    // {
-    //   path: 'add-faq-modal',
-    //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
-    // },
-    {
-      path: 'view-product',
-      loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
-    },
-    {
-      path: 'view-package',
-      loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
-    },
-    {
-      path: 'ambassador-landing-page',
-      loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
-    },
-    {
-      path: 'performance-studio',
-      loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
-    },
-    {
-      path: 'product-details',
-      loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
-    },
+  // {
+  //   path: 'add-faq-modal',
+  //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
+  // },
+  {
+    path: 'view-merch',
+    loadChildren: () => import('./Product/ViewMerch/ViewMerch.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'ambassador-landing-page',
+    loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'performance-studio',
+    loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
+  },
+  {
+    path: 'product-details',
+    loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+  },
 
 
     {
       path: 'view-ambassador-faq',
       loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then(m=>m.ViewFaqPageModule)
     },
-
     {
       path: 'view-ambassador-feedback',
       loadChildren: () => import('./ambassador/view-ambassador-feedback/view-ambassador-feedback/view-ambassador-feedback.module').then( m => m.ViewAmbassadorFeedbackPageModule)
@@ -176,6 +171,27 @@
     path: 'client-checkout',
     loadChildren: () => import('./Client Order/client-checkout/client-checkout.module').then( m => m.ClientCheckoutPageModule)
     },
+  {
+    path: 'view-special',
+    loadChildren: () => import('./Admin/Special/view-special/view-special.module').then( m => m.ViewSpecialPageModule)
+  },
+  {
+    path: 'add-special',
+    loadChildren: () => import('./Admin/Special/add-special/add-special.module').then( m => m.AddSpecialPageModule)
+  },
+  {
+    path: 'update-special',
+    loadChildren: () => import('./Admin/Special/update-special/update-special.module').then( m => m.UpdateSpecialPageModule)
+  },
+  {
+    path: 'report',
+    loadChildren: () => import('./Report/report/report.module').then( m => m.ReportPageModule)
+  },
+
+  
+
+
+
 
   {
     path: 'landing-page',
@@ -231,7 +247,32 @@
       path: 'add-address',
       loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
     },
-    
+  {
+    path: 'navbar-menu',
+    loadChildren: () => import('./navbar-menu/navbar-menu.module').then( m => m.NavbarMenuPageModule)
+  },
+  {
+    path: 'position-requests',
+    loadChildren: () => import('./Admin/position-requests/position-requests.module').then( m => m.PositionRequestsPageModule)
+  },
+  {
+    path: 'target',
+    loadChildren: () => import('./Admin/target/target.module').then( m => m.TargetPageModule)
+  },
+  {
+    path: 'update-course',
+    loadChildren: () => import('./Training/update-course/update-course.module').then( m => m.UpdateCoursePageModule)
+  },
+  {
+    path: 'course-studio',
+    loadChildren: () => import('./Training/course-studio/course-studio.module').then( m => m.CourseStudioPageModule)
+  },
+  {
+    path: 'update-quiz',
+    loadChildren: () => import('./Training/update-quiz/update-quiz.module').then( m => m.UpdateQuizPageModule)
+  },
+
+
   ];
 
   @NgModule({

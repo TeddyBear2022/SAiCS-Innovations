@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, PopoverController } from '@ionic/angular';
@@ -15,12 +16,14 @@ export class UpdateFaqModalComponent implements OnInit {
   FAQ:FormGroup
   dbCategories = []
   updateFAQs;
+  faqs
   constructor(private modal: ModalController, private api:ApiService, private alert: AlertController, private popoverController:PopoverController) { }
 
   ngOnInit() {
+    console.log(this.faqs)
     this.FAQ = new FormGroup({
-      question: new FormControl('', Validators.required),
-      answer: new FormControl('', Validators.required)
+      question: new FormControl(this.updateFAQs.faqquestion, Validators.required),
+      answer: new FormControl(this.updateFAQs.faqanswers, Validators.required)
     })
   }
 
@@ -36,7 +39,7 @@ export class UpdateFaqModalComponent implements OnInit {
 
   //Close Modal
   dissmissModeal(){
-    this.modal.dismiss();
+    this.modal.dismiss({updatedfaqs: this.faqs});
     // this.alert.dismiss()
     // this.close()
     // console.log("close")
@@ -73,14 +76,29 @@ export class UpdateFaqModalComponent implements OnInit {
        
        this.api.UpdateFAQ(apiUpdateFAQ).subscribe(data =>{
          if(data == true){
-           this.dissmissModeal()
-           this.Success()
-         }
-         else{
-           this.dissmissModeal()
+          this.api.GetAllFAQS().subscribe(data=> {
+            this.faqs = data
+            console.log(this.faqs)
+            this.dissmissModeal()
+            this.Success()
+          })
+         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+       },(response: HttpErrorResponse) => {
+        
+        if (response.status === 404) {
+          this.dissmissModeal()
            this.UnSuccess()
-         }
-       })
+        }
+        if (response.status === 500){
+          this.dissmissModeal()
+           this.UnSuccess()
+        }
+        if (response.status === 400){
+          this.dissmissModeal()
+           this.UnSuccess()
+        }
+        
+      })
      }},
      {text: "Cancel",
      cssClass: 'Cancel',
@@ -109,7 +127,7 @@ export class UpdateFaqModalComponent implements OnInit {
       // subHeader: 'Subtitle',
       message: 'FAQ Has been successfully updated',
       buttons: [{text: 'Ok', handler: ()=> {
-      window.location.reload() 
+      // window.location.reload() 
       }
     }]
     });

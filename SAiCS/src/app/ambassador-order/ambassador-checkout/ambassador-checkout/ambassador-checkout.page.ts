@@ -57,7 +57,7 @@ export class AmbassadorCheckoutPage implements OnInit {
     address.RecipientNumber = this.newAddress.value.phone
     address.UserID = 1 //local storage things 
 
-    this.api.NewAddress(address).subscribe();
+    //this.api.NewAddress(address).subscribe();
     this.router.navigate(['/ambassador-checkout-ii'])
   }
   else

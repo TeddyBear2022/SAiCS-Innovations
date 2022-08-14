@@ -32,11 +32,10 @@
            <br>
            <form id="registerNextForm" [formGroup] = "register" (ngSubmit)="Register()" #localForm = ngForm>
              <ion-list>
-               <ion-item lines="none" >
-                <ion-label type = "text"  readonly style="color: black; align-items: center;" >{{registrationinfo[0].emailaddress}} </ion-label>            
+               <ion-item lines="none" style="margin-left:38% ;">
+                <ion-label type = "text"  readonly style ="color: black; align-items: center;" >{{registrationinfo[0].emailaddress}} </ion-label>            
                </ion-item>
                <!-- <span *ngIf="localForm.submitted && register.controls['username'].invalid" style="color: red;">Please enter a username</span> -->
-               <br>
                <ion-item lines="none">
                 <ion-input type="password" placeholder="Password" formControlName="password"> </ion-input>              
                </ion-item>

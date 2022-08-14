@@ -1,0 +1,147 @@
+<ion-button id="export" (click)="download()">
+  <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+  <span>Export</span>
+</ion-button>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="6">
+      <ion-accordion-group>
+        <ion-accordion
+          value="first"
+          toggleIcon="chevron-down-outline"
+          toggleIconSlot="end"
+        >
+          <ion-item id="accordionHeader" slot="header">
+            <ion-label id="AdSearch">ADVANCED SEARCH</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-4>
+                  <ion-label class="AdSearchOptions" style="margin-left: 1%"
+                    >Merchandise Type:</ion-label
+                  >
+                  <ion-select
+                    interface="popover"
+                    placeholder="Select type..."
+                    (ionChange)="onTypeSearch($event)"
+                  >
+                    <ion-select-option value=" ">All</ion-select-option>
+                    <ion-select-option value="package"
+                      >Package</ion-select-option
+                    >
+                    <ion-select-option value="product"
+                      >Product</ion-select-option
+                    >
+                  </ion-select>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-label class="AdSearchOptions" style="margin-left: 1%"
+                    >Merchandise Category:</ion-label
+                  >
+                  <ion-select
+                    interface="popover"
+                    placeholder="Select category..."
+                    (ionChange)="onCatSearch($event)"
+                  >
+                    <ion-select-option value=" ">All</ion-select-option>
+                    <ion-select-option value="cosmetic"
+                      >Cosmetic</ion-select-option
+                    >
+                    <ion-select-option value="lifestyle"
+                      >Lifestyle</ion-select-option
+                    >
+                    <ion-select-option value="slimming"
+                      >Slimming</ion-select-option
+                    >
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<br />
+<div style="align-items: center; display: flex; justify-content: center;">
+  <!-- <ngx-datatable [rows]="rows" [columns]="columns"> 
+  </ngx-datatable> -->
+  <table id="ProductList">
+    <thead>
+      <tr>
+        <th class="pointer" (click)="sortByCol('id')" style="width: 10%">
+          <span>
+            ID
+            <ion-icon
+              name="code-outline"
+              class="theadIcon"
+              slot="end"
+            ></ion-icon>
+          </span>
+        </th>
+        <th class="pointer" (click)="sortByCol('item')" style="width: 15%">
+          <span>
+            ITEM
+            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
+          </span>
+        </th>
+        <th class="pointer" (click)="sortByCol('description')">
+          <span>
+            DESCRIPTION
+            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
+          </span>
+        </th>
+        <th class="pointer" (click)="sortByCol('merchType')" style="width: 20%">
+          <span>
+            MERCHANDISE TYPE
+            <ion-icon
+              name="code-outline"
+              class="theadIcon"
+              slot="end"
+            ></ion-icon>
+          </span>
+        </th>
+        <th class="pointer" (click)="sortByCol('merchCat')" style="width: 15%">
+          <span>
+            MERCHANDISE CATEGORY
+            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
+          </span>
+        </th>
+        <th
+          class="pointer"
+          (click)="sortByCol('unitPrice')"
+          style="text-align: right; width: 12%"
+        >
+          <span>
+            UNIT PRICE
+            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
+          </span>
+        </th>
+        <th class="pointer" (click)="sortByCol('status')" style="width: 10%">
+          <span>
+            STATUS
+            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of rows">
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.item }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.merchType }}</td>
+          <td>{{ item.merchCat }}</td>
+          <td style="text-align: right">
+            {{ item.unitPrice | currency: "ZAR":"symbol-narrow" }}
+          </td>
+          <td>{{ item.status }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

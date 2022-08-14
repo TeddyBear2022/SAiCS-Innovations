@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { ModalCustomEvent } from '@ionic/core';
 import { AssignCourseModalComponent } from './assign-course-modal/assign-course-modal.component';
 
@@ -10,9 +10,11 @@ import { AssignCourseModalComponent } from './assign-course-modal/assign-course-
 })
 export class AssignCoursePage implements OnInit {
 
-  constructor(private modal: ModalController) { }
+  constructor(private modal: ModalController,
+    private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'admin-menu');
   }
   AssignCourse(){
     this.assigncourse()

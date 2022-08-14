@@ -16,18 +16,21 @@ import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
 import { Feedback } from '../Models/Feedback';
 import { FeedbackVM } from '../Models/ViewModels/FeedbackVM';
-import { Product } from '../Models/Product';
 import { FAQ } from '../Models/FAQ';
 import { FAQCategory } from '../Models/FAQCategory';
-import { ProductType } from '../Models/ProductType';
-import { ProductVM } from '../Models/ViewModels/ProductVM';
-import { PackageVM } from '../Models/ViewModels/PackageVM';
-import { PackageType } from '../Models/PackageType';
-import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
-import { Address } from '../Models/Address';
+import { loginToken } from '../Models/ViewModels/loginToken';
+import { ProfileVM } from '../Models/ViewModels/ProfileVM';
+import { PositionRequestsVM } from '../Models/ViewModels/PositionRequestVM';
+import { NewCourseVM } from '../Models/ViewModels/NewCourseVM';
+import { SectionContent } from '../Models/SectionContent';
+import { QuestionBank } from '../Models/QuestionBank';
+import { Quiz } from '../Models/Quiz';
+import { Course } from '../Models/Course';
+import { MerchVM } from '../Models/ViewModels/MerchVM';
+import { CartItem } from '../Models/CartItem';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +41,7 @@ export class ApiService {
 
   apilink:string = "https://localhost:44343/api/"
   token:any
+  updateCourseId:number;
 
   //get title
   getTitles():Observable<Title[]>{
@@ -67,8 +71,8 @@ export class ApiService {
     return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
   }
   //login
-  login(logindetails:LoginVM){
-    return this.api.post(this.apilink+"User/Login",logindetails)
+  login(logindetails:LoginVM):Observable<loginToken>{
+    return this.api.post<loginToken>(this.apilink+"User/Login",logindetails)
   }
   //get Users session info
   session(logindetails:LoginVM){
@@ -85,8 +89,8 @@ export class ApiService {
     return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
   }
   //delete user
-  deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
+  deleteUser(userID:string){
+    return this.api.delete(this.apilink+ `User/DeleteUser?userID=${userID}`)
   }
  
   //Feedback
@@ -112,24 +116,26 @@ export class ApiService {
   }
 
   // Catalog
-  GetCatalog()
-  {
-    return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
-  }
+  // GetCatalog()
+  // {
+  //   return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
+  // }
 
-  GetProductsById(id: number): Observable<Product[]>
-  {
-    return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
-  }
+  // GetProductsById(id: number): Observable<Product[]>
+  // {
+  //   return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
+  // }
 
   //FAQs
 
   CreateFAQ(faq:FAQ){
     return this.api.post(this.apilink+'Admin/createFAQ',faq )
   }
-  DeleteFAQ(faq:FAQ){
-    return this.api.post(this.apilink+'Admin/deleteFAQ',faq)
+  // faqID
+  DeleteFAQ(faqID:number):Observable<boolean>{
+    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`)
   }
+
   GetAccountFAQ(): Observable<FAQ[]>
   {
     return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
@@ -158,12 +164,12 @@ export class ApiService {
     return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
   }
 
-  DeleteFAQCategory(deleteFAQ:FAQCategory){
-    return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
+  DeleteFAQCategory(faqCategoryID:number){
+    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`)
   }
 
-  UpdateFAQ(updateFAQ:FAQ){
-    return this.api.post(this.apilink+'Admin/updateFAQ', updateFAQ)
+  UpdateFAQ(updateFAQ:FAQ):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ)
   }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
@@ -176,83 +182,56 @@ export class ApiService {
     return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
   }
 
-  //Product Subsystem
-  // Get all packages
-  GetPackages(): Observable<PackageVM[]>
-  {
-    return this.api.get<PackageVM[]>(this.apilink + 'Product/getPackages')
-  }
-
-  //Get package by name
-  GetPackageByName(name: string): Observable<PackageVM>
-  {
-    return this.api.get<PackageVM>(this.apilink + `Product/getPackageByName?name=${name}`)
-  }
-
-  //Get package types
-  GetPackageTypes(): Observable<PackageType[]>
-  {
-    return this.api.get<PackageType[]>(this.apilink + 'Product/getPackageTypes')
-  }
-
-
-  //Create package
-  CreatePackage(newPackage: PackageVM)
-  {
-    return this.api.post(this.apilink + "Product/createPackage", newPackage)
-  }
-
   
-  //Update package
-  UpdatePackage(name: string, newPackage: PackageVM): Observable<PackageVM>
+  //Product Subsystem
+  //Get MerchTypes
+  GetMerchTypes(): Observable<any>
   {
-    return this.api.put<PackageVM>(this.apilink + `Product/updatePackage?name=${name}`, newPackage)
+    return this.api.get(this.apilink + 'Product/GetMerchTypes');
   }
 
-  //Delete package
-  DeletePackage(id: number): Observable<PackageVM>
+  GetMerchCat(): Observable<any>
   {
-    return this.api.delete<PackageVM>(this.apilink + `Product/deletePackage?id=${id}`)
+    return this.api.get(this.apilink + 'Product/GetMerchCats');
   }
-
  
+   //Create product
+  CreateMerch(nMerch: MerchVM)
+  {
+    return this.api.post(this.apilink + "Product/CreateMerch", nMerch)
+  }
+
   // Get all products
-  GetProducts(): Observable<ProductVM[]>
+  GetAllMerch(): Observable<any>
   {
-    return this.api.get<ProductVM[]>(this.apilink + 'Product/getProducts')
+    return this.api.get(this.apilink + 'Product/GetMerch')
   }
 
-  //Get product by name
-  GetProductByName(name: string): Observable<ProductVM>
+  GetMerchById(id: number)
   {
-    return this.api.get<ProductVM>(this.apilink + `Product/getProductByName?name=${name}`)
+    return this.api.get(this.apilink + `Product/GetMerchById?id=${id}`)
   }
-
-  //Products
-  //Get product types
-  GetProductTypes(): Observable<ProductType[]>
-  {
-    return this.api.get<ProductType[]>(this.apilink + 'Product/getProductTypes')
-  }
-
-
-  //Create product
-  CreateProduct(newProduct: ProductVM)
-  {
-    return this.api.post(this.apilink + "Product/createProduct", newProduct)
-  }
-
   
   //Update product
-  UpdateProduct(name: string, newProduct: ProductVM): Observable<ProductVM>
+  UpdateMerch(id: number, uMerch: MerchVM): Observable<MerchVM>
   {
-    return this.api.put<ProductVM>(this.apilink + `Product/updateProduct?name=${name}`, newProduct)
+    return this.api.put<MerchVM>(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch)
   }
 
   //Delete product
-  DeleteProduct(id: number): Observable<ProductVM>
+  DeleteMerch(id: number)
   {
-    return this.api.delete<ProductVM>(this.apilink + `Product/deleteProduct?id=${id}`)
+    return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`)
+  }
+
+  AmbassadorDiscount(id)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`)
+  }
+
+  GetVAT()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
   }
 
 
@@ -279,12 +258,12 @@ export class ApiService {
     return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
   }
 
-  AddToCart(newItem: CartVM)
+  AddToCart(id: string,newItem: CartItem[])
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem)
   }
 
-  ViewCart()
+  GetCartItems()
   {
     return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
   }
@@ -309,8 +288,122 @@ export class ApiService {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
   }
 
-  NewAddress(address: Address)
+  ValidateRefferralCode(refferalCode: string)
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/NewAddress", address)
+    return this.api.get(this.apilink + `User/ValidateRefferralCode?refferalCode=${refferalCode}`)
+  }
+  SetToken(token:string){
+    this.token = token
+    localStorage.setItem("token",token)
+  }
+  ClearToken(){
+    this.token=""
+    localStorage.removeItem("token")
+  }
+  ApplicationStatus(id: string)
+  {
+    return this.api.get(this.apilink + `User/applicationStatus?id=${id}`)
+  }
+  Logout()
+  {
+    return this.api.get(this.apilink + `User/Logout`)
+  }
+
+  UpdateUser(user: ProfileVM):Observable<boolean>
+  {
+    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user)
+  }
+  PositionRequests():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+`Admin/PositionRequests`)
+  }
+  
+  //Course
+  CreateCourse(newCourse:NewCourseVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink + `Training/CreateCourse`, newCourse )
+  }
+
+  GetAllCourses():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+ `Training/GetAllCourses`)
+  }
+
+  setCourseId(courseId :number){
+    this.updateCourseId = courseId;
+  }
+
+  GetCourseDetails(id=this.updateCourseId){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+  }
+
+  UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+`Training/UpdateSectionContent`, sectionContent)
+  }
+  
+  UpdateQuizQuestion(quizQuestion:QuestionBank){
+    return this.api.patch(this.apilink+`Training/UpdateQuizQuestions`,quizQuestion)
+  }
+
+  UpdateQuiz(quiz:Quiz){
+    return this.api.patch(this.apilink+`Training/UpdateQuiz`,quiz)
+  }
+
+  UpdateCourse(updateCourse:Course){
+    return this.api.patch(this.apilink+ `Training/UpdateCourseTest`, updateCourse)
+  }
+
+  getCourseId(){
+    return this.updateCourseId
+  }
+
+  CreateQuizQuestion(createQuizQuestion:QuestionBank){
+    return this.api.post(this.apilink+ `Training/CreateQuizQuestion`, createQuizQuestion) 
+  }
+
+  GetCourseQuestionBank(quizId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuestionBank?quizId=${quizId}`)
+  }
+
+  GetCourseQuiz(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuiz?courseId=${courseId}`)
+  }
+
+  GetCourseSection(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseSectionContent?courseId=${courseId}`)
+  }
+
+  DeleteSectionContent(sectionContentId:number){
+    return this.api.delete(this.apilink + `Training/DeleteSectionContent?sectionContentId=${sectionContentId}`)
+  }
+
+  DeleteQuiz(quizId:number){
+    return this.api.delete(this.apilink + `Training/DeleteQuiz?quizId=${quizId}`)
+  }
+
+  DeleteCourseQuestion(questionBankId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourseQuestion?questionBankId=${questionBankId}`)
+  }
+
+  DeleteCourse(courseId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourse?courseId=${courseId}`)
+  }
+
+  CreateSectionContent(sectionContent: SectionContent){
+    return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
+  }
+
+
+  //Iteration 7
+  ProductListRep()
+  {
+    return this.api.get(this.apilink + "Report/ProductListRep")
+  }
+
+  AmbassadorListRep()
+  {
+    return this.api.get(this.apilink + "Report/AmbassadorListRep")
+  }
+
+  GetSalesRep()
+  {
+    return this.api.get(this.apilink + "Report/SalesRep")
   }
 }

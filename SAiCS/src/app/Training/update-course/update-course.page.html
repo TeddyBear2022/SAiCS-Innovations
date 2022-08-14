@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round" routerLink="/clients-cart">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="courseUpdateDetails" #localForm = 'ngForm' (ngSubmit)="UpdateCourse()">
+  <ion-grid>
+<h1 style="text-align: center;font-size: 50px;color: #333333;">Update Course</h1>
+<ion-row>
+  <ion-col></ion-col>
+  <ion-col></ion-col>
+    <ion-button type="submit" style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
+      Update
+    </ion-button>
+</ion-row>
+<ion-row>
+  <ion-col size="7" id="leftSection">
+<div class="CourseLeft">
+  <ion-button fill="white" data-backdrop="static" data-keyboard="false" (click)="AddContent()">
+    <ion-icon name="add-circle-outline" size="large" id="addIcon" style="color: #08c10f;" ></ion-icon>
+  </ion-button><br>
+  <h2 style="color: #333333">Course Content</h2>  
+   <ion-item style="width: 800px;">
+    <ion-col>
+  <ion-accordion-group *ngFor="let sectionContent of sectionContent;let i = index">
+    <ion-accordion>
+      <ion-item slot="header" color="light">
+        <ion-label slot="start">{{sectionContent.sectionName}}</ion-label>
+        <ion-button slot="end" (click)="UpdateSection(i)">Edit</ion-button>
+        <ion-button slot="end" (click)="DeleteSection(i)">Delete</ion-button>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label>-{{sectionContent.contentHeading}}</ion-label><br>
+        <ion-label>-{{sectionContent.youtubeHeading}}</ion-label> 
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-col>
+</ion-item>
+<h2>Quiz</h2>
+<!-- <ion-select style="border: black solid 1px;width:40%;" placeholder="Course Section"></ion-select> -->
+<ion-card>
+<ion-card-content *ngFor="let quiz of quiz">
+  <ion-card-header>
+  <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px">
+</ion-card-header>
+  <ion-row>
+   <label>{{quiz.quizName}}</label>
+ </ion-row>
+</ion-card-content>
+<ion-item> 
+  <ion-button slot="end" (click)="UpdateQuiz()">Edit</ion-button>
+  <ion-button slot="end">Delete</ion-button>
+</ion-item>
+</ion-card>
+</div>
+</ion-col>
+<ion-col size="5" id="UploadSection">
+<!-- <ion-content class="UploadSection"> -->
+  <div align="center" id="card" *ngFor="let c of courseName">
+  <ion-card id="courseDetails" >
+    <img src="./assets/newcoursepic.png"  alt="SaiCS member photo" />
+    <ion-input formControlName="updatecoursename" placeholder="Enter a Course Name" ></ion-input>
+    <span *ngIf="localForm.submitted  && courseUpdateDetails.controls['updatecoursename'].invalid" >Please Enter a valid Course Name</span>
+    <br><br>
+    <ion-textarea formControlName="updatedescription" placeholder="Enter a Description"></ion-textarea>
+    <span *ngIf="localForm.submitted  && courseUpdateDetails.controls['updatedescription'].invalid">Please Enter a valid Course Description</span>
+     <!-- console.log(this.quiz.quizName ); -->
+  
+    
+  </ion-card>
+  </div>
+<!-- </ion-content> -->
+</ion-col>
+</ion-row>
+</ion-grid>
+</form>
+</ion-content>

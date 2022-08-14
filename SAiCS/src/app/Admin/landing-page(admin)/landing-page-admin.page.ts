@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 
 @Component({
@@ -9,9 +9,11 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class LandingPageAdminPage implements OnInit {
 
-  constructor(public popoverController: PopoverController) { }
+  constructor(public popoverController: PopoverController,
+    private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'admin-menu');
   }
 
    // Show Profile optionss when icon on right of navbar clicked function
