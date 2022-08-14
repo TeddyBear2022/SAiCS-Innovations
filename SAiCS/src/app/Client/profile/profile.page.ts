@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, PopoverController } from '@ionic/angular';
+import { UpdateFaqModalComponent } from 'src/app/Admin/modals/update-faq-modal/update-faq-modal.component';
 import { DeleteUserVM } from 'src/app/Models/ViewModels/DeleteUserVM';
+import { ProfileVM } from 'src/app/Models/ViewModels/ProfileVM';
 import { registerationinfoVM } from 'src/app/Models/ViewModels/registerationinfoVM';
 import { registerVM } from 'src/app/Models/ViewModels/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
@@ -16,6 +19,8 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 
 export class ProfilePage implements OnInit {
+
+  //Data from api
   profileinfo= []
   title:string
   name:string
@@ -37,7 +42,17 @@ export class ProfilePage implements OnInit {
   aliasname:string
   aboutmyself:string
 
-  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage, private alert:AlertController, private route:Router, private api: ApiService){}
+  //Data from form to delete or update
+  form:FormGroup
+  
+  constructor(public popoverController: PopoverController, 
+    private tempStorage:TemporaryStorage, 
+    private alert:AlertController, 
+    private route:Router, 
+    private api: ApiService)
+    {
+     
+    }
 
   // Show Profile options when icon on right of navbar clicked function
   async presentPopover(event)
@@ -72,7 +87,20 @@ export class ProfilePage implements OnInit {
     this.aliasname=this.profileinfo[0].aliasname
     this.aboutmyself=this.profileinfo[0].aboutmyself
 
-  
+    //form
+    this.form = new FormGroup({
+      titleForm: new FormControl(this.title),
+      nameForm: new FormControl(this.name),
+      surnameForm: new FormControl(this.Surname),
+      emailaddressForm: new FormControl(this.emailaddress),
+      phonenumberForm: new FormControl(this.phonenumber),
+      usernameForm: new FormControl(this.username),
+      countryForm: new FormControl(this.country),
+      cityForm: new FormControl(this.city),
+      addressForm: new FormControl(this.address),
+      postalForm: new FormControl(this.postal)
+    })
+
   }
 
   close()
@@ -81,7 +109,7 @@ export class ProfilePage implements OnInit {
     this.popoverController.dismiss();
   }
 
-  //Are you sure 
+  //Are you sure (Delete)
   async confirm() {
     const alert = await this.alert.create({
       header: 'Delete',
@@ -89,13 +117,14 @@ export class ProfilePage implements OnInit {
       buttons: [{text: 'Yes', handler: ()=> {
         //this.tempStorage.clearRegistrationInfo()
         //clear session + delete user
-        let deleteUser:DeleteUserVM = new DeleteUserVM(this.profileinfo[0].userId)
+        let deleteUser = this.profileinfo[0].id
         this.api.deleteUser(deleteUser).subscribe(result=> {
+        console.log(result)
         if(result == true){
         this.tempStorage.logout()
         this.close()
         this.route.navigate(['home'])
-        console.log("done")
+        console.log("deleted user")
         }
         else{
           console.log(result)
@@ -111,9 +140,63 @@ export class ProfilePage implements OnInit {
   }
 
 
+  //Are you sure (Delete)
+  async confirmUpdate() {
+    const alert = await this.alert.create({
+      header: 'Update',
+      message: 'Are you sure?',
+      buttons: [{text: 'Yes', handler: ()=> {
+        //this.api
+        // console.log( this.form.get('addressForm').value);
+        let updateUser = new ProfileVM()
+        updateUser.Address = this.form.get('addressForm').value
+        updateUser.TitleId = this.form.get('titleForm').value
+        updateUser.Surname = this.form.get('surnameForm').value
+        updateUser.PhoneNumber = this.form.get('phonenumberForm').value
+        updateUser.CountryId = 1
+        updateUser.PostalCode = this.form.get('postalForm').value
+        updateUser.Id= this.profileinfo[0].id
+        updateUser.City = this.form.get('cityForm').value
+        updateUser.Name = this.form.get('nameForm').value
+        // console.log(updateUser);
+        this.api.UpdateUser(updateUser).subscribe(data => {
+          if(data == true){
+            this.alertNotif("Your details were successfully updated! ", "Update")
+          }
+          else{
+            this.alertNotif("Something went wrong, please try again later! ", "Opps!")
+          }
+          
+        })
+        
+ 
+      }},{text: "No", handler: ()=>
+      this.close()
+    }]
+    });
+
+    await alert.present();
+  }
+
+  //Notfication
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+
   //delete user
   Delete(){
     this.confirm()
     console.log(this.profileinfo[0].userId)
+  }
+
+  Update(){
+    this.confirmUpdate()
   }
 }

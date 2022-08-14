@@ -27,7 +27,6 @@ import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
-import { Address } from '../Models/Address';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +37,7 @@ export class ApiService {
 
   apilink:string = "https://localhost:44343/api/"
   token:any
+  updateCourseId:number;
 
   //get title
   getTitles():Observable<Title[]>{
@@ -67,8 +67,8 @@ export class ApiService {
     return this.api.post<AdminVM>(this.apilink+"User/RegisterAdmin",newAdmin )
   }
   //login
-  login(logindetails:LoginVM){
-    return this.api.post(this.apilink+"User/Login",logindetails)
+  login(logindetails:LoginVM):Observable<loginToken>{
+    return this.api.post<loginToken>(this.apilink+"User/Login",logindetails)
   }
   //get Users session info
   session(logindetails:LoginVM){
@@ -85,8 +85,8 @@ export class ApiService {
     return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
   }
   //delete user
-  deleteUser(deleteUser:DeleteUserVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink+ "User/DeleteUser", deleteUser)
+  deleteUser(userID:string){
+    return this.api.delete(this.apilink+ `User/DeleteUser?userID=${userID}`)
   }
  
   //Feedback
@@ -127,9 +127,11 @@ export class ApiService {
   CreateFAQ(faq:FAQ){
     return this.api.post(this.apilink+'Admin/createFAQ',faq )
   }
-  DeleteFAQ(faq:FAQ){
-    return this.api.post(this.apilink+'Admin/deleteFAQ',faq)
+  // faqID
+  DeleteFAQ(faqID:number):Observable<boolean>{
+    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`)
   }
+
   GetAccountFAQ(): Observable<FAQ[]>
   {
     return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
@@ -158,12 +160,12 @@ export class ApiService {
     return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
   }
 
-  DeleteFAQCategory(deleteFAQ:FAQCategory){
-    return this.api.post(this.apilink+'Admin/deleteFAQCategory', deleteFAQ)
+  DeleteFAQCategory(faqCategoryID:number){
+    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`)
   }
 
-  UpdateFAQ(updateFAQ:FAQ){
-    return this.api.post(this.apilink+'Admin/updateFAQ', updateFAQ)
+  UpdateFAQ(updateFAQ:FAQ):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ)
   }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
@@ -307,10 +309,5 @@ export class ApiService {
   Checkout(order: Order)
   {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
-  }
-
-  NewAddress(address: Address)
-  {
-    return this.api.post(this.apilink + "AmbassadorOrder/NewAddress", address)
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';;
 import { CartVM } from 'src/app/Models/ViewModels/CartVM';
 import { CartItem } from 'src/app/Models/CartItem';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,10 +18,13 @@ export class LandingPagePage implements OnInit {
   products: any
   ItemQuantity: FormGroup
   inputValue: number  = 1
+  session=[]
 
   constructor(
   public popoverController: PopoverController, 
-  private api: ApiService, private fb: FormBuilder){}
+  private api: ApiService, private fb: FormBuilder,
+  private tmpStorage:TemporaryStorage,
+  private menu:MenuController){}
   
   async presentPopover(event)
   {
@@ -42,11 +46,13 @@ export class LandingPagePage implements OnInit {
   //     })
   // }
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog()
 
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)
     })
+    this.session = this.tmpStorage.getSessioninfo()
   }
 
 
@@ -73,7 +79,7 @@ AddToCart(item: any)
  newItem.quantity = item.itemQuantity
 
  let cartvm = {} as CartVM 
- cartvm.userID = 1 //use session storage
+ cartvm.userID = this.session[0].id //use session storage
  cartvm.cartItem = newItem
  
 this.api.AddToCart(cartvm).subscribe((res) => {

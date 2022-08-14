@@ -1,4 +1,5 @@
 export class FAQCategory{
-    public FaqcategoryId:number
-    public CategoryName:string  
+    FaqcategoryId:number
+    CategoryName:string
+    FaqTypeId:number  
 }

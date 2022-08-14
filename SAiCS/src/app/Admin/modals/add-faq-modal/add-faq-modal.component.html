@@ -11,19 +11,19 @@
 <div align="center">
 
 <div align="left"  style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>FAQ Type:</b></i></label></div>
-<select formControlName="faqtype" interface="popover"  align="left">
+<select formControlName="faqtype" interface="popover"  align="left"  (change)="FAQType()">
   <option value= null disabled >Select FAQ Type</option>
-  <option value="1" >Client</option>
-  <option value="2" >Ambassador</option>
+  <option *ngFor="let f of FAQs" value={{f.faqtypeId}}>{{f.faqtypeName}}</option>
+  <!-- <option value="2" >Ambassador</option> -->
 </select>
 <br>
 <span *ngIf="localForm.submitted && FAQ.controls.faqtype.invalid"> Please select a FAQ Type</span>
 
 <section *ngIf="FAQ.controls.faqtype.valid">
 <div align="left"  style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>FAQ Category:</b></i></label></div>
-<select formControlName="category" interface="popover"  align="left">
+<select formControlName="category" interface="popover"  align="left" (change)="FAQCategory()">
   <option value="" disabled>Select FAQ Category</option>
-  <option *ngFor="let dbCategory of dbCategories" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</option>
+  <option *ngFor="let dbCategory of faqCategory" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</option>
 </select>
 <br>
 

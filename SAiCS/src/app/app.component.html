@@ -1,18 +1,19 @@
 <ion-app>
   <!-- menu -->
-<ion-menu menuId="main-menu" contentId="main-menu" type="overlay">
+  <!-- Client sub-system -->
+<ion-menu menuId="client-menu" content-id="main-menu" type="overlay">
   <ion-header>
     <ion-toolbar>
      <img src="./assets/Client Navbar logo.png" height="50px">
     </ion-toolbar>
   </ion-header>
-  <!-- Client sub-system -->
+
   <ion-content>
-    <ion-list *ngIf="userRole == 1">
+    <ion-list>
       <ion-menu-toggle>
         <ion-item routerLink="/landing-page" lines="none">
           <ion-icon name="home-outline" slot="start"></ion-icon>
-          <ion-label>Home</ion-label>
+          <ion-label>Client</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
@@ -34,18 +35,36 @@
         </ion-item>
       </ion-menu-toggle>
     </ion-list>
-  
 
-  <!-- ambassador sub system -->
-  <ion-list *ngIf="userRole == 2">
+</ion-content>
+  <ion-footer>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-icon size="large" name="help-circle-outline" slot="end"></ion-icon>
+        <ion-label slot="end">Help</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-footer>
+</ion-menu>
+
+<!-- Ambassador sub system -->
+<ion-menu menuId="ambassador-menu" content-id="main-menu" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+     <img src="./assets/Client Navbar logo.png" height="50px">
+    </ion-toolbar>
+  </ion-header>
+ 
+  <ion-content>
+  <ion-list >
     <ion-menu-toggle>
       <ion-item routerLink="/ambassador-landing-page" lines="none">
         <ion-icon name="home-outline" slot="start"></ion-icon>
-        <ion-label>Home</ion-label>
+        <ion-label>Ambassador</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
-    <ion-item routerLink="/feedback/view-feedback" lines="none">
+    <ion-item routerLink="" lines="none">
       <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
       <ion-label>Position Requests</ion-label>
     </ion-item>
@@ -75,7 +94,7 @@
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
-      <ion-item routerLink="/faq" lines="none">
+      <ion-item routerLink="access-course" lines="none">
         <ion-icon name="help-outline" slot="start"></ion-icon>
         <ion-label>Training</ion-label>
       </ion-item>
@@ -99,6 +118,86 @@
       </ion-item>
     </ion-menu-toggle>
   </ion-list>
+
+
+</ion-content>
+  <ion-footer>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-icon size="large" name="help-circle-outline" slot="end"></ion-icon>
+        <ion-label slot="end">Help</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-footer>
+</ion-menu>
+
+<!-- Admin sub system -->
+<ion-menu menuId="admin-menu" content-id="main-menu" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+     <img src="./assets/Client Navbar logo.png" height="50px">
+    </ion-toolbar>
+  </ion-header>
+ 
+  <ion-content>
+  <ion-list >
+    <ion-menu-toggle>
+      <ion-item routerLink="/landing-page-admin" lines="none">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Admin</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+    <ion-item routerLink="/position-requests" lines="none">
+      <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
+      <ion-label>Position Requests</ion-label>
+    </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="" lines="none">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Ambassadors</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Reports</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Merchandise</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="course-studio" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Training Courses</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Specials</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>Feedbacks</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="view-faq" lines="none">
+        <ion-icon name="help-outline" slot="start"></ion-icon>
+        <ion-label>FAQs</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+
+
 </ion-content>
   <ion-footer>
     <ion-list>

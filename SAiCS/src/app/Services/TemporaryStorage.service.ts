@@ -14,10 +14,10 @@ import { registerVM } from "../Models/ViewModels/registerVM"
       if(!localStorage.getItem('registerInfo' &&'accessInfo')){
         let registerInfo:registerationinfoVM[] = []
         let accessInfo:accessInfoVM[]=[]
-        let sessioninfo:registerVM[] =[]
+        //let sessioninfo:registerVM[] =[]
         localStorage.setItem('registerInfo', JSON.stringify(registerInfo))
         localStorage.setItem('accessInfo', JSON.stringify(accessInfo))
-        localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
+        //localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
       }
      }
 

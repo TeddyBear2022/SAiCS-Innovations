@@ -1,5 +1,5 @@
 export class credentialsVM{
     token:any
-    expirationDate:Date
+    expiration:Date
     userID:string
 }

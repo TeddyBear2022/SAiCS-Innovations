@@ -68,10 +68,10 @@
       path: 'landing-page-admin',
       loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
     },
-    // {
-    //   path: 'view-faq',
-    //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
-    // },
+    {
+      path: 'view-faq',
+      loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+    },
     {
       path: 'view-faq',
       loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
@@ -111,7 +111,6 @@
       path: 'view-ambassador-faq',
       loadChildren: () => import('./ambassador/faq/view-faq/view-faq.module').then(m=>m.ViewFaqPageModule)
     },
-
     {
       path: 'view-ambassador-feedback',
       loadChildren: () => import('./ambassador/view-ambassador-feedback/view-ambassador-feedback/view-ambassador-feedback.module').then( m => m.ViewAmbassadorFeedbackPageModule)
@@ -231,7 +230,32 @@
       path: 'add-address',
       loadChildren: () => import('./Client Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
     },
-    
+  {
+    path: 'navbar-menu',
+    loadChildren: () => import('./navbar-menu/navbar-menu.module').then( m => m.NavbarMenuPageModule)
+  },
+  {
+    path: 'position-requests',
+    loadChildren: () => import('./Admin/position-requests/position-requests.module').then( m => m.PositionRequestsPageModule)
+  },
+  {
+    path: 'target',
+    loadChildren: () => import('./Admin/target/target.module').then( m => m.TargetPageModule)
+  },
+  {
+    path: 'update-course',
+    loadChildren: () => import('./Training/update-course/update-course.module').then( m => m.UpdateCoursePageModule)
+  },
+  {
+    path: 'course-studio',
+    loadChildren: () => import('./Training/course-studio/course-studio.module').then( m => m.CourseStudioPageModule)
+  },
+  {
+    path: 'update-quiz',
+    loadChildren: () => import('./Training/update-quiz/update-quiz.module').then( m => m.UpdateQuizPageModule)
+  },
+
+
   ];
 
   @NgModule({

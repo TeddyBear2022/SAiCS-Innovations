@@ -1,6 +1,6 @@
 import { CartItem } from "../CartItem"
 
 export class CartVM{
-    userID: number
+    userID: string
     cartItem: CartItem
 }

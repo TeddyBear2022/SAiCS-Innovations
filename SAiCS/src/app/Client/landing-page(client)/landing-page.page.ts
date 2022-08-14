@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { CartVM } from 'src/app/Models/ViewModels/CartVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,11 +19,14 @@ export class LandingPagePage implements OnInit {
   products: any
   ItemQuantity: FormGroup
   inputValue: number  = 1
+  session=[]
 
   constructor(
   public popoverController: PopoverController, 
   private api: ApiService, private fb: FormBuilder,
-  private route:Router){}
+  private route:Router,
+  private tmpStorage:TemporaryStorage,
+  private menu:MenuController){}
   
   async presentPopover(event)
   {
@@ -35,11 +39,15 @@ export class LandingPagePage implements OnInit {
 
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
+    // this.menu.open('client-menu')
+    // this.menu.close()
     this.GetCatalog()
 
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)
     })
+    this.session = this.tmpStorage.getSessioninfo()
   }
 
 
@@ -63,7 +71,7 @@ AddToCart(item: any)
  newItem.quantity = item.itemQuantity
 
  let cartvm = {} as CartVM 
- cartvm.userID = 1 //use session storage
+ cartvm.userID = this.session[0].id //use session storage
  cartvm.cartItem = newItem
  
 this.api.AddToCart(cartvm).subscribe((res) => {
@@ -72,7 +80,7 @@ this.api.AddToCart(cartvm).subscribe((res) => {
   localStorage.setItem('MarkedItem',JSON.stringify(marked))
 });
 
- console.log(newItem)
+ console.log(cartvm)
 }
 
 incrementQty(index: number) {

@@ -14,13 +14,21 @@ export class MaintainCategoryModalComponent implements OnInit {
 
   constructor(private modal: ModalController, private api:ApiService, private alert:AlertController, private popoverController: PopoverController) { }
 
+
   category:FormGroup
   newcategory:any
   categories=[]
   error:boolean = false
+  typeSelected:boolean= false
+
+  //next
+  FAQs = []
+  // FaqCategory = []
+
   ngOnInit() {
     this.category = new FormGroup({
-      category: new FormControl()
+      category: new FormControl(),
+      faqType: new FormControl()
     })
   }
   ionViewWillEnter(){
@@ -28,6 +36,20 @@ export class MaintainCategoryModalComponent implements OnInit {
       this.categories = data
       console.log(data)
     })
+
+    this.api.GetAllFAQS().subscribe(data=> {
+      this.FAQs = data
+      console.log(this.FAQs)
+    })
+  }
+
+  FAQType(){
+    this.typeSelected = true
+    for(var category of this.FAQs){
+      if(category.faqtypeId == this.category.get(['faqType']).value){
+        this.categories = category.faqcategories
+      }
+    }
   }
 
   dissmissModeal(){
@@ -50,7 +72,7 @@ export class MaintainCategoryModalComponent implements OnInit {
       handler: ()=> {
         //if confirm clicked
         console.log(deleteFAQ)
-        this.api.DeleteFAQCategory(deleteFAQ).subscribe(data =>{
+        this.api.DeleteFAQCategory(deleteFAQ.FaqcategoryId).subscribe(data =>{
           if(data == true){
             this.SuccessDeleted()
           }
@@ -75,8 +97,10 @@ export class MaintainCategoryModalComponent implements OnInit {
   CreateCategory(){
     if(this.category.get('category').value !=null){
       this.error = false
+
       let newCategory = new FAQCategory()
       newCategory.CategoryName = this.category.get('category').value
+      newCategory.FaqTypeId= this.category.get(['faqType']).value
       this.api.CreateFAQCategory(newCategory).subscribe(data =>
         {
           if(data == true){
@@ -115,7 +139,7 @@ export class MaintainCategoryModalComponent implements OnInit {
       message: 'Category has been successfully created',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
-        window.location.reload() 
+         
       }
     }]
     });

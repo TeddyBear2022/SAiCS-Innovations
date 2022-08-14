@@ -31,30 +31,30 @@
   </ion-row>
 
   <br>
-  <ion-row> 
-    <ion-select placeholder="FAQ Type" [(ngModel)]="faqType" (ionChange)="FAQType()" interface="popover" >
-      <ion-select-option value="1">Client</ion-select-option>
-      <ion-select-option value="2" >Ambassador</ion-select-option>
+  <ion-row > 
+    <ion-select placeholder="FAQ Type" [(ngModel)]="faqType" (ionChange)="FAQType()" interface="popover"  >
+      <ion-select-option *ngFor="let f of FAQs" value={{f.faqtypeId}}>{{f.faqtypeName}}</ion-select-option>
     </ion-select>
     <ion-col></ion-col>
     <ion-col></ion-col>
   </ion-row>
+
   <br>
   <ion-row *ngIf="chosenfaqtype !=null">
     <ion-select placeholder="Category" [(ngModel)]="category" (ionChange)="FAQCategory()" interface="popover" >
-       <ion-select-option *ngFor="let dbCategory of dbCategories" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</ion-select-option>
+       <ion-select-option *ngFor="let dbCategory of faqCategory" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</ion-select-option>
     </ion-select>
     <a (click)="MaintainCategory()"><u> Maintain Category?</u></a>
   </ion-row>
 
   <section *ngIf="filter">
   <section >
-    <h2>{{showCategory.categoryName}}</h2>
+    <h2>{{categoryHeading}}</h2>
     <ion-row>
       <br>
-      <ng-container *ngFor="let FAQ of FAQs" >
-        <ng-container *ngIf="FAQ.faqcategoryId == showCategory.faqcategoryId">
-      <ion-card *ngIf="FAQ.faqtypeId == chosenfaqtype" >
+      <ng-container *ngFor="let FAQ of filteredFAQS" >
+        <ng-container >
+      <ion-card>
         <ion-card-header>
           <ion-card-subtitle></ion-card-subtitle>
         </ion-card-header>
