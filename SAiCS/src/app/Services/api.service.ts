@@ -27,6 +27,14 @@ import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
+import { loginToken } from '../Models/ViewModels/loginToken';
+import { ProfileVM } from '../Models/ViewModels/ProfileVM';
+import { PositionRequestsVM } from '../Models/ViewModels/PositionRequestVM';
+import { NewCourseVM } from '../Models/ViewModels/NewCourseVM';
+import { SectionContent } from '../Models/SectionContent';
+import { QuestionBank } from '../Models/QuestionBank';
+import { Quiz } from '../Models/Quiz';
+import { Course } from '../Models/Course';
 
 @Injectable({
   providedIn: 'root'
@@ -309,5 +317,107 @@ export class ApiService {
   Checkout(order: Order)
   {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
+  }
+
+  ValidateRefferralCode(refferalCode: string)
+  {
+    return this.api.get(this.apilink + `User/ValidateRefferralCode?refferalCode=${refferalCode}`)
+  }
+  SetToken(token:string){
+    this.token = token
+    localStorage.setItem("token",token)
+  }
+  ClearToken(){
+    this.token=""
+    localStorage.removeItem("token")
+  }
+  ApplicationStatus(id: string)
+  {
+    return this.api.get(this.apilink + `User/applicationStatus?id=${id}`)
+  }
+  Logout()
+  {
+    return this.api.get(this.apilink + `User/Logout`)
+  }
+
+  UpdateUser(user: ProfileVM):Observable<boolean>
+  {
+    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user)
+  }
+  PositionRequests():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+`Admin/PositionRequests`)
+  }
+  
+  //Course
+  CreateCourse(newCourse:NewCourseVM):Observable<boolean>{
+    return this.api.post<boolean>(this.apilink + `Training/CreateCourse`, newCourse )
+  }
+
+  GetAllCourses():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+ `Training/GetAllCourses`)
+  }
+
+  setCourseId(courseId :number){
+    this.updateCourseId = courseId;
+  }
+
+  GetCourseDetails(id=this.updateCourseId){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+  }
+
+  UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
+    return this.api.patch<boolean>(this.apilink+`Training/UpdateSectionContent`, sectionContent)
+  }
+  
+  UpdateQuizQuestion(quizQuestion:QuestionBank){
+    return this.api.patch(this.apilink+`Training/UpdateQuizQuestions`,quizQuestion)
+  }
+
+  UpdateQuiz(quiz:Quiz){
+    return this.api.patch(this.apilink+`Training/UpdateQuiz`,quiz)
+  }
+
+  UpdateCourse(updateCourse:Course){
+    return this.api.patch(this.apilink+ `Training/UpdateCourseTest`, updateCourse)
+  }
+
+  getCourseId(){
+    return this.updateCourseId
+  }
+
+  CreateQuizQuestion(createQuizQuestion:QuestionBank){
+    return this.api.post(this.apilink+ `Training/CreateQuizQuestion`, createQuizQuestion) 
+  }
+
+  GetCourseQuestionBank(quizId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuestionBank?quizId=${quizId}`)
+  }
+
+  GetCourseQuiz(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuiz?courseId=${courseId}`)
+  }
+
+  GetCourseSection(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseSectionContent?courseId=${courseId}`)
+  }
+
+  DeleteSectionContent(sectionContentId:number){
+    return this.api.delete(this.apilink + `Training/DeleteSectionContent?sectionContentId=${sectionContentId}`)
+  }
+
+  DeleteQuiz(quizId:number){
+    return this.api.delete(this.apilink + `Training/DeleteQuiz?quizId=${quizId}`)
+  }
+
+  DeleteCourseQuestion(questionBankId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourseQuestion?questionBankId=${questionBankId}`)
+  }
+
+  DeleteCourse(courseId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourse?courseId=${courseId}`)
+  }
+
+  CreateSectionContent(sectionContent: SectionContent){
+    return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
   }
 }
