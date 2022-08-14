@@ -63,24 +63,24 @@ console.log(this.products)
 AddToCart(item: any)
 {
 
- let newItem = {} as CartItem
- newItem.packageId = item.itemType === 2? item.itemID : null
- newItem.productId = item.itemType === 1? item.itemID : null
- newItem.specialId = null
- newItem.price = item.itemPrice
- newItem.quantity = item.itemQuantity
+//  let newItem = {} as CartItem
+//  newItem.packageId = item.itemType === 2? item.itemID : null
+//  newItem.productId = item.itemType === 1? item.itemID : null
+//  newItem.specialId = null
+//  newItem.price = item.itemPrice
+//  newItem.quantity = item.itemQuantity
 
- let cartvm = {} as CartVM 
- cartvm.userID = this.session[0].id //use session storage
- cartvm.cartItem = newItem
+//  let cartvm = {} as CartVM 
+//  cartvm.userID = this.session[0].id //use session storage
+//  cartvm.cartItem = newItem
  
-this.api.AddToCart(cartvm).subscribe((res) => {
-  console.log(res);
-  var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
-  localStorage.setItem('MarkedItem',JSON.stringify(marked))
-});
+// this.api.AddToCart(cartvm).subscribe((res) => {
+//   console.log(res);
+//   var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
+//   localStorage.setItem('MarkedItem',JSON.stringify(marked))
+// });
 
- console.log(cartvm)
+ //console.log(cartvm)
 }
 
 incrementQty(index: number) {
