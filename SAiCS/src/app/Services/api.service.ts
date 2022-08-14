@@ -269,4 +269,21 @@ export class ApiService {
   {
     return this.api.post(this.apilink + "AmbassadorOrder/NewAddress", address)
   }
+
+
+  //Iteration 7
+  ProductListRep()
+  {
+    return this.api.get(this.apilink + "Report/ProductListRep")
+  }
+
+  AmbassadorListRep()
+  {
+    return this.api.get(this.apilink + "Report/AmbassadorListRep")
+  }
+
+  GetSalesRep()
+  {
+    return this.api.get(this.apilink + "Report/SalesRep")
+  }
 }

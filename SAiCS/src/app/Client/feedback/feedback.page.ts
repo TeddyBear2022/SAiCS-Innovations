@@ -14,6 +14,7 @@ export class FeedbackPage implements OnInit {
   //Variables
   feedbackForm: FormGroup
   myAmbassador = []
+  products = []
   //products: Product[]
   ambassador: number
   constructor(

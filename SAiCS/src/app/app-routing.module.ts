@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'add-special',
+    redirectTo: 'report',
     pathMatch: 'full'
   },
   {
@@ -176,6 +176,14 @@ const routes: Routes = [
     path: 'update-special',
     loadChildren: () => import('./Admin/Special/update-special/update-special.module').then( m => m.UpdateSpecialPageModule)
   },
+  {
+    path: 'report',
+    loadChildren: () => import('./Report/report/report.module').then( m => m.ReportPageModule)
+  },
+
+  
+
+
 
 
 

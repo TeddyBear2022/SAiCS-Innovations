@@ -9,11 +9,13 @@ import { AppRoutingModule } from './app-routing.module';
 import{HttpClientModule} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { ReportComponentsModule } from './Report/report-components/report-components.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule],
+  imports: [BrowserModule, NgxDatatableModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule, ReportComponentsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],
   bootstrap: [AppComponent],
 })

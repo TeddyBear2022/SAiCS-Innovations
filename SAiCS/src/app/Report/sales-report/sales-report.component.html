@@ -1,0 +1,83 @@
+<ion-button id="export" (click)="download()">
+  <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+  <span>Export</span>
+   </ion-button>
+   
+<div style="align-items: center; display: flex; justify-content: center;">
+  <!-- <ngx-datatable #myTable
+  id=""
+  [rows]="rows" 
+  [groupRowsBy]="'Category'"
+  [columnMode]="'force'"
+  [rowClass]="getRowClass"
+  [groupExpansionDefault]="true"
+  [headerHeight]="50"
+  [rowHeight]="40"
+  style="align-self: center;"
+  >  -->
+<!-- Group Header Template -->
+<!-- <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)" class="datatable-header">
+  <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+    <div style="padding-left:5px; width: 100%; background-color: white; padding-top: 2%;">
+      <span
+        title="Expand/Collapse Group"
+        (click)="toggleExpandGroup(group)"
+        
+      >
+        <b>{{ group.value[0].Category }}</b>
+    </span>
+    </div>
+  </ng-template>
+</ngx-datatable-group-header>
+
+  <ngx-datatable-column name="MERCHANDISE NAME"  prop="Name" 
+  [canAutoResize]="false"
+  [resizeable]="false"
+  [width]="300"
+  headerClass="headerClass"
+  >
+  </ngx-datatable-column>
+  <ngx-datatable-column name="UNIT PRICE" prop="Price" 
+  [canAutoResize]="false"
+  [resizeable]="false"
+  [width]="150"
+  headerClass="headerClass"
+  ></ngx-datatable-column>
+  <ngx-datatable-column name="QUANTITY" prop="Quantity" 
+  [canAutoResize]="false"
+  [resizeable]="false"
+  [width]="150"
+  headerClass="headerClass"
+  ></ngx-datatable-column>
+  <ngx-datatable-column name="TOTAL SALES" prop="Total" 
+  [canAutoResize]="false"
+  [resizeable]="false"
+  [width]="150"
+  headerClass="headerClass"
+  ></ngx-datatable-column>
+  </ngx-datatable> -->
+
+  <table id="SalesTable">
+    <thead>
+       <tr>
+        <th class="pointer" (click)= "sortByCol('Name')" style="width: 15%;">MERCHANDISE NAME</th> 
+        <th class="pointer"  (click)= "sortByCol('Price')" style="text-align: right; width: 10%;">UNIT PRICE</th> 
+        <th class="pointer" (click)= "sortByCol('Quantity')" style="text-align: right; width: 10%;">QUANTITY SOLD</th> 
+        <th class="pointer" (click)= "sortByCol('Total')" style="text-align: right; width: 10%;">TOTAL SALES</th> 
+       </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of result">
+        <tr>
+          <td colspan="4"><b>{{item.name}}</b></td>
+        </tr>
+        <tr *ngFor="let value of item.values">
+          <td>{{value.Name}}</td>
+          <td style="text-align: right;" >{{value.Price | currency:'ZAR':'symbol-narrow'}}</td>
+          <td style="text-align: right;" >{{value.Quantity}}</td>
+          <td style="text-align: right;" >{{value.Total | currency:'ZAR':'symbol-narrow'}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
