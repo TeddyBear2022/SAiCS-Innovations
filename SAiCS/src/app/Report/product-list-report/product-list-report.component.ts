@@ -14,6 +14,7 @@ export class ProductListReportComponent implements OnInit {
 
   rows = [];
   temp = [];
+  allRows = [];
   
   constructor(private api: ApiService, private CURRENCY: CurrencyPipe) {
     this.GetProductList()
@@ -51,7 +52,15 @@ export class ProductListReportComponent implements OnInit {
    //let nes = [] 
     
     const value = (event.target as HTMLInputElement).value.toLowerCase();
-    value == '' ? this.rows = this.rows: this.rows = this.filterRows(value, this.previousCatFilter)
+    if(value != " ")
+    {
+      this.rows = this.filterRows(value, this.previousCatFilter)
+    }
+    else
+    {
+      this.GetProductList()
+    }
+    
   }
 
   onCatSearch(event: Event)
@@ -59,8 +68,14 @@ export class ProductListReportComponent implements OnInit {
    //let nes = [] 
     
     const value = (event.target as HTMLInputElement).value.toLowerCase();
-    value == '' ? this.rows : this.rows = this.filterRows(this.previousTypeFilter,value)
-    console.log(this.rows);
+
+    if(value != " "){
+      this.rows = this.filterRows(this.previousTypeFilter,value)
+    }
+    else{
+      this.GetProductList()
+    }
+    
     
   }
 
@@ -69,7 +84,7 @@ export class ProductListReportComponent implements OnInit {
     return this.temp.filter(x => {
     if(filterCat === " " && filterCat === " ")
     {
-      this.rows 
+      this.rows = this.allRows
     }
     else{
       return x.merchCat.toLowerCase() === filterCat || x.merchType.toLowerCase() === filterType
