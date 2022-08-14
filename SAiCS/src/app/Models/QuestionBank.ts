@@ -5,5 +5,6 @@ export class QuestionBank{
     Option1:string
     Option2:string
     Option3:string
+    QuizId:number
 
 }

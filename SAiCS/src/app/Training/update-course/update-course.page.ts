@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MenuController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, MenuController, ModalController } from '@ionic/angular';
 import { Course } from 'src/app/Models/Course';
 import { QuestionBank } from 'src/app/Models/QuestionBank';
 import { Quiz } from 'src/app/Models/Quiz';
@@ -31,7 +32,9 @@ export class UpdateCoursePage implements OnInit {
   
   constructor(private modal:ModalController,
     private menu:MenuController, 
-    private api:ApiService) { }
+    private api:ApiService, 
+    private router:Router, 
+    private alert:AlertController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
@@ -39,7 +42,7 @@ export class UpdateCoursePage implements OnInit {
       // console.log(data);
       this.courseDetails = data
       this.course = this.courseDetails.course;
-      for(var x=0; x<= this.courseDetails.questionBank.length-1; x++){
+      for(var x=0; x <= this.courseDetails.questionBank.length-1; x++){
         this.questionBank.push(this.courseDetails.questionBank[x]);
       }
       this.quiz.push(this.courseDetails.quiz)
@@ -51,13 +54,14 @@ export class UpdateCoursePage implements OnInit {
       this.courseDescription.push(this.course.description)
       
     })
+// console.log(this.courseName);
 
-    console.log(this.quiz);
+    // console.log(this.quiz);
     this.courseUpdateDetails = new FormGroup({
       updatecoursename: new FormControl(this.courseName, Validators.required),
       updatedescription: new FormControl(this.courseDescription, Validators.required)
     })
-    console.log(this.questionBank);
+    // console.log(this.questionBank);
     // console.log(this.courseDetails.course);
     
   }
@@ -65,8 +69,9 @@ export class UpdateCoursePage implements OnInit {
     console.log(sectionIndex)
     this.updateSectionModal(sectionIndex);
   }
-  DeleteSection(){
-    console.log("Delete Section")
+  DeleteSection(index:number){
+    console.log("Delete Section", index)
+    this.alertNotif("", "Are you sure you want to delete this section?", index)
   }
 
   async updateSectionModal(sectionIndex)
@@ -82,29 +87,73 @@ export class UpdateCoursePage implements OnInit {
 
       // id: 'addquizClass',
     });
-    modals.onDidDismiss().then(() => {
-    
+    modals.onDidDismiss().then((data) => {
+    // console.log(data.data.updatedSection);
+    this.sectionContent = data.data.updatedSection
     })
      await modals.present();
   }
+
   UpdateCourse(){
-    console.log(this.course.courseName);
+    if(this.courseUpdateDetails.valid){
+      let UpdateCourse:Course= new Course();
+      let coursenameArray = this.courseUpdateDetails.get(['updatecoursename']).value
+      UpdateCourse.CourseName=coursenameArray.toString()
+      let courseDescriptionArray =  this.courseUpdateDetails.get(['updatedescription']).value
+      UpdateCourse.Description =  courseDescriptionArray.toString()
+      UpdateCourse.CourseId = this.api.getCourseId()
+      console.log(UpdateCourse);
+      this.api.UpdateCourse(UpdateCourse).subscribe(data=>
+        {
+          if(data == true){
+            this.router.navigate(['course-studio'])
+          }
+          else{
+          console.log("Invalid error");
+          
+          }
+        })
+    }
+    else{
+      console.log("invalid update course");
+      
+    }
+ 
   }
-  updateSection(){
-    this.updatesection()
-  }
-  async updatesection()
-  {
-   const modals = await this.modal.create({
-      component: UpdateSectionModalPage,      
-      id: 'addcontentClass',
+
+  async alertNotif(header:string, message:string, index:number) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'Yes', handler: ()=>{
+       this.api.DeleteSectionContent(this.sectionContent[index].sectionContentId).subscribe(data=>
+        {
+          this.api.GetCourseSection(this.api.getCourseId()).subscribe(data=>
+            {
+              this.sectionContent = data              
+            })
+          console.log(data);
+        }) 
+      }}, {text:'No'}],
     });
-    modals.onDidDismiss().then((data) => {
-      console.log(data);
-        
-    })
-    return await modals.present();
+
+    await alert.present();
   }
+  // updateSection(){
+  //   this.updatesection()
+  // }
+  // async updatesection()
+  // {
+  //  const modals = await this.modal.create({
+  //     component: UpdateSectionModalPage,      
+  //     // id: 'addcontentClass',
+  //   });
+  //   modals.onDidDismiss().then((data) => {
+  //     console.log("data.data.updatedSection");
+        
+  //   })
+  //   return await modals.present();
+  // }
 
   UpdateQuiz(){
     this.updatequiz()
@@ -120,8 +169,9 @@ export class UpdateCoursePage implements OnInit {
       // id: 'addcontentClass',
     });
     modals.onDidDismiss().then((data) => {
-      console.log(data);
-        
+      console.log(data.data.updatedQuiz);
+      this.quiz = []
+        this.quiz.push(data.data.updatedQuiz)
     })
     return await modals.present();
   }
@@ -137,12 +187,9 @@ export class UpdateCoursePage implements OnInit {
       id: 'addcontentClass',
     });
     modals.onDidDismiss().then((data) => {
-      // if(data.data.newContent != undefined){
-      //   this.contents.push(data.data.newContent)
-      // }
-      // else{
-      //   console.log("no content found");
-      // }     
+      this.sectionContent = data.data.sectionContentList
+      // console.log( data.data.sectionContentList);
+          
     })
     return await modals.present();
   }

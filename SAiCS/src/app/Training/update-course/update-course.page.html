@@ -29,7 +29,7 @@
 <ion-row>
   <ion-col></ion-col>
   <ion-col></ion-col>
-    <ion-button  style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
+    <ion-button type="submit" style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
       Update
     </ion-button>
 </ion-row>
@@ -47,7 +47,7 @@
       <ion-item slot="header" color="light">
         <ion-label slot="start">{{sectionContent.sectionName}}</ion-label>
         <ion-button slot="end" (click)="UpdateSection(i)">Edit</ion-button>
-        <ion-button slot="end" (click)="DeleteSection()">Delete</ion-button>
+        <ion-button slot="end" (click)="DeleteSection(i)">Delete</ion-button>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-label>-{{sectionContent.contentHeading}}</ion-label><br>
@@ -80,11 +80,11 @@
   <div align="center" id="card" *ngFor="let c of courseName">
   <ion-card id="courseDetails" >
     <img src="./assets/newcoursepic.png"  alt="SaiCS member photo" />
-    <ion-input formControlName="updatecoursename" [value]="course.courseName" placeholder="Enter a Course Name" ></ion-input>
-    <span  >Please Enter a valid Course Name</span>
+    <ion-input formControlName="updatecoursename" placeholder="Enter a Course Name" ></ion-input>
+    <span *ngIf="localForm.submitted  && courseUpdateDetails.controls['updatecoursename'].invalid" >Please Enter a valid Course Name</span>
     <br><br>
     <ion-textarea formControlName="updatedescription" placeholder="Enter a Description"></ion-textarea>
-    <span  >Please Enter a valid Course Description</span>
+    <span *ngIf="localForm.submitted  && courseUpdateDetails.controls['updatedescription'].invalid">Please Enter a valid Course Description</span>
      <!-- console.log(this.quiz.quizName ); -->
   
     

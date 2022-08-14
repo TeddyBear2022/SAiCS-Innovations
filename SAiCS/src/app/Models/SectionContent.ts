@@ -7,4 +7,5 @@ export class SectionContent{
     ContentLink:string
     ContentHeading:string
     SectionContentId:number
+    CourseId:number
 }

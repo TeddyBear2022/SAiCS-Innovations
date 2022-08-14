@@ -18,8 +18,10 @@ export class UpdateQuizModalPage implements OnInit {
   questionSelected:boolean = false
 
   UpdateQuiz:FormGroup;
+  UpdateQuestionBankForm:FormGroup
+  newQuestionBankForm:FormGroup
   QuestionBankList = []
-  ListError=false
+ quizError=false
   newQuiz
   updateOrDelete:NgModel
   constructor(private modal: ModalController, 
@@ -28,23 +30,12 @@ export class UpdateQuizModalPage implements OnInit {
     public toastController: ToastController, 
     private fb: FormBuilder,) { 
   }
+  
   ngOnInit() {
-    this.UpdateQuestionBankInfo
-    this.UpdateQuizInfo
 
-    this.UpdateQuiz = new FormGroup({
-      //Update or delete form fields
+    //Update Quiz Question
+    this.UpdateQuestionBankForm = new FormGroup({
       updateordelete: new FormControl('Please choose an option'),
-
-      //New quiz questions form fields
-      quizname:new FormControl(this.UpdateQuizInfo.quizName, Validators.required),
-      quizquestion:new FormControl('', Validators.required),
-      quizanswer:new FormControl('', Validators.required),
-      option1:new FormControl('', Validators.required),
-      option2:new FormControl('', Validators.required),
-      option3:new FormControl('', Validators.required),
-
-      //update quiz questions form fields
       updatequizquestion:new FormControl('', Validators.required),
       updatequizanswer:new FormControl('', Validators.required),
       updateoption1:new FormControl('', Validators.required),
@@ -52,45 +43,72 @@ export class UpdateQuizModalPage implements OnInit {
       updateoption3:new FormControl('', Validators.required),
 
       questionChosen:new FormControl(null)
+
+    })
+
+    //new Quiz Question Form
+    this.newQuestionBankForm = new FormGroup({
+      newquizquestion:new FormControl('', Validators.required),
+      newquizanswer:new FormControl('', Validators.required),
+      newoption1:new FormControl('', Validators.required),
+      newoption2:new FormControl('', Validators.required),
+      newoption3:new FormControl('', Validators.required),
+    })
+
+    //Update Quiz
+    this.UpdateQuiz = new FormGroup({
+      //Update or delete form fields
+      //updateordelete: new FormControl('Please choose an option'),
+
+      //New quiz questions form fields
+      updatequizname:new FormControl(this.UpdateQuizInfo.quizName, Validators.required),
+      // quizquestion:new FormControl('', Validators.required),
+      // quizanswer:new FormControl('', Validators.required),
+      // option1:new FormControl('', Validators.required),
+      // option2:new FormControl('', Validators.required),
+      // option3:new FormControl('', Validators.required),
+
+      //update quiz questions form fields
+      // updatequizquestion:new FormControl('', Validators.required),
+      // updatequizanswer:new FormControl('', Validators.required),
+      // updateoption1:new FormControl('', Validators.required),
+      // updateoption2:new FormControl('', Validators.required),
+      // updateoption3:new FormControl('', Validators.required),
+
+      // questionChosen:new FormControl(null)
   });
 }
 
 AddToQuestionBank(){
-  if(this.UpdateQuiz.get(['quizquestion']).value !='' ||
-  this.UpdateQuiz.get(['quizanswer']).value !=''||
-  this.UpdateQuiz.get(['option1']).value !='' ||
-  this.UpdateQuiz.get(['option2']).value !='' ||
-  this.UpdateQuiz.get(['option3']).value !=''){
-    this.ListError= false
+  if(this.newQuestionBankForm.valid){
 
-    //Add new questionBank information to API
-  // let newQuestionBankItem:{
-  //   question:string, 
-  //   answer:string,
-  //   option1:string,
-  //   option2:string,
-  //   option3:string
-  // } = {
-  // question :this.UpdateQuiz.get(['quizquestion']).value,
-  // answer:this.UpdateQuiz.get(['quizanswer']).value,
-  // option1:this.UpdateQuiz.get(['option1']).value,
-  // option2:this.UpdateQuiz.get(['option2']).value,
-  // option3: this.UpdateQuiz.get(['option3']).value
-  // }
+  //this.ListError= false
   let questionItem:QuestionBank = new QuestionBank
-    questionItem.Questions = this.UpdateQuiz.get(['quizquestion']).value
-    questionItem.Answers = this.UpdateQuiz.get(['quizanswer']).value
-    questionItem.Option1 =this.UpdateQuiz.get(['option1']).value
-    questionItem.Option2 =this.UpdateQuiz.get(['option2']).value
-    questionItem.Option3 =  this.UpdateQuiz.get(['option3']).value
+    questionItem.QuizId = this.UpdateQuizInfo.quizId
+    questionItem.Questions = this.newQuestionBankForm.get(['newquizquestion']).value
+    questionItem.Answers = this.newQuestionBankForm.get(['newquizanswer']).value
+    questionItem.Option1 =this.newQuestionBankForm.get(['newoption1']).value
+    questionItem.Option2 =this.newQuestionBankForm.get(['newoption2']).value
+    questionItem.Option3 =  this.newQuestionBankForm.get(['newoption3']).value
   
-    console.log(questionItem);
-    
     //TODO: send object to api
+    this.api.CreateQuizQuestion(questionItem).subscribe(data => 
+      {
+        console.log(data);
+        this.api.GetCourseQuestionBank(questionItem.QuizId).subscribe(data=>{
+          this.UpdateQuestionBankInfo = data
+          console.log(data);
+          
+        })
+      })
+    
+    this.newQuestionBankForm.reset()
+    this.UpdateQuestionBankForm.reset('questionChosen')
 // this.QuestionBankList.push(questionItem)
   }
   else{
-    this.ListError=true
+    //this.ListError=true
+
     console.log("invalid form");
   }
   
@@ -101,60 +119,80 @@ AddToQuestionBank(){
     if(this.UpdateQuiz.invalid){
       this.newQuiz= {status:"false"}
     }
-    this.modal.dismiss({newQuiz :this.newQuiz, });
+    this.modal.dismiss({updatedQuiz :this.UpdateQuizInfo });
   }
 
-  CreateQuiz(){
-    if(this.QuestionBankList.length>=1 && this.UpdateQuiz.get(['quizname']).value != ''){
-      this.newQuiz= {status:"true", quizname: this.UpdateQuiz.get(['quizname']).value, 
-      questions: this.QuestionBankList}
-      this.dismissModal()
-      console.log("quiz")
-    }
-    else{
-      console.log("invalid")
-    }
-    // console.log("create quiz");
-    
-    // console.log(this.QuestionBankList.length)
-  }
   UpdateQuestionBank(){
-    console.log("update");
+    if(this.UpdateQuestionBankForm.valid){
+      console.log("update");
 
     //Update questionBank info on API
     let updateQuizQuestions:QuestionBank= new QuestionBank()
-    updateQuizQuestions.QuestionBankId = this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].questionBankId
-    updateQuizQuestions.Questions = this.UpdateQuiz.get(['updatequizquestion']).value
-    updateQuizQuestions.Answers = this.UpdateQuiz.get(['updatequizanswer']).value
-    updateQuizQuestions.Option1 = this.UpdateQuiz.get(['updateoption1']).value
-    updateQuizQuestions.Option2 = this.UpdateQuiz.get(['updateoption2']).value
-    updateQuizQuestions.Option3 = this.UpdateQuiz.get(['updateoption3']).value
+    updateQuizQuestions.QuestionBankId = this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questionBankId
+    updateQuizQuestions.Questions = this.UpdateQuestionBankForm.get(['updatequizquestion']).value
+    updateQuizQuestions.Answers = this.UpdateQuestionBankForm.get(['updatequizanswer']).value
+    updateQuizQuestions.Option1 = this.UpdateQuestionBankForm.get(['updateoption1']).value
+    updateQuizQuestions.Option2 = this.UpdateQuestionBankForm.get(['updateoption2']).value
+    updateQuizQuestions.Option3 = this.UpdateQuestionBankForm.get(['updateoption3']).value
     console.log(updateQuizQuestions);
     
     //TODO: send object to api
+    this.api.UpdateQuizQuestion(updateQuizQuestions).subscribe(data=> 
+      {
+        console.log(data)
+        this.api.GetCourseQuestionBank(this.UpdateQuizInfo.quizId).subscribe(data=>{
+          this.UpdateQuestionBankInfo = data
+          console.log(data);
+          
+        })
+      })
+    }
+    else{
+      console.log("invalid update form");
+      
+    }
   }
 
   //can remove was just for testing
   UpdateDeleteOption(){
-    console.log(this.UpdateQuiz.get(['updateordelete']).value);
+    console.log(this.UpdateQuestionBankForm.get(['updateordelete']).value);
     
   }
+
   QuestionChosen(){
     this.questionSelected = true
-    // console.log(this.UpdateQuiz.get(['questionChosen']).value);
-    
-    this.UpdateQuiz.patchValue({
-      updatequizquestion: this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].questions,
-      updatequizanswer:this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].answers,
-      updateoption1:this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].option1,
-      updateoption2:this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].option2,
-      updateoption3:this.UpdateQuestionBankInfo[this.UpdateQuiz.get(['questionChosen']).value].option3,
+    this.UpdateQuestionBankForm.patchValue({
+      updatequizquestion: this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questions,
+      updatequizanswer:this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].answers,
+      updateoption1:this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].option1,
+      updateoption2:this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].option2,
+      updateoption3:this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].option3,
     })
   }
+
   Update(){
+    if(this.UpdateQuiz.valid){
+    this.quizError= false
     let updateQuiz:Quiz = new Quiz()
-    updateQuiz.QuizName= this.UpdateQuiz.get(['quizname']).value
+    updateQuiz.QuizName= this.UpdateQuiz.get(['updatequizname']).value
+    updateQuiz.QuizId = this.UpdateQuizInfo.quizId
     console.log(updateQuiz);
+    this.api.UpdateQuiz(updateQuiz).subscribe(data =>
+      {
+        this.api.GetCourseQuiz(this.api.getCourseId()).subscribe(data=>
+          {
+            this.UpdateQuizInfo =  data
+            this.dismissModal()
+          })
+        
+      })
+    }
+    else{
+      this.quizError = true
+      console.log("Invalid form");
+      
+    }
+    
     
   }
 

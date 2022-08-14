@@ -17,6 +17,9 @@ export class AddContentModalComponent implements OnInit {
 
   newContent;
   AddContent:FormGroup;
+  sectionList
+  
+
   selectedFile = null
   isExisting: boolean = false
   constructor(private modal: ModalController, 
@@ -40,7 +43,7 @@ export class AddContentModalComponent implements OnInit {
       // if(this.AddContent.invalid){
 
       // }
-      this.modal.dismiss({newContent: this.newContent});
+      this.modal.dismiss({newContent: this.newContent, sectionContentList: this.sectionList});
     }
     CreateContent(){
       if(this.AddContent.valid){
@@ -52,8 +55,19 @@ export class AddContentModalComponent implements OnInit {
         content.ContentLink = this.AddContent.get(['googledrivelink']).value
         content.YoutubeHeading = this.AddContent.get(['youtubevideoheading']).value
         content.YoutubeLink = this.AddContent.get(['youtubeLink']).value
+        content.CourseId = this.api.getCourseId()
         this.newContent = content
-        this.dismissModal()
+                
+        this.api.CreateSectionContent(content).subscribe(()=>
+          {
+            this.api.GetCourseSection(this.api.getCourseId()).subscribe(data=>
+              {
+                this.sectionList = data
+                // console.log(data)
+                this.dismissModal()
+              })
+             
+          })
       }
       else{
         console.log('Invalid form')

@@ -20,6 +20,10 @@ export class CourseStudioPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
+    
+  }
+
+  ionViewDidEnter(){
     this.api.GetAllCourses().subscribe(data =>{
       // this.courses.push(data);
       this.courses = data
@@ -27,23 +31,34 @@ export class CourseStudioPage implements OnInit {
       
     })
   }
-
   UpdateCourse(id:number){
     console.log(id);
     this.api.setCourseId(id)
     this.router.navigate(['update-course']);
   }
 
-  DeleteCourse(){
-    this.alertNotif("Are you sure you want to delete this course?", "")
+  DeleteCourse(id:number){
+    this.alertNotif("Are you sure you want to delete this course?", "", id)
     console.log("Delete")
   }
 
-  async alertNotif(message:string, header:string) {
+  async alertNotif(message:string, header:string, id:number) {
     const alert = await this.alert.create({
       header: header,
       message: message,
-      buttons: [{text: 'OK'}]
+      buttons: [{text: 'Yes', handler: ()=>
+    {
+      
+      this.api.DeleteCourse(id).subscribe(data=>{
+        // console.log(data);
+        this.api.GetAllCourses().subscribe(data =>{
+          // this.courses.push(data);
+          this.courses = data
+          // console.log(data);
+          
+        })
+      })
+    }},{text:"No"}]
     });
 
     await alert.present();

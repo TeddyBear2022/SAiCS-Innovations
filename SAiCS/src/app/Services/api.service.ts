@@ -32,6 +32,9 @@ import { ProfileVM } from '../Models/ViewModels/ProfileVM';
 import { PositionRequestsVM } from '../Models/ViewModels/PositionRequestVM';
 import { NewCourseVM } from '../Models/ViewModels/NewCourseVM';
 import { SectionContent } from '../Models/SectionContent';
+import { QuestionBank } from '../Models/QuestionBank';
+import { Quiz } from '../Models/Quiz';
+import { Course } from '../Models/Course';
 
 @Injectable({
   providedIn: 'root'
@@ -366,4 +369,55 @@ export class ApiService {
     return this.api.patch<boolean>(this.apilink+`Training/UpdateSectionContent`, sectionContent)
   }
   
+  UpdateQuizQuestion(quizQuestion:QuestionBank){
+    return this.api.patch(this.apilink+`Training/UpdateQuizQuestions`,quizQuestion)
+  }
+
+  UpdateQuiz(quiz:Quiz){
+    return this.api.patch(this.apilink+`Training/UpdateQuiz`,quiz)
+  }
+
+  UpdateCourse(updateCourse:Course){
+    return this.api.patch(this.apilink+ `Training/UpdateCourseTest`, updateCourse)
+  }
+
+  getCourseId(){
+    return this.updateCourseId
+  }
+
+  CreateQuizQuestion(createQuizQuestion:QuestionBank){
+    return this.api.post(this.apilink+ `Training/CreateQuizQuestion`, createQuizQuestion) 
+  }
+
+  GetCourseQuestionBank(quizId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuestionBank?quizId=${quizId}`)
+  }
+
+  GetCourseQuiz(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseQuiz?courseId=${courseId}`)
+  }
+
+  GetCourseSection(courseId:number){
+    return this.api.get(this.apilink + `Training/GetCourseSectionContent?courseId=${courseId}`)
+  }
+
+  DeleteSectionContent(sectionContentId:number){
+    return this.api.delete(this.apilink + `Training/DeleteSectionContent?sectionContentId=${sectionContentId}`)
+  }
+
+  DeleteQuiz(quizId:number){
+    return this.api.delete(this.apilink + `Training/DeleteQuiz?quizId=${quizId}`)
+  }
+
+  DeleteCourseQuestion(questionBankId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourseQuestion?questionBankId=${questionBankId}`)
+  }
+
+  DeleteCourse(courseId:number){
+    return this.api.delete(this.apilink + `Training/DeleteCourse?courseId=${courseId}`)
+  }
+
+  CreateSectionContent(sectionContent: SectionContent){
+    return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
+  }
 }
