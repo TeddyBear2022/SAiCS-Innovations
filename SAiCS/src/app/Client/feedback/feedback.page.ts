@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { Feedback } from 'src/app/Models/Feedback';
-import { Product } from 'src/app/Models/Product';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -15,7 +14,8 @@ export class FeedbackPage implements OnInit {
   //Variables
   feedbackForm: FormGroup
   myAmbassador = []
-  products: Product[]
+  products = []
+  //products: Product[]
   ambassador: number
   constructor(
   private api: ApiService, public popoverController: PopoverController,public formBuilder: FormBuilder,public alertController: AlertController,public toastController: ToastController){
@@ -45,11 +45,11 @@ export class FeedbackPage implements OnInit {
 
   GetProductsById(id: number)
   {
-    this.api.GetProductsById(id).subscribe(data => {
-      this.products = data
-      console.log(`id: ${id}`)
-      console.log(this.products)
-    })
+    // this.api.GetProductsById(id).subscribe(data => {
+    //   this.products = data
+    //   console.log(`id: ${id}`)
+    //   console.log(this.products)
+    // })
   }
 
   MyAmbassador()

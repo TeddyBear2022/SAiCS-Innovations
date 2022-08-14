@@ -26,6 +26,12 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+// Data table things
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+
 // all navbars
 #navbar
 {
