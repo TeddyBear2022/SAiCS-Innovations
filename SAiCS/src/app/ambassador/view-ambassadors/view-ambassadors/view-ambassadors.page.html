@@ -22,44 +22,61 @@
 
 
 <ion-content>
-  <br><br><br><br>
+  <br>
+  <div align="center"><h1>Ambassadors</h1></div>
+  <br><br>
 
     <ion-row>
       <ion-col>
-          <ion-select id="dropdown" placeholder="Select Agent Ranking">
-            <!--Retrieved from database-->
-            <ion-select-option value="Admin">Agent</ion-select-option>
-            <ion-select-option value="Ambassador">Manager</ion-select-option>
-            <ion-select-option value="Client">Distributor</ion-select-option>
+          <ion-select id="dropdown" placeholder="Select Agent Ranking" interface="popover">
+          <ion-select-option value=1>Junior Agent</ion-select-option>
+          <ion-select-option value=2>Agent</ion-select-option>
+          <ion-select-option value=3>Senior Agent</ion-select-option>
+          <ion-select-option value=4>Manager</ion-select-option>
+          <ion-select-option value=5>Entrepreneur</ion-select-option>
+          <ion-select-option value=6>Junior Distributor</ion-select-option>
+          <ion-select-option value=7>Senior Distributor</ion-select-option>
+          <ion-select-option value=8>Executive Distributor</ion-select-option>
           </ion-select>
-        </ion-col>
-
-      <ion-searchbar id="searchbar" placeholder="Search Agent" ></ion-searchbar>
+        
+        <ion-item lines="none" >
+         <div align="center" slot="end">
+        <ion-input  id="searchbar"
+         placeholder="Search ambassador..."
+        (ionChange)="SearchAmbassador($event)">
+      </ion-input>
+      </div>
+      <ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+      </ion-item>
+    </ion-col>
     </ion-row>
 <br><br> 
-  <table>
-    <thead>
+  <table *ngIf="noResults == false">
+    <thead align="center">
     <th>Title</th>
-    <th>Full Name</th>
-    <th>Alias Name</th>
+    <th>First Name</th>
+    <th>Last Name</th>
     <th>Ranking</th>
     <th>Email</th>
-    <th>Address</th>
     <th>Phone Number</th>
-    <th>Ranking Requests</th>
+    
     </thead>
     <tbody >
     <tr *ngFor="let ambassador of ambassadorsList">
     <td>mr</td>
-    <td>{{ambassador.user.name}} {{ambassador.user.surname}}</td>
-    <td>alias</td> 
+    <td>{{ambassador.user.name}} </td>
+    <td>{{ambassador.user.surname}}</td>
     <td>{{ambassador.user.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>
     <td>{{ambassador.user.email}}</td>
-    <td>remove from design</td>
     <td>{{ambassador.user.phoneNumber}}</td> 
-     <td><button id="button" (click)="rankingrequest()">Request Change</button></td>
+     
     </tbody>
     </table>
+
+    <!-- no results found -->
+    <div align="center" *ngIf="noResults == true">
+      <img src="./assets/noresultsfound3.gif" alt="No results found">
+      </div>
 
     <ion-row> 
       <ion-col style="margin-top: 18%;">

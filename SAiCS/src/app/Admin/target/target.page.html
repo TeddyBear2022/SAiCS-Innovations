@@ -1,9 +1,50 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Target</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white;"></ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <h1>Targets</h1>
 
+  <table>
+    <thead>
+    <th>Ranking</th>
+    <th>Full Name</th>
+    <th>Target Amount</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Senior Distributor</td>
+    <td>Matt Hardy</td>
+    <td>R 15 000</td>
+    <td>2022/04/29</td>
+    <td>2022/11/29</td>
+    <td><ion-button (click)="AssignTarget()">Assign</ion-button></td>
+    <td></td>
+    <td><ion-button (click)="DeleteTarget()">Delete</ion-button></td>
+    </tr>
+    </tbody>
+    </table>
 </ion-content>

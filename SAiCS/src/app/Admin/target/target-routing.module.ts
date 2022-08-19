@@ -7,7 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: TargetPage
+  },
+ 
+  {
+    path: 'assign-target',
+    loadChildren: () => import('./Modals/assign-target/assign-target.module').then( m => m.AssignTargetPageModule)
   }
+
 ];
 
 @NgModule({

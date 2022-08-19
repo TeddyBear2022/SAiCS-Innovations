@@ -35,6 +35,8 @@ import { SectionContent } from '../Models/SectionContent';
 import { QuestionBank } from '../Models/QuestionBank';
 import { Quiz } from '../Models/Quiz';
 import { Course } from '../Models/Course';
+import { OTPVM } from '../Models/ViewModels/OTPVM';
+import { ResetPasswordVM } from '../Models/ViewModels/ResetPasswordVM';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +84,7 @@ export class ApiService {
   session(logindetails:LoginVM){
     return this.api.post(this.apilink+"User/getUserSessionInfo", logindetails)
   }
-  //reset password
+  
 
   //get ambassador rankings
   getAmbassadorRankings():Observable<AmbassadorType[]>{
@@ -419,5 +421,45 @@ export class ApiService {
 
   CreateSectionContent(sectionContent: SectionContent){
     return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
+  }
+
+  //reset password
+  ForgotPassword(email:LoginVM){
+    return this.api.post(this.apilink+ `User/ForgotPassword`, email)
+  }
+
+  //Verify OTP 
+  VerifyOTP(otp:OTPVM){
+  return this.api.post(this.apilink+ `User/VerifyOTP`, otp)
+  }
+
+  //Reset password
+  ResetPassword(reset: ResetPasswordVM):Observable<any>{
+    return this.api.post<any>(this.apilink+ `User/VerifyOTP`, reset)
+  }
+
+  //View Feedback Admin
+  // ViewFeedbackAdmin(){
+  //   return this.api.get(this.apilink+ `Admin/ViewFeedback`)
+  // }
+
+  ViewAmbassadorFeedbackAdmin(){
+    return this.api.get(this.apilink+ `Admin/ViewAmbassadorFeedback`)
+  }
+
+  ViewMerchFeedbackAdmin(){
+    return this.api.get(this.apilink+ `Admin/ViewMerchFeedback`)
+  }
+
+  ViewAllAmbassadors(){
+    return this.api.get(this.apilink + `Admin/ViewAmbassadors`)
+  }
+
+  SearchAmbassador(searchInput:string){
+    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`)
+  }
+
+  SearchCurrentAgents(searchInput:string, userid:string){
+    return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`)
   }
 }

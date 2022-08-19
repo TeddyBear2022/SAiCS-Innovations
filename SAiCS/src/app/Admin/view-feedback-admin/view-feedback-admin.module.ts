@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ResetPasswordPageRoutingModule } from './reset-password-routing.module';
+import { ViewFeedbackAdminPageRoutingModule } from './view-feedback-admin-routing.module';
 
-import { ResetPasswordPage } from './reset-password.page';
+import { ViewFeedbackAdminPage } from './view-feedback-admin.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ResetPasswordPageRoutingModule,
+    ViewFeedbackAdminPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ResetPasswordPage]
+  declarations: [ViewFeedbackAdminPage]
 })
-export class ResetPasswordPageModule {}
+export class ViewFeedbackAdminPageModule {}

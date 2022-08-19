@@ -1,19 +1,18 @@
 export class registerationinfoVM{
-    UsertypeID: number
-    TitleID:number
-    Name:string
-    Surname:string
+    usertypeID: number
+    titleID:number
+    name:string
+    surname:string
     emailaddress:string
-    PhoneNumber:number
-    CountryID:number
-    City:number // change to string
+    phoneNumber:number
+    countryID:number
+    city:string 
+    provinceID:number
     address:string
-    PostalCode:number
-    Idnumber:string| null
-    referralcode:string;
-    ProofOfAdderess:File
-    IDPhoto:File;
-    AmbassadorRankingID:number
-    AliasName:string
-    AboutMyself:string;
+    postalCode:number
+    idnumber:string| null
+    referralcode:string
+    iDPhoto:File;
+    ambassadortype:number
+    aboutMyself:string;
 }

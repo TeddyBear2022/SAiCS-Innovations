@@ -254,6 +254,15 @@
     path: 'update-quiz',
     loadChildren: () => import('./Training/update-quiz/update-quiz.module').then( m => m.UpdateQuizPageModule)
   },
+  {
+    path: 'view-feedback-admin',
+    loadChildren: () => import('./Admin/view-feedback-admin/view-feedback-admin.module').then( m => m.ViewFeedbackAdminPageModule)
+  },
+  {
+    path: 'view-ambassadors-admin',
+    loadChildren: () => import('./Admin/view-ambassadors/view-ambassadors.module').then( m => m.ViewAmbassadorsPageModule)
+  },
+
 
 
   ];
