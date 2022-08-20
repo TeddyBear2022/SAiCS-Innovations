@@ -159,6 +159,49 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
         {
             _sms.Sms();
             return Ok("Message sent");
+            db.Add(vat);
+            return db.SaveChanges();
+        }
+
+        [HttpPost("TestingCarID")]
+        public object TestingCarID(Cart vat)
+        {
+            db.Add(vat);
+            return db.SaveChanges();
+        }
+
+        [HttpPost("TestVAT")]
+        public object TestVAT(Vat vat)
+        {
+            db.Add(vat);
+            return db.SaveChanges();
+        }
+
+        [HttpPost("TestingAmbType")]
+        public object TestingAmbType(AmbassadorType type)
+        {
+            db.Add(type);
+            return db.SaveChanges();
+        }
+
+        [HttpGet("GetSales")]
+        public object GetSales()
+        {
+            var sales = db.OrderItems
+                .GroupBy(x => new {
+                    x.MerchandiseId, 
+                    x.Price, x.Merchandise.MerchName, 
+                    x.Merchandise.MerchCategory.MerchCategoryName,
+                    v=x.Order.Date.Value.Month.Equals(DateTime.Today.Month)})
+                .Select(x => new { 
+                    Key = x.Key.MerchandiseId,
+                    Merchandise = x.Key.MerchName,
+                    Category = x.Key.MerchCategoryName,
+                    Price = x.Key.Price,
+                    Quantity = x.Sum(x => x.Quantity),
+                    Date = x.Key.v});
+
+            return sales;
         }
     }
 }

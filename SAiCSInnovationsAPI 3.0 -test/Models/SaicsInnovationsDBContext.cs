@@ -46,9 +46,10 @@ namespace SAiCSInnovationsAPI_3._0.Models
         public virtual DbSet<Faqtype> Faqtypes { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<FeedbackType> FeedbackTypes { get; set; }
+        public virtual DbSet<MerchCategory> MerchCategories { get; set; }
         public virtual DbSet<MerchSpecial> MerchSpecials { get; set; }
+        public virtual DbSet<MerchStatus> MerchStatuses { get; set; }
         public virtual DbSet<MerchType> MerchTypes { get; set; }
-        public virtual DbSet<Merchandise> MerchCategory { get; set; }
         public virtual DbSet<Merchandise> Merchandises { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -112,7 +113,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
             {
                 entity.ToTable("Address");
 
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
+                entity.Property(e => e.AddressId)
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .UseIdentityColumn()
+                                .HasColumnName("AddressID");
 
                 entity.Property(e => e.Address1)
                     .HasMaxLength(50)
@@ -123,8 +128,9 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ProvinceId).HasColumnName("ProvinceID");
+
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
-                entity.Property(e => e.ProvinceId).HasColumnName("ProvinceId");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -182,7 +188,7 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.AmbassadorTypeId).HasColumnName("AmbassadorTypeID");
-                
+
                 entity.Property(e => e.BankAccountId).HasColumnName("BankAccountID");
 
                 entity.Property(e => e.Idnumber)
@@ -250,21 +256,6 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(18, 2)");
-            });
-
-            modelBuilder.Entity<MerchCategory>(entity =>
-            {
-                entity.ToTable("MerchCategory");
-
-                entity.Property(e => e.MerchCategoryId)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn()
-                .HasColumnName("MerchCategoryID");
-
-                entity.Property(e => e.MerchCategoryName)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Application>(entity =>
@@ -394,9 +385,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
 
                 entity.Property(e => e.SpecialId).HasColumnName("SpecialID");
 
+                entity.Property(e => e.Quantity).HasColumnName("Quantity");
+
                 entity.Property(e => e.Price)
-                    .HasColumnType("money")
-                    .HasColumnName("Price");
+                                .HasColumnType("money")
+                                .HasColumnName("Price");
 
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.CartItems)
@@ -491,17 +484,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
             //        .IsUnicode(false);
             //});
 
-            modelBuilder.Entity<Province>(entity =>
             {
-                entity.ToTable("Province");
 
-                entity.Property(e => e.ProvinceId).HasColumnName("ProvinceId");
 
-                entity.Property(e => e.ProvinceName)
                     .HasMaxLength(30)
                     .IsUnicode(false);
-
-                
             });
 
             modelBuilder.Entity<Country>(entity =>
@@ -690,6 +677,23 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MerchCategory>(entity =>
+            {
+                entity.ToTable("MerchCategory");
+
+                entity.Property(e => e.MerchCategoryId)
+                      .IsRequired()
+                      .ValueGeneratedOnAdd()
+                      .UseIdentityColumn()
+                      .HasColumnName("MerchCategoryID");
+
+                entity.Property(e => e.MerchCategoryName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+
+            });
+
             modelBuilder.Entity<MerchSpecial>(entity =>
             {
                 entity.ToTable("MerchSpecial");
@@ -709,6 +713,22 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .WithMany(p => p.MerchSpecials)
                     .HasForeignKey(d => d.SpecialId)
                     .HasConstraintName("FK_MerchSpecial_Special");
+            });
+
+            modelBuilder.Entity<MerchStatus>(entity =>
+            {
+                entity.ToTable("MerchStatus");
+
+                entity.Property(e => e.MerchStatusId)
+                .IsRequired()
+                      .ValueGeneratedOnAdd()
+                      .UseIdentityColumn()
+                .HasColumnName("MerchStatusID");
+
+                entity.Property(e => e.MerchStatusName)
+                                .HasMaxLength(30)
+                                .IsUnicode(false);
+
             });
 
             modelBuilder.Entity<MerchType>(entity =>
@@ -737,20 +757,25 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.MerchTypeId).HasColumnName("MerchTypeID");
+                entity.Property(e => e.MerchCategoryId).HasColumnName("MerchCategoryID");
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-                
+                entity.Property(e => e.MerchStatusId).HasColumnName("MerchStatusID");
+
                 entity.HasOne(d => d.MerchType)
                     .WithMany(p => p.Merchandises)
                     .HasForeignKey(d => d.MerchTypeId)
                     .HasConstraintName("FK_Merchandise_MerchType");
-
+                
                 entity.HasOne(d => d.MerchCategory)
-                   .WithMany(p => p.Merchandises)
-                   .HasForeignKey(d => d.MerchCategoryId)
-                   .HasConstraintName("FK_Merchandise_MerchCategory");
+                  .WithMany(p => p.Merchandises)
+                  .HasForeignKey(d => d.MerchCategoryId)
+                  .HasConstraintName("FK_Merchandise_MerchCategory");
+
+                entity.HasOne(d => d.MerchStatuses)
+                  .WithMany(p => p.Merchandises)
+                  .HasForeignKey(d => d.MerchStatusId)
+                  .HasConstraintName("FK_Merchandise_MerchStatus");
+
             });
 
             modelBuilder.Entity<Option>(entity =>
@@ -789,13 +814,8 @@ namespace SAiCSInnovationsAPI_3._0.Models
                 entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
                 entity.Property(e => e.AmbassadorId).HasColumnName("AmbassadorID");
-
-                entity.HasOne(d => d.Ambassador)
-                   .WithMany(p => p.Orders)
-                   .HasForeignKey(d => d.AddressId)
-                   .HasConstraintName("FK_Order_Ambassador");
-
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Orders)
@@ -821,6 +841,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_Order_User");
+
+                entity.HasOne(d => d.Ambassador)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.AmbassadorId)
+                    .HasConstraintName("FK_Order_Ambassador");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -835,9 +860,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
 
                 entity.Property(e => e.SpecialId).HasColumnName("SpecialID");
 
+                entity.Property(e => e.Quantity).HasColumnName("Quantity");
+
                 entity.Property(e => e.Price)
-                    .HasColumnType("money")
-                    .HasColumnName("Price");
+                                .HasColumnType("money")
+                                .HasColumnName("Price");
 
                 entity.HasOne(d => d.Merchandise)
                     .WithMany(p => p.OrderItems)
@@ -911,7 +938,6 @@ namespace SAiCSInnovationsAPI_3._0.Models
                 entity.Property(e => e.Date).HasColumnType("date");
 
                 entity.Property(e => e.RequestTypeId).HasColumnName("RequestTypeID");
-               
 
                 entity.HasOne(d => d.Ambassador)
                     .WithMany(p => p.PositionRequests)
@@ -942,6 +968,21 @@ namespace SAiCSInnovationsAPI_3._0.Models
                     .WithMany(p => p.Prices)
                     .HasForeignKey(d => d.MerchandiseId)
                     .HasConstraintName("FK_Price_Merchandise");
+            });
+
+            modelBuilder.Entity<Province>(entity =>
+            {
+                entity.ToTable("Province");
+
+                entity.Property(e => e.ProvinceId)
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .UseIdentityColumn()
+                                .HasColumnName("ProvinceID");
+
+                entity.Property(e => e.ProvinceName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<QuestionBank>(entity =>
@@ -980,7 +1021,11 @@ namespace SAiCSInnovationsAPI_3._0.Models
 
                 entity.Property(e => e.CourseId).HasColumnName("CourseId");
 
-               
+
+                entity.HasOne(d => d.QuestionBank)
+                    .WithMany(p => p.Quizzes)
+                    .HasForeignKey(d => d.QuestionBankId)
+                    .HasConstraintName("FK_Quiz_QuestionBank");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Quizzes)

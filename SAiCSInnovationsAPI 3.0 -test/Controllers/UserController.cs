@@ -144,22 +144,22 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
             if (user != null )
             {
                 //validate password
-                var checkpassword = _rep.CheckPassword(user.Id, userVM.Password);
+            var checkpassword = _rep.CheckPassword(user.Id, userVM.Password);
                 if (checkpassword == true)
+            {
+                try
                 {
-                    try
-                    {
-                        var principal = await _claims.CreateAsync(user);
-                        await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+                    var principal = await _claims.CreateAsync(user);
+                    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
                         var infoForToken = _db.Users.Where(find => find.Id == user.Id).Include(role =>role.UserRole).FirstOrDefault();
-                        _db.SaveChanges();
+                    _db.SaveChanges();
                         var token = _rep.GenerateToken(infoForToken);
-                        return Ok(token);
-                    }
-                    catch (Exception error)
-                    {
-                        return BadRequest(error.InnerException.Message);
-                    }
+                    return Ok(token);
+                }
+                catch (Exception error)
+                {
+                    return BadRequest(error.InnerException.Message);
+                }
                 }
                 else
                 {
@@ -317,8 +317,8 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
         [HttpGet("applicationStatus")]
         public ActionResult applicationStatus(string id)
         {
-            try
-            {
+            try 
+            { 
                 var application = _rep.ApplicationStatus(id);
                 return Ok(application);
             }
@@ -337,16 +337,40 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
                 if (_rep.UpdateUser(user))
                 {
                     return Ok(true);
-                }
+            }
                 else
-                {
+            {
                     return StatusCode(StatusCodes.Status500InternalServerError, "Didn't update");
-                }
+        }
+
+        [HttpGet("GetProvinces")]
+        public object GetProvinces()
+        {
+            try
+            {
+                return _rep.GetAll<Province>();
             }
             catch (Exception error)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, error.InnerException.Message);
+                return BadRequest(error.Message);
             }
         }
+
+
+        //for cart image
+        //[HttpGet("GetimageById")]
+        //public object GetimageById()
+        //{
+        //    try
+        //    {
+        //        var user = _rep.GetMerchImages();
+        //        return user;
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return BadRequest(error.Message);
+        //    }
+        //}
     }
 }

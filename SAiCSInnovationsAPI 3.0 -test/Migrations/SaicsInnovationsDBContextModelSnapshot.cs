@@ -71,6 +71,71 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -193,6 +258,8 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("AddressID")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address1")
@@ -215,7 +282,7 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
                     b.Property<int>("ProvinceId")
                         .HasColumnType("int")
-                        .HasColumnName("ProvinceId");
+                        .HasColumnName("ProvinceID");
 
                     b.Property<int?>("RecipientNumber")
                         .HasColumnType("int");
@@ -543,7 +610,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasColumnName("Price");
 
                     b.Property<int?>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<int?>("SpecialId")
                         .HasColumnType("int")
@@ -617,26 +683,34 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Property<int>("ContentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("ContentID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContentHeading")
-                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContentLink")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SectionId")
-                        .HasColumnType("int");
 
-                    b.Property<string>("YoutubeHeading")
-                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("YoutubeLink")
-                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ContentId");
 
-                    b.ToTable("Contents");
+                });
+
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.ContentType", b =>
+                {
+                    b.Property<int>("ContentTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ContentTypeID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContentTypeName")
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
+
+                    b.HasKey("ContentTypeId");
+
+                    b.ToTable("ContentType");
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Country", b =>
@@ -768,7 +842,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
                     b.Property<int?>("FaqcategoryId")
                         .HasColumnType("int")
-                        .HasColumnName("FaqCategoryID");
 
                     b.Property<string>("Faqquestion")
                         .HasColumnType("text")
@@ -930,6 +1003,26 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.ToTable("MerchSpecial");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.MerchStatus", b =>
+                {
+                    b.Property<int>("MerchStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("MerchStatusID")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MerchStatusName")
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)");
+
+                    b.HasKey("MerchStatusId");
+
+                    b.ToTable("MerchStatus");
+                });
+
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.MerchType", b =>
                 {
                     b.Property<int>("MerchTypeId")
@@ -960,7 +1053,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("MerchCategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("MerchImage")
                         .IsUnicode(false)
@@ -970,6 +1062,10 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasMaxLength(30)
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)");
+
+                    b.Property<int>("MerchStatusId")
+                        .HasColumnType("int")
+                        .HasColumnName("MerchStatusID");
 
                     b.Property<int?>("MerchTypeId")
                         .HasColumnType("int")
@@ -983,6 +1079,8 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.HasKey("MerchandiseId");
 
                     b.HasIndex("MerchCategoryId");
+
+                    b.HasIndex("MerchStatusId");
 
                     b.HasIndex("MerchTypeId");
 
@@ -1025,7 +1123,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AddressID");
 
-                    b.Property<int>("AmbassadorId")
                         .HasColumnType("int")
                         .HasColumnName("AmbassadorID");
 
@@ -1054,6 +1151,8 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("AmbassadorId");
 
                     b.HasIndex("CartId");
 
@@ -1087,7 +1186,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasColumnName("Price");
 
                     b.Property<int?>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<int?>("SpecialId")
                         .HasColumnType("int")
@@ -1224,7 +1322,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Property<int>("ProvinceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("ProvinceId")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ProvinceName")
@@ -1279,9 +1376,7 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasColumnName("QuizID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseId")
                         .HasColumnType("int")
-                        .HasColumnName("CourseId");
 
                     b.Property<string>("QuizDescription")
                         .HasColumnType("text");
@@ -1291,9 +1386,12 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<int?>("SectionId")
+                        .HasColumnType("int")
+                        .HasColumnName("SectionID");
+
                     b.HasKey("QuizId");
 
-                    b.HasIndex("CourseId");
 
                     b.ToTable("Quiz");
                 });
@@ -1398,12 +1496,9 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.ToTable("RequestType");
                 });
 
-            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.SectionContent", b =>
                 {
-                    b.Property<int>("SectionContentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("SectionContentId")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ContentHeading")
@@ -1423,19 +1518,9 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<string>("YoutubeHeading")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("YoutubeHeading");
-
-                    b.Property<string>("YoutubeLink")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("YoutubeLink");
-
-                    b.HasKey("SectionContentId");
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("SectionContent");
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Special", b =>
@@ -1672,6 +1757,39 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.ToTable("VAT");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.User", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Surname")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int?>("TitleId")
+                        .HasColumnType("int")
+                        .HasColumnName("TitleID");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserID");
+
+                    b.Property<int?>("UserRoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserRoleID");
+
+                    b.HasIndex("TitleId");
+
+                    b.HasIndex("UserRoleId");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1683,7 +1801,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1692,7 +1809,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1707,7 +1823,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1716,7 +1831,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1919,6 +2033,23 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Content", b =>
+                {
+                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.ContentType", "ContentType")
+                        .WithMany("Contents")
+                        .HasForeignKey("ContentTypeId")
+                        .HasConstraintName("FK_Content_ContentType");
+
+                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.Section", "Section")
+                        .WithMany("Contents")
+                        .HasForeignKey("SectionId")
+                        .HasConstraintName("FK_Content_Section");
+
+                    b.Navigation("ContentType");
+
+                    b.Navigation("Section");
+                });
+
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Course", b =>
                 {
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Admin", "Admin")
@@ -1951,7 +2082,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Faqcategory", "Faqcategory")
                         .WithMany("Faqs")
                         .HasForeignKey("FaqcategoryId")
-                        .HasConstraintName("FK_FAQ_FaqCategory");
 
                     b.Navigation("Faqcategory");
                 });
@@ -2023,12 +2153,21 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                         .HasForeignKey("MerchCategoryId")
                         .HasConstraintName("FK_Merchandise_MerchCategory");
 
+                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.MerchStatus", "MerchStatuses")
+                        .WithMany("Merchandises")
+                        .HasForeignKey("MerchStatusId")
+                        .HasConstraintName("FK_Merchandise_MerchStatus")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.MerchType", "MerchType")
                         .WithMany("Merchandises")
                         .HasForeignKey("MerchTypeId")
                         .HasConstraintName("FK_Merchandise_MerchType");
 
                     b.Navigation("MerchCategory");
+
+                    b.Navigation("MerchStatuses");
 
                     b.Navigation("MerchType");
                 });
@@ -2052,7 +2191,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Ambassador", "Ambassador")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressId")
                         .HasConstraintName("FK_Order_Ambassador");
 
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Cart", "Cart")
@@ -2161,12 +2299,8 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Quiz", b =>
                 {
-                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.Course", "Course")
                         .WithMany("Quizzes")
-                        .HasForeignKey("CourseId")
-                        .HasConstraintName("FK_Quiz_Course");
 
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Referral", b =>
@@ -2203,12 +2337,9 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("Ambassador");
                 });
 
-            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.SectionContent", b =>
                 {
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Course", "Course")
-                        .WithMany("SectionContents")
                         .HasForeignKey("CourseId")
-                        .HasConstraintName("FK_SectionContent_Course");
 
                     b.Navigation("Course");
                 });
@@ -2233,8 +2364,24 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("Ambassador");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.UserRole", b =>
+                {
+                    b.HasOne("SAiCSInnovationsAPI_3._0.Models.AccessLevel", "AccessLevel")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("AccessLevelId")
+                        .HasConstraintName("FK_UserRoleID_AccessLevel");
+
+                    b.Navigation("AccessLevel");
+                });
+
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.User", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("SAiCSInnovationsAPI_3._0.Models.User", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
                     b.HasOne("SAiCSInnovationsAPI_3._0.Models.Title", "Title")
                         .WithMany("Users")
                         .HasForeignKey("TitleId")
@@ -2335,6 +2482,11 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("Feedbacks");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.ContentType", b =>
+                {
+                    b.Navigation("Contents");
+                });
+
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Country", b =>
                 {
                     b.Navigation("Addresses");
@@ -2344,9 +2496,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                 {
                     b.Navigation("AmbassadorEnrollments");
 
-                    b.Navigation("Quizzes");
-
-                    b.Navigation("SectionContents");
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.CourseStatus", b =>
@@ -2380,6 +2529,11 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.MerchCategory", b =>
+                {
+                    b.Navigation("Merchandises");
+                });
+
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.MerchStatus", b =>
                 {
                     b.Navigation("Merchandises");
                 });
@@ -2422,9 +2576,6 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Quiz", b =>
-                {
-                    b.Navigation("QuestionBanks");
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.ReferralCode", b =>
@@ -2442,6 +2593,13 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                     b.Navigation("PositionRequests");
                 });
 
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Section", b =>
+                {
+                    b.Navigation("Contents");
+
+                    b.Navigation("Quizzes");
+                });
+
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Special", b =>
                 {
                     b.Navigation("CartItems");
@@ -2457,6 +2615,11 @@ namespace SAiCSInnovationsAPI_3._0.Migrations
                 });
 
             modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.Title", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("SAiCSInnovationsAPI_3._0.Models.UserRole", b =>
                 {
                     b.Navigation("Users");
                 });

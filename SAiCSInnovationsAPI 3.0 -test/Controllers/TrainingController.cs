@@ -218,7 +218,7 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
                 section.YoutubeLink = sectionContent.YoutubeLink;
                 _db.SaveChanges();
                 return Ok(true);
-            }
+        }
             catch (Exception error)
             {
                 return BadRequest(error.InnerException.Message);

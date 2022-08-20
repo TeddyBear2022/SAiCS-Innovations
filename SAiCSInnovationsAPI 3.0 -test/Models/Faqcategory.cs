@@ -11,6 +11,7 @@ namespace SAiCSInnovationsAPI_3._0.Models
         {
             Faqs = new HashSet<Faq>();
         }
+
         public int FaqcategoryId { get; set; }
         public int? FaqtypeId { get; set; }
         public string CategoryName { get; set; }

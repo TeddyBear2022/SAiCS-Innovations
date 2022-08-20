@@ -352,6 +352,12 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
                     .ThenInclude(title => title.Title)
                     .Include(type => type.AmbassadorType)
                     .ToList();
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return BadRequest(error.InnerException.Message);
+        //    }
+        //}
 
                 return Ok(allambassadors); 
             }
@@ -360,9 +366,13 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
                 return BadRequest(error.InnerException.Message);
             }
         }
+        //Iteration 8
+        //Amanda
 
         [HttpGet("SearchAmbassador")]
         public ActionResult SearchAmbassador(string nameorsurname)
+        [HttpGet("GetSpecialOptions")]
+        public object GetSpecialOptions()
         {
             try
             {
@@ -373,12 +383,13 @@ namespace SAiCSInnovationsAPI_3._0.Controllers
                     .Include(user => user.User).Where(searchInfo => searchInfo.User.Name.Contains(nameorsurname) || searchInfo.User.Surname.Contains(nameorsurname))
                     .ToList();
 
-            
+                
                 if (searchResults.Count() == 0)
                 {
                     return NotFound("Can't find ambassador");
                 }
                 return Ok(searchResults);
+                return _rep.GetSpecialOptions();
             }
             catch (Exception error)
             {

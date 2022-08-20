@@ -20,12 +20,10 @@ namespace SAiCSInnovationsAPI_3._0.Models
         public byte[] ProofOfPayment { get; set; }
         public int? DeliveryId { get; set; }
         public DateTime? Date { get; set; }
-
-        //Added to link ambassador and order tables
-        public int AmbassadorId { get; set; }
-        public virtual Ambassador Ambassador { get; set; }
+        public int? AmbassadorId { get; set; }
 
         public virtual Address Address { get; set; }
+        public virtual Ambassador Ambassador { get; set; }
         public virtual Cart Cart { get; set; }
         public virtual Delivery Delivery { get; set; }
         public virtual OrderStatus OrderStatus { get; set; }

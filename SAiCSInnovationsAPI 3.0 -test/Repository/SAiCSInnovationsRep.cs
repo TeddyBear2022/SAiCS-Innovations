@@ -234,6 +234,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 user.UserRoleId = user.UserRole.UserRoleId;
                 user.Title = new Title { TitleId = registration.RegisterInfo.TitleID };
                 user.TitleId = user.Title.TitleId;
+
                 user.Name = registration.RegisterInfo.Name;
                 user.Surname = registration.RegisterInfo.Surname;
                 user.Email = registration.RegisterInfo.EmailAddress;
@@ -257,14 +258,29 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 //UserRole->User
                 user.UserRole.Users.Add(user);
                 user.UserRole = user.UserRole;
+                //Country->User
+                //user.Country.Users.Add(user);
+                //user.Country = user.Country;
+                //Address->User
+                //user.Address.Users.Add(user);
+                //user.Address = user.Address;
 
                 Address address = new Address { Address1 = registration.RegisterInfo.Address, City = registration.RegisterInfo.City, PostalCode = registration.RegisterInfo.PostalCode, CountryId = registration.RegisterInfo.CountryID, UserId = user.Id, Country = new Country { CountryId = registration.RegisterInfo.CountryID } };
+
+
+                //user.Country = new Country { CountryId = registration.RegisterInfo.CountryID };
+                //user.CountryId = user.Country.CountryId;
+                //user.Address = new Address { Address1 = registration.RegisterInfo.Address, City = registration.RegisterInfo.City, PostalCode = registration.RegisterInfo.PostalCode };
+                //user.AddressId = user.Address.AddressId;
+
                 //password->User
                 user.Passwords.Add(password);
                 password.User = user;
 
                 //userapplicationstatus
                 user.Applications.Add(application);
+                //uAPP.User = user;
+
 
                 //Assignings
                 //userrole
@@ -275,15 +291,17 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 db.Entry(address.Country).State = EntityState.Unchanged;
 
                 //Add to database
+                //db.UserApplicationStatuses.Add(uAPP);
                 db.Applications.Add(application);
                 db.Admins.Add(admin);
                 db.Addresses.Add(address);
 
+                db.SaveChanges();
 
                 if (db.SaveChanges() > 0)
                 {
-                    return true;
-                }
+                return true;
+            }
                 else
                 {
                     return false;
@@ -293,6 +311,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
             {
                 return false;
             }
+
         }
 
         //Register Ambassador User
@@ -300,6 +319,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         {
             try
             {
+
                 //Create Ambassador
                 Ambassador ambassador = new Ambassador();
                 ambassador.AmbassadorType = new AmbassadorType { AmbassadorTypeId = Convert.ToInt32(registration.RegisterInfo.ambassadorType) };
@@ -307,7 +327,10 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 ambassador.Idnumber = registration.RegisterInfo.Idnumber;
                 ambassador.Idphoto = null;
                 ambassador.ProofOfAddress = null; //Amanda soloution
-               
+                //ambassador.Idphoto = null;
+                //ambassador.ProofOfAddressPhoto = null; //fix it up
+                //ambassador.ProfilePic = null;
+
                 //Create User
                 User user = new User();
                 user.UserRole = new UserRole { UserRoleId = 2 };
@@ -317,6 +340,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
 
                 user.Name = registration.RegisterInfo.Name;
                 user.Surname = registration.RegisterInfo.Surname;
+                //user.EmailAddress = registration.RegisterInfo.EmailAddress;
                 user.Email = registration.RegisterInfo.EmailAddress;
                 user.UserName = registration.RegisterInfo.EmailAddress;
                 user.NormalizedEmail = registration.RegisterInfo.EmailAddress.ToUpper();
@@ -439,6 +463,8 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         // testing 
         public bool ValidateRefferralCode(string refferalCode)
         {
+            try
+            {
                 //see if there is a valid refferal code is used
                 var registrationRefferralCode = db.ReferralCodes.Where(code => code.ReferralCode1 == refferalCode).FirstOrDefault();
                 if (registrationRefferralCode == null)
@@ -450,7 +476,31 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 else
                 {
                     return true;
+                    }
+                    if (existingRefferalCode != null)
+                    {
+                        code.ReferralCode1 = GenerateRefferralCode(registration.RegisterInfo.Name, registration.RegisterInfo.Surname).ToString();
+                        Add(code);
+                        db.SaveChanges();
+                    }
+                    if (LinkUsers(registration.RegisterInfo.referralcode, registration.RegisterInfo.EmailAddress, "Ambassador") == true)
+                    {
+                        //Send welcome  email
+                        //Emails(user.EmailAddress, user.Username, registration.AccessInfo.Password, registration.RegisterInfo.UsertypeID);
+                        db.SaveChanges();
+                        return "Linked the users";
+                    }
+                    else
+                    {
+                        return "Registration unsuccessful";
+                    }
+
                 }
+            }
+            catch (Exception error)
+            {
+                return "error";
+            }
         }
 
         //Register Client user
@@ -644,7 +694,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 var user = db.Users.Where(user => user.UserName == logindetails.EmailorUsername || user.Email == logindetails.EmailorUsername)
                                                                         .Include(address => address.Addresses)
                                                                         .ThenInclude(country => country.Country)
-                                                                        .Include(title => title.Title)                                                                       
+                                                                        .Include(title => title.Title)
                                                                         .Include(userrole => userrole.UserRole)
                                                                         .FirstOrDefault();
                 if (user == null)
@@ -948,6 +998,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         //    }
         //}
 
+        //Amandas Repository Code
         // Get product types 
         //public object GetProductTypes()
         //{
@@ -962,58 +1013,59 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         //    }
         //}
 
-        // Get product by name
-        //public object GetProductByName(string name)
-        //{
-        //    try
-        //    {
+        //Product Subsystem
 
-        //        var product = (from p in db.Products
-        //                       join pt in db.ProductTypes on p.ProductTypeId equals pt.ProductTypeId
-        //                       join pp in db.ProductPrices on p.ProductId equals pp.ProductId
-        //                       join pr in db.Prices on pp.PriceId equals pr.PriceId
-        //                       where p.ProductName == name
-        //                       select new ProductVM
-        //                       {
-        //                           product = p,
-        //                           productType = pt,
-        //                           productPrice = pp,
-        //                           price = pr
+        public object GetUserAddress(string id)
+        {
+            try
+            {
+                var userAdresses = db.Addresses.Where(x => x.UserId == id).Select(x => new
+                {
+                    Id = x.AddressId,
+                    Address = x.Address1,
+                    Country = x.Country.CountryName,
+                    Province = x.Province.ProvinceName,
+                    City = x.City,
+                    PostalCode = x.PostalCode,
+                    Phone = x.RecipientNumber
+                });
 
-        //                       }).FirstOrDefault();
-        //        //db.Products.Where(p => p.ProductName == name).Single<Product>();
+                return userAdresses;
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+        }
 
-        //        return product;
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
+        public object AddUserAddress(Address address)
+        {
 
-        //Create prouduct
-        //public object CreateProduct(ProductVM product)
-        //{
-        //    try
-        //    {
-        //        Product newProduct = db.Products.FirstOrDefault(p => p.ProductName == product.product.ProductName);
+            Address nAddress = db.Addresses.Where(x => x.UserId == address.UserId && x.Address1 == address.Address1).FirstOrDefault();
 
-        //        if (newProduct == null)
-        //        {
-        //            //add product
-        //            newProduct = new Product
-        //            {
-        //                ProductName = product.product.ProductName,
-        //                ProductTypeId = product.product.ProductTypeId,
-        //                //Quantity = product.product.Quantity,
-        //                Description = product.product.Description,
-        //                ProductImage = product.product.ProductImage
-        //            };
-        //            Add(newProduct);
-        //            SaveChanges();
+            try
+            {
+                if (nAddress == null)
+                {
+                    nAddress = new Address()
+                    {
+                        Address1 = address.Address1,
+                        City = address.City,
+                        ProvinceId = address.ProvinceId,
+                        CountryId = address.CountryId,
+                        UserId = address.UserId,
+                        RecipientNumber = address.RecipientNumber,
+                        PostalCode = address.PostalCode
+                    };
+                    Add(nAddress);
+                    SaveChanges();
 
-        //            //find an existing price
-        //            Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == product.price.Price1);
+                    return "New Address created";
+                }
+                else
+                {
+                    return "Address already exists";
+                }
 
         //            //add new price if it doesnt exist
         //            if (searchPrice == null)
@@ -1027,286 +1079,203 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         //                searchPrice = price;
         //            }
 
-        //            // add attributes to product price
-        //            ProductPrice productPrice = new ProductPrice
-        //            {
-        //                ProductId = newProduct.ProductId,
-        //                PriceId = searchPrice.PriceId
-        //            };
-        //            Add(productPrice);
-        //            SaveChanges();
-        //        }
-        //        else
-        //        { return false; }
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+        }
 
-        //        return true;
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
+        public object CreateMerch(MerchVM merch)
+        {
+            //Check if item exists
+            Merchandise newMerch = db.Merchandises.FirstOrDefault(m => m.MerchName == merch.MerchName);
 
-        //Update product
-        //public object UpdateProduct(string name, ProductVM product)
-        //{
-        //    try
-        //    {
-        //        // Find the record 
-        //        Product existingProduct = db.Products.FirstOrDefault(p => p.ProductName == name);
+            try
+            {
+                //create item if null
+                if (newMerch == null)
+                {
+                    newMerch = new Merchandise()
+                    {
+                        MerchName = merch.MerchName,
+                        Description = merch.Description,
+                        MerchImage = merch.MerchImage,
+                        MerchStatusId = merch.StatusId,
+                        MerchTypeId = merch.MerchTypeId,
+                        MerchCategoryId = merch.MerchCategoryId
 
-        //        //Update attributes
-        //        existingProduct.ProductName = product.product.ProductName;
-        //        existingProduct.ProductTypeId = product.product.ProductTypeId;
-        //        existingProduct.Description = product.product.Description;
-        //        //existingProduct.Quantity = product.product.Quantity;
-        //        existingProduct.ProductImage = product.product.ProductImage;
-        //        SaveChanges();
+                    };
+                    Add(newMerch);
+                    SaveChanges();
 
-        //        //find an existing price
-        //        Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == product.price.Price1);
+                    //Create new price if null
+                    // Need to make sure that the price isn't attached to any other ID
+                    Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == merch.Price && p.MerchandiseId == newMerch.MerchandiseId);
 
-        //        //add new price if it doesnt exist
-        //        if (searchPrice == null)
-        //        {
-        //            Price price = new Price
-        //            {
-        //                Price1 = product.price.Price1
-        //            };
-        //            Add(price);
-        //            SaveChanges();
-        //            searchPrice = price;
-        //        }
+                    if (searchPrice == null)
+                    {
+                        Price price = new()
+                        {
+                            Price1 = merch.Price,
+                            Date = DateTime.Now,
+                            MerchandiseId = newMerch.MerchandiseId
+                        };
+                        Add(price);
+                        SaveChanges();
+                    }
 
         //        // find price and change
         //        ProductPrice exstingProductPrice = db.ProductPrices.FirstOrDefault(p => p.ProductId == existingProduct.ProductId);
         //        exstingProductPrice.PriceId = searchPrice.PriceId;
         //        SaveChanges();
 
-        //        return "Updated successfully";
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
+                    return "Item added successfully";
 
-        //Delete product
-        //public object DeleteProduct(int id)
-        //{
-        //    try
-        //    {
-        //        var deleteProduct = db.Products.Find(id);
-        //        Delete(deleteProduct);
-        //        SaveChanges();
-        //        return "Product deleted";
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
+                }
+                else
+                {
+                    return "Item already Exists";
+                }
 
-        //Get all packages
-        //public object GetPackages()
-        //{
-        //    try
-        //    {
-        //        var packageList = from p in db.Packages.ToList()
-        //                          join pt in db.PackageTypes.ToList() on p.PackageTypeId equals pt.PackageTypeId into ptTable
-        //                          from pt in ptTable.ToList()
-        //                          join pp in db.PackagePrices.ToList() on p.PackageId equals pp.PackageId into ppTable
-        //                          from pp in ppTable.ToList()
-        //                          join pr in db.Prices.ToList() on pp.PriceId equals pr.PriceId into prTable
-        //                          from pr in prTable.ToList()
-        //                          select new PackageVM
-        //                          {
-        //                              package = p,
-        //                              packageType = pt,
-        //                              packagePrice = pp,
-        //                              price = pr
-
-        //                          };
-
-        //        return packageList.ToList();
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        // Get package types 
-        //public object GetPackageTypes()
-        //{
-        //    try
-        //    {
-        //        var packageTypeList = db.PackageTypes;
-        //        return packageTypeList.ToList();
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        // Get package by name
-        //public object GetPackageByName(string name)
-        //{
-        //    try
-        //    {
-        //        var package = (from p in db.Packages
-        //                       join pt in db.PackageTypes on p.PackageTypeId equals pt.PackageTypeId
-        //                       join pp in db.PackagePrices on p.PackageId equals pp.PackageId
-        //                       join pr in db.Prices on pp.PriceId equals pr.PriceId
-        //                       where p.PackageName == name
-        //                       select new PackageVM
-        //                       {
-        //                           package = p,
-        //                           packageType = pt,
-        //                           packagePrice = pp,
-        //                           price = pr
-
-        //                       }).FirstOrDefault();
-
-        //        return package;
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        //Create package
-        //public object CreatePackage(PackageVM package)
-        //{
-        //    try
-        //    {
-        //        Package newPackage = db.Packages.FirstOrDefault(p => p.PackageName == package.package.PackageName);
-
-        //        if (newPackage == null)
-        //        {
-        //            //add product
-        //            newPackage = new Package
-        //            {
-        //                PackageName = package.package.PackageName,
-        //                PackageTypeId = package.package.PackageTypeId,
-        //                //Quantity = package.package.Quantity,
-        //                Description = package.package.Description,
-        //                PackageImage = package.package.PackageImage
-        //            };
-        //            Add(newPackage);
-        //            SaveChanges();
-
-        //            //find an existing price
-        //            Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == package.price.Price1);
-
-        //            //add new price if it doesnt exist
-        //            if (searchPrice == null)
-        //            {
-        //                Price price = new Price
-        //                {
-        //                    Price1 = package.price.Price1
-        //                };
-        //                Add(price);
-        //                SaveChanges();
-        //                searchPrice = price;
-        //            }
-
-        //            // add attributes to product price
-        //            PackagePrice packagePrice = new PackagePrice
-        //            {
-        //                PackageId = newPackage.PackageId,
-        //                PriceId = searchPrice.PriceId
-        //            };
-        //            Add(packagePrice);
-        //            SaveChanges();
-        //        }
-        //        else
-        //        { return false; }
-
-        //        return true;
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        //Update package
-        //public object UpdatePackage(string name, PackageVM package)
-        //{
-        //    try
-        //    {
-        //        // Find the record 
-        //        Package existingPackage = db.Packages.FirstOrDefault(p => p.PackageName == name);
-
-        //        //Update attributes
-        //        existingPackage.PackageName = package.package.PackageName;
-        //        existingPackage.PackageTypeId = package.package.PackageTypeId;
-        //        existingPackage.Description = package.package.Description;
-        //        // existingPackage.Quantity = package.package.Quantity;
-        //        existingPackage.PackageImage = package.package.PackageImage;
-        //        SaveChanges();
-
-        //        //find an existing price
-        //        Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == package.price.Price1);
-
-        //        //add new price if it doesnt exist
-        //        if (searchPrice == null)
-        //        {
-        //            Price price = new Price
-        //            {
-        //                Price1 = package.price.Price1
-        //            };
-        //            Add(price);
-        //            SaveChanges();
-        //            searchPrice = price;
-        //        }
-
-        //        // find price and change
-        //        PackagePrice exstingPackagePrice = db.PackagePrices.FirstOrDefault(p => p.PackageId == existingPackage.PackageId);
-        //        exstingPackagePrice.PriceId = searchPrice.PriceId;
-        //        SaveChanges();
-
-        //        return "Updated successfully";
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        //Delete package
-        //public object DeletePackage(int id)
-        //{
-        //    try
-        //    {
-        //        var deletePackage = db.Packages.Find(id);
-        //        Delete(deletePackage);
-        //        SaveChanges();
-        //        return "Product deleted";
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return error.Message;
-        //    }
-        //}
-
-        public object AddProductToCart(int id)
-        {
-            throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
         }
 
-        public object AddPackageToCart(int id)
+        public object UpdateMerch(int id, MerchVM merch)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //find the item by id
+                Merchandise eMerch = db.Merchandises.FirstOrDefault(m => m.MerchandiseId == id);
+
+                // make the replacements 
+                eMerch.MerchName = merch.MerchName;
+                eMerch.Description = merch.Description;
+                eMerch.MerchImage = merch.MerchImage ?? eMerch.MerchImage;
+                eMerch.MerchStatusId = merch.StatusId;
+                eMerch.MerchTypeId = merch.MerchTypeId;
+                eMerch.MerchCategoryId = merch.MerchCategoryId;
+                SaveChanges();
+
+                //Create new price if null
+                //Thats it there is no mathing price for that id
+                Price searchPrice = db.Prices.FirstOrDefault(p => p.Price1 == merch.Price && p.MerchandiseId == id);
+
+                if (searchPrice == null)
+                {
+                    Price price = new()
+                    {
+                        Price1 = merch.Price,
+                        Date = DateTime.Now,
+                        MerchandiseId = eMerch.MerchandiseId
+                    };
+                    Add(price);
+                    SaveChanges();
+                }
+
+                return "Item Updated successfully";
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
         }
 
-        public object AddSpecialToCart(int id)
+        public object DeleteMerch(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //Delete item
+                var merch = db.Merchandises.Find(id);
+                Delete(merch);
+
+                //Delete associated prices
+                db.Prices.RemoveRange(db.Prices.Where(p => p.MerchandiseId == id));
+                SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
+
+        public object GetAllMerch()
+        {
+            try
+            {
+                var allMerch = db.Merchandises
+                    .Select(x => new
+                    {
+                        ID = x.MerchandiseId,
+                        Name = x.MerchName,
+                        Description = x.Description,
+                        Image = x.MerchImage,
+                        Type = x.MerchType.MerchTypeName,
+                        TypeID = x.MerchTypeId,
+                        CatID = x.MerchCategoryId,
+                        Category = x.MerchCategory.MerchCategoryName,
+                        Price = x.Prices.OrderByDescending(o => o.Date).Select(p => p.Price1).FirstOrDefault(),
+                        Status = x.MerchStatuses.MerchStatusName,
+                        Quantity = 0
+                    });
+
+                return allMerch;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public object GetMerchById(int id)
+        {
+            try
+            {
+                var merch = db.Merchandises.Where(m => m.MerchandiseId == id).Select(x => new
+                {
+                    ID = x.MerchandiseId,
+                    Name = x.MerchName,
+                    Description = x.Description,
+                    Image = x.MerchImage,
+                    Type = x.MerchType.MerchTypeName,
+                    TypeID = x.MerchTypeId,
+                    CatID = x.MerchCategoryId,
+                    Category = x.MerchCategory.MerchCategoryName,
+                    Price = x.Prices.Select(p => p.Price1).First(),
+                    Status = x.MerchStatuses.MerchStatusId,
+                    Quantity = 0
+                }).FirstOrDefault();
+
+                return merch;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public object AmbassadorDiscount(string id)
+        {
+            //Fetch ambassador discount
+            var varID = id;
+            var discount = db.Ambassadors.Where(id => id.UserId == varID)
+                                        .Select(x => new { Discount = x.AmbassadorType.DiscountPercentage });
+            return discount;
+        }
+
+        public object GetVAT()
+        {
+            var VATAmount = db.Vats.OrderByDescending(x => x.Date).Select(x => x.VatPercentage).FirstOrDefault();
+
+            return VATAmount;
+        }
+
         public object FindRefferalLink(string refferalCode)
         {
             var refferalrecord = db.ReferralCodes.Where(refferalcode => refferalcode.ReferralCode1 == refferalCode).FirstOrDefault();
@@ -1372,11 +1341,6 @@ namespace SAiCSInnovationsAPI_3._0.Repository
 
         }
 
-        public object Find<T>(T entity) where T : class
-        {
-            return "";
-
-        }
 
         public object GenerateRefferralCode(string name, string surname, string usedRefferralCode)
         {
@@ -1534,64 +1498,111 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         }
 
         //Amanda iteration 06
-        //public object ViewCatalog()
-        //{
 
-        //    var catalog = db.Products
-        //    .Select(x => new
-        //    {
-        //        ItemID = x.ProductId,
-        //        ItemName = x.ProductName,
-        //        ItemType = 1,
-        //        ItemCategory = x.ProductTypeId,
-        //        ItemPrice = x.ProductPrices.Select(p => p.Price.Price1).FirstOrDefault(),
-        //        ItemImage = x.ProductImage,
-        //        ItemQuantity = 0
-        //    })
-        //    .AsEnumerable()
-        //    .Concat(db.Packages.Select(x => new
-        //    {
-        //        ItemID = x.PackageId,
-        //        ItemName = x.PackageName,
-        //        ItemType = 2,
-        //        ItemCategory = x.PackageTypeId,
-        //        ItemPrice = x.PackagePrices.Select(p => p.Price.Price1).FirstOrDefault(),
-        //        ItemImage = x.PackageImage,
-        //        ItemQuantity = 0
-        //    }));
+        public object AddToCart(string id, CartItem cartitem)
+        {
+            //Find the cart for the specific user
+            Cart userCartID = db.Carts.FirstOrDefault(c => c.UserId == id);
 
-        //    return catalog;
-        //}
+            CartItem item = db.CartItems
+                .Where(x => x.CartId == userCartID.CartId && x.MerchandiseId == cartitem.MerchandiseId)
+                .FirstOrDefault();
 
-        //public object AddToCart(CartVM item)
-        //{
-        //    //Find the cart for the specific user
-        //    Cart userCartID = db.Carts.FirstOrDefault(c => c.UserId == item.userID.ToString());
-        //    item.cartItem.CartId = userCartID.CartId;
+            try
+            {
+                if (item == null)
+                {
+                    CartItem cart = new CartItem();
+                    cart.CartId = userCartID.CartId;
+                    cart.MerchandiseId = cartitem.MerchandiseId ?? null;
+                    cart.SpecialId = cartitem.SpecialId ?? null;
+                    cart.Quantity = cartitem.Quantity;
+                    cart.Price = cartitem.Price;
+                    Add(cart);
+                    SaveChanges();
+                    return "Added To Cart";
 
-        //    //Search for the cartITem
-        //    CartItem cartItem = Search<CartItem>(c => c.CartItemId == item.cartItem.CartItemId && c.CartId == item.cartItem.CartId).FirstOrDefault();
+                }
+                else
+                {
 
-        //    //Increase quantity if item exists
-        //    if (cartItem != null)
-        //    {
-        //        cartItem.Quantity += item.cartItem.Quantity;
-        //        SaveChanges();
-        //    }
-        //    else //Create cartItem if null
-        //    {
-        //        cartItem = new CartItem
-        //        {
-        //            PackageId = item.cartItem.PackageId ?? null,
-        //            ProductId = item.cartItem.ProductId ?? null,
-        //            SpecialId = item.cartItem.SpecialId ?? null,
-        //            CartId = item.cartItem.CartId,
-        //            Quantity = item.cartItem.Quantity,
-        //            Price = item.cartItem.Price
+                    item.Quantity += cartitem.Quantity;
+                    SaveChanges();
+                    return "Item Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
 
-        //        };
-        //        Add(cartItem);
-        //        SaveChanges();
+        }
+
+        public object loadCart(string id)
+        {
+            //Find the cart for the specific user
+            Cart userCartID = db.Carts.FirstOrDefault(c => c.UserId == id);
+
+            try
+            {
+                var loadcart = db.CartItems.Select(x => new
+                {
+                    Id = x.CartItemId,
+                    CartId = x.CartId,
+                    Price = x.Price,
+                    Quantity = x.Quantity,
+                    Name = x.Merchandise.MerchName ?? x.Special.SpecialName,
+                    Image = x.Merchandise.MerchImage ?? x.Special.SpecialName
+                });
+
+                return loadcart;
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+        }
+
+        public object increaseCartItem(int id)
+        {
+            try
+            {
+                var item = db.CartItems.Find(id);
+                item.Quantity += 1;
+                SaveChanges();
+
+                return "Item increased";
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+        }
+
+        public object decreaseCartItem(int id)
+        {
+            try
+            {
+                var item = db.CartItems.Find(id);
+
+                if (item.Quantity > 1)
+                {
+                    item.Quantity -= 1;
+                    SaveChanges();
+
+                    return "Item decreased";
+                }
+                else
+                {
+                    return "Item already at 1";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+        }
 
         //    }
         //   ;
@@ -1692,14 +1703,30 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         //    return "saved";
         //}
 
-        //public object Checkout(CheckoutVM checkout)
-        //{
+        public object Checkout(Order checkout)
+        {
+            try
+            {
+                //Find the cart for the specific user
+                Cart userCartID = db.Carts.FirstOrDefault(c => c.UserId == checkout.UserId);
+                Delivery delivery = new Delivery();
+                if (checkout.AddressId != null)
+                {
+                    delivery.DeliveryAmountId = 1;
+                    Add(delivery);
+                    SaveChanges();
+                }
 
-        //    //Find the cart items
-        //    var cartItem = db.CartItems.Where(items => items.CartId == checkout.order.CartId).ToList();
-
-        //    //Create order object
-        //    Order newOrder = db.Orders.FirstOrDefault(p => p.OrderId == checkout.order.OrderId);
+                Order newOrder = new Order();
+                newOrder.OrderStatusId = checkout.OrderStatusId;
+                newOrder.AddressId = checkout.AddressId;
+                newOrder.CartId = userCartID.CartId;
+                newOrder.UserId = checkout.UserId;
+                newOrder.DeliveryId = checkout.AddressId == null ? null : delivery.DeliveryId;
+                newOrder.ProofOfPayment = checkout.ProofOfPayment;
+                newOrder.Date = DateTime.Today;
+                Add(newOrder);
+                SaveChanges();
 
         //    if (newOrder == null)
         //    {
@@ -1713,35 +1740,50 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         //            Date = DateTime.Today
         //        };
 
-        //        for (int orderitems = 0; orderitems <= cartItem.Count(); orderitems++)
-        //        {
-        //            OrderItem items = new OrderItem();
-        //            items.PackageId = cartItem[orderitems].PackageId;
-        //            items.ProductId = cartItem[orderitems].ProductId;
-        //            items.SpecialId = cartItem[orderitems].SpecialId;
-        //            items.OrderId = newOrder.OrderId;
-        //            items.Quantity = cartItem[orderitems].Quantity;
-        //            items.Price = cartItem[orderitems].Price;
-        //            Add(items);
+                var cart = db.CartItems.Where(x => x.CartId == userCartID.CartId);
+                foreach (var item in cart)
+                {
+                    OrderItem items = new OrderItem();
+                    items.MerchandiseId = item.MerchandiseId ?? null;
+                    items.SpecialId = item.SpecialId ?? null;
+                    items.OrderId = newOrder.OrderId;
+                    items.Quantity = item.Quantity;
+                    items.Price = item.Price;
+                    Add(items);
+                }
+                SaveChanges();
 
-        //        }
-        //        Add(newOrder);
-        //        SaveChanges();
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
+                ClearCart(userCartID.CartId);
 
+                return "Order Placed";
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
 
-        //    return true;
-        //}
+        }
 
         public object ViewOrderHistory(string userID)
         {
-            var orders = db.Orders.Where(id => id.UserId == userID).Include(os => os.OrderStatus)
-                                                                   .ToList();
-            return orders;
+            try
+            {
+                var orders = db.Orders.Where(id => id.UserId == userID)
+                                 .Select(x => new
+                                 {
+                                     Id = x.OrderId,
+                                     Date = x.Date,
+                                     Status = x.OrderStatus.OrderStatusName,
+                                     Price = x.OrderItems.Select(x => x.Price).First(),
+                                     Quantity = x.OrderItems.Select(x => x.Quantity).First(),
+                                 });
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message;
+            }
+
         }
 
         //public object ViewOrderDetails(int orderID)
@@ -1783,10 +1825,26 @@ namespace SAiCSInnovationsAPI_3._0.Repository
             existingAddress.PostalCode = user.PostalCode;
             existingAddress.City = user.City;
 
-            if (SaveChanges())
+        public object GetProductList()
+        {
+            try
             {
+                var productlist = db.Merchandises.Select(x => new
+            if (SaveChanges())
+                {
+                    ID = x.MerchandiseId,
+                    Item = x.MerchName,
+                    Description = x.Description,
+                    MerchType = x.MerchType.MerchTypeName,
+                    MerchCat = x.MerchCategory.MerchCategoryName,
+                    UnitPrice = x.Prices.OrderByDescending(x => x.Date).Select(x => x.Price1).First(),
+                    Status = x.MerchStatuses.MerchStatusName
+                });
+
+                return productlist;
                 return true;
             }
+            catch
             else
             {
                 return false;
@@ -1838,36 +1896,69 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 //add order of teh user(ambassador) to list
                 //Order positionUsersOrders =
                 //ambassadorsOrders.Add((Order)db.Orders.Where(ambid => ambid.AmbassadorId == requests[i].AmbassadorId));
-            }
+        }
 
             //PositionRequestsVM positionrequests = new PositionRequestsVM();
             //positionrequests.Ambassadors = ambassadorsPositionRequests;
             //positionrequests.Orders = ambassadorsOrders;
             return allPositionRequests;
 
-            //for (var i = 0; i<= requests.Count();i++)
-            //{
-            //    var ambRefferral = db.ReferralCodes.Where(amb => amb.AmbassadorId == requests[i].AmbassadorId).FirstOrDefault();
-            //     this.FindRefferalLink(ambRefferral.ReferralCode1);
-            //   // db.Referrals.Where(ambid => ambid.re)
-            //}
+        public object AmbassadorListRep()
+        {
+            try
+            {
+                var amb = db.Ambassadors.Select(x => new
+                {
+                    Name = x.User.Name,
+                    Surname = x.User.Surname,
+                    Email = x.User.Email,
+                    Province = x.User.Addresses.Select(x => x.Province.ProvinceName).First(),
+                    Phone = x.User.PhoneNumber,
+                    Ranking = x.AmbassadorType.AmbassadorTypeName
 
 
+                });
 
-        }
+                return amb;
+            }
+            catch
 
         public void deleteFAQ(int faqId)
-        {
+            {
+                return false;
+            }
             var deleteFAQ = db.Faqs.Where(faq => faq.Faqid == faqId).FirstOrDefault();
             Delete(deleteFAQ);
         }
 
-        public void deleteFAQCategory(int faqCategoryId)
+        public object SalesRep()
         {
+            try
+            {
+                var sales = db.OrderItems
+                .GroupBy(x => new
+                {
+                    x.MerchandiseId,
+                    x.Price,
+                    x.Merchandise.MerchName,
+                    x.Merchandise.MerchCategory.MerchCategoryName,
+                    v = x.Order.Date.Value.Month.Equals(DateTime.Today.Month)
+                })
+                .Select(x => new
+        public void deleteFAQCategory(int faqCategoryId)
+                {
+                    Key = x.Key.MerchandiseId,
+                    Merchandise = x.Key.MerchName,
+                    Category = x.Key.MerchCategoryName,
+                    Price = x.Key.Price,
+                    Quantity = x.Sum(x => x.Quantity),
+                    Date = x.Key.v
+                });
             var deleteFAQCategory = db.Faqcategories.Where(category => category.FaqcategoryId == faqCategoryId).FirstOrDefault();
             Delete(deleteFAQCategory);
 
-        }
+                return sales;
+            }
 
         public string GenerateOTP()
         {
@@ -1875,26 +1966,44 @@ namespace SAiCSInnovationsAPI_3._0.Repository
                 Random rndNum = new Random();
                 int[] otpNum = new int[4];
                 for (int j = 0; j < 4; j++)
-                {
+            catch
+            {
                     otpNum[j] = (rndNum.Next(0, 10));
-                }
-                return string.Join("", otpNum);
-            
+                return false;
+            }
         }
+                return string.Join("", otpNum);
+
+        }
+        //Iteration 8 
+        //Amanda 
 
         public bool VerifyOTP(string userID, string otp)
+        public object GetSpecialOptions()
         {
+            try
+            {
             var verifyOTP = db.Passwords.Where(id => id.UserId == userID).FirstOrDefault();
             if(BCrypt.Net.BCrypt.Verify(otp, verifyOTP.HashedOtp) == true)
-            {
+                var options = db.Merchandises.Select(x => new
+                {
+                    Item = x.MerchImage,
+                    Name = x.MerchName,
+                    Status = x.MerchStatuses.MerchStatusName
+                });
+
+                return options;
                 return true;
             }
+            catch (Exception ex)
             else
             {
+                return ex.InnerException.Message;
                 return false;
             }
         }
     }
+
 
 
 }

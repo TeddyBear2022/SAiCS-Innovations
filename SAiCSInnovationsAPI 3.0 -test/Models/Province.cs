@@ -11,6 +11,7 @@ namespace SAiCSInnovationsAPI_3._0.Models
         {
             Addresses = new HashSet<Address>();
         }
+
         public int ProvinceId { get; set; }
         public string ProvinceName { get; set; }
        

@@ -14,6 +14,7 @@ namespace SAiCSInnovationsAPI_3._0.Models
             Certificates = new HashSet<Certificate>();
             Clients = new HashSet<Client>();
             Feedbacks = new HashSet<Feedback>();
+            Orders = new HashSet<Order>();
             PositionRequests = new HashSet<PositionRequest>();
             ReferralCodes = new HashSet<ReferralCode>();
             Targets = new HashSet<Target>();

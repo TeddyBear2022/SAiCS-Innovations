@@ -30,6 +30,7 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         object GetUserRoles();
         object GetAmbassadorTypes();
         object FindFeedback(int id);
+
         //object GetProductFeedbacks();
         //object GetAmbassadorFeedbacks();
         //object GetAccountFAQs();
@@ -43,10 +44,6 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         void deleteFAQ(int faqId);
         //Iteration 06
         object FindRefferalLink(string refferalCode);
-
-        object AddProductToCart(int id);
-        object AddPackageToCart(int id);
-        object AddSpecialToCart(int id);
         object ViewCurrentAgents(string userID);
         object ViewClient(string userID);
         bool RequestRankingPromotion(string userID);
@@ -59,24 +56,20 @@ namespace SAiCSInnovationsAPI_3._0.Repository
         object GenerateToken(User user);
         bool CheckPassword(string userid, string password);
 
+        object GetUserAddress(string id);
+        object AddUserAddress(Address address);
+
         //Amandas interface repository code
         //Amanda changes
+        //CRUD Merch
+        object CreateMerch(MerchVM merch);
+        object UpdateMerch(int id, MerchVM merch);
+        object DeleteMerch(int id);
+        object GetAllMerch();
+        object GetMerchById(int id);
+        object AmbassadorDiscount(string id);
+        object GetVAT();
 
-        //CRUD Product
-        //object GetProducts();
-        //object GetProductTypes();
-        //abstract object GetProductByName(string name);
-        //object CreateProduct(ProductVM product);
-        //object UpdateProduct(string name, ProductVM product);
-        //object DeleteProduct(int id);
-
-        //CRUD package
-        //object GetPackages();
-        //object GetPackageTypes();
-        //abstract object GetPackageByName(string name);
-        //object CreatePackage(PackageVM package);
-        //object UpdatePackage(string name, PackageVM package);
-        //object DeletePackage(int id);
 
         //Amanda Iteration 6
         //Generic function
@@ -86,18 +79,30 @@ namespace SAiCSInnovationsAPI_3._0.Repository
 
         //Cart functions
         //object ViewCatalog();
-        //object AddToCart(CartVM item);
-        //object RemoveFromCart(int itemID);
-        //object ClearCart(int cartID);
+        object AddToCart(string id, CartItem cartitem);
+        object RemoveFromCart(int itemID);
+        object ClearCart(int cartID);
         //object ViewAmbassadorCart();
         //object ViewClientCart();
-        //object Checkout(CheckoutVM checkout);
+        object Checkout(Order checkout);
+        object loadCart(string id);
+        object increaseCartItem(int id);
+        object decreaseCartItem(int id);
         object ViewOrderHistory(string userID);
         //object ViewOrderDetails(int orderID);
 
         //Training Subsystem
         object AssignCourse(int userID);
 
+        //Iteration 7
+        // Amanda
+        object GetProductList();
+        object AmbassadorListRep();
+        object SalesRep();
+
+        //Iteration 8 
+        //Amanda
+        object GetSpecialOptions();
 
         //REVAMP SEASON
         bool ValidateRefferralCode(string refferalCode);

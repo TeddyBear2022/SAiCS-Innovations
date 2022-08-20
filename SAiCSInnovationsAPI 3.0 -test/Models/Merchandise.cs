@@ -20,12 +20,13 @@ namespace SAiCSInnovationsAPI_3._0.Models
         public string MerchName { get; set; }
         public string Description { get; set; }
         public string MerchImage { get; set; }
-        public string Status { get; set; }
+        public int MerchStatusId { get; set; }
         public int? MerchTypeId { get; set; }
         public int? MerchCategoryId { get; set; }
 
         public virtual MerchType MerchType { get; set; }
         public virtual MerchCategory MerchCategory { get; set; }
+        public virtual MerchStatus MerchStatuses { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<MerchSpecial> MerchSpecials { get; set; }
