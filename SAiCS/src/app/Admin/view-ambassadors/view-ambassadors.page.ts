@@ -26,6 +26,7 @@ export class ViewAmbassadorsPage implements OnInit {
         console.log(data);
         
       })
+     
   }
 
   async presentPopover(event)

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
@@ -48,6 +48,14 @@ export class ApiService {
   apilink:string = "https://localhost:44343/api/"
   token:any
   updateCourseId:number;
+  // headers = new HttpHeaders().set('Authorization', ' Bearer'+ JSON.stringify(localStorage.getItem('token')))
+  headers = new HttpHeaders().set('Authorization :', 'Bearer'+  localStorage.getItem('token')) 
+
+  httpOptions = {
+    headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem("token")
+    })
+  };
 
   //get title
   getTitles():Observable<Title[]>{
@@ -444,22 +452,22 @@ export class ApiService {
   // }
 
   ViewAmbassadorFeedbackAdmin(){
-    return this.api.get(this.apilink+ `Admin/ViewAmbassadorFeedback`)
+    return this.api.get(this.apilink+ `Admin/ViewAmbassadorFeedback`,this.httpOptions)
   }
 
   ViewMerchFeedbackAdmin(){
-    return this.api.get(this.apilink+ `Admin/ViewMerchFeedback`)
+    return this.api.get(this.apilink+ `Admin/ViewMerchFeedback`,this.httpOptions)
   }
 
   ViewAllAmbassadors(){
-    return this.api.get(this.apilink + `Admin/ViewAmbassadors`)
+    return this.api.get(this.apilink + `Admin/ViewAmbassadors`,this.httpOptions)
   }
 
   SearchAmbassador(searchInput:string){
-    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`)
+    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`,this.httpOptions)
   }
 
   SearchCurrentAgents(searchInput:string, userid:string){
-    return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`)
+    return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,this.httpOptions)
   }
 }

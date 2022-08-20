@@ -21,6 +21,8 @@ export class ViewFeedbackAdminPage implements OnInit {
     private menu:MenuController) { }
 
   ngOnInit() {
+
+    console.log("TOken",localStorage.getItem('token')) //remove
     this.FilterForm = new FormGroup({
       feedbackType: new FormControl()
     })
