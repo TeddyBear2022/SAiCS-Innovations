@@ -76,28 +76,31 @@
 
 </ion-col>
 <ion-col size="6">
-    <ion-item no-padding>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-4>
-          <strong>Text in column one</strong>
-        </ion-col>
-        <ion-col col-4>
-          Text in column two
-        </ion-col>
-        <ion-col col-4>
-          Text in column three
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
+<div id="productTable">
+  <ag-grid-angular 
+	style="height: 500px;" 
+	class="ag-theme-alpine"
+	[rowData]="rowData" 
+	[columnDefs]="columnDefs"
+  [rowSelection]="rowSelection"
+  [rowMultiSelectWithClick]="true"
+  (rowSelected)="onRowSelected($event)"
+  (selectionChanged)="onSelectionChanged($event)"
+  >
+</ag-grid-angular>
+</div>
+
+
 </ion-col>
 </ion-row>
+
 <ion-row>
   <ion-item-group style="float: right; margin-left: 85%;">
     <ion-button id="create" slot="end"  type="submit">Create</ion-button>
     <ion-button id="cancel" slot="end" >Cancel</ion-button>
   </ion-item-group>
 </ion-row>
+
+
   </ion-grid>
 </ion-content>

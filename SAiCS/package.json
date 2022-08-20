@@ -29,6 +29,8 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.10.2",
     "@swimlane/ngx-datatable": "^20.0.0",
+    "ag-grid-angular": "^28.1.0",
+    "ag-grid-community": "^28.1.0",
     "angular-material": "^1.2.5",
     "bootstrap": "^5.2.0",
     "font-awesome": "^4.7.0",

@@ -2,6 +2,7 @@
   import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+<<<<<<< Updated upstream
   const routes: Routes = [
     {
       path: 'home',
@@ -80,6 +81,86 @@
     //   path: 'faq-add-modal',
     //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
     // },
+=======
+const routes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'add-special',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./User/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./User/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('./Client/faq/faq.module').then( m => m.FAQPageModule)
+  },
+  {
+    path: 'account-faq',
+    loadChildren: () => import('./Client/faq/account-faq/account-faq.module').then( m => m.AccountFaqPageModule )
+  },
+  {
+    path: 'product-faq',
+    loadChildren: () => import('./Client/faq/product-faq/product-faq.module').then( m => m.ProductFaqPageModule )
+  },
+  {
+    path: 'delivery-faq',
+    loadChildren: () => import('./Client/faq/delivery-faq/delivery-faq.module').then( m => m.DeliveryFaqPageModule )
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./User/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule )
+  },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./Client/feedback/feedback.module').then( m => m.FeedbackPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./Client/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'next',
+    loadChildren: () => import('./User/next/next.module').then( m => m.NextPageModule)
+  },
+  {
+    path: 'waiting',
+    loadChildren: () => import('./User/waiting/waiting.module').then( m => m.WaitingPageModule)
+  },
+  {
+    path: 'view-ambassador',
+    loadChildren: () => import('./Client/view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
+  },
+  {
+    path: 'landing-page-admin',
+    loadChildren: () => import('./Admin/landing-page(admin)/landing-page-admin.module').then( m => m.LandingPageAdminPageModule)
+  },
+  // {
+  //   path: 'view-faq',
+  //   loadChildren: () => import('./Admin/faq(admin)/view-faq/view-faq.module').then( m => m.ViewFaqPageModule)
+  // },
+  {
+    path: 'view-faq',
+    loadChildren: () => import('./Admin/faq(admin)/view-faq.module').then( m => m.ViewFaqPageModule)
+  },
+  // {
+  //   path: 'faq-add-modal',
+  //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
+  // },
+>>>>>>> Stashed changes
 
   // {
   //   path: 'add-faq-modal',

@@ -4,4 +4,5 @@ export class CartItem{
     specialId: number
     cartId: number
     quantity: number
+    price: number
 }

@@ -6,6 +6,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class CartService {
 
+  apilink:string = "https://localhost:44343/api/"
   currentImage = [];
   items = [];
 
@@ -60,15 +61,6 @@ export class CartService {
 
   itemInCart(item): boolean {
     return this.items.findIndex((o) => o.id === item.id) > -1;
-  }
-
-  set SetImage(imageData){
-     this.currentImage = imageData
-  }
-
-  get GetImage()
-  {
-    return this.currentImage
   }
 
 }

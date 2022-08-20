@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';;
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from 'src/app/Services/cart.service';
-import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -24,9 +23,7 @@ export class LandingPagePage implements OnInit {
 
   constructor(
   public popoverController: PopoverController, 
-  private api: ApiService, private cartService: CartService, private fb: FormBuilder,
-  private tmpStorage:TemporaryStorage,
-  private menu:MenuController,public router: Router){}
+  private api: ApiService, private cartService: CartService, private fb: FormBuilder,public router: Router){}
   
   async presentPopover(event)
   {
@@ -54,11 +51,13 @@ var data = await this.api.GetAllMerch().toPromise()
 var dataObj = JSON.parse(JSON.stringify(data));
 this.merchandise = dataObj;
 console.log(this.merchandise);
+
 }
 
-AddToCart(item)
+AddToCart(id)
 {
     
+var item = this.merchandise.find(x => x.id === id)
     // var itemImage: any = {}
   if(!this.cartService.itemInCart(item))
   {
@@ -75,7 +74,7 @@ AddToCart(item)
 //  newItem.quantity = item.itemQuantity
 
 //  let cartvm = {} as CartVM 
-//  cartvm.userID = this.session[0].id //use session storage
+//  cartvm.userID = 1 //use session storage
 //  cartvm.cartItem = newItem
  
 // this.api.AddToCart(cartvm).subscribe((res) => {
@@ -99,7 +98,6 @@ decrementQty(index: number) {
 
 viewCart(merchandise)
 {
-  this.cartService.SetImage = merchandise
   this.router.navigate(['/view-ambassador-cart'])
 }
 }

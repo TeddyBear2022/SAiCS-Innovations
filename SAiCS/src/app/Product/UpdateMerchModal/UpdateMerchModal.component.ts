@@ -14,6 +14,7 @@ import {
 import { ApiService } from 'src/app/Services/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-update-merch-modal',
@@ -26,6 +27,7 @@ export class UpdateMerchModalComponent implements OnInit {
   updateMerch: FormGroup;
   merchTypes = [];
   merchCat = [];
+  merchStatus = [];
   selectedFile: any;
   setData: any;
 
@@ -41,14 +43,15 @@ export class UpdateMerchModalComponent implements OnInit {
     this.GetMerchById(this.existingProduct);
     this.GetMerchCat();
     this.GetMerchTypes();
+    this.GetMerchStatuses();
 
     this.updateMerch = this.fb.group({
       merchName: new FormControl('', Validators.required),
       merchTypeId: new FormControl('', Validators.required),
       merchCatId: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      merchImage: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
+      merchImage: new FormControl(''),
+      price: new FormControl('', [Validators.required]),
       status: new FormControl('', Validators.required),
     });
   }
@@ -71,14 +74,21 @@ export class UpdateMerchModalComponent implements OnInit {
   GetMerchTypes() {
     this.api.GetMerchTypes().subscribe((data) => {
       this.merchTypes = data;
-      console.log(this.merchTypes);
+      console.log("Loaded types successfully");
     });
   }
 
   GetMerchCat() {
     this.api.GetMerchCat().subscribe((data) => {
       this.merchCat = data;
-      console.log(this.merchCat);
+      console.log("Loaded categories successfully");
+    });
+  }
+
+  GetMerchStatuses() {
+    this.api.GetMerchStatuses().subscribe((data) => {
+      this.merchStatus = data;
+      console.log("Loaded statuses successfully");
     });
   }
 
@@ -102,11 +112,12 @@ export class UpdateMerchModalComponent implements OnInit {
     uMerch.description = this.updateMerch.value.description;
     uMerch.merchImage = this.selectedFile;
     uMerch.price = this.updateMerch.value.price;
-    uMerch.status = this.updateMerch.value.status;
+    uMerch.statusId = this.updateMerch.value.status;
     uMerch.merchTypeId = this.updateMerch.value.merchTypeId;
     uMerch.merchCategoryId = this.updateMerch.value.merchCatId;
 
     //add product attributes
+
     // let product = {} as Product;
     // product.productName = this.updateProductForm.value.productName
     // product.description = this.updateProductForm.value.description
@@ -123,42 +134,66 @@ export class UpdateMerchModalComponent implements OnInit {
     // viewModel.price = price
 
     // update product
-    this.api.UpdateMerch(this.existingProduct, uMerch).subscribe(()=> {console.log("success")})
-    //console.log(product)
+    
+    this.api.UpdateMerch(this.existingProduct, uMerch).subscribe((res) =>{
+      if(res.body == "Item Updated successfully")
+      {
+        this.presentToast();
+        this.dismissModal();
+      }
+      else
+      {
+        console.log(res.body);
+      }
+     
+      
+    })
 
-    //dismiss modal
-    //this.dismissModal();
-
-    //suceess
-    //this.presentToast();
-  }
-
+    }
+    
   //confirm update
   async ConfirmUpdate() {
-    const alert = await this.alertController.create({
-      cssClass: 'messageAlert',
-      message: "Are you sure you would like to update this product's details?",
-      buttons: [
-        {
-          text: 'Confirm',
-          cssClass: 'Confirm',
-          handler: () => {
-            this.submitForm();
-            console.log('Confirm Ok');
+    
+    if(this.updateMerch.valid)
+    {
+      const alert = await this.alertController.create({
+        cssClass: 'messageAlert',
+        message: "Are you sure you would like to update this product's details?",
+        buttons: [
+          {
+            text: 'Confirm',
+            cssClass: 'Confirm',
+            handler: () => {
+              this.submitForm();
+              console.log('Confirm Ok');
+            },
           },
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'Cancel',
-          handler: () => {
-            console.log('Confirm Cancel');
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'Cancel',
+            handler: () => {
+              console.log('Confirm Cancel');
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
+  
+      await alert.present();
+    }
+    else {
 
-    await alert.present();
+      const alert = await this.alertController.create({
+        cssClass: 'messageAlert',
+        header: 'Invalid Form',
+        message: "Please Ensure All Fields Are not Empty",
+        buttons: ['OK']
+      });
+      
+      await alert.present();
+      //console.log('invalid form');
+    }
+    
   }
 
   //dismiss modal
@@ -169,7 +204,7 @@ export class UpdateMerchModalComponent implements OnInit {
   //success alert
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Successfully Updated Product',
+      message: 'Successfully Updated Merchandise',
       cssClass: 'successToaster',
       duration: 5000,
     });
