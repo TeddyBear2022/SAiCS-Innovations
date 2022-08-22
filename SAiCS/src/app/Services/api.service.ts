@@ -183,14 +183,17 @@ export class ApiService {
   {
     return this.api.get(this.apilink + 'Product/GetMerchCats');
   }
- 
-   //Create product
-  CreateMerch(nMerch: MerchVM)
+
+  GetMerchStatuses(): Observable<any>
   {
-    return this.api.post(this.apilink + "Product/CreateMerch", nMerch)
+    return this.api.get(this.apilink + 'Product/GetMerchStatuses');
   }
 
-  // Get all products
+  CreateMerch(nMerch: MerchVM)
+  {
+    return this.api.post(this.apilink + "Product/CreateMerch", nMerch,  {observe: 'response', responseType: 'text'})
+  }
+
   GetAllMerch(): Observable<any>
   {
     return this.api.get(this.apilink + 'Product/GetMerch')
@@ -202,12 +205,11 @@ export class ApiService {
   }
   
   //Update product
-  UpdateMerch(id: number, uMerch: MerchVM): Observable<MerchVM>
+  UpdateMerch(id: number, uMerch: MerchVM)
   {
-    return this.api.put<MerchVM>(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch)
+    return this.api.put(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch, {observe: 'response', responseType: 'text'})
   }
 
-  //Delete product
   DeleteMerch(id: number)
   {
     return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`)
@@ -235,41 +237,61 @@ export class ApiService {
     return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
   }
 
-  AddToCart(id: string,newItem: CartItem[])
+  AddToCart(id: string,newItem: CartItem)
   {
-    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem)
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', responseType: 'text'})
+  }
+  
+
+  GetCartItems(id: string)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewCart?id=${id}`)
   }
 
-  GetCartItems()
+  IncreaseCartItem(id: number)
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
+  return this.api.post(this.apilink + `AmbassadorOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  }
+
+  DecreaseCartItem(id: number)
+  {
+  return this.api.post(this.apilink + `AmbassadorOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
   }
 
   RemoveFromCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`)
+    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'})
   }
 
   ClearCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`)
+    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?cartID=${id}`)
   }
 
   GetAddress(id: string)
   {
-    return this.api.get(this.apilink +`AmbassadorOrder/GetAddress?userID=${id}`)
+    return this.api.get(this.apilink +`User/GetUserAddress?id=${id}`)
   }
 
   Checkout(order: Order)
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order)
+    return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order, {observe: 'response', responseType: 'text'})
   }
 
   NewAddress(address: Address)
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/NewAddress", address)
+    return this.api.post(this.apilink + "User/AddUserAddress", address, {observe: 'response', responseType: 'text'})
   }
 
+  GetProvinces()
+  {
+    return this.api.get(this.apilink +"User/GetProvinces")
+  }
+
+  OrderHistory(id: string)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`)
+  }
 
   //Iteration 7
   ProductListRep()
@@ -286,4 +308,13 @@ export class ApiService {
   {
     return this.api.get(this.apilink + "Report/SalesRep")
   }
+
+  //Iteration 8 
+  //Amanda 
+  GetSpecialOptions()
+  {
+    return this.api.get(this.apilink + "Admin/GetSpecialOptions")
+  }
+
+
 }

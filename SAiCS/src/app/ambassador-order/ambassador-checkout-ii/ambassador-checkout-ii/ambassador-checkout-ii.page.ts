@@ -7,8 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   deliveryOption = false;
   checkout: FormGroup;
   OdrSmry: any;
-  one = 1; //got testing
+  one = 2; //got testing
   isModalOpen = false;
 
   setOpen(isOpen: boolean) {
@@ -30,6 +31,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   constructor(
+    public popoverController: PopoverController, 
     private alert: AlertController,
     private api: ApiService,
     private fb: FormBuilder,
@@ -75,23 +77,36 @@ export class AmbassadorCheckoutIiPage implements OnInit {
      this.selectedFile = encoded
      console.log("encoded successfully")
       }
-    //console.log('size', file.size);
     
   }
 
   submitForm() {
-   if(this.deliveryOption == false) this.checkout.setValidators(null)
+
+   if(this.deliveryOption == false) 
+   {
+    this.checkout.get('address').clearValidators();
+    this.checkout.get('address').updateValueAndValidity();
+   }
+   
 
     if (this.checkout.valid) {
             let order = {} as Order;
             order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
             order.userId = this.one.toString();
-            order.orderStatusId = 1;
+            order.orderStatusId = 2;
             order.proofOfPayment = this.selectedFile
-            this.api.Checkout(order).subscribe();
+            this.api.Checkout(order).subscribe(res => {
+              console.log(res.body);
+              
+            });
             console.log(order);
+
+            this.checkout.get('address').setValidators(Validators.required);
+            this.checkout.get('address').updateValueAndValidity();
+
+            localStorage.removeItem('checkout')
+
             this.showAlert();
-            this.router.navigate(['/ambassador-landing-page'])
 
     } else {
       console.log('invalid form');
@@ -108,9 +123,23 @@ export class AmbassadorCheckoutIiPage implements OnInit {
       buttons: [
         {
           text: 'Back To Home',
+          handler: () => {
+            
+            this.router.navigate(['/ambassador-landing-page'])
+          }
         },
       ],
     });
     await alert.present();
+  }
+
+  //Profile popover
+  async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
+    });
+    return await popover.present();
   }
 }

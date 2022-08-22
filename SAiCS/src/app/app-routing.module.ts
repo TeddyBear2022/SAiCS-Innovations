@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'report',
+    redirectTo: 'add-special',
     pathMatch: 'full'
   },
   {

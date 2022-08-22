@@ -57,7 +57,10 @@
 
       <ion-item-group>
         <ion-label>Status:</ion-label>
-        <ion-input formControlName="status" placeholder="Enter product status..."></ion-input>
+        <select placeholder="Pick" formControlName="status">
+          <option value="" disabled selected>Select status</option>
+          <option *ngFor="let m of merchStatus" value="{{m.merchStatusId}}">{{m.merchStatusName}}</option>
+        </select><br> 
         <span *ngIf="localForm.submitted && merch.controls['status'].invalid">Required</span>
       </ion-item-group>
 

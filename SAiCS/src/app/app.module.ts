@@ -10,12 +10,14 @@ import{HttpClientModule} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReportComponentsModule } from './Report/report-components/report-components.module';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AgGridModule } from 'ag-grid-angular';
+
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, NgxDatatableModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule, ReportComponentsModule],
+  imports: [BrowserModule, AgGridModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule, ReportComponentsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],
   bootstrap: [AppComponent],
 })

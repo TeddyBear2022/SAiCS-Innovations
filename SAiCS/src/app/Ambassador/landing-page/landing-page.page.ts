@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
-import { ApiService } from 'src/app/Services/api.service';;
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CartService } from 'src/app/Services/cart.service';
+import { ApiService } from 'src/app/Services/api.service';
+import { CartItem } from 'src/app/Models/CartItem';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,7 +17,7 @@ export class LandingPagePage implements OnInit {
 
   constructor(
   public popoverController: PopoverController, 
-  private api: ApiService, private cartService: CartService, private fb: FormBuilder,public router: Router){}
+  private api: ApiService,public router: Router){}
   
   async presentPopover(event)
   {
@@ -40,35 +39,30 @@ var data = await this.api.GetAllMerch().toPromise()
 var dataObj = JSON.parse(JSON.stringify(data));
 this.merchandise = dataObj;
 console.log(this.merchandise);
+
 }
 
-AddToCart(item)
+AddToCart(id)
 {
     
+var item = this.merchandise.find(x => x.id === id)
     // var itemImage: any = {}
-  if(!this.cartService.itemInCart(item))
-  {
-    //for storage 
-    var addItem = {'id':item.id, 'name': item.name, 'price': item.price,  'quantity': item.quantity} 
-    console.log(addItem);
-    this.cartService.addToCart(addItem);
- }
-//  let newItem = {} as CartItem
-//  newItem.packageId = item.itemType === 2? item.itemID : null
-//  newItem.productId = item.itemType === 1? item.itemID : null
-//  newItem.specialId = null
-//  newItem.price = item.itemPrice
-//  newItem.quantity = item.itemQuantity
-
-//  let cartvm = {} as CartVM 
-//  cartvm.userID = 1 //use session storage
-//  cartvm.cartItem = newItem
+//   if(!this.cartService.itemInCart(item))
+//   {
+//     //for storage 
+//     var addItem = {'id':item.id, 'name': item.name, 'price': item.price,  'quantity': item.quantity} 
+//     console.log(addItem);
+//     this.cartService.addToCart(addItem);
+//  }
+ let newItem = {} as CartItem
+ newItem.merchandiseId = item.id 
+ newItem.specialId = null
+ newItem.price = item.price
+ newItem.quantity = item.quantity
  
-// this.api.AddToCart(cartvm).subscribe((res) => {
-//   console.log(res);
-//   var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
-//   localStorage.setItem('MarkedItem',JSON.stringify(marked))
-// });
+let one = 2 
+
+this.api.AddToCart(one.toString(), newItem).subscribe((res) => {console.log(res.body);});
 
 //  console.log(newItem)
 }
@@ -85,7 +79,6 @@ decrementQty(index: number) {
 
 viewCart(merchandise)
 {
-  this.cartService.SetImage = merchandise
   this.router.navigate(['/view-ambassador-cart'])
 }
 }

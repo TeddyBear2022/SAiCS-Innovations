@@ -2,8 +2,9 @@ export class Address{
        AddressID: number
        UserID: number
        CountryID: number
-       Address:string
+       Address1:string
        PostalCode:number
        City: string
        RecipientNumber: number
+       ProvinceId: number
 }

@@ -1,16 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Update Product
+      Update Merchandise
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="updateMerch"  class="ion-padding" (ngSubmit)="submitForm()">
+  <form [formGroup]="updateMerch" #localForm = 'ngForm' class="ion-padding">
    
       <ion-item-group>
         <ion-label>Product Name:</ion-label>
         <ion-input formControlName="merchName"></ion-input>
+        <span *ngIf="localForm.submitted && updateMerch.controls['merchName'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
@@ -19,6 +20,7 @@
           <option value="" disabled selected>Select product type</option>
           <option *ngFor="let m of merchTypes" value="{{m.merchTypeId}}">{{m.merchTypeName}}</option>
         </select>
+        <span *ngIf="localForm.submitted && updateMerch.controls['merchTypeId'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
@@ -27,12 +29,14 @@
           <option value="" disabled selected>Select product type</option>
           <option *ngFor="let m of merchCat" value="{{m.merchCategoryId}}">{{m.merchCategoryName}}</option>
         </select>
+        <span *ngIf="localForm.submitted && updateMerch.controls['merchCatId'].invalid">Required</span>
       </ion-item-group>
 
       
       <ion-item-group>
         <ion-label>Merchandise Price:</ion-label>
         <ion-input formControlName="price" type="number" min="0"></ion-input>
+        <span *ngIf="localForm.submitted && updateMerch.controls['price'].invalid">Required: The minimum price is R30</span>
       </ion-item-group> 
 
       <ion-item-group>
@@ -43,15 +47,20 @@
       <ion-item-group>
         <ion-label>Description:</ion-label>
         <ion-textarea  formControlName="description"></ion-textarea>
+        <span *ngIf="localForm.submitted && updateMerch.controls['description'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
         <ion-label>Status:</ion-label>
-        <ion-input formControlName="status"></ion-input>
+        <select placeholder="Pick" formControlName="status">
+          <option value="" disabled selected>Select status</option>
+          <option *ngFor="let m of merchStatus" value="{{m.merchStatusId}}">{{m.merchStatusName}}</option>
+        </select><br> 
+        <span *ngIf="localForm.submitted && updateMerch.controls['status'].invalid">Required</span>
       </ion-item-group>
 
         <ion-item-group style="float: right;">
-          <ion-button id="update" slot="end"  (click)="ConfirmUpdate()">Update</ion-button>
+          <ion-button id="update" slot="end" (click)="ConfirmUpdate()">Update</ion-button>
           <ion-button id="cancel" slot="end" (click)="dismissModal()">Cancel</ion-button>
         </ion-item-group>
   </form>

@@ -13,6 +13,7 @@ import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.
 export class ViewMerchPage implements OnInit {
   merch = []
   merchCat = [];
+  merchCatOption = 'All'
   
 
   constructor(

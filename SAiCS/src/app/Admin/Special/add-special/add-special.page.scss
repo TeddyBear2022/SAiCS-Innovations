@@ -1,36 +1,79 @@
 ion-content {
-    --padding-start:0%;
-    --padding-top: 5%;
-    --background: #f8f8f8;
+  --padding-start: 0%;
+  --padding-top: 5%;
+  --background: #f8f8f8;
 }
 
-ion-input[type=text], ion-input[type=number], ion-textarea, input{
-    border: 2px solid #9e9e9e;
-    width: 202px;
-    border-radius: 10px;
-    text-align: left;
-    --background:white;
+ion-input[type="text"],
+ion-input[type="number"],
+ion-textarea,
+input {
+  border: 2px solid #9e9e9e;
+  width: 202px;
+  border-radius: 10px;
+  text-align: left;
+  --background: white;
 }
 
-ion-input{height: 40px;}
-ion-textarea{height: 160px;}
-
-ion-button{
-    width: 80px;
-    height: 45px;
-    color:white;
-    font-weight: bold;
-    text-transform: none;
-    border-radius: 10px;
-   }
-   #create{--background: #0070c0;}
-   #cancel{ --background: #f44336;}
-
-   #searchProductBar{
-    align-self: center;
-    --background: #ffffff;
-    --placeholder-color: #000000;
-    --color:var(--placeholder-color);
-    --border-radius: 10px;
-   
+ion-input {
+  height: 40px;
 }
+ion-textarea {
+  height: 160px;
+}
+
+ion-button {
+  width: 80px;
+  height: 45px;
+  color: white;
+  font-weight: bold;
+  text-transform: none;
+  border-radius: 10px;
+}
+#create {
+  --background: #0070c0;
+}
+#cancel {
+  --background: #f44336;
+}
+
+#searchProductBar {
+  align-self: center;
+  --background: #ffffff;
+  --placeholder-color: #000000;
+  --color: var(--placeholder-color);
+  --border-radius: 10px;
+}
+
+.ag-theme-alpine {
+  --ag-borders: none;
+  background: #f8f8f8;
+}
+
+::ng-deep .ag-theme-alpine .ag-row {
+  background-color: #ffffff;
+  margin-top: 20px;
+  position: relative;
+  transform: translateY(0) !important;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px black;
+ height: 62px;
+ vertical-align: middle;
+}
+
+::ng-deep .ag-center-cols-viewport {
+  background: #f8f8f8;
+}
+
+#productTable{
+    margin-left: 5%;
+}
+
+// ::ng-deep .ag-theme-alpine .ag-body-viewport {
+//     overflow-x: hidden;
+//   }
+
+// .ag-layout-normal > .ag-body-viewport.ag-layout-normal {
+//     overflow-y: overlay;
+// }

@@ -3,7 +3,7 @@ export class MerchVM{
     merchName: string
     description: string
     merchImage: string
-    status: string
+    statusId: number
     merchTypeId: number
     merchCategoryId: number
     price: number

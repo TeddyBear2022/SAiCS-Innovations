@@ -19,7 +19,8 @@
 </ion-header>
 
 <ion-content>
-  <br><br><br>
+  <ion-grid>
+
   <ion-row>
     <ion-col>
       <ion-button fill="clear" (click)="createProduct()">
@@ -30,16 +31,21 @@
       <ion-searchbar id="searchProductBar" placeholder="Search Product..."></ion-searchbar>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <!-- Filter box -->
    <ion-col size="2.1">
+    <ion-row>
+      <a href="#" style="margin-left: 5%;">Maintain VAT</a>
+    </ion-row>
+
     <ion-card id="filterBox">
       <ion-card-header>
         <ion-card-title>Categories...</ion-card-title>
       </ion-card-header>
     
       <ion-card-content>
-        <ion-radio-group value="merchCats" name="merchCats" ngModel #merchCats="ngModel">
+        <ion-radio-group [(ngModel)]="merchCatOption">
 
           <ion-item lines="none" *ngFor="let m of merchCat; index as i">
             <ion-label>{{m.merchCategoryName}}</ion-label>
@@ -48,15 +54,16 @@
       
           <ion-item lines="none">
             <ion-label>Show All...</ion-label>
-            <ion-radio slot="start" value="All" checked="true"></ion-radio>
+            <ion-radio slot="start" value="All"></ion-radio>
           </ion-item>
 
         </ion-radio-group>
       </ion-card-content>
     </ion-card>
    </ion-col>
+
    <!-- Table -->
-   <ion-col>
+   <ion-col size="9">
     
      <table id="productTable">
       <thead>
@@ -72,13 +79,13 @@
       </thead>
       <tbody>
         <ng-container *ngFor="let m of merch">
-          <tr *ngIf="m.catID == merchCats.value || merchCats.value == 'All'">
+          <tr *ngIf="m.catID == merchCatOption || merchCatOption == 'All'">
             <td>{{m.id}}</td>
             <td><img src="data:image/png;base64,{{m.image}}" height="100px" alt='The Image' /></td>
             <td>{{m.name}}</td>
             <td>{{m.category}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>
-            <td>{{m.price}}</td>
+            <td>{{m.price | currency: 'ZAR':'symbol-narrow'}}</td>
             <td style="display: block;text-align: center;">
               <ion-button id="update" (click)="updateProduct(m.id)">Update</ion-button>
               <ion-button id="delete" (click)="DeleteMerch(m.id)">Remove</ion-button>
@@ -89,4 +96,5 @@
      </table>
   </ion-col>
   </ion-row>
+</ion-grid>
 </ion-content>

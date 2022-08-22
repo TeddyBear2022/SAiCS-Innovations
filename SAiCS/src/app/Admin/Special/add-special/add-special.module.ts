@@ -5,13 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AddSpecialPageRoutingModule } from './add-special-routing.module';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { AddSpecialPage } from './add-special.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    AgGridModule,
     IonicModule,
     AddSpecialPageRoutingModule
   ],

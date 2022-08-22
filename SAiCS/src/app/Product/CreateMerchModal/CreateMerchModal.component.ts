@@ -7,8 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from 'src/app/Services/api.service';
-import { HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-merch-modal',
@@ -19,6 +20,7 @@ export class CreateMerchModalComponent implements OnInit {
   merch: FormGroup;
   merchTypes = [];
   merchCat = [];
+  merchStatus = [];
   selectedFile: any;
   isExisting: boolean = false;
 
@@ -32,6 +34,7 @@ export class CreateMerchModalComponent implements OnInit {
   ngOnInit() {
     this.GetMerchTypes();
     this.GetMerchCat();
+    this.GetMerchStatuses();
 
     this.merch = this.fb.group({
       merchName: new FormControl('', Validators.required),
@@ -39,9 +42,7 @@ export class CreateMerchModalComponent implements OnInit {
       merchCatId: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       merchImage: new FormControl('', Validators.required),
-      price: new FormControl('', [
-        Validators.required,
-      ]),
+      price: new FormControl('', [Validators.required]),
       status: new FormControl('', Validators.required),
     });
   }
@@ -50,63 +51,66 @@ export class CreateMerchModalComponent implements OnInit {
   GetMerchTypes() {
     this.api.GetMerchTypes().subscribe((data) => {
       this.merchTypes = data;
-      console.log(this.merchTypes);
+      console.log("Loaded types successfully");
     });
   }
 
   GetMerchCat() {
     this.api.GetMerchCat().subscribe((data) => {
       this.merchCat = data;
-      console.log(this.merchCat);
+      console.log("Loaded categories successfully");
+    });
+  }
+
+  GetMerchStatuses() {
+    this.api.GetMerchStatuses().subscribe((data) => {
+      this.merchStatus = data;
+      console.log("Loaded statuses successfully");
     });
   }
 
   //convert image to base64
   onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
-
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+      if (encoded.length % 4 > 0) {
+        encoded += '='.repeat(4 - (encoded.length % 4));
+      }
+      this.selectedFile = encoded;
+      console.log('encoded successfully');
+    };
   }
 
   submitForm() {
     if (this.merch.valid) {
+      let nMerch = {} as MerchVM;
+      nMerch.merchName = this.merch.value.merchName;
+      nMerch.description = this.merch.value.description;
+      nMerch.merchImage = this.selectedFile;
+      nMerch.price = this.merch.value.price;
+      nMerch.statusId = this.merch.value.status;
+      nMerch.merchTypeId = this.merch.value.merchTypeId;
+      nMerch.merchCategoryId = this.merch.value.merchCatId;
 
-        const formData: FormData = new FormData();
-        formData.append('file', this.selectedFile, this.selectedFile.name);
-  
-          this.api.UploadImage(formData).subscribe(data => { 
-            console.log(data)}, (res: HttpErrorResponse) =>{
-              if(res.status === 200)
-              {    
-                let nMerch = {} as MerchVM;
-                nMerch.merchName = this.merch.value.merchName;
-                nMerch.description = this.merch.value.description;
-                nMerch.merchImage = res.error.text;
-                nMerch.price = this.merch.value.price;
-                nMerch.status = this.merch.value.status;
-                nMerch.merchTypeId = this.merch.value.merchTypeId;
-                nMerch.merchCategoryId = this.merch.value.merchCatId;
-          
-                // create product
-                this.api.CreateMerch(nMerch).subscribe((response)=> {
-                  if(response == true)
-                  {
-                    this.isExisting = false
-                    //dismiss modal
-                    this.dismissModal()
-                     // success alert
-                     this.presentToast()
-                     
-                  }
-                  else
-                  {
-                    this.isExisting = true
-                    console.log("Product existing")
-                  }      
-                });
-              }
-            })
+      // create product
+     this.api.CreateMerch(nMerch).subscribe((res) =>{
+      if(res.body == 'Item already Exists')
+      {
+        this.isExisting = true
+      }
+      else{
+        this.isExisting = false
+        this.presentToast()
+        this.dismissModal()
+      }
+      
+     }, (error) => {console.log(error)})
 
+     
+     
     } else {
       console.log('invalid form');
     }

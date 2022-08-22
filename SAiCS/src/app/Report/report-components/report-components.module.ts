@@ -8,7 +8,6 @@ import { SalesReportComponent } from '../sales-report/sales-report.component';
 import { TargetReportComponent } from '../target-report/target-report.component';
 import { LeaderboardReportComponent } from '../leaderboard-report/leaderboard-report.component';
 import { IonicModule } from '@ionic/angular';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -24,7 +23,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 ],
   imports: [
     CommonModule,
-    NgxDatatableModule,
     IonicModule.forRoot()
   ],
   exports:[

@@ -1,19 +1,10 @@
-import { CurrencyPipe } from '@angular/common';
 import {
   Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChildren,
+  OnInit
 } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import {  Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
-import { share } from 'rxjs/operators';
-import { CartItem } from 'src/app/Models/CartItem';
 
 @Component({
   selector: 'app-view-ambassador-cart',
@@ -21,11 +12,8 @@ import { CartItem } from 'src/app/Models/CartItem';
   styleUrls: ['./view-ambassador-cart.page.scss'],
 })
 export class ViewAmbassadorCartPage implements OnInit {
-  cartImages: any;
-  items = [];
+  items: any = [];
   deliveryOption = false;
-  //For totals to reflect
-  @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
  
  
   discount = 0;
@@ -34,32 +22,19 @@ export class ViewAmbassadorCartPage implements OnInit {
   constructor(
     private api: ApiService,
     private cartService: CartService,
-    private currencyPipe: CurrencyPipe,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {
-    this.cartImages = this.cartService.GetImage;
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.cartService.loadCart();
-    this.items = this.cartService.getItems();
     this.ViewCart();
+    this.loadCart();
   }
 
-  //Cart funtionalities
 
-  getImage(id) {
-    var image = this.cartImages.find((x) => x.id === id);
-    if (image) {
-      return `data:image/png;base64,${image.image}`;
-    } else {
-      return './assets/noImage.png';
-    }
-  }
 
   async ViewCart() {
-    var data = await this.api.AmbassadorDiscount(2).toPromise();
+    let two = 2;
+    var data = await this.api.AmbassadorDiscount(two.toString()).toPromise();
     var dataObj = JSON.parse(JSON.stringify(data[0].discount));
     this.discount = dataObj;
     console.log(`discount: ${this.discount}`);
@@ -68,44 +43,54 @@ export class ViewAmbassadorCartPage implements OnInit {
     var vatObj = JSON.parse(JSON.stringify(vatData));
     this.vat = vatObj;
     console.log(`discount: ${this.vat}`);
+
+    
+  }
+
+  loadCart()
+  {
+    let one = 1 
+    this.api.GetCartItems(one.toString()).subscribe(res =>{
+      this.items = res
+      console.log(this.items);
+      
+    })
   }
 
   increment(item) {
     // the quantity and price and get new subtotal
     item.quantity += 1;
-    this.cartService.saveCart();
-    var i = this.items.findIndex((x) => x.id === item.id);
-    this.ChangeItemTotal(item, i);
+    this.api.IncreaseCartItem(item.id).subscribe((res) => {
+      console.log(res.body);
+      
+    })
   }
 
   decrement(item) {
     // the quantity and price and get new subtotal
     if (item.quantity > 1) {
       item.quantity -= 1;
-      this.cartService.saveCart();
-      var i = this.items.findIndex((x) => x.id === item.id);
-      this.ChangeItemTotal(item, i);
+      this.api.DecreaseCartItem(item.id).subscribe((res) =>{
+        console.log(res.body);
+        
+      })
     }
   }
 
   RemoveFromCart(item) {
-    this.cartService.removeItem(item);
-    this.items = this.cartService.getItems();
+    this.api.RemoveFromCart(item.id).subscribe(res =>{
+      console.log(res.body);
+      
+    })
   }
 
-  ClearCart(id: number) {
-    this.api.ClearCart(id).subscribe();
+  ClearCart() {
+    this.api.ClearCart(this.items[0].cartId).subscribe();
     window.location.reload();
   }
 
-  ChangeItemTotal(item, index) {
-    const subTotal = item.price * item.quantity;
-    this.itemTotal.toArray()[index].nativeElement.innerHTML = subTotal;
-    this.cartService.saveCart();
-  }
-
 //Calculations
-  get total() {
+  get Subtotal() {
     return this.items.reduce(
       (sum, x) => ({
         quantity: 1,
@@ -116,23 +101,22 @@ export class ViewAmbassadorCartPage implements OnInit {
   }
 
  get AmbassadorDiscount() {
-    return  this.total * this.discount
-    //return "hello"
+    return  this.Subtotal * this.discount
   }
 
   get CalculatedVAT()
   {
-    return this.vat * this.total
+    return this.vat * this.Subtotal
   }
 
   get OrderTotal()
   {
     if(this.deliveryOption == true)
     {
-      return (this.total + 200) - this.AmbassadorDiscount
+      return (this.Subtotal + 200) - this.AmbassadorDiscount
     }
     else{
-      return this.total - this.AmbassadorDiscount
+      return this.Subtotal - this.AmbassadorDiscount
     }
     
   }
@@ -144,23 +128,9 @@ export class ViewAmbassadorCartPage implements OnInit {
 
   //Place order
   PlaceOrder() {
-    var itemArray = []
-    for(let item of this.items)
-    {
-      let cart = {} as CartItem
-      cart.merchandiseId = item.id
-      cart.quantity = item.quantity
-      cart.specialId = null
-      itemArray.push(cart)
-    }
-    console.log(itemArray);
-    
-    var one = 1   
-    this.api.AddToCart(one.toString(), itemArray).subscribe();
-
     var orderdetails = {
       'itemCount': this.TotalItems, 'discount': this.AmbassadorDiscount,
-      'vat': this.CalculatedVAT, 'subtotal': this.total, 'totalCost': this.OrderTotal, 'deliveryOption': this.deliveryOption}
+      'vat': this.CalculatedVAT, 'subtotal': this.Subtotal, 'totalCost': this.OrderTotal, 'deliveryOption': this.deliveryOption}
       localStorage.setItem('checkout', JSON.stringify(orderdetails))
 
     this.router.navigate(['/ambassador-checkout-ii'])
