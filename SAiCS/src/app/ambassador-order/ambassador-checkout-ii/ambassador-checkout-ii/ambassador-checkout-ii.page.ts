@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
 import { ApiService } from 'src/app/Services/api.service';
@@ -22,11 +23,17 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   checkout: FormGroup;
   OdrSmry: any;
   one = 1; //got testing
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   constructor(
     private alert: AlertController,
     private api: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -57,7 +64,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   onFileSelected(event) {
-    let file = event.target.files[0];
+     let file = event.target.files[0];
      let reader = new FileReader();
      reader.readAsDataURL(file);
      reader.onload = () => {
@@ -67,7 +74,10 @@ export class AmbassadorCheckoutIiPage implements OnInit {
        }
      this.selectedFile = encoded
      console.log("encoded successfully")
-  }}
+      }
+    //console.log('size', file.size);
+    
+  }
 
   submitForm() {
    if(this.deliveryOption == false) this.checkout.setValidators(null)
@@ -77,10 +87,12 @@ export class AmbassadorCheckoutIiPage implements OnInit {
             order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
             order.userId = this.one.toString();
             order.orderStatusId = 1;
-            order.cartId = this.OdrSmry.cartId
             order.proofOfPayment = this.selectedFile
             this.api.Checkout(order).subscribe();
             console.log(order);
+            this.showAlert();
+            this.router.navigate(['/ambassador-landing-page'])
+
     } else {
       console.log('invalid form');
     }

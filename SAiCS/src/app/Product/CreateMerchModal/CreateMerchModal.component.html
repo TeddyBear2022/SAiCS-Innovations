@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      
+      <ion-item color="primary"><h2 style="margin-left: 10pt;"><b>Create Product</b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="merch" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
+   
+      <ion-item-group>
+        <ion-label>Merchandise Name:</ion-label>
+        <ion-input formControlName="merchName" placeholder="Enter product name"></ion-input>
+        <span *ngIf="localForm.submitted && merch.controls['merchName'].invalid">Required</span>
+        <span *ngIf="isExisting" style="margin-left: 15%;">Product already exists</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Merchandise Type:</ion-label>
+        <select placeholder="Pick" formControlName="merchTypeId">
+          <option value="" disabled selected>Select product type</option>
+          <option *ngFor="let m of merchTypes" value="{{m.merchTypeId}}">{{m.merchTypeName}}</option>
+        </select><br> 
+        <span *ngIf="localForm.submitted && merch.controls['merchTypeId'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Merchandise Category:</ion-label>
+        <select placeholder="Pick" formControlName="merchCatId">
+          <option value="" disabled selected>Select product type</option>
+          <option *ngFor="let m of merchCat" value="{{m.merchCategoryId}}">{{m.merchCategoryName}}</option>
+        </select><br> 
+        <span *ngIf="localForm.submitted && merch.controls['merchCatId'].invalid">Required</span>
+      </ion-item-group>
+
+
+      <ion-item-group>
+        <ion-label>Merchandise Price:</ion-label>
+        <ion-input formControlName="price" type="number"></ion-input>
+        <span *ngIf="localForm.submitted && merch.controls['price'].invalid">Required: The minimum price is R30</span>
+        <br>
+      </ion-item-group> 
+
+      <ion-item-group>
+        <ion-label>Merchandise Image:</ion-label>
+        <ion-input formControlName="merchImage" type="file" (change)="onFileSelected($event)"></ion-input>
+        <span *ngIf="localForm.submitted && merch.controls['merchImage'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Description:</ion-label>
+        <ion-textarea formControlName="description" placeholder="Enter product description..."></ion-textarea>
+        <span *ngIf="localForm.submitted && merch.controls['description'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-label>Status:</ion-label>
+        <ion-input formControlName="status" placeholder="Enter product status..."></ion-input>
+        <span *ngIf="localForm.submitted && merch.controls['status'].invalid">Required</span>
+      </ion-item-group>
+
+      <ion-item-group style="float: right;">
+        <ion-button id="create" slot="end"  type="submit">Create</ion-button>
+        <ion-button id="cancel" slot="end" (click)="dismissModal()">Cancel</ion-button>
+      </ion-item-group>
+
+      
+  </form>
+ 
+</ion-content>

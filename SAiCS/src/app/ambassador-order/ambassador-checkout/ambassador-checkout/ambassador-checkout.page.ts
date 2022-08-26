@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Address } from 'src/app/Models/Address';
 import { ApiService } from 'src/app/Services/api.service';
 
 
@@ -12,48 +14,60 @@ import { ApiService } from 'src/app/Services/api.service';
 export class AmbassadorCheckoutPage implements OnInit {
   deliveryOption=false
   newAddress: FormGroup
-  itemTotal=[]
-  itemCount = 0
-  totalCost = 0
-  subtotal = 0
-  discount = 0
-  vat = 0
-  constructor(public alert: AlertController, private api: ApiService,  private fb: FormBuilder) { }
+  OdrSmry: any;
+  countries: any;
+  constructor(public alert: AlertController, private api: ApiService,  private fb: FormBuilder,private router: Router) { }
 
   ngOnInit() {
-
+    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
+    this.GetCountries()
     this.newAddress = this.fb.group({
       address: ['', [Validators.required]],
       city:['', [Validators.required]],
       postalCode:['', [Validators.required]],
-      phone:['', [Validators.required, Validators.min(10)]]
+      phone:['', [Validators.required, Validators.min(10)]],
+      country: ['', [Validators.required]]
     });
   }
 
   toggleValue()
  {
-  if(this.deliveryOption == true)
-  this.totalCost += 200
-  else
-  this.totalCost -= 200
-
-  console.log(this.totalCost)
-    return this.totalCost 
+  if (this.deliveryOption == true) this.OdrSmry.totalCost += 200;
+  else this.OdrSmry.totalCost -= 200;
  } 
  
-  async showAlert(){
-    const alert = await this.alert.create({
-      header: "Thank You For Your Order!",
-      message: "At SAICS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintainable lifestyle with our top of the range and clinically tested products",
-      buttons: [
-        {
-            text: "Back To Home"
-        },
-      ]
-    });
-    await alert.present()}
+ GetCountries()
+ {
+  this.api.getCountrys().subscribe(data =>{
+    this.countries = data
+    console.log(this.countries);
+    
+  })
+ }
+
+ OnSubmit()
+ {
+  if(this.newAddress.valid)
+  {
+    let address = {} as Address;
+    address.Address = this.newAddress.value.address
+    address.CountryID = this.newAddress.value.country
+    address.City = this.newAddress.value.city
+    address.PostalCode = this.newAddress.value.postalCode
+    address.RecipientNumber = this.newAddress.value.phone
+    address.UserID = 1 //local storage things 
+
+    //this.api.NewAddress(address).subscribe();
+    this.router.navigate(['/ambassador-checkout-ii'])
+  }
+  else
+  {
+    console.log("Invalid Form");
+    
+  }
+  
+  
+ }
 
 }
-
-
  

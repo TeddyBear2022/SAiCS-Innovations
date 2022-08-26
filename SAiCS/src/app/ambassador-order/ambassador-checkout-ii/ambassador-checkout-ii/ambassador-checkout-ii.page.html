@@ -24,7 +24,7 @@
 
   <br>
   <ion-grid>
-    <form [formGroup]="checkout" class="ion-padding" (ngSubmit)="submitForm()">
+    <form [formGroup]="checkout" #localForm = 'ngForm'  class="ion-padding" (ngSubmit)="submitForm()">
     <ion-row>
       <ion-col size="9">
         
@@ -35,7 +35,10 @@
           <p style="font-size: 22px; font-weight: 150; color: black; text-decoration-color: black; text-align: left; margin-left: 7%;">1. Shipping Information</p>
           <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
            
-          <p style="float: left; font-weight: 150;  margin-left: 80px; color: black; font-size: 20px; margin-top: 2%;">Shipping Addresses</p><br>
+          <p style="float: left; font-weight: 150;  margin-left: 80px; color: black; font-size: 20px; margin-top: 2%;">
+            Shipping Addresses
+            <span style="font-size: 13px; color: #f44336;" *ngIf="deliveryOption && localForm.submitted && checkout.controls['address'].invalid">*Required</span>
+          </p><br>
           <a style="font-size: 15px; float: right; margin-right: 80px;" routerLink="/ambassador-checkout">Add New Address</a><br>
       
           <ion-list style="width: 90%; margin: auto" *ngIf="deliveryOption">
@@ -62,6 +65,7 @@
               </ion-item>
             </ion-radio-group>
           </ion-list>
+          <br>
           <!-- <ion-card style="border:none; background-color:#defbfb; height:300px; width: 900px; margin-left:8%"><br>
             <ion-radio style="float:left; margin-left: 20px; margin-top:100px"></ion-radio>
             <p style="float: left; font-weight: 150;  margin-left: 100px; color: black; font-size: 15px;">19 Clover Road</p><br><br><br>
@@ -75,7 +79,7 @@
             <p style="float: left; font-weight: 150;  margin-left: 140px; color: black; font-size: 15px;">0662736745</p><br><br><br>
       
           </ion-card><br><br> -->
-      <div>
+      <ng-container>
         <p style="font-size: 22px; font-weight: 150; color: black; text-decoration-color: black; text-align: left; margin-left: 7%;">2. Payment Details</p>
           <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
       
@@ -84,15 +88,16 @@
            <ion-label>
             <p style="float: left; font-weight: 150;  margin-left: 8%; color: black; font-size: 20px;">Proof Of Payment</p><br>
            </ion-label> 
-            <a style="font-size: 15px; float: right; margin-right: 80px;" href="">View Ambassador Banking Details</a><br><br>
+            <ion-button fill="clear" style="font-size: 15px; float: right; margin-right: 80px; text-transform: none;" (click)="setOpen(true)"><u>View Ambassador Banking Details</u></ion-button><br><br>
            </ion-item>
          
       
           <label style="float: left; margin-left: 7%; color: black" >Upload Proof Of Payment</label><br>
+          <span style="font-size: 13px; color: #f44336;" *ngIf="localForm.submitted && checkout.controls['pdfFile'].invalid">*Required</span>
           <ion-input (change)="onFileSelected($event) " formControlName="pdfFile" style=" float: left; margin-left: 7%; width: 400px; border: 1px solid black;" type="file" accept="application/pdf"></ion-input><br><br><br>
       
          <span><a style="font-size: 15px; float: right; margin-right: 80%;" href=""> <ion-icon name="arrow-back-outline"></ion-icon> Back To Cart</a> </span> 
-      </div>
+      </ng-container>
   
       </ion-card>
       </ion-col>
@@ -101,7 +106,7 @@
     <ion-col size="3">
       <ion-card id="ordersummary" style=" margin-right: 30%; width:100%; height: 100%">
         <p style="font-size: 19px; font-weight: 150;  color: black; text-decoration-color: black; text-align: center;">Order Summary</p>
-        <hr style="border: none;border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
+        <hr style="border: none;margin: auto; border-top: 2px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 90%;">
         <ion-list>
           <ion-item lines="none">
             <ion-label>Items: {{OdrSmry.itemCount}}</ion-label>
@@ -122,7 +127,7 @@
             <ion-label>VAT Amount</ion-label>
             <ion-label slot="end">R{{OdrSmry.vat}}</ion-label>
           </ion-item>
-          <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
+          <hr style="border: none;margin: auto; border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
           <ion-item lines="none">
             <ion-label>Total Cost</ion-label>
             <ion-label slot="end">R{{OdrSmry.totalCost}}</ion-label>
@@ -160,5 +165,40 @@
 
 
 
-
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Ambassador Banking Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+         
+          <ion-item lines="none">
+            <ion-label slot="start">Ambassador Name:</ion-label>
+            <ion-label slot="end"> John Pieterson</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label slot="start">Bank Name:</ion-label>
+            <ion-label slot="end">FNB</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label slot="start">Account Number:</ion-label>
+            <ion-label slot="end">62819064176</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label slot="start">Account Type:</ion-label>
+            <ion-label slot="end">Transmission</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-button slot="end" size="default" (click)="setOpen(false)">Ok</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

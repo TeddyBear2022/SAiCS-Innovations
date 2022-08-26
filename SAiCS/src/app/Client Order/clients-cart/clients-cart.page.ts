@@ -32,26 +32,26 @@ export class ClientsCartPage implements OnInit {
 }
 ViewCart()
 {
-    this.api.ViewCart().subscribe((data) =>
-      {
-        this.products = data
-        this.itemCount = this.products.length
-        console.log(this.products)
-        for(let i=0; i<this.products.length; i++){
+    // this.api.ViewCart().subscribe((data) =>
+    //   {
+    //     this.products = data
+    //     this.itemCount = this.products.length
+    //     console.log(this.products)
+    //     for(let i=0; i<this.products.length; i++){
 
-          this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
-        }
+    //       this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
+    //     }
       
-      for (var i = 0; i< this.itemTotal.length; i++){
-        this.subtotal += this.itemTotal[i];
-       }
+    //   for (var i = 0; i< this.itemTotal.length; i++){
+    //     this.subtotal += this.itemTotal[i];
+    //    }
       
-       //calculate disicout, vat and totalCost
-       this.discount = this.products[0].itemDiscount.discount * this.subtotal
-       this.vat = this.products[0].vaT * this.subtotal
-        this.totalCost = this.subtotal - this.discount 
-        console.log(this.totalCost)
-      });    
+    //    //calculate disicout, vat and totalCost
+    //    this.discount = this.products[0].itemDiscount.discount * this.subtotal
+    //    this.vat = this.products[0].vaT * this.subtotal
+    //     this.totalCost = this.subtotal - this.discount 
+    //     console.log(this.totalCost)
+    //   });    
       
       
 }

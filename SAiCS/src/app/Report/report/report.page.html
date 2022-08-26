@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>    
+   
+    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col size="6">
+      <ion-label style="margin-left: 5%;">Select Report:</ion-label>
+      <ion-select interface="popover" placeholder="Select report" #reportOption name="reportOption" ngModel>
+        <ion-select-option value="ambassadorlist">Ambassador list</ion-select-option>
+        <ion-select-option value="recruitmentlist">Ambassador recruitment</ion-select-option>
+        <ion-select-option value="bestselling">Best selling product</ion-select-option>
+        <ion-select-option value="productlist">Product list report</ion-select-option>
+        <ion-select-option value="salesreport">Sales report</ion-select-option>
+        <ion-select-option value="targetreport">Target report</ion-select-option>
+        <ion-select-option value="leaderboard">Weekly leaderboard</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="6">
+     
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<app-ambassador-list-report *ngIf="reportOption.value == 'ambassadorlist'"></app-ambassador-list-report>
+<app-recruitement-list-report *ngIf="reportOption.value == 'recruitmentlist'"></app-recruitement-list-report>
+<app-best-selling-report *ngIf="reportOption.value == 'bestselling'"></app-best-selling-report>
+<app-product-list-report *ngIf="reportOption.value == 'productlist'"></app-product-list-report>
+<app-sales-report *ngIf="reportOption.value == 'salesreport'"></app-sales-report>
+<app-target-report *ngIf="reportOption.value == 'targetreport'"></app-target-report>
+<app-leaderboard-report *ngIf="reportOption.value == 'leaderboard'"></app-leaderboard-report>
+</ion-content>

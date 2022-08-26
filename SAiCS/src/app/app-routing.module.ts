@@ -81,30 +81,26 @@
     //   loadChildren: () => import('./Admin/modals/faq-add-modal/faq-add-modal.module').then( m => m.FAQAddModalPageModule)
     // },
 
-    // {
-    //   path: 'add-faq-modal',
-    //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
-    // },
-    {
-      path: 'view-product',
-      loadChildren: () => import('./Product/view-product/view-product.module').then( m => m.ViewProductPageModule)
-    },
-    {
-      path: 'view-package',
-      loadChildren: () => import('./Product/view-package/view-package.module').then( m => m.ViewPackagePageModule)
-    },
-    {
-      path: 'ambassador-landing-page',
-      loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
-    },
-    {
-      path: 'performance-studio',
-      loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
-    },
-    {
-      path: 'product-details',
-      loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
-    },
+  // {
+  //   path: 'add-faq-modal',
+  //   loadChildren: () => import('./Admin/modals/add-faq-modal/add-faq-modal.module').then( m => m.AddFAQModalPageModule)
+  // },
+  {
+    path: 'view-merch',
+    loadChildren: () => import('./Product/ViewMerch/ViewMerch.module').then( m => m.ViewProductPageModule)
+  },
+  {
+    path: 'ambassador-landing-page',
+    loadChildren: () => import('./Ambassador/landing-page/landing-page.module').then( m => m.LandingPagePageModule)
+  },
+  {
+    path: 'performance-studio',
+    loadChildren: () => import('./Ambassador/performance-studio/performance-studio.module').then( m => m.PerformanceStudioPageModule)
+  },
+  {
+    path: 'product-details',
+    loadChildren: () => import('./Ambassador/product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+  },
 
 
     {
@@ -175,6 +171,27 @@
     path: 'client-checkout',
     loadChildren: () => import('./Client Order/client-checkout/client-checkout.module').then( m => m.ClientCheckoutPageModule)
     },
+  {
+    path: 'view-special',
+    loadChildren: () => import('./Admin/Special/view-special/view-special.module').then( m => m.ViewSpecialPageModule)
+  },
+  {
+    path: 'add-special',
+    loadChildren: () => import('./Admin/Special/add-special/add-special.module').then( m => m.AddSpecialPageModule)
+  },
+  {
+    path: 'update-special',
+    loadChildren: () => import('./Admin/Special/update-special/update-special.module').then( m => m.UpdateSpecialPageModule)
+  },
+  {
+    path: 'report',
+    loadChildren: () => import('./Report/report/report.module').then( m => m.ReportPageModule)
+  },
+
+  
+
+
+
 
   {
     path: 'landing-page',

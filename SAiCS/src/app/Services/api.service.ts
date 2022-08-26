@@ -16,14 +16,8 @@ import { User } from '../Models/User';
 import { UserType } from '../Models/UserType';
 import { Feedback } from '../Models/Feedback';
 import { FeedbackVM } from '../Models/ViewModels/FeedbackVM';
-import { Product } from '../Models/Product';
 import { FAQ } from '../Models/FAQ';
 import { FAQCategory } from '../Models/FAQCategory';
-import { ProductType } from '../Models/ProductType';
-import { ProductVM } from '../Models/ViewModels/ProductVM';
-import { PackageVM } from '../Models/ViewModels/PackageVM';
-import { PackageType } from '../Models/PackageType';
-import { map } from 'rxjs/operators';
 import { credentialsVM } from '../Models/ViewModels/credentialsVM';
 import { CartVM } from '../Models/ViewModels/CartVM';
 import { Order } from '../Models/Order';
@@ -35,6 +29,8 @@ import { SectionContent } from '../Models/SectionContent';
 import { QuestionBank } from '../Models/QuestionBank';
 import { Quiz } from '../Models/Quiz';
 import { Course } from '../Models/Course';
+import { MerchVM } from '../Models/ViewModels/MerchVM';
+import { CartItem } from '../Models/CartItem';
 import { OTPVM } from '../Models/ViewModels/OTPVM';
 import { ResetPasswordVM } from '../Models/ViewModels/ResetPasswordVM';
 
@@ -130,15 +126,15 @@ export class ApiService {
   }
 
   // Catalog
-  GetCatalog()
-  {
-    return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
-  }
+  // GetCatalog()
+  // {
+  //   return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
+  // }
 
-  GetProductsById(id: number): Observable<Product[]>
-  {
-    return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
-  }
+  // GetProductsById(id: number): Observable<Product[]>
+  // {
+  //   return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
+  // }
 
   //FAQs
 
@@ -196,83 +192,56 @@ export class ApiService {
     return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
   }
 
-  //Product Subsystem
-  // Get all packages
-  GetPackages(): Observable<PackageVM[]>
-  {
-    return this.api.get<PackageVM[]>(this.apilink + 'Product/getPackages')
-  }
-
-  //Get package by name
-  GetPackageByName(name: string): Observable<PackageVM>
-  {
-    return this.api.get<PackageVM>(this.apilink + `Product/getPackageByName?name=${name}`)
-  }
-
-  //Get package types
-  GetPackageTypes(): Observable<PackageType[]>
-  {
-    return this.api.get<PackageType[]>(this.apilink + 'Product/getPackageTypes')
-  }
-
-
-  //Create package
-  CreatePackage(newPackage: PackageVM)
-  {
-    return this.api.post(this.apilink + "Product/createPackage", newPackage)
-  }
-
   
-  //Update package
-  UpdatePackage(name: string, newPackage: PackageVM): Observable<PackageVM>
+  //Product Subsystem
+  //Get MerchTypes
+  GetMerchTypes(): Observable<any>
   {
-    return this.api.put<PackageVM>(this.apilink + `Product/updatePackage?name=${name}`, newPackage)
+    return this.api.get(this.apilink + 'Product/GetMerchTypes');
   }
 
-  //Delete package
-  DeletePackage(id: number): Observable<PackageVM>
+  GetMerchCat(): Observable<any>
   {
-    return this.api.delete<PackageVM>(this.apilink + `Product/deletePackage?id=${id}`)
+    return this.api.get(this.apilink + 'Product/GetMerchCats');
   }
-
  
+   //Create product
+  CreateMerch(nMerch: MerchVM)
+  {
+    return this.api.post(this.apilink + "Product/CreateMerch", nMerch)
+  }
+
   // Get all products
-  GetProducts(): Observable<ProductVM[]>
+  GetAllMerch(): Observable<any>
   {
-    return this.api.get<ProductVM[]>(this.apilink + 'Product/getProducts')
+    return this.api.get(this.apilink + 'Product/GetMerch')
   }
 
-  //Get product by name
-  GetProductByName(name: string): Observable<ProductVM>
+  GetMerchById(id: number)
   {
-    return this.api.get<ProductVM>(this.apilink + `Product/getProductByName?name=${name}`)
+    return this.api.get(this.apilink + `Product/GetMerchById?id=${id}`)
   }
-
-  //Products
-  //Get product types
-  GetProductTypes(): Observable<ProductType[]>
-  {
-    return this.api.get<ProductType[]>(this.apilink + 'Product/getProductTypes')
-  }
-
-
-  //Create product
-  CreateProduct(newProduct: ProductVM)
-  {
-    return this.api.post(this.apilink + "Product/createProduct", newProduct)
-  }
-
   
   //Update product
-  UpdateProduct(name: string, newProduct: ProductVM): Observable<ProductVM>
+  UpdateMerch(id: number, uMerch: MerchVM): Observable<MerchVM>
   {
-    return this.api.put<ProductVM>(this.apilink + `Product/updateProduct?name=${name}`, newProduct)
+    return this.api.put<MerchVM>(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch)
   }
 
   //Delete product
-  DeleteProduct(id: number): Observable<ProductVM>
+  DeleteMerch(id: number)
   {
-    return this.api.delete<ProductVM>(this.apilink + `Product/deleteProduct?id=${id}`)
+    return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`)
+  }
+
+  AmbassadorDiscount(id)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`)
+  }
+
+  GetVAT()
+  {
+    return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
   }
 
 
@@ -299,12 +268,12 @@ export class ApiService {
     return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
   }
 
-  AddToCart(newItem: CartVM)
+  AddToCart(id: string,newItem: CartItem[])
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/AddToCart", newItem)
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem)
   }
 
-  ViewCart()
+  GetCartItems()
   {
     return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
   }
@@ -473,5 +442,22 @@ export class ApiService {
 
   AmbassadorAccessCourse():Observable<any[]>{
     return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`,this.httpOptions)
+  }
+
+
+  //Iteration 7
+  ProductListRep()
+  {
+    return this.api.get(this.apilink + "Report/ProductListRep")
+  }
+
+  AmbassadorListRep()
+  {
+    return this.api.get(this.apilink + "Report/AmbassadorListRep")
+  }
+
+  GetSalesRep()
+  {
+    return this.api.get(this.apilink + "Report/SalesRep")
   }
 }
