@@ -119,7 +119,7 @@ export class RegisterPage implements OnInit {
             this.registerInfo.addRegisterInfo(registrationInfo)
             
             //Navigate to the next page
-            this.route.navigate(["next"])
+            this.AllInfoCorrectNotif()
            
           },(response: HttpErrorResponse) => {
             if (response.status === 404) {
@@ -154,7 +154,7 @@ export class RegisterPage implements OnInit {
             this.registerInfo.addRegisterInfo(registrationInfo)
             
             //Navigate to the next page
-            this.route.navigate(["next"])
+            this.AllInfoCorrectNotif()
            
           },(response: HttpErrorResponse) => {
             if (response.status === 404) {
@@ -172,6 +172,29 @@ export class RegisterPage implements OnInit {
       }
     }
   }
+
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+  async AllInfoCorrectNotif(){
+    const alert = await this.alert.create({
+      header: "Are you sure?",
+      message: "Are you sure you have fillied in all the information correctly?",
+      buttons: [{text: 'yes', handler: () => {
+        this.route.navigate(["next"])
+      }},{text: "No"}]
+    });
+
+    await alert.present();
+  }
+
   //REVAMP END
   
   
@@ -214,15 +237,7 @@ export class RegisterPage implements OnInit {
     // }
   }
 
-  async alertNotif(message:string, header:string) {
-    const alert = await this.alert.create({
-      header: header,
-      message: message,
-      buttons: [{text: 'OK'}]
-    });
-
-    await alert.present();
-  }
+  
 
   //Step 2 of registering
   Next(){

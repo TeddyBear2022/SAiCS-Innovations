@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item color="primary"><h2 style="margin-left: 10pt;"><b>Create Client FAQ</b> </h2> <ion-icon  slot="end" (click)="dissmissModeal()" name="close-outline"></ion-icon></ion-item>
+    
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+<form [formGroup]="FAQ" #localForm = 'ngForm' (ngSubmit)="createFAQ()">
+<div align="center">
+
+<div align="left"  style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>FAQ Type:</b></i></label></div>
+<select formControlName="faqtype" interface="popover"  align="left"  (change)="FAQType()">
+  <option value= null disabled >Select FAQ Type</option>
+  <option *ngFor="let f of FAQs" value={{f.faqtypeId}}>{{f.faqtypeName}}</option>
+  <!-- <option value="2" >Ambassador</option> -->
+</select>
+<br>
+<span *ngIf="localForm.submitted && FAQ.controls.faqtype.invalid"> Please select a FAQ Type</span>
+
+<section *ngIf="FAQ.controls.faqtype.valid">
+<div align="left"  style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>FAQ Category:</b></i></label></div>
+<select formControlName="category" interface="popover"  align="left" (change)="FAQCategory()">
+  <option value="" disabled>Select FAQ Category</option>
+  <option *ngFor="let dbCategory of faqCategory" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</option>
+</select>
+<br>
+
+<span *ngIf="localForm.submitted && FAQ.controls.category.invalid"> Please select a Category</span>
+
+<div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>Question:</b></i></label></div>
+<ion-input type="text"  formControlName="question" placeholder="Enter Question" align="left" ></ion-input>
+<span *ngIf="localForm.submitted && FAQ.controls.question.invalid"> Please enter a valid question</span>
+
+<div align="left" style="margin-left:70pt;font-size: 14pt; color:#333333;"><label ><i><b>Answer:</b></i></label></div>
+<ion-input type="text"   formControlName="answer" placeholder="Enter Answer" align="left" ></ion-input>
+<span *ngIf="localForm.submitted && FAQ.controls.answer.invalid"> Please enter a valid answer</span>
+
+</section>
+</div>
+<section  *ngIf="FAQ.controls.faqtype.valid">
+  <div align="right" style="margin-top: 3%;">
+  <button type="submit" style=" background-color: #0070c0; margin-right: 10px;" >Create</button> 
+  <button style=" background-color: #f44336;" (click)="dissmissModeal()">Cancel</button>
+</div>
+</section>
+
+</form>
+</ion-content>

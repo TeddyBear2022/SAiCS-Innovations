@@ -50,7 +50,7 @@
     },
     {
       path: 'profile',
-      loadChildren: () => import('./Client/profile/profile.module').then( m => m.ProfilePageModule)
+      loadChildren: () => import('./User/profile/profile.module').then( m => m.ProfilePageModule)
     },
     {
       path: 'next',

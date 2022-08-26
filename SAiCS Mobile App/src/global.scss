@@ -1,0 +1,108 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+// all navbars
+#navbar
+{
+  --background: #062b80;
+  #toolbarProfileIcon{color: #FFFFFF;}
+  #toolbarUserName{color: #FFFFFF;}
+  #toolbarCartIcon{color: #08c10f;}
+  
+}
+
+
+ion-menu {
+    --ion-background-color: #757575;
+    --ion-text-color: white;
+  
+  ion-toolbar {--background: #757575;}
+  ion-list{ background : #757575 !important;}
+  ion-item{
+    --background : #757575 !important;
+    --color: #FFFFFF;
+    ion-icon {color: #000000;}
+  }
+  ion-footer{border-top: 1px solid #000000;}
+  }
+
+
+  ion-menu-button
+  {
+    --color: #FFFFFF;
+  }
+
+  .messageAlert .alert-wrapper{
+    background-color: #FFFFFF;
+    max-width: 400px;
+    #alert-1-msg{
+      font-style: italic;
+      color: #333333;
+      text-align: center;
+    }
+    .alert-button-group{
+
+      display: flex;
+      justify-content: center;
+
+      button{
+        border: 1px solid;
+        border-radius: 10px;
+        text-align: center;
+        width: 30%;
+        text-transform: none;}
+    }
+
+    .header{color: #000000;}
+    .Confirm{color: #0070c0 !important;}
+    .Cancel{color: #f44336 !important;}
+    .alert-button-inner {
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+  }
+
+  //sucesstoaster
+  .successToaster{
+    --color:#199d00;
+    --border-color:#199d00;
+    --border-style:solid;
+    --border-width:1px;    
+    --background:#ffffff;
+     text-align: center;
+  }
+  .small-modal{
+    &::part(content){
+      width: 370px;
+      height: 350px;
+      border-radius: 10px;
+      background-color: #f1f1f1;
+  
+    }
+  }

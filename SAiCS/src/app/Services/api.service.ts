@@ -103,8 +103,8 @@ export class ApiService {
     return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
   }
   //delete user
-  deleteUser(userID:string){
-    return this.api.delete(this.apilink+ `User/DeleteUser?userID=${userID}`)
+  deleteUser(){
+    return this.api.delete(this.apilink+ `User/DeleteUser?`, this.httpOptions)
   }
  
   //Feedback
@@ -143,47 +143,47 @@ export class ApiService {
   //FAQs
 
   CreateFAQ(faq:FAQ){
-    return this.api.post(this.apilink+'Admin/createFAQ',faq )
+    return this.api.post(this.apilink+'Admin/createFAQ',faq ,this.httpOptions)
   }
   // faqID
   DeleteFAQ(faqID:number):Observable<boolean>{
-    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`)
+    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`,this.httpOptions)
   }
 
   GetAccountFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ')
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ',this.httpOptions)
   }
 
   GetProductFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ')
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ',this.httpOptions)
   }
 
   GetDeliveryFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ')
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ',this.httpOptions)
   }
 
   GetAllFAQS(): Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS')
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS',this.httpOptions)
   }
 
   //FAQ Category
   GetFAQategory():Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories')
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories',this.httpOptions)
   }
 
   CreateFAQCategory(createFAQ:FAQCategory){
-    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ)
+    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ,this.httpOptions)
   }
 
   DeleteFAQCategory(faqCategoryID:number){
-    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`)
+    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`,this.httpOptions)
   }
 
   UpdateFAQ(updateFAQ:FAQ):Observable<boolean>{
-    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ)
+    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ,this.httpOptions)
   }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
@@ -431,19 +431,19 @@ export class ApiService {
     return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
   }
 
-  //reset password
-  ForgotPassword(email:LoginVM){
-    return this.api.post(this.apilink+ `User/ForgotPassword`, email)
+  //Forgot password
+  ForgotPassword(forgotPassword:LoginVM):Observable<loginToken>{
+    return this.api.post<loginToken>(this.apilink+ `User/ForgotPassword`, forgotPassword)
   }
 
   //Verify OTP 
-  VerifyOTP(otp:OTPVM){
-  return this.api.post(this.apilink+ `User/VerifyOTP`, otp)
+  VerifyOTP(otp:string){
+  return this.api.get(this.apilink+ `User/VerifyOTP?otp=${otp}`, this.httpOptions)
   }
 
   //Reset password
-  ResetPassword(reset: ResetPasswordVM):Observable<any>{
-    return this.api.post<any>(this.apilink+ `User/VerifyOTP`, reset)
+  ResetPassword(password:string):Observable<any>{
+    return this.api.get<any>(this.apilink+ `User/ResetPassword?resetPassword=${password}`,this.httpOptions)
   }
 
   //View Feedback Admin
@@ -469,5 +469,9 @@ export class ApiService {
 
   SearchCurrentAgents(searchInput:string, userid:string){
     return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,this.httpOptions)
+  }
+
+  AmbassadorAccessCourse():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`,this.httpOptions)
   }
 }

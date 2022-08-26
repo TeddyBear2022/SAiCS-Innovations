@@ -1,0 +1,38 @@
+#IntroCourseSide{
+    float:right;
+    padding-right: 4%;
+    width:20%;
+    height:650px;
+}
+
+#Accordion{
+        line-height: 380px;
+        padding-top: 0;
+        padding-bottom: 0;
+        transition: 0.09s all linear;
+}
+h3{
+    margin-left: 20px;
+}
+ion-accordion-group{
+    width: 770px ;
+}
+.IntroCourseSide{
+    width:400px;
+    border-style: solid;
+    border-color:black;
+    border: width 50cm;
+    height: 750px;
+    float: right;
+}
+#IntroCourseSideProgressBar{
+    width: 350px;
+     height: 20px;
+}
+#begincoursebtn{
+    background-color: #0070c0;
+     color: white; 
+     width: 250px;
+     border-radius: 10px;
+     margin-left: 70px;
+}
