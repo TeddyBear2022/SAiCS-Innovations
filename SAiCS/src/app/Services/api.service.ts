@@ -23,6 +23,8 @@ import { Order } from '../Models/Order';
 import { Address } from '../Models/Address';
 import { MerchVM } from '../Models/ViewModels/MerchVM';
 import { CartItem } from '../Models/CartItem';
+import { Special } from '../Models/Special';
+import { SpecialVM } from '../Models/ViewModels/SpecialVM';
 
 @Injectable({
   providedIn: 'root'
@@ -316,5 +318,18 @@ export class ApiService {
     return this.api.get(this.apilink + "Admin/GetSpecialOptions")
   }
 
+  GetSpecialTypes()
+  {
+    return this.api.get(this.apilink + "Admin/GetSpecialTypes")
+  }
 
+  addSpecial(special: SpecialVM)
+  {
+    return this.api.post(this.apilink + "Admin/addSpecial", special, {observe: 'response', responseType: 'text'})
+  }
+
+  GetAllSpecials()
+  {
+    return this.api.get(this.apilink + "Admin/GetAllSpecials")
+  }
 }

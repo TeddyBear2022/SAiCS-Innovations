@@ -7,9 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from 'src/app/Services/api.service';
-import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-merch-modal',

@@ -22,7 +22,7 @@
   <br><br><br>
   <ion-row>
     <ion-col>
-      <ion-button fill="clear" (click)="createSpecial()">
+      <ion-button fill="clear" routerLink="/add-special">
         <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
       </ion-button>
     </ion-col>
@@ -36,11 +36,11 @@
       </ion-card-header>
     
       <ion-card-content>
-        <ion-radio-group value="merchCats" name="merchCats" ngModel #merchCats="ngModel">
+        <ion-radio-group  [(ngModel)]="specialOption">
 
-          <ion-item lines="none" *ngFor="let m of specials; index as i">
-            <ion-label>{{m.merchCategoryName}}</ion-label>
-            <ion-radio slot="start" value="{{m.merchCategoryId}}"></ion-radio>
+          <ion-item lines="none" *ngFor="let s of specialTypes; index as i">
+            <ion-label>{{s.type}}</ion-label>
+            <ion-radio slot="start" value="{{s.id}}"></ion-radio>
           </ion-item>
       
           <ion-item lines="none">
@@ -58,7 +58,7 @@
      <table id="productTable">
       <thead>
         <tr>
-          <th width="20%">Item Details</th>
+          <th width="25%">Item Details</th>
           <th width="20%">Description</th>
           <th width="10%">Type</th>
           <th width="15%">Start Date</th>
@@ -67,16 +67,27 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let m of specials">
-          <tr >
-            <td>details</td>
-            <td><img src="data:image/png;base64,{{m.image}}" height="100px" alt='The Image' /></td>
-            <td>{{m.name}}</td>
-            <td>{{m.category}}</td>
-            <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>
+        <ng-container *ngFor="let s of specials">
+          <tr  *ngIf="s.typeId == specialOption || specialOption == 'All'">
+            <td> <div class="containerItem" id="{{s.id}}" style="display:inline-block;vertical-align:top;">
+              <img src="data:image/png;base64,{{s.image}}" style="height:75px; width:80px; padding-right: 10%;"  alt='The Image' />
+           
+                
+          </div>
+          <div  style="display:inline-block;">
+            <p><br>
+              <span style="color: black; font-size: 15px;">{{s.name}}</span><br>
+              <span style="color: black; font-size: 15px;">{{s.price | currency: 'ZAR':'symbol-narrow'}}</span>
+            </p>  
+          </div>
+        </td>
+            <td>{{s.description}}</td>
+            <td>{{s.type}}</td>
+            <td>{{s.startDate | date: 'dd/MM/yyyy'}}</td>
+            <td style="word-wrap: break-word; text-align: left;">{{s.endDate | date: 'dd/MM/yyyy'}}</td>
             <td style="display: block;text-align: center;">
-              <ion-button id="update" (click)="updateSpecial(m.id)">Update</ion-button>
-              <ion-button id="delete" (click)="DeleteSpecial(m.id)">Remove</ion-button>
+              <ion-button id="update" (click)="updateSpecial(s.id)">Update</ion-button>
+              <ion-button id="delete" (click)="DeleteSpecial(s.id)">Remove</ion-button>
             </td>
           </tr>
         </ng-container>

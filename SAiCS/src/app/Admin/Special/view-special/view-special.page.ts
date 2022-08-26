@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
   selector: 'app-view-special',
@@ -8,11 +10,28 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
   styleUrls: ['./view-special.page.scss'],
 })
 export class ViewSpecialPage implements OnInit {
-  specials = []
-  constructor( public popoverController: PopoverController, ) { }
+  specials: any= []
+  specialTypes: any = [];
+  specialOption = 'All'
+  constructor( public popoverController: PopoverController,private api: ApiService, private router: Router
+    ) { }
 
   ngOnInit() {
+    this.GetInfo()
   }
+
+  GetInfo()
+  {
+      this.api.GetSpecialTypes().subscribe(res => {
+        this.specialTypes = res
+      })
+
+      this.api.GetAllSpecials().subscribe(res => {
+        this.specials = res
+      })
+
+  }
+
 
   createSpecial()
   {
@@ -21,7 +40,8 @@ export class ViewSpecialPage implements OnInit {
 
   updateSpecial(id: number)
   {
-
+    const navigationExtras: NavigationExtras = {state: {existingSpecial: id}};
+    this.router.navigate(['/update-special'], navigationExtras)
   }
 
   DeleteSpecial(id: number)

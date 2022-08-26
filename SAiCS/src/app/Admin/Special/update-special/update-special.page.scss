@@ -1,0 +1,91 @@
+ion-content {
+    --padding-start: 0%;
+    --padding-top: 2%;
+    --background: #f8f8f8;
+  }
+  
+  ion-input[type="text"],
+  ion-input[type="number"],
+  ion-textarea,
+  input,
+  select {
+    border: 2px solid #9e9e9e;
+    width: 202px;
+    border-radius: 10px;
+    text-align: left;
+    --background: white;
+  }
+  
+  ion-input,
+  select {
+    height: 40px;
+  }
+  ion-textarea {
+    height: 160px;
+  }
+  
+  ion-label {
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  #specialItemsCard {
+    height: 160px;
+    width: 202px;
+    border: 2px solid #9e9e9e;
+    margin-left: 0% !important;
+  }
+  
+  .required{
+    color: #f44336;
+  }
+  
+  ion-button {
+    width: 80px;
+    height: 45px;
+    color: white;
+    font-weight: bold;
+    text-transform: none;
+    border-radius: 10px;
+  }
+  #create {
+    --background: #0070c0;
+  }
+  #cancel {
+    --background: #f44336;
+  }
+  
+  #searchProductBar {
+    align-self: center;
+    --background: #ffffff;
+    --placeholder-color: #000000;
+    --color: var(--placeholder-color);
+    --border-radius: 10px;
+  }
+  
+  .ag-theme-alpine {
+    --ag-borders: none;
+    background: #f8f8f8;
+  }
+  
+  ::ng-deep .ag-theme-alpine .ag-row {
+    background-color: #ffffff;
+    margin-top: 20px;
+    position: relative;
+    transform: translateY(0) !important;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px black;
+    height: 62px;
+    vertical-align: middle;
+  }
+  
+  ::ng-deep .ag-center-cols-viewport {
+    background: #f8f8f8;
+  }
+  
+  #productTable {
+    margin-left: 5%;
+  }
+  
+  
