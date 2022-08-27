@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
-import { CreatePackageModalComponent } from 'src/app/Product/create-package-modal/create-package-modal.component';
+//import { CreatePackageModalComponent } from 'src/app/Product/create-package-modal/create-package-modal.component';
 import { AssignTargetPage } from './Modals/assign-target/assign-target.page';
 
 @Component({

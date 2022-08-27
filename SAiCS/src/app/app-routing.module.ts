@@ -1,6 +1,7 @@
   import { NgModule } from '@angular/core';
   import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './AuthGuards/auth-guard.guard';
 
   const routes: Routes = [
     {
@@ -22,7 +23,8 @@
     },
     {
       path: 'landing-page',
-      loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule)
+      loadChildren: () => import('./Client/landing-page(client)/landing-page.module').then( m => m.LandingPagePageModule),
+      canLoad: [AuthGuard]
     },
     {
       path: 'faq',
@@ -187,11 +189,6 @@
     path: 'report',
     loadChildren: () => import('./Report/report/report.module').then( m => m.ReportPageModule)
   },
-
-  
-
-
-
 
   {
     path: 'landing-page',

@@ -113,7 +113,7 @@ export class ProfilePage implements OnInit {
   async confirmDelete() {
     const alert = await this.alert.create({
       header: 'Delete',
-      message: 'Are you sure?',
+      message: 'Are you sure you want tp permenantly delete your account?',
       buttons: [{text: 'Yes', handler: ()=> {
         //this.tempStorage.clearRegistrationInfo()
         //clear session + delete user

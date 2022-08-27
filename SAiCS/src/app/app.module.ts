@@ -18,7 +18,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [AppComponent,NavbarMenuPage],
   entryComponents: [],
-  imports: [BrowserModule, NgxDatatableModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule, ReportComponentsModule,Ng2SearchPipeModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule,Ng2SearchPipeModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],
   bootstrap: [AppComponent],
 })
