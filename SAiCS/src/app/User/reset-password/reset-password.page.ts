@@ -18,6 +18,7 @@ export class ResetPasswordPage implements OnInit {
   EmailorUsernameForm: FormGroup
   OTPForm:FormGroup
   PassWordForm:FormGroup
+  resetPwdToken:string
 
   EmailSent:boolean = true
   OTPSent:boolean = false
@@ -28,6 +29,7 @@ export class ResetPasswordPage implements OnInit {
     private route:Router) { }
 
   ngOnInit() {
+    //localStorage.removeItem('token')
     //Forms
     this.EmailorUsernameForm = new FormGroup({
       emailorusername: new FormControl("",Validators.compose([Validators.email, Validators.required]) ) 
@@ -38,8 +40,8 @@ export class ResetPasswordPage implements OnInit {
     })
 
     this.PassWordForm = new FormGroup({
-      password: new FormControl("", Validators.required),
-      confirmPassword: new FormControl("", Validators.required)
+      password: new FormControl("",  Validators.compose([ Validators.required, Validators.minLength(14)])),
+      confirmPassword: new FormControl("",  Validators.compose([ Validators.required, Validators.minLength(14)]))
     })
   }
 
@@ -54,10 +56,9 @@ export class ResetPasswordPage implements OnInit {
       this.api.ForgotPassword(resetPassword).subscribe(data =>
       {
       //Log
+      this.resetPwdToken = data.token.toString()
       console.log(data)
 
-      //set token
-      this.api.SetToken(data.token.toString())
       if(data != null){
       this.EmailSent = false
       this.OTPSent = true
@@ -66,11 +67,11 @@ export class ResetPasswordPage implements OnInit {
       },(response: HttpErrorResponse) => {
         
         if (response.status === 404) {
-          this.alertNotif("User doesnt exist!","Opps!")
+          this.alertNotif("User doesnt exist!","Oops!")
           console.log("User doesnt exist!")
         }
         if (response.status === 500){
-          this.alertNotif("Encountered an error","Opps!")
+          this.alertNotif("Encountered an error","Oops!")
           console.log("Encountered an error")
         }
         if (response.status === 400){
@@ -91,7 +92,7 @@ export class ResetPasswordPage implements OnInit {
     if(this.OTPForm.valid == true){
       console.log(this.OTPForm.value)
 
-      this.api.VerifyOTP(this.OTPForm.get(['otp']).value).subscribe(data => 
+      this.api.VerifyOTP(this.OTPForm.get(['otp']).value, this.resetPwdToken).subscribe(data => 
         {
           this.EmailSent = false
           this.OTPValidated = true
@@ -125,11 +126,11 @@ export class ResetPasswordPage implements OnInit {
         console.log(this.PassWordForm.value);
         
         //Send reset password request
-        this.api.ResetPassword(this.PassWordForm.get(['password']).value).subscribe(data => {
+        this.api.ResetPassword(this.PassWordForm.get(['password']).value,this.resetPwdToken).subscribe(data => {
           console.log(data);
           if(data == true){
             this.resetPasswordSuccess("Congrats your password was reset", "Success!")
-            localStorage.removeItem("token")
+            //localStorage.removeItem("token")
           }
           
         },(response: HttpErrorResponse) => {

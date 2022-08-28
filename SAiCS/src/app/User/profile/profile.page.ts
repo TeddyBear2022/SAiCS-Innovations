@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { UpdateFaqModalComponent } from 'src/app/Admin/modals/update-faq-modal/update-faq-modal.component';
@@ -24,7 +25,6 @@ export class ProfilePage implements OnInit {
   profileinfo= []
   profilereginfo:registerationinfoVM 
   userRoleID:number
-  refferralCode:string
 
   //Data from form to delete or update
   form:FormGroup
@@ -68,35 +68,35 @@ export class ProfilePage implements OnInit {
     
     //Ambassador or Client user form
     this.form = new FormGroup({
-      titleForm: new FormControl(this.profileinfo[0].title.titleName),
-      nameForm: new FormControl(this.profileinfo[0].name),
-      surnameForm: new FormControl(this.profileinfo[0].surname),
-      emailaddressForm: new FormControl(this.profileinfo[0].email),
-      phonenumberForm: new FormControl('+27'+this.profileinfo[0].phoneNumber),
-      usernameForm: new FormControl(this.profileinfo[0].userName),
-      countryForm: new FormControl(this.profileinfo[0].addresses[0].country.countryName),
-      provinceForm: new FormControl(this.profileinfo[0].addresses[0].province.provinceName),
-      cityForm: new FormControl(this.profileinfo[0].addresses[0].city),
-      addressForm: new FormControl(this.profileinfo[0].addresses[0].address1),
-      postalForm: new FormControl(this.profileinfo[0].addresses[0].postalCode),
+      titleForm: new FormControl(this.profileinfo[0].title.titleId,Validators.required),
+      nameForm: new FormControl(this.profileinfo[0].name,Validators.required),
+      surnameForm: new FormControl(this.profileinfo[0].surname,Validators.required),
+      emailaddressForm: new FormControl(this.profileinfo[0].email,Validators.compose([Validators.required, Validators.email])),
+      phonenumberForm: new FormControl(this.profileinfo[0].phoneNumber,Validators.compose([Validators.required, Validators.maxLength(10)])),
+      usernameForm: new FormControl(this.profileinfo[0].userName,Validators.required),
+      countryForm: new FormControl(this.profileinfo[0].addresses[0].country.countryName,Validators.required),
+      provinceForm: new FormControl(this.profileinfo[0].addresses[0].province.provinceId,Validators.required),
+      cityForm: new FormControl(this.profileinfo[0].addresses[0].city,Validators.required),
+      addressForm: new FormControl(this.profileinfo[0].addresses[0].address1,Validators.required),
+      postalForm: new FormControl(this.profileinfo[0].addresses[0].postalCode,Validators.required),
     })
     
 
     //Admin user form
-    this.AdminUserForm = new FormGroup({
-      titleForm: new FormControl(this.profileinfo[0].title.titleName),
-      nameForm: new FormControl(this.profileinfo[0].name),
-      surnameForm: new FormControl(this.profileinfo[0].surname),
-      emailaddressForm: new FormControl(this.profileinfo[0].email),
-      phonenumberForm: new FormControl('+27'+this.profileinfo[0].phoneNumber),
-      usernameForm: new FormControl(this.profileinfo[0].userName),
-      countryForm: new FormControl(this.profileinfo[0].addresses[0].country.countryName),
-      provinceForm: new FormControl(''),
-      cityForm: new FormControl(this.profileinfo[0].addresses[0].city),
-      addressForm: new FormControl(this.profileinfo[0].addresses[0].address1),
-      postalForm: new FormControl(this.profileinfo[0].addresses[0].postalCode)
+    // this.AdminUserForm = new FormGroup({
+    //   titleForm: new FormControl(this.profileinfo[0].title.titleName),
+    //   nameForm: new FormControl(this.profileinfo[0].name),
+    //   surnameForm: new FormControl(this.profileinfo[0].surname),
+    //   emailaddressForm: new FormControl(this.profileinfo[0].email),
+    //   phonenumberForm: new FormControl(this.profileinfo[0].phoneNumber,Validators.compose([Validators.required, Validators.maxLength(10)])),
+    //   usernameForm: new FormControl(this.profileinfo[0].userName),
+    //   countryForm: new FormControl(this.profileinfo[0].addresses[0].country.countryName),
+    //   provinceForm: new FormControl(this.profileinfo[0].addresses[0].province.provinceId),
+    //   cityForm: new FormControl(this.profileinfo[0].addresses[0].city),
+    //   addressForm: new FormControl(this.profileinfo[0].addresses[0].address1),
+    //   postalForm: new FormControl(this.profileinfo[0].addresses[0].postalCode)
       
-    })
+    // })
   
     console.log
     (this.userRoleID)
@@ -105,7 +105,6 @@ export class ProfilePage implements OnInit {
 
   close()
   {
-   
     this.popoverController.dismiss();
   }
 
@@ -113,11 +112,9 @@ export class ProfilePage implements OnInit {
   async confirmDelete() {
     const alert = await this.alert.create({
       header: 'Delete',
-      message: 'Are you sure you want tp permenantly delete your account?',
+      message: 'Are you sure you want to permenantly delete your account?',
       buttons: [{text: 'Yes', handler: ()=> {
-        //this.tempStorage.clearRegistrationInfo()
-        //clear session + delete user
-       
+        //delete account through api      
         this.api.deleteUser().subscribe(result=> {
         console.log(result)
         if(result == true){
@@ -144,46 +141,71 @@ export class ProfilePage implements OnInit {
   async confirmUpdate() {
     const alert = await this.alert.create({
       header: 'Update',
-      message: 'Are you sure?',
+      message: 'Are you sure you want to update your details?',
       buttons: [{text: 'Yes', handler: ()=> {
-        //this.api
-        // console.log( this.form.get('addressForm').value);
-        let updateUser = new ProfileVM()
-        updateUser.Address = this.form.get('addressForm').value
-        updateUser.TitleId = this.form.get('titleForm').value
-        updateUser.Surname = this.form.get('surnameForm').value
-        updateUser.PhoneNumber = this.form.get('phonenumberForm').value
-        updateUser.CountryId = 1
-        updateUser.PostalCode = this.form.get('postalForm').value
-        updateUser.Id= this.profileinfo[0].id
-        updateUser.City = this.form.get('cityForm').value
-        updateUser.Name = this.form.get('nameForm').value
-        // console.log(updateUser);
-        this.api.UpdateUser(updateUser).subscribe(data => {
-          if(data == true){
+          //update user object sent to api
+          console.log('Valid continue')
+          let updateUser = new ProfileVM()
+          updateUser.Address = this.form.get('addressForm').value
+          updateUser.TitleId = this.form.get('titleForm').value
+          updateUser.Surname = this.form.get('surnameForm').value
+          updateUser.PhoneNumber = this.form.get('phonenumberForm').value
+          updateUser.CountryId = 1
+          updateUser.PostalCode = this.form.get('postalForm').value
+          updateUser.Id= this.profileinfo[0].id
+          updateUser.City = this.form.get('cityForm').value
+          updateUser.Name = this.form.get('nameForm').value
+          updateUser.ProvinceId = this.form.get('provinceForm').value
+  
+          console.log(updateUser);
+          this.api.UpdateUser(updateUser).subscribe(data => {
+            console.log(data)
+            this.tempStorage.updateSession(data)
             this.alertNotif("Your details were successfully updated! ", "Update")
-          }
-          else{
-            this.alertNotif("Something went wrong, please try again later! ", "Opps!")
-          }
-          
-        })
-        
- 
-      }},{text: "No", handler: ()=>
+
+          },(response: HttpErrorResponse) => {
+            if (response.status === 500){
+              this.Errors("Something went wrong, please try again later! ", "Oops!")
+              // this.DissmissLoading()
+              console.log("Encountered an error")
+            }
+            if (response.status === 400){
+              this.Errors("Something went wrong, please try again later! ", "Oops!")
+              // this.DissmissLoading()
+              console.log("wrong password an error")
+            }
+          })
+        }
+        },{text: "No", handler: ()=>
       this.close()
     }]
     });
+    
 
     await alert.present();
   }
+    
 
   //Notfication
   async alertNotif(message:string, header:string) {
     const alert = await this.alert.create({
       header: header,
       message: message,
-      buttons: [{text: 'OK'}]
+      buttons: [{text: 'OK', handler:()=>{
+        window.location.reload()
+      }}]
+    });
+
+    await alert.present();
+  }
+
+  async Errors(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK', handler:()=>{
+        //window.location.reload()
+      }}]
     });
 
     await alert.present();
@@ -198,6 +220,12 @@ export class ProfilePage implements OnInit {
 
   //Update User
   Update(){
-    this.confirmUpdate()
+    if(this.form.invalid){
+      this.Errors('Please ensure all the details displayed on the screen are filled in', '')
+    }
+    if(this.form.valid){
+      this.confirmUpdate()
+    }
+   
   }
 }

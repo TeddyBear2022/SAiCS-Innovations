@@ -14,6 +14,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { ReportComponentsModule } from './Report/report-components/report-components.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
   declarations: [AppComponent,NavbarMenuPage],

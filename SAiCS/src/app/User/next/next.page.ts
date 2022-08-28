@@ -32,8 +32,8 @@ export class NextPage implements OnInit {
   ngOnInit() {
     this.register = new FormGroup({
     username:new FormControl(this.registrationinfo[0].emailaddress),
-    password: new FormControl('', Validators.required),
-    confirmpassword: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.compose([ Validators.required, Validators.minLength(14)])),
+    confirmpassword: new FormControl('',  Validators.compose([ Validators.required, Validators.minLength(14)]))
     
     })
   }  

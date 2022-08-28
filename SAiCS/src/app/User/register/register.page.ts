@@ -48,7 +48,7 @@ export class RegisterPage implements OnInit {
     name:new FormControl('', Validators.required),
     surname:new FormControl('', Validators.required),
     emailaddress:new FormControl('', Validators.compose([Validators.email, Validators.required])),
-    phonenumber:new FormControl('', Validators.compose([Validators.required, Validators.maxLength(10)])),
+    phonenumber:new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)])),
     countryID:new FormControl('', Validators.required),
     city:new FormControl('', Validators.required),
     address:new FormControl('', Validators.required),
@@ -143,30 +143,55 @@ export class RegisterPage implements OnInit {
         console.log("client form invalid");
         
       }
-      else{
+      if(this.RegisterForm.valid && this.ClientForm.valid){
         console.log("continue, its client user", this.ClientForm.value, this.RegisterForm.value);
 
         this.api.ValidateRefferralCode(this.ClientForm.get(['clientreferralcode']).value).subscribe(data=>
           {
-            //send information to the next page through an object
-            let registrationInfo:registerationinfoVM = this.RegisterForm.value
-            registrationInfo.referralcode = this.ClientForm.get(['clientreferralcode']).value
-            this.registerInfo.addRegisterInfo(registrationInfo)
+            //validate if the account already exists on the system
+            this.api.AccountExists(this.RegisterForm.get(['emailaddress']).value).subscribe(data => {
+              //Account already exists
+              if(data == true){
+                this.AccountExists()
+              }
+
+              //Account doesnt exist
+              if(data == false){
+              //send information to the next page through an object
+              let registrationInfo:registerationinfoVM = this.RegisterForm.value
+              registrationInfo.referralcode = this.ClientForm.get(['clientreferralcode']).value
+              this.registerInfo.addRegisterInfo(registrationInfo)
             
-            //Navigate to the next page
-            this.AllInfoCorrectNotif()
+              //Navigate to the next page
+              this.AllInfoCorrectNotif()
+
+              }
+            },(response: HttpErrorResponse) => {
+              if (response.status === 404) {
+                this.alertNotif("Refferal Doesn't exist!", "Oops!")
+                
+              }
+              if (response.status === 500){
+                this.alertNotif("Internal error", "Oops!")
+               
+              }
+              if (response.status === 400){
+                this.alertNotif("Something went wrong", "Oops!")
+              }
+            })
+            
            
           },(response: HttpErrorResponse) => {
             if (response.status === 404) {
-              this.alertNotif("Refferal Doesn't exist!", "Opps!")
+              this.alertNotif("Refferal Doesn't exist!", "Oops!")
               
             }
             if (response.status === 500){
-              this.alertNotif("Internal error", "Opps!")
+              this.alertNotif("Internal error", "Oops!")
              
             }
             if (response.status === 400){
-              this.alertNotif("Something went wrong", "Opps!")
+              this.alertNotif("Something went wrong", "Oops!")
             }
           })
       }
@@ -190,6 +215,16 @@ export class RegisterPage implements OnInit {
       buttons: [{text: 'yes', handler: () => {
         this.route.navigate(["next"])
       }},{text: "No"}]
+    });
+
+    await alert.present();
+  }
+
+  async AccountExists(){
+    const alert = await this.alert.create({
+      header: "Oops",
+      message: "An account with that associated email address already exists on the the system.",
+      buttons: [{text: 'Ok'}]
     });
 
     await alert.present();

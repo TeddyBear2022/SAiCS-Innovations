@@ -39,11 +39,12 @@
                <ion-item lines="none">
                 <ion-input type="password" placeholder="Password" formControlName="password"> </ion-input>              
                </ion-item>
-               <span *ngIf="localForm.submitted && register.controls['password'].invalid" style="color: red;">Please enter a password</span>
+               <span *ngIf="localForm.submitted && register.controls['password'].invalid" style="color: red;">Please enter a valid password of atleast 14 characters</span>
+               <!-- <span *ngIf="localForm.submitted && !register.controls['password'].min(14)" style="color: red;">Password must be atleast 14 charcaters long</span> -->
                <ion-item lines="none">
                 <ion-input type="password" placeholder="Confirm Password" formControlName = "confirmpassword"> </ion-input>
                </ion-item>
-               <span *ngIf="localForm.submitted && register.controls['confirmpassword'].invalid" style="color: red;">Please confirm your password</span>
+               <span *ngIf="localForm.submitted && register.controls['confirmpassword'].invalid" style="color: red;">Please confirm your password of atleast 14 characters</span>
              <br>
                 <ion-button color="secondary" type="submit">Register</ion-button>
                 <br><br>

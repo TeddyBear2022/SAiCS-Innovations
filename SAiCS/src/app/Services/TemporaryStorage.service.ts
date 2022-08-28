@@ -63,6 +63,14 @@ import { registerVM } from "../Models/ViewModels/registerVM"
        localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
      }
 
+     //Uploading user session information to localstorage so its accessible everywhere on the app while logged in
+     updateSession(session:any){
+      let sessioninfo:any[] =[]
+      if(localStorage.clear){}
+      sessioninfo.push(session)
+      localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
+    }
+
      //get user session inforamtion
      getSessioninfo(){
       let sessioninfo:any[] =[]

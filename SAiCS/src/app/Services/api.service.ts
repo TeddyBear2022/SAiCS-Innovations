@@ -321,7 +321,7 @@ export class ApiService {
 
   UpdateUser(user: ProfileVM):Observable<boolean>
   {
-    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user)
+    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user,this.httpOptions)
   }
   PositionRequests():Observable<any[]>{
     return this.api.get<any[]>(this.apilink+`Admin/PositionRequests`)
@@ -406,13 +406,22 @@ export class ApiService {
   }
 
   //Verify OTP 
-  VerifyOTP(otp:string){
-  return this.api.get(this.apilink+ `User/VerifyOTP?otp=${otp}`, this.httpOptions)
+  VerifyOTP(otp:string, token:string){
+  return this.api.get(this.apilink+ `User/VerifyOTP?otp=${otp}`, 
+  {
+    headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+    })
+  })
   }
 
   //Reset password
-  ResetPassword(password:string):Observable<any>{
-    return this.api.get<any>(this.apilink+ `User/ResetPassword?resetPassword=${password}`,this.httpOptions)
+  ResetPassword(password:string, token:string):Observable<any>{
+    return this.api.get<any>(this.apilink+ `User/ResetPassword?resetPassword=${password}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token
+      })
+    })
   }
 
   //View Feedback Admin
@@ -459,5 +468,9 @@ export class ApiService {
   GetSalesRep()
   {
     return this.api.get(this.apilink + "Report/SalesRep")
+  }
+
+  AccountExists(email:string):Observable<boolean>{
+    return this.api.get<boolean>(this.apilink +`User/UserExist?email=${email}`)
   }
 }

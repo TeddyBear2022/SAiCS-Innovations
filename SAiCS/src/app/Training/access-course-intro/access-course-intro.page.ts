@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 
@@ -9,11 +10,17 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class AccessCourseIntroPage implements OnInit {
 
+  //Variables
+  CourseDetails:FormGroup
   constructor(public popoverController: PopoverController,
     private menu:MenuController) { }
 
   ngOnInit() {
-    this.menu.enable(true, 'admin-menu');
+    this.menu.enable(true, 'ambassador-menu');
+    this.CourseDetails = new FormGroup({
+      coursename: new FormControl(),
+      courseDescription: new FormControl()
+    })
   }
 
   async presentPopover(event)
