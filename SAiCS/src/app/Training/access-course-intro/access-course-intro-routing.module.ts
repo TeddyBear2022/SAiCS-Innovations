@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AccessCourseIntroPage
+  },
+  {
+    path: 'yt-video',
+    loadChildren: () => import('./yt-video/yt-video.module').then( m => m.YtVideoPageModule)
   }
 ];
 

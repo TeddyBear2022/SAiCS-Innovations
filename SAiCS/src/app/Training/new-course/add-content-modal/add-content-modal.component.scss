@@ -17,6 +17,26 @@ ion-input,ion-textarea{
     text-align: left;
     --background:white;
 }
+
+ion-toolbar{
+    --background: #e5e5e5;
+    --color : black;
+    // border-bottom: solid 5px black;
+    // margin-left: 10pt;
+    // border-radius: 50px;
+  }
+
+ion-item{
+    --ion-color-primary: #e5e5e5;
+	--ion-color-primary-rgb: 229,229,229;
+	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast-rgb: 0,0,0;
+	--ion-color-primary-shade: #cacaca;
+	--ion-color-primary-tint: #e8e8e8;
+
+ // background-color: white;
+}
+
 #AddContentModal,span,ion-item-group,ion-label{
     --padding-start: 0%;
        font-style: italic;
@@ -24,5 +44,9 @@ ion-input,ion-textarea{
         color: #333333;
         margin-left: 10px; 
         // margin-top: 10%;       
-  span{color: #f44336; margin-right: 40%;}
+ 
+}
+span{
+    color: #f44336; 
+    margin-right: 2%;
 }

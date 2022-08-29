@@ -2,11 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {AlertController, MenuController, ModalController} from '@ionic/angular';
+import {AlertController, MenuController, ModalController, PopoverController} from '@ionic/angular';
 import { Course } from 'src/app/Models/Course';
 import { Quiz } from 'src/app/Models/Quiz';
 import { Section } from 'src/app/Models/Section';
 import { NewCourseVM } from 'src/app/Models/ViewModels/NewCourseVM';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { AddContentModalComponent } from './add-content-modal/add-content-modal.component';
 import { AddQuizModalComponent } from './add-quiz-modal/add-quiz-modal.component';
@@ -22,16 +23,21 @@ export class NewCoursePage implements OnInit {
   quiz:Quiz;
   questionbank=[]
   courseDetails:FormGroup;
-  quizCreated = false
+  quizCreated:boolean = false
+  //sectionCreated:boolean = false
 
   constructor(private modal: ModalController,
   private menu:MenuController,
   private api:ApiService,
   private alert:AlertController, 
-  private router:Router) { }
+  private router:Router, 
+  private popoverController:PopoverController) { }
 
   ngOnInit() {
-    this.menu.enable(true, 'ambassador-menu');
+    //Menu items
+    this.menu.enable(true, 'admin-menu');
+
+    //Form
     this.courseDetails = new FormGroup({
       coursename: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required)
@@ -50,6 +56,7 @@ export class NewCoursePage implements OnInit {
     await alert.present();
   }
 
+  //Creating a quiz
  AddQuiz(){
   this.addquiz()
  }
@@ -87,6 +94,7 @@ export class NewCoursePage implements OnInit {
    const modals = await this.modal.create({
       component: AddContentModalComponent,      
       id: 'addcontentClass',
+      componentProps: {requestType: "newCourse"}
     });
     modals.onDidDismiss().then((data) => {
       if(data.data.newContent != undefined){
@@ -136,5 +144,19 @@ export class NewCoursePage implements OnInit {
       console.log("invalid, can't create quiz");
     }
   }
+  
+   // Show Profile optionss when icon on right of navbar clicked function
+   async presentPopover(event)
+   {
+     const popover = await this.popoverController.create({
+       component: ProfilePopoverComponent,
+       event
+     });
+     return await popover.present();
+   }
+
+   Back(){
+    this.router.navigate(['course-studio'])
+   }
  
 }

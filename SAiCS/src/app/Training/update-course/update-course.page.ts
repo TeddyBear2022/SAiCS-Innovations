@@ -39,7 +39,7 @@ export class UpdateCoursePage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
     this.api.GetCourseDetails().subscribe(data =>{
-      // console.log(data);
+      console.log(data);
       this.courseDetails = data
       this.course = this.courseDetails.course;
       for(var x=0; x <= this.courseDetails.questionBank.length-1; x++){
@@ -139,21 +139,21 @@ export class UpdateCoursePage implements OnInit {
 
     await alert.present();
   }
-  // updateSection(){
-  //   this.updatesection()
-  // }
-  // async updatesection()
-  // {
-  //  const modals = await this.modal.create({
-  //     component: UpdateSectionModalPage,      
-  //     // id: 'addcontentClass',
-  //   });
-  //   modals.onDidDismiss().then((data) => {
-  //     console.log("data.data.updatedSection");
+  updateSection(){
+    this.updatesection()
+  }
+  async updatesection()
+  {
+   const modals = await this.modal.create({
+      component: UpdateSectionModalPage,      
+      // id: 'addcontentClass',
+    });
+    modals.onDidDismiss().then((data) => {
+      console.log("data.data.updatedSection");
         
-  //   })
-  //   return await modals.present();
-  // }
+    })
+    return await modals.present();
+  }
 
   UpdateQuiz(){
     this.updatequiz()
@@ -185,9 +185,12 @@ export class UpdateCoursePage implements OnInit {
    const modals = await this.modal.create({
       component: AddContentModalComponent,      
       id: 'addcontentClass',
+      componentProps: {requestType: "updateCourse"}
     });
     modals.onDidDismiss().then((data) => {
+      console.log(data)
       this.sectionContent = data.data.sectionContentList
+      console.log('section content from update course', data.data.sectionContentList)
       // console.log( data.data.sectionContentList);
           
     })

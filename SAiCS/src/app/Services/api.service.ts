@@ -44,6 +44,7 @@ export class ApiService {
   apilink:string = "https://localhost:44343/api/"
   token:any
   updateCourseId:number;
+  accessCourseID:number
   // headers = new HttpHeaders().set('Authorization', ' Bearer'+ JSON.stringify(localStorage.getItem('token')))
   headers = new HttpHeaders().set('Authorization :', 'Bearer'+  localStorage.getItem('token')) 
 
@@ -340,8 +341,20 @@ export class ApiService {
     this.updateCourseId = courseId;
   }
 
+  setAccessCourseId(courseId :number){
+    this.accessCourseID = courseId;
+  }
+
+  showAccessCourseId(){
+    return this.accessCourseID;
+  }
+
   GetCourseDetails(id=this.updateCourseId){
     return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+  }
+
+  GetAccessCourseDetails(){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${localStorage.getItem('course')}`)
   }
 
   UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
@@ -450,7 +463,11 @@ export class ApiService {
   }
 
   AmbassadorAccessCourse():Observable<any[]>{
-    return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`,this.httpOptions)
+    return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
 

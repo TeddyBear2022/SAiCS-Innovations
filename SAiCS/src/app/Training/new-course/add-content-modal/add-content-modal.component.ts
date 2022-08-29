@@ -14,10 +14,13 @@ import { SectionContent } from 'src/app/Models/SectionContent';
   styleUrls: ['./add-content-modal.component.scss'],
 })
 export class AddContentModalComponent implements OnInit {
+  //previous validator for google links: Validators.pattern("^(https:\/\/drive.google.com/drive)")]
 
+  //Variables
   newContent;
   AddContent:FormGroup;
   sectionList
+  requestType
   
 
   selectedFile = null
@@ -33,11 +36,13 @@ export class AddContentModalComponent implements OnInit {
     ({
       contentsectionname:new FormControl('', Validators.required),
       contentheading:new FormControl('', Validators.required),
-      googledrivelink: new FormControl('', Validators.required),
+      googledrivelink: new FormControl('',Validators.compose([Validators.required])),
       youtubevideoheading: new FormControl('', Validators.required),
-      youtubeLink:new FormControl('', Validators.required)
+      youtubeLink:new FormControl('', Validators.compose([Validators.required, Validators.pattern(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/)]))
     });
+    console.log(this.requestType)
   }
+ 
     dismissModal()
     {
       // if(this.AddContent.invalid){
@@ -47,28 +52,32 @@ export class AddContentModalComponent implements OnInit {
     }
     CreateContent(){
       if(this.AddContent.valid){
-
-        // console.log(this.AddContent.value)
         let content:SectionContent = new SectionContent
         content.SectionName = this.AddContent.get(['contentsectionname']).value
         content.ContentHeading = this.AddContent.get(['contentheading']).value
         content.ContentLink = this.AddContent.get(['googledrivelink']).value
         content.YoutubeHeading = this.AddContent.get(['youtubevideoheading']).value
         content.YoutubeLink = this.AddContent.get(['youtubeLink']).value
-        //content.CourseId = this.api.getCourseId()
         this.newContent = content
-        this.dismissModal()
+        
+        if(this.requestType == "updateCourse"){
+          content.CourseId = this.api.getCourseId()
+            this.api.CreateSectionContent(content).subscribe(()=>
+          {
+            this.api.GetCourseSection(this.api.getCourseId()).subscribe(data=>
+              {
+                this.sectionList = data
+                console.log(data)
                 
-        // this.api.CreateSectionContent(content).subscribe(()=>
-        //   {
-        //     this.api.GetCourseSection(this.api.getCourseId()).subscribe(data=>
-        //       {
-        //         this.sectionList = data
-        //         // console.log(data)
-        //         this.dismissModal()
-        //       })
-             
-        //   })
+                this.dismissModal()
+              })
+              
+          })
+        } 
+        if(this.requestType == "newCourse"){
+          this.dismissModal()
+        }    
+       
       }
       else{
         console.log('Invalid form')

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AccessCourseIntroPageRoutingModule } from './access-course-intro-routing.module';
 
 import { AccessCourseIntroPage } from './access-course-intro.page';
-import { YouTubePlayerModule } from "@angular/youtube-player";
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   imports: [

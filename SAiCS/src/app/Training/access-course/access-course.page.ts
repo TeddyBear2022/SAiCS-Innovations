@@ -22,6 +22,11 @@ export class AccessCoursePage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
     // this.menu.open('client-menu')
+    this.api.AmbassadorAccessCourse().subscribe(data =>{
+      this.courses = data
+      console.log("Access course");
+      console.log(data)
+    })
 
   }
 
@@ -41,7 +46,10 @@ export class AccessCoursePage implements OnInit {
      return await popover.present();
    }
 
-   AccessCourse(){
+   AccessCourse(id:number){
+    this.api.setAccessCourseId(id)
+    console.log(id)
+    localStorage.setItem('course', id.toLocaleString())
     console.log("Access course")
     this.route.navigate(['access-course-intro'])
 
