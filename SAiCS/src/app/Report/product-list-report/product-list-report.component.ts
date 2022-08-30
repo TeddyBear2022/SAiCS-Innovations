@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import autoTable from 'jspdf-autotable';
 import { CurrencyPipe } from '@angular/common';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-product-list-report',
@@ -15,33 +16,60 @@ export class ProductListReportComponent implements OnInit {
   rows = [];
   temp = [];
   allRows = [];
+  rowData: any= [];
   
-  constructor(private api: ApiService, private CURRENCY: CurrencyPipe) {
-    this.GetProductList()
+  constructor(private api: ApiService, private cp: CurrencyPipe) {
     
    }
-  columns = [
-    {prop: 'id', name: 'ID' }, 
-    {prop: 'item', name: 'ITEM' },
-    { prop: 'description', name: 'DESCRIPTION' },
-    { prop: 'merchType', name: 'MERCHANDISE TYPE' },
-    { prop: 'merchCat', name: 'MERCHANDISE CATEGORY' },
-    {prop: 'unitPrice', name: 'UNIT PRICE' },
-    { prop: 'status', name: 'STATUS' } ];
+   columnDefs: ColDef[] = [
+    {headerName: 'ID', field: 'id', width: 80},
+		{headerName: 'ITEM', field: 'item', width: 130},
+		{headerName: 'DESCRIPTION', field: 'description', wrapText: true, autoHeight: true, width: 250},
+		{headerName: 'MERCHANDISE TYPE', field: 'merchType'},
+    {headerName: 'MERCHANDISE CATEGORY', field: 'merchCat'},
+    {headerName: 'UNIT PRICE', field: 'unitPrice', width: 110, 
+    cellStyle: { 'text-align': "right" },
+    cellRenderer: (params) => this.cp.transform(params.value, 'ZAR', 'symbol-narrow')},
+    {headerName: 'STATUS', field: 'status', width: 120},
+	];
+
+  public defaultColDef: ColDef = {
+    //width: 170,
+    sortable: true,
+    unSortIcon: true,
+    wrapText: true,     // <-- HERE
+    autoHeight: true,
+  };
+
+  // columns = [
+  //   {prop: 'id', name: 'ID' }, 
+  //   {prop: 'item', name: 'ITEM' },
+  //   { prop: 'description', name: 'DESCRIPTION' },
+  //   { prop: 'merchType', name: 'MERCHANDISE TYPE' },
+  //   { prop: 'merchCat', name: 'MERCHANDISE CATEGORY' },
+  //   {prop: 'unitPrice', name: 'UNIT PRICE' },
+  //   { prop: 'status', name: 'STATUS' } ];
 
 
   ngOnInit() {
+    this.GetProductList()
     
   }
 
-  async GetProductList()
+  GetProductList()
   {
-   var data = await this.api.ProductListRep().toPromise()
-   var dataObj = JSON.parse(JSON.stringify(data));
+  //  var data = await this.api.ProductListRep().toPromise()
+  //  var dataObj = JSON.parse(JSON.stringify(data));
    
-   this.rows = dataObj 
-   this.temp = dataObj 
+  //  this.rows = dataObj 
+  //  this.temp = dataObj 
    //console.log(this.productlist)
+
+   this.api.ProductListRep().subscribe(res =>
+    {
+      this.rowData =res
+      console.log(this.rowData);
+    })
   }
 
   previousTypeFilter = ''
@@ -92,11 +120,11 @@ export class ProductListReportComponent implements OnInit {
   }
 
 
-  sortByCol(column) {
-    this.rows.sort((a, b) =>
-      a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0
-    );
-  }
+  // sortByCol(column) {
+  //   this.rows.sort((a, b) =>
+  //     a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0
+  //   );
+  // }
 
   async download() {
     var doc = new jsPDF('p', 'pt', 'A4');
@@ -115,7 +143,7 @@ export class ProductListReportComponent implements OnInit {
           o.description,
           o.merchType,
           o.merchCat,
-          this.CURRENCY.transform(o.unitPrice, 'ZAR', 'symbol-narrow'),
+          this.cp.transform(o.unitPrice, 'ZAR', 'symbol-narrow'),
           o.status
         ];
       }),

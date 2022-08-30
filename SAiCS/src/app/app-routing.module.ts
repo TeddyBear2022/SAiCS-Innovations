@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'view-special',
+    redirectTo: 'ambassador-order-history',
     pathMatch: 'full'
   },
   {
@@ -180,6 +180,15 @@ const routes: Routes = [
     path: 'report',
     loadChildren: () => import('./Report/report/report.module').then( m => m.ReportPageModule)
   },
+  {
+    path: 'ambassador-special',
+    loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special.module').then( m => m.AmbassadorSpecialPageModule)
+  },
+  {
+    path: 'edit-address',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout/edit-address/edit-address.module').then( m => m.EditAddressPageModule)
+  },
+
 
   
 

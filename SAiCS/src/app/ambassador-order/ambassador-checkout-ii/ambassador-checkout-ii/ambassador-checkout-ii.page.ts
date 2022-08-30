@@ -52,10 +52,20 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   toggleValue() {
-    if (this.deliveryOption == true) this.OdrSmry.totalCost += 200;
-    else this.OdrSmry.totalCost -= 200;
-
-    console.log(this.OdrSmry.totalCost);
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'))
+    if (this.deliveryOption == true)
+    {
+      this.OdrSmry.totalCost += 200;
+      deliverValue.deliveryOption = true;
+  
+    }
+    else
+    {
+     this.OdrSmry.totalCost -= 200;
+     deliverValue.deliveryOption = false;
+    }
+    
+    localStorage.setItem('checkout', JSON.stringify(deliverValue))
   }
 
   GetAddress() {
@@ -78,6 +88,18 @@ export class AmbassadorCheckoutIiPage implements OnInit {
      console.log("encoded successfully")
       }
     
+  }
+
+  EditAddress(id: number)
+  {
+    localStorage.setItem('EditAddressId', JSON.stringify(id))
+    this.router.navigate(['/edit-address'])
+  }
+
+  DeleteAddress(id: number)
+  {
+    this.api.DeleteSecondaryAddress(id).subscribe(res => {console.log(res);
+    })
   }
 
   submitForm() {
@@ -104,7 +126,11 @@ export class AmbassadorCheckoutIiPage implements OnInit {
             this.checkout.get('address').setValidators(Validators.required);
             this.checkout.get('address').updateValueAndValidity();
 
-            localStorage.removeItem('checkout')
+            var orderdetails = {
+              'itemCount': 0, 'discount': 0,
+              'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
+              localStorage.setItem('checkout', JSON.stringify(orderdetails))
+        
 
             this.showAlert();
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import {  Router } from '@angular/router';
+import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -13,7 +13,10 @@ export class ViewSpecialPage implements OnInit {
   specials: any= []
   specialTypes: any = [];
   specialOption = 'All'
-  constructor( public popoverController: PopoverController,private api: ApiService, private router: Router
+  constructor( public popoverController: PopoverController,
+    private api: ApiService, private router: Router,
+    public alertController: AlertController,
+    public toastController: ToastController
     ) { }
 
   ngOnInit() {
@@ -40,14 +43,51 @@ export class ViewSpecialPage implements OnInit {
 
   updateSpecial(id: number)
   {
-    const navigationExtras: NavigationExtras = {state: {existingSpecial: id}};
-    this.router.navigate(['/update-special'], navigationExtras)
+    localStorage.setItem('UpdateId', JSON.stringify(id))
+
+    this.router.navigate(['/update-special'])
   }
 
-  DeleteSpecial(id: number)
+ async DeleteSpecial(id: number)
   {
-    
+    const alert = await this.alertController.create({
+      cssClass: 'messageAlert',
+      message: 'Are you sure you would like to permanently remove this item? ',
+      buttons: [
+        {
+          text: 'Confirm',
+          cssClass: 'Confirm',
+          handler: () => {
+            this.api.DeleteSpecial(id).subscribe(() => console.log("deleted successfully"))
+            this.presentToast()
+            console.log('Confirm Ok');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'Cancel',
+          handler: () => {
+            
+            console.log('Confirm Cancel');
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
   }
+
+  //success alert
+async presentToast() {
+  const toast = await this.toastController.create({
+    message: 'Successfully deleted',
+    cssClass: 'successToaster',
+    duration: 5000
+  });
+  toast.present(); 
+  window.location.reload() 
+}
 
   //Profile popover
   async presentPopover(event)

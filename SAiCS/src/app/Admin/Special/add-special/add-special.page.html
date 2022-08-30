@@ -128,15 +128,19 @@
                 <ion-col col-4>
                   <ion-label
                     ><span class="required"
-                    *ngIf="localForm.submitted && specialItemsArr.length < 1"
+                    *ngIf="localForm.submitted && specialItemsArr.length == 0"
                     >*</span> Special Items:
                   </ion-label>
                   <ion-card id="specialItemsCard">
-                    <ion-card-content>
-                      <ul>
-                        <li *ngFor="let s of specialItemsArr">{{s.name}}</li>
-                      </ul>
-                    </ion-card-content>
+                    <ion-content style="top:0%; --background: white;" [scrollEvents]="true">
+                      <ion-list>
+                         <ion-item *ngFor="let s of specialItemsArr" lines="none">{{s.name}} 
+                          <ion-fab-button (click)="RemoveItem(s.name)" color="light" slot="end">
+                            <ion-icon name="close" ></ion-icon>
+                          </ion-fab-button>
+                        </ion-item> 
+                      </ion-list>
+                    </ion-content>
                   </ion-card>
                 </ion-col>
               </ion-row>
@@ -148,6 +152,7 @@
             <ag-grid-angular
               style="height: 500px"
               class="ag-theme-alpine"
+              #specialGrid
               [rowData]="rowData"
               [columnDefs]="columnDefs"
               [rowSelection]="rowSelection"
@@ -163,7 +168,7 @@
       <ion-row>
         <ion-item-group style="float: right; margin-left: 85%">
           <ion-button id="create" slot="end" type="submit">Create</ion-button>
-          <ion-button id="cancel" slot="end">Cancel</ion-button>
+          <ion-button id="cancel" slot="end" routerLink="/view-special">Cancel</ion-button>
         </ion-item-group>
       </ion-row>
     </ion-grid>

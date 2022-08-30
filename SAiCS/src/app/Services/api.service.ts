@@ -272,7 +272,7 @@ export class ApiService {
 
   GetAddress(id: string)
   {
-    return this.api.get(this.apilink +`User/GetUserAddress?id=${id}`)
+    return this.api.get(this.apilink +`User/GetSecondaryAddress?id=${id}`)
   }
 
   Checkout(order: Order)
@@ -282,7 +282,22 @@ export class ApiService {
 
   NewAddress(address: Address)
   {
-    return this.api.post(this.apilink + "User/AddUserAddress", address, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + "User/AddSecondaryAddress", address, {observe: 'response', responseType: 'text'})
+  }
+
+  GetSecondaryAddressById(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetSecondaryAddressById?id=${id}`)
+  }
+
+  EditSecondaryAddress(address: Address)
+  {
+    return this.api.put(this.apilink + "User/EditSecondaryAddress", address, {observe: 'response', responseType: 'text'})
+  }
+
+  DeleteSecondaryAddress(id: number)
+  {
+    return this.api.delete(this.apilink + `User/DeleteSecondaryAddress?id=${id}`)
   }
 
   GetProvinces()
@@ -293,6 +308,11 @@ export class ApiService {
   OrderHistory(id: string)
   {
     return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`)
+  }
+
+  ViewOrderDetails(id: number)
+  {
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderDetails?id=${id}`)
   }
 
   //Iteration 7
@@ -332,4 +352,20 @@ export class ApiService {
   {
     return this.api.get(this.apilink + "Admin/GetAllSpecials")
   }
+
+  GetSpecialById(id: number)
+  {
+    return this.api.get(this.apilink + `Admin/GetSpecialById?id=${id}`)
+  }
+
+  UpdateSpecial(special: SpecialVM)
+  {
+    return this.api.put(this.apilink + "Admin/UpdateSpecial", special, {observe: 'response', responseType: 'text'})
+  }
+
+  DeleteSpecial(id: number)
+  {
+    return this.api.delete(this.apilink + `Admin/DeleteSpecial?id=${id}`)
+  }
+
 }

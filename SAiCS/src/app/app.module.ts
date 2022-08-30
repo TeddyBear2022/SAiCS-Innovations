@@ -17,7 +17,7 @@ import { AgGridModule } from 'ag-grid-angular';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, AgGridModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule, ReportComponentsModule],
+  imports: [BrowserModule, AgGridModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],
   bootstrap: [AppComponent],
 })

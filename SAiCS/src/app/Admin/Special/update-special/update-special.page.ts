@@ -1,8 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { AgGridAngular } from 'ag-grid-angular';
 import { RowSelectedEvent, SelectionChangedEvent } from 'ag-grid-community';
+import { Special } from 'src/app/Models/Special';
+import { SpecialVM } from 'src/app/Models/ViewModels/SpecialVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -23,36 +27,67 @@ export class UpdateSpecialPage implements OnInit {
 
 	rowData: any= [];
   specialItemsArr = []
-  
+  @ViewChild('specialGrid') grid!: AgGridAngular;
   addForm: FormGroup;
   selectedFile: any;
   specialTypes: any = [];
   rowSelection: 'single' | 'multiple' = 'multiple';
   selectedRow: any;
+  setData: any;
 
   constructor(private router: Router,public popoverController: PopoverController,
     private api: ApiService,private fb: FormBuilder) { 
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation.extras.state as {existingSpecial: number};
-    this.existingSpecial = state.existingSpecial;
+    // const navigation = this.router.getCurrentNavigation();
+    // const state = navigation.extras.state as {existingSpecial: number};
+    this.existingSpecial =  JSON.parse(localStorage.getItem('UpdateId'));
   }
 
   ngOnInit() {
     this.GetSpecialOptions()
-    console.log(this.existingSpecial);
+    this.GetSpecialById(this.existingSpecial)
+
     this.addForm = this.fb.group({
       sName: new FormControl('', Validators.required),
       sType: new FormControl('', Validators.required),
-      sImage: new FormControl('', Validators.required),
+      sImage: new FormControl(''),
       sDescription: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
       endDate: new FormControl('', [Validators.required]),
       sPrice: new FormControl('', Validators.required),
     });
     
+   
+   
   }
 
-  
+  GetSpecialById(id: number)
+  {
+    this.api.GetSpecialById(id).subscribe(data =>
+      {
+        this.setData = data;
+        console.log(this.setData);
+        this.addForm.controls['sName'].setValue(this.setData.name)
+        this.addForm.controls['sType'].setValue(this.setData.typeId)
+        this.addForm.controls['sDescription'].setValue(this.setData.description)
+        this.addForm.controls['sPrice'].setValue(this.setData.price)
+        this.addForm.controls['startDate'].setValue(formatDate(this.setData.startDate,'yyyy-MM-dd','en'))
+        this.addForm.controls['endDate'].setValue(formatDate(this.setData.endDate,'yyyy-MM-dd','en'))
+
+      })
+  }
+
+  onFirstDataRendered(params) {
+    this.setData.merchandise.forEach(e =>{
+      params.api.forEachNode(function(node) {
+        if(node.data.name === e)
+        {
+          node.setSelected(true)
+        }
+      });
+     })
+   
+  }
+
   GetSpecialOptions()
   {
 
@@ -70,7 +105,36 @@ export class UpdateSpecialPage implements OnInit {
 
   submitForm()
   {
-    
+    if(this.addForm.valid && this.specialItemsArr.length > 0)
+    {
+      let nSpecial = {} as Special;
+      nSpecial.specialId = this.existingSpecial
+      nSpecial.specialName = this.addForm.value.sName;
+      nSpecial.specialImage = this.selectedFile;
+      nSpecial.specialTypeId = this.addForm.value.sType;
+      nSpecial.description = this.addForm.value.sDescription;
+      nSpecial.price = this.addForm.value.sPrice;
+      nSpecial.startDate = this.addForm.value.startDate;
+      nSpecial.endDate = this.addForm.value.endDate;
+
+      let vmSpecial = {} as SpecialVM;
+      vmSpecial.Special = nSpecial
+      vmSpecial.SpecialItems = this.specialItemsArr
+
+      this.api.UpdateSpecial(vmSpecial).subscribe(res =>{
+        console.log(res.body);
+        if(res.body == "Special updated")
+        {
+          localStorage.removeItem('UpdateId')
+          this.router.navigate(['/view-special'])
+        }
+      })
+    }
+    else
+    {
+      console.log("invalid form");
+      
+    }
   }
 
   
@@ -108,8 +172,25 @@ export class UpdateSpecialPage implements OnInit {
 
   onSelectionChanged(event: SelectionChangedEvent) {
     var rowCount = event.api.getSelectedNodes().length;
-    window.alert('selection changed, ' + rowCount + ' rows selected');
+    console.log('selection changed, ' + rowCount + ' rows selected');
   }
+
+  RemoveItem(name)
+  {
+    this.grid.api.forEachNode(function(node){
+      if(node.data.name === name)
+      {
+        node.setSelected(false)
+      }
+    }.bind(this))
+  }
+
+  Return()
+  {
+    localStorage.removeItem('UpdateId')
+    this.router.navigate(['/view-special'])
+  }
+
 
     //Profile popover
     async presentPopover(event)

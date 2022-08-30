@@ -11,7 +11,7 @@ import { CartItem } from 'src/app/Models/CartItem';
   styleUrls: ['./landing-page.page.scss'],
 })
 export class LandingPagePage implements OnInit {
-  cartImages = []
+
   merchandise = []
   
 

@@ -55,8 +55,8 @@
         <td>{{o.id}}</td>
         <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
         <td>{{o.status}}</td>
-        <td style="text-align: left;">{{o.price * o.quantity | currency: 'ZAR':'symbol-narrow'}}</td>
-        <td><a href="">View Details</a></td>
+        <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
+        <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
         </tr>
         <tr>
         </ng-container>
@@ -81,7 +81,7 @@
           <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{o.status}}</td>
           <td style="text-align: left;">{{o.price * o.quantity | currency: 'ZAR':'symbol-narrow'}}</td>
-          <td><a href="">View Details</a></td>
+          <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
           </tr>
           <tr>
           </ng-container>
@@ -106,7 +106,7 @@
           <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{o.status}}</td>
           <td style="text-align: left;">{{o.price * o.quantity | currency: 'ZAR':'symbol-narrow'}}</td>
-          <td><a href="">View Details</a></td>
+          <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
           </tr>
           <tr>
           </ng-container>

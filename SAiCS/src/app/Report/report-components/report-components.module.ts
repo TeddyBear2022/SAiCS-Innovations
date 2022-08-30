@@ -8,6 +8,7 @@ import { SalesReportComponent } from '../sales-report/sales-report.component';
 import { TargetReportComponent } from '../target-report/target-report.component';
 import { LeaderboardReportComponent } from '../leaderboard-report/leaderboard-report.component';
 import { IonicModule } from '@ionic/angular';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 
@@ -23,7 +24,8 @@ import { IonicModule } from '@ionic/angular';
 ],
   imports: [
     CommonModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    AgGridModule
   ],
   exports:[
   ProductListReportComponent, 

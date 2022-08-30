@@ -19,7 +19,7 @@ export class AmbassadorCheckoutPage implements OnInit {
   countries: any;
   provinces: any;
 
-  constructor(  public popoverController: PopoverController, public alert: AlertController, private api: ApiService,  private fb: FormBuilder,private router: Router) { }
+  constructor(public popoverController: PopoverController, public alert: AlertController, private api: ApiService,  private fb: FormBuilder,private router: Router) { }
 
   ngOnInit() {
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))

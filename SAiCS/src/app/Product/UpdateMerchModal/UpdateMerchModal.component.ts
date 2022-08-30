@@ -12,9 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from 'src/app/Services/api.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-update-merch-modal',

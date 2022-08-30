@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { GridApi, RowSelectedEvent, SelectionChangedEvent } from 'ag-grid-community';
+import {RowSelectedEvent, SelectionChangedEvent} from 'ag-grid-community';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Special } from 'src/app/Models/Special';
 import { SpecialVM } from 'src/app/Models/ViewModels/SpecialVM';
+import { AgGridAngular } from 'ag-grid-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-special',
@@ -27,13 +29,14 @@ export class AddSpecialPage implements OnInit {
   addForm: FormGroup;
   selectedFile: any;
   specialTypes: any = [];
-
+  //gridApi: GridOptions; 
+  @ViewChild('specialGrid') grid!: AgGridAngular;
   rowSelection: 'single' | 'multiple' = 'multiple';
   selectedRow: any;
   constructor(
     public popoverController: PopoverController,
      private api: ApiService,
-     private fb: FormBuilder,) { }
+     private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.GetSpecialOptions()
@@ -70,6 +73,7 @@ export class AddSpecialPage implements OnInit {
     {
       console.log(event.node.data.name);
       this.specialItemsArr.push({
+        id: event.node.data.id,
         name: event.node.data.name
       })
     }
@@ -82,9 +86,19 @@ export class AddSpecialPage implements OnInit {
    
   }
 
+  RemoveItem(name)
+  {
+    this.grid.api.forEachNode(function(node){
+      if(node.data.name === name)
+      {
+        node.setSelected(false)
+      }
+    }.bind(this))
+  }
+
   onSelectionChanged(event: SelectionChangedEvent) {
     var rowCount = event.api.getSelectedNodes().length;
-    window.alert('selection changed, ' + rowCount + ' rows selected');
+    console.log('selection changed, ' + rowCount + ' rows selected');
   }
 
    //convert image to base64
@@ -104,7 +118,7 @@ export class AddSpecialPage implements OnInit {
 
   submitForm()
   {
-    if(this.addForm.valid && this.specialItemsArr.length > 1)
+    if(this.addForm.valid && this.specialItemsArr.length > 0)
     {
       let nSpecial = {} as Special;
       nSpecial.specialName = this.addForm.value.sName;
@@ -122,8 +136,8 @@ export class AddSpecialPage implements OnInit {
       //console.log(nSpecial);
       
       this.api.addSpecial(vmSpecial).subscribe(res =>{
-        console.log(res);
-        
+        console.log(res.body);
+        this.router.navigate(['/view-special'])
       })
       
     }
@@ -133,8 +147,7 @@ export class AddSpecialPage implements OnInit {
     }
   }
 
-
-
+  
   //Profile popover
   async presentPopover(event)
   {

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AmbassadorOrderHistoryPageRoutingModule } from './ambassador-order-history-routing.module';
 
 import { AmbassadorOrderHistoryPage } from './ambassador-order-history.page';
+import { ViewOrderhistoryDetailsComponent } from '../view-orderhistory-details/view-orderhistory-details.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AmbassadorOrderHistoryPage } from './ambassador-order-history.page';
     IonicModule,
     AmbassadorOrderHistoryPageRoutingModule
   ],
-  declarations: [AmbassadorOrderHistoryPage]
+  declarations: [AmbassadorOrderHistoryPage, ViewOrderhistoryDetailsComponent],
+  entryComponents:[ViewOrderhistoryDetailsComponent]
 })
 export class AmbassadorOrderHistoryPageModule {}

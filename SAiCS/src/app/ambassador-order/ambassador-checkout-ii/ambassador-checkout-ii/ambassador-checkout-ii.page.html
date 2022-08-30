@@ -57,8 +57,8 @@
                           <p>0{{a.phone}}</p>
                         </ion-label>
                         <ion-label slot="end">
-                          <ion-button fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Delete</ion-button>
-                          <ion-button fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Edit</ion-button>
+                          <ion-button (click)="DeleteAddress(a.id)" fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Delete</ion-button>
+                          <ion-button (click)="EditAddress(a.id)" fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Edit</ion-button>
                         </ion-label>
                     </ion-item>
                   
