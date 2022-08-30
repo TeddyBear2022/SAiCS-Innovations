@@ -285,6 +285,17 @@ import { AuthGuard } from './AuthGuards/auth-guard.guard';
     path: 'view-ambassadors-admin',
     loadChildren: () => import('./Admin/view-ambassadors/view-ambassadors.module').then( m => m.ViewAmbassadorsPageModule)
   },
+  {
+    path: 'client-edit-address',
+    loadChildren: () => import('./Client Order/client-edit-address/client-edit-address.module').then( m => m.ClientEditAddressPageModule)
+  },
+  {
+    path: 'client-orderhistory',
+    loadChildren: () => import('./Client Order/client-orderhistory/client-orderhistory.module').then( m => m.ClientOrderhistoryPageModule)
+  },
+
+
+
 
 
 

@@ -37,7 +37,7 @@
             <ion-label class="rightFormLabel">Country</ion-label>
               <select class="rightFormControl" id="dropdown" placeholder="Country" style="width: 85%; height: 35px;" formControlName="country">
                 <option value="" disabled selected>Select Country</option>
-                <option *ngFor="let c of countries" value="{{c.countryId}}" >{{c.countryName}}</option>
+                <option  value=1>South Africa</option>
               </select><br /><br />
               <span *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
           </ion-item-group>
@@ -128,7 +128,7 @@
             <ion-label slot="end">{{OdrSmry.totalCost | currency: 'ZAR':'symbol-narrow'}}</ion-label>
           </ion-item>
           <ion-item lines="none">
-            <button disabled="true" style="background-color: #08c10f; width: 60%;" id="button">Place Order</button>
+            <ion-button [disabled]="true" style="background-color: #08c10f; width: 60%;" id="button">Place Order</ion-button>
           </ion-item>
         </ion-list>
       

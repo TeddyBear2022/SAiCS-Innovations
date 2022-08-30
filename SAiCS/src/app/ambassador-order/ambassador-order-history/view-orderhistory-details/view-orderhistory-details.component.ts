@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController} from '@ionic/angular';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -70,4 +70,6 @@ export class ViewOrderhistoryDetailsComponent implements OnInit {
   dismissModal() {
     this.modalCtrl.dismiss();
   }
+
+
 }

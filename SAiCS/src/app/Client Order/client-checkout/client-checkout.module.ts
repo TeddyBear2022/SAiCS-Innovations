@@ -8,7 +8,6 @@ import { ClientCheckoutPageRoutingModule } from './client-checkout-routing.modul
 
 import { ClientCheckoutPage } from './client-checkout.page';
 import { AddAddressPage } from '../add-address/add-address.page';
-import { BankingDetailsComponent } from './banking-details/banking-details.component';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { BankingDetailsComponent } from './banking-details/banking-details.compo
     ReactiveFormsModule,
     ClientCheckoutPageRoutingModule
   ],
-  declarations: [ClientCheckoutPage, BankingDetailsComponent],
-  entryComponents:[BankingDetailsComponent]
+  declarations: [ClientCheckoutPage]
 })
 export class ClientCheckoutPageModule {}

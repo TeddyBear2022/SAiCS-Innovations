@@ -15,10 +15,10 @@
     <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button (click)="presentPopover($event)" shape="round">
+      <ion-button shape="round">
         <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
       </ion-button>
-    </ion-buttons>    
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -34,15 +34,14 @@
             <hr style="border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;">
             <h2 style="font-size: 20px; margin-top: -2%;">Add New Address</h2>
           
-            <form [formGroup]="newAddress" #localForm = 'ngForm' (ngSubmit)="OnSubmit()">
+            <form [formGroup]="newAddress" #localForm ='ngForm' (ngSubmit)="OnSubmit()">
             <ion-item-group>
-              <ion-label class="rightFormLabel">
-                <p>Country</p>
-                <ion-select class="rightFormControl" id="dropdown" placeholder="Country" style="width: 85%; height: 35px;" formControlName="country">
-                  <ion-select-option  value=1>South Africa</ion-select-option>
-                </ion-select><br />
-                </ion-label>
-                <span style="margin-left: 0%; display: block;" *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
+              <ion-label class="rightFormLabel">Country</ion-label>
+                <select class="rightFormControl" id="dropdown" placeholder="Country" style="width: 85%; height: 35px;" formControlName="country">
+                  <option value="" disabled selected>Select Country</option>
+                  <option  value=1>South Africa</option>
+                </select><br /><br />
+                <span *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
             </ion-item-group>
   
             <ion-item-group>
@@ -56,16 +55,18 @@
               <ion-col size="4" style="margin-left: -1%;">
                 <ion-item-group>
                   <ion-label class="rightFormLabel" style="font-size: 15px;">City</ion-label>
-                  <input class="rightFormControl" style="width: 130%;" type="text" placeholder="Enter Your City" formControlName="city">
+                  <ion-input class="rightFormControl" style="width: 130%;" type="text" placeholder="Enter Your City" formControlName="city">
+                  </ion-input>
                     <span  *ngIf="localForm.submitted && newAddress.controls['city'].invalid">Required</span>
                   </ion-item-group>
               </ion-col>
               <ion-col size="4">
                 <ion-item-group>
                   <ion-label style="font-size: 15px; margin-left: 30%;">Province</ion-label>
-                  <ion-select id="dropdown" placeholder="Province" style="width: 140%; margin-left: 30%; height: 35px;" formControlName="province">
-                    <ion-select-option *ngFor="let p of provinces" value="{{p.provinceId}}" >{{p.provinceName}}</ion-select-option>
-                  </ion-select>
+                  <select  id="dropdown" placeholder="Province" style="width: 140%; margin-left: 30%; height: 35px;" formControlName="province">
+                    <option value="" disabled selected>Select Province</option>
+                    <option *ngFor="let p of provinces" value="{{p.provinceId}}" >{{p.provinceName}}</option>
+                  </select>
                   <span style="margin-left: 30%;" *ngIf="localForm.submitted && newAddress.controls['province'].invalid">Required</span>
                 </ion-item-group>
               </ion-col>
@@ -91,7 +92,7 @@
   
             <ion-item-group style="float: right; margin-right: 5%;">
               <ion-button style="--background:#0070c0; text-transform: none;" type="submit">Save</ion-button>
-              <ion-button style="--background:#424242;text-transform: none;" routerLink="/ambassador-checkout-ii">Cancel</ion-button>
+              <ion-button (click)="Return()" style="--background:#424242;text-transform: none;">Cancel</ion-button>
             </ion-item-group>
           </form>
           </ion-list>
@@ -116,10 +117,6 @@
               <ion-input *ngIf="deliveryOption" id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
             </ion-item>
             <ion-item lines="none">
-              <ion-label>Discount</ion-label>
-              <ion-label slot="end">{{OdrSmry.discount | currency: 'ZAR':'symbol-narrow'}}</ion-label>
-            </ion-item>
-            <ion-item lines="none">
               <ion-label>VAT Amount</ion-label>
               <ion-label slot="end">{{OdrSmry.vat | currency: 'ZAR':'symbol-narrow'}}</ion-label>
             </ion-item>
@@ -129,7 +126,7 @@
               <ion-label slot="end">{{OdrSmry.totalCost | currency: 'ZAR':'symbol-narrow'}}</ion-label>
             </ion-item>
             <ion-item lines="none">
-              <ion-button [disabled]="true" style="--background: #08c10f; text-transform: none; width: 60%;"  id="button">Place Order</ion-button>
+              <ion-button [disabled]="true" style="background-color: #08c10f; width: 60%;" id="button">Place Order</ion-button>
             </ion-item>
           </ion-list>
         

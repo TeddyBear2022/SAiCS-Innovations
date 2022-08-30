@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 
 @Component({
@@ -13,74 +14,116 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ClientsCartPage implements OnInit {
 
-  products: any
-  deliveryOption=false
-  //For totals to reflect
-  itemTotal=[]
-  itemCount = 0
-  totalCost = 0
-  subtotal = 0
-  discount = 0
-  vat = 0
-  constructor(public popoverController:PopoverController,private alertController: AlertController,private api: ApiService, private route:Router) { }
+  items: any = [];
+  deliveryOption = false;
+  vat = 0;
+  session: any 
+
+  constructor(public popoverController:PopoverController, private tmpStorage:TemporaryStorage,private alertController: AlertController,private api: ApiService, private route:Router) { }
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.ViewCart()
-    //console.log(localStorage.getItem('userID'));
+    this.loadCart();
     
     
 }
-ViewCart()
+async ViewCart()
 {
-    // this.api.ViewCart().subscribe((data) =>
-    //   {
-    //     this.products = data
-    //     this.itemCount = this.products.length
-    //     console.log(this.products)
-    //     for(let i=0; i<this.products.length; i++){
-
-    //       this.itemTotal[i] = this.products[i].quantity * this.products[i].price //use i instead of 0  
-    //     }
-      
-    //   for (var i = 0; i< this.itemTotal.length; i++){
-    //     this.subtotal += this.itemTotal[i];
-    //    }
-      
-    //    //calculate disicout, vat and totalCost
-    //    this.discount = this.products[0].itemDiscount.discount * this.subtotal
-    //    this.vat = this.products[0].vaT * this.subtotal
-    //     this.totalCost = this.subtotal - this.discount 
-    //     console.log(this.totalCost)
-    //   });    
+  var vatData = await this.api.ClientGetVAT().toPromise();
+  var vatObj = JSON.parse(JSON.stringify(vatData));
+  this.vat = vatObj;
+  console.log(`discount: ${this.vat}`);   
       
       
 }
 
-RemoveFromCart(id: number)
+loadCart()
 {
-    this.api.RemoveFromCart(id).subscribe();
-    this.ViewCart()
-    window.location.reload()
+    this.api.ClientCartItems(this.session[0].id).subscribe(res =>{
+      this.items = res
+      console.log(this.items);
+      
+    })
+  
 }
 
-ClearCart(id: number)
-{
-  this.api.ClearCart(id).subscribe()
-  this.ViewCart()
-  window.location.reload()
+increment(item) {
+  // the quantity and price and get new subtotal
+  item.quantity += 1;
+  this.api.ClientIncreaseCartItem(item.id).subscribe((res) => {
+    console.log(res.body);
+    
+  })
+}
+
+decrement(item) {
+  // the quantity and price and get new subtotal
+  if (item.quantity > 1) {
+    item.quantity -= 1;
+    this.api.ClientDecreaseCartItem(item.id).subscribe((res) =>{
+      console.log(res.body);
+      
+    })
+  }
+}
+
+RemoveFromCart(item) {
+  this.api.ClientRemoveFromCart(item.id).subscribe(res =>{
+    console.log(res.body);
+    
+  })
+}
+
+ClearCart() {
+  this.api.ClientClearCart(this.items[0].cartId).subscribe();
+  window.location.reload();
 }
 
 
-toggleValue()
-{
-if(this.deliveryOption == true)
-this.totalCost += 200
-else
-this.totalCost -= 200
+// toggleValue()
+// {
+// if(this.deliveryOption == true)
+// this.totalCost += 200
+// else
+// this.totalCost -= 200
 
-console.log(this.totalCost)
-  return this.totalCost 
-}   
+// console.log(this.totalCost)
+//   return this.totalCost 
+// }   
+
+//Calculations
+get Subtotal() {
+  return this.items.reduce(
+    (sum, x) => ({
+      quantity: 1,
+      price: sum.price + x.quantity * x.price,
+    }),
+    { quantity: 1, price: 0 }
+  ).price;
+}
+get CalculatedVAT()
+  {
+    return this.vat * this.Subtotal
+  }
+
+  get OrderTotal()
+  {
+    if(this.deliveryOption == true)
+    {
+      return (this.Subtotal + 200) 
+    }
+    else{
+      return this.Subtotal 
+    }
+    
+  }
+
+  get TotalItems()
+  {
+    return this.items.length
+  }
+
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({
@@ -102,13 +145,17 @@ console.log(this.totalCost)
       ]
     });
     await alert.present();}
-    PlaceOrder()
-{
+ 
+   //Place order
+   PlaceOrder() {
+    var orderdetails = {
+      'itemCount': this.TotalItems, 
+      'vat': this.CalculatedVAT, 'subtotal': this.Subtotal, 'totalCost': this.OrderTotal, 'deliveryOption': this.deliveryOption}
+      localStorage.setItem('checkout', JSON.stringify(orderdetails))
 
-  var orderdetails = {cartId: this.products[0].cartID, 
-    'itemCount': this.itemCount, 'discount': this.discount,
-    'vat': this.vat, 'subtotal': this.subtotal, 'totalCost': this.totalCost, 'deliveryOption': this.deliveryOption}
-  localStorage.setItem('checkout', JSON.stringify(orderdetails))
-  this.route.navigate(['client-checkout'])
+      this.route.navigate(['client-checkout'])
+  }
+
+  
 }
-}
+

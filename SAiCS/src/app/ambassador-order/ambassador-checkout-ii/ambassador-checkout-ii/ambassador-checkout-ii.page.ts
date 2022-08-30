@@ -11,6 +11,7 @@ import { AlertController, PopoverController } from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-ambassador-checkout-ii',
@@ -23,7 +24,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   deliveryOption = false;
   checkout: FormGroup;
   OdrSmry: any;
-  one = 2; //got testing
+  session: any
   isModalOpen = false;
 
   setOpen(isOpen: boolean) {
@@ -35,10 +36,12 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     private alert: AlertController,
     private api: ApiService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private tmpStorage:TemporaryStorage
   ) {}
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.GetAddress();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
     this.deliveryOption = this.OdrSmry.deliveryOption == true? true : false
@@ -69,7 +72,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   GetAddress() {
-    this.api.GetAddress(this.one.toString()).subscribe((data) => {
+    this.api.GetAddress(this.session[0].id).subscribe((data) => {
       this.userAddress = data;
       console.log(this.userAddress);
     });
@@ -114,8 +117,8 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     if (this.checkout.valid) {
             let order = {} as Order;
             order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
-            order.userId = this.one.toString();
-            order.orderStatusId = 2;
+            order.userId = this.session[0].id;
+            order.orderStatusId = 1;
             order.proofOfPayment = this.selectedFile
             this.api.Checkout(order).subscribe(res => {
               console.log(res.body);
@@ -148,7 +151,6 @@ export class AmbassadorCheckoutIiPage implements OnInit {
         {
           text: 'Back To Home',
           handler: () => {
-            
             this.router.navigate(['/ambassador-landing-page'])
           }
         },

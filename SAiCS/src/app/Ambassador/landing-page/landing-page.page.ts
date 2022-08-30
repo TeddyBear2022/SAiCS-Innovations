@@ -15,12 +15,9 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 export class LandingPagePage implements OnInit {
 
   merchandise = []
-  
-
   products: any
   ItemQuantity: FormGroup
-  inputValue: number  = 1
-  session=[]
+  session: any 
 
   constructor(
   public popoverController: PopoverController, 
@@ -38,13 +35,15 @@ export class LandingPagePage implements OnInit {
   }
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog()
 
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)
     })
-    this.session = this.tmpStorage.getSessioninfo()
+   
+    
   }
 
 
@@ -61,23 +60,13 @@ AddToCart(id)
 {
     
 var item = this.merchandise.find(x => x.id === id)
-    // var itemImage: any = {}
-//   if(!this.cartService.itemInCart(item))
-//   {
-//     //for storage 
-//     var addItem = {'id':item.id, 'name': item.name, 'price': item.price,  'quantity': item.quantity} 
-//     console.log(addItem);
-//     this.cartService.addToCart(addItem);
-//  }
  let newItem = {} as CartItem
  newItem.merchandiseId = item.id 
  newItem.specialId = null
  newItem.price = item.price
  newItem.quantity = item.quantity
- 
-let one = 2 
 
-this.api.AddToCart(one.toString(), newItem).subscribe((res) => {console.log(res.body);});
+this.api.AddToCart(this.session[0].id, newItem).subscribe((res) => {console.log(res.body);});
 
 //  console.log(newItem)
 }

@@ -5,6 +5,7 @@ import { AlertController, PopoverController } from '@ionic/angular';
 import { Address } from 'src/app/Models/Address';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 
 @Component({
@@ -18,10 +19,12 @@ export class AmbassadorCheckoutPage implements OnInit {
   OdrSmry: any;
   countries: any;
   provinces: any;
+  session: any 
 
-  constructor(public popoverController: PopoverController, public alert: AlertController, private api: ApiService,  private fb: FormBuilder,private router: Router) { }
+  constructor(public popoverController: PopoverController, private tmpStorage:TemporaryStorage, public alert: AlertController, private api: ApiService,  private fb: FormBuilder,private router: Router) { }
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
     this.GetCountries()
     this.newAddress = this.fb.group({
@@ -55,12 +58,6 @@ export class AmbassadorCheckoutPage implements OnInit {
  
  GetCountries()
  {
-  this.api.getCountrys().subscribe(data =>{
-    this.countries = data
-    console.log(this.countries);
-    
-  })
-
   this.api.GetProvinces().subscribe(data => {
     this.provinces = data
   })
@@ -77,7 +74,7 @@ export class AmbassadorCheckoutPage implements OnInit {
     address.PostalCode = this.newAddress.value.postalCode
     address.RecipientNumber = this.newAddress.value.phone
     address.ProvinceId = this.newAddress.value.province
-    address.UserID = 2 //local storage things 
+    address.UserID = this.session[0].id
 
     this.api.NewAddress(address).subscribe((res) => {
       console.log(res.body);

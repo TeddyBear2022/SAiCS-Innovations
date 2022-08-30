@@ -250,6 +250,12 @@ export class ApiService {
     return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
   }
 
+  
+  ClientGetVAT()
+  {
+    return this.api.get(this.apilink + "ClientOrder/GetVAT")
+  }
+
 
   UploadImage(file: FormData)
   {
@@ -278,6 +284,11 @@ export class ApiService {
   {
     return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', responseType: 'text'})
   }
+
+  ClientAddToCart(id: string,newItem: CartItem)
+  {
+    return this.api.post(this.apilink + `ClientOrder/AddToCart?id=${id}`, newItem, {observe: 'response', responseType: 'text'})
+  }
   
 
   GetCartItems(id: string)
@@ -285,9 +296,19 @@ export class ApiService {
     return this.api.get(this.apilink + `AmbassadorOrder/ViewCart?id=${id}`)
   }
 
+  ClientCartItems(id: string)
+  {
+    return this.api.get(this.apilink + `ClientOrder/ViewCart?id=${id}`)
+  }
+
   IncreaseCartItem(id: number)
   {
   return this.api.post(this.apilink + `AmbassadorOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  }
+
+  ClientIncreaseCartItem(id: number)
+  {
+  return this.api.post(this.apilink + `ClientOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
   }
 
   DecreaseCartItem(id: number)
@@ -295,15 +316,32 @@ export class ApiService {
   return this.api.post(this.apilink + `AmbassadorOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
   }
 
+  ClientDecreaseCartItem(id: number)
+  {
+  return this.api.post(this.apilink + `ClientOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  }
+
   RemoveFromCart(id: number)
   {
     return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'})
   }
 
+  ClientRemoveFromCart(id: number)
+  {
+    return this.api.delete(this.apilink + `ClientOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'})
+  }
+
+
   ClearCart(id: number)
   {
     return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?cartID=${id}`)
   }
+
+  ClientClearCart(id: number)
+  {
+    return this.api.delete(this.apilink + `ClientOrder/ClearCart?cartID=${id}`)
+  }
+
 
   GetAddress(id: string)
   {
@@ -313,6 +351,11 @@ export class ApiService {
   Checkout(order: Order)
   {
     return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order, {observe: 'response', responseType: 'text'})
+  }
+
+  ClientCheckout(order: Order)
+  {
+    return this.api.post(this.apilink + "ClientOrder/Checkout", order, {observe: 'response', responseType: 'text'})
   }
 
   ValidateRefferralCode(refferalCode: string)
@@ -517,9 +560,19 @@ export class ApiService {
     return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`)
   }
 
+  ClientOrderHistory(id: string)
+  {
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderHistory?userID=${id}`)
+  }
+
   ViewOrderDetails(id: number)
   {
     return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderDetails?id=${id}`)
+  }
+
+  ClientViewOrderDetails(id: number)
+  {
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderDetails?id=${id}`)
   }
 
   //Iteration 7
@@ -542,37 +595,63 @@ export class ApiService {
   //Amanda 
   GetSpecialOptions()
   {
-    return this.api.get(this.apilink + "Admin/GetSpecialOptions")
+    return this.api.get(this.apilink + "Admin/GetSpecialOptions", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetSpecialTypes()
   {
-    return this.api.get(this.apilink + "Admin/GetSpecialTypes")
+    return this.api.get(this.apilink + "Admin/GetSpecialTypes", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   addSpecial(special: SpecialVM)
   {
-    return this.api.post(this.apilink + "Admin/addSpecial", special, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + "Admin/addSpecial", special, {observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
   GetAllSpecials()
   {
-    return this.api.get(this.apilink + "Admin/GetAllSpecials")
+    return this.api.get(this.apilink + "Admin/GetAllSpecials", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetSpecialById(id: number)
   {
-    return this.api.get(this.apilink + `Admin/GetSpecialById?id=${id}`)
+    return this.api.get(this.apilink + `Admin/GetSpecialById?id=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   UpdateSpecial(special: SpecialVM)
   {
-    return this.api.put(this.apilink + "Admin/UpdateSpecial", special, {observe: 'response', responseType: 'text'})
+    return this.api.put(this.apilink + "Admin/UpdateSpecial", special, {observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
   DeleteSpecial(id: number)
   {
-    return this.api.delete(this.apilink + `Admin/DeleteSpecial?id=${id}`)
+    return this.api.delete(this.apilink + `Admin/DeleteSpecial?id=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
 

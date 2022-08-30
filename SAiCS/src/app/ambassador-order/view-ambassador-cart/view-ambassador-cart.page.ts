@@ -5,6 +5,7 @@ import {
 import {  Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-view-ambassador-cart',
@@ -14,18 +15,18 @@ import { CartService } from 'src/app/Services/cart.service';
 export class ViewAmbassadorCartPage implements OnInit {
   items: any = [];
   deliveryOption = false;
- 
- 
   discount = 0;
   vat = 0;
+  session: any 
 
   constructor(
     private api: ApiService,
-    private cartService: CartService,
+    private tmpStorage:TemporaryStorage,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.ViewCart();
     this.loadCart();
   }
@@ -33,8 +34,7 @@ export class ViewAmbassadorCartPage implements OnInit {
 
 
   async ViewCart() {
-    let two = 2;
-    var data = await this.api.AmbassadorDiscount(two.toString()).toPromise();
+    var data = await this.api.AmbassadorDiscount(this.session[0].id).toPromise();
     var dataObj = JSON.parse(JSON.stringify(data[0].discount));
     this.discount = dataObj;
     console.log(`discount: ${this.discount}`);
@@ -49,12 +49,12 @@ export class ViewAmbassadorCartPage implements OnInit {
 
   loadCart()
   {
-    let one = 1 
-    this.api.GetCartItems(one.toString()).subscribe(res =>{
-      this.items = res
-      console.log(this.items);
-      
-    })
+      this.api.GetCartItems(this.session[0].id).subscribe(res =>{
+        this.items = res
+        console.log(this.items);
+        
+      })
+    
   }
 
   increment(item) {

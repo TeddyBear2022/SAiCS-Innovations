@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddAddressPageRoutingModule } from './add-address-routing.module';
+import { ClientEditAddressPageRoutingModule } from './client-edit-address-routing.module';
 
-import { AddAddressPage } from './add-address.page';
+import { ClientEditAddressPage } from './client-edit-address.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { AddAddressPage } from './add-address.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    AddAddressPageRoutingModule
+    ClientEditAddressPageRoutingModule
   ],
-  declarations: [AddAddressPage]
+  declarations: [ClientEditAddressPage]
 })
-export class AddAddressPageModule {}
+export class ClientEditAddressPageModule {}

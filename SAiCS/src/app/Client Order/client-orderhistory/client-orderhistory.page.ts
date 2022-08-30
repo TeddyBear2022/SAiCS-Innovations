@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { ViewOrderhistoryDetailsComponent } from '../view-orderhistory-details/view-orderhistory-details.component';
-import { MenuController } from '@ionic/angular';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { ClientOrderDetailsComponent } from '../client-order-details/client-order-details.component';
 
 @Component({
-  selector: 'app-ambassador-order-history',
-  templateUrl: './ambassador-order-history.page.html',
-  styleUrls: ['./ambassador-order-history.page.scss'],
+  selector: 'app-client-orderhistory',
+  templateUrl: './client-orderhistory.page.html',
+  styleUrls: ['./client-orderhistory.page.scss'],
 })
-export class AmbassadorOrderHistoryPage implements OnInit {
+export class ClientOrderhistoryPage implements OnInit {
 
   orders: any = []
   session: any
-  constructor(public popoverController: PopoverController, private tmpStorage:TemporaryStorage, private modalCtrl: ModalController, private api: ApiService, private menu:MenuController) { }
+
+  constructor(private modalCtrl: ModalController, private tmpStorage:TemporaryStorage, private api: ApiService, public popoverController:PopoverController, private menu:MenuController) { }
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
     this.ViewHistory()
   }
-
 
   openOrder(evt, cityName) {
     var i, tabcontent, tablinks;
@@ -39,7 +38,7 @@ export class AmbassadorOrderHistoryPage implements OnInit {
 
   ViewHistory()
   {
-    this.api.OrderHistory(this.session[0].id).subscribe(res => {
+    this.api.ClientOrderHistory(this.session[0].id).subscribe(res => {
       this.orders = res
 
       console.log(this.orders);
@@ -47,12 +46,12 @@ export class AmbassadorOrderHistoryPage implements OnInit {
     })
     this.menu.enable(true, 'ambassador-menu');
   }
-  
-async ViewOrderDetails(id: number)
+
+  async ViewOrderDetails(id: number)
 {
   
  const modal = await this.modalCtrl.create({
-    component: ViewOrderhistoryDetailsComponent,
+    component: ClientOrderDetailsComponent,
     componentProps: {
      order: id
     },
@@ -61,7 +60,7 @@ async ViewOrderDetails(id: number)
   await modal.present();
 }
 
-  //Profile popover
+
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({

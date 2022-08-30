@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController} from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
 import { ApiService } from 'src/app/Services/api.service';
-import { BankingDetailsComponent } from './banking-details/banking-details.component';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 @Component({
   selector: 'app-client-checkout',
   templateUrl: './client-checkout.page.html',
@@ -17,16 +17,23 @@ export class ClientCheckoutPage implements OnInit {
   deliveryOption = false;
   checkout: FormGroup;
   OdrSmry: any;
-  one = 1; //got testing
+  session: any
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
    constructor(public alertController: AlertController, 
     private modal: ModalController, 
     private alert: AlertController,
     private api: ApiService,
     private fb: FormBuilder,
-    private route:Router) { }
+    private route:Router,
+    private tmpStorage:TemporaryStorage) { }
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo()
     this.GetAddress();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
     this.deliveryOption = this.OdrSmry.deliveryOption == true? true : false
@@ -40,14 +47,25 @@ export class ClientCheckoutPage implements OnInit {
   }
 
   toggleValue() {
-    if (this.deliveryOption == true) this.OdrSmry.totalCost += 200;
-    else this.OdrSmry.totalCost -= 200;
-
-    console.log(this.OdrSmry.totalCost);
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'))
+    if (this.deliveryOption == true)
+    {
+      this.OdrSmry.totalCost += 200;
+      deliverValue.deliveryOption = true;
+  
+    }
+    else
+    {
+     this.OdrSmry.totalCost -= 200;
+     deliverValue.deliveryOption = false;
+    }
+    
+    localStorage.setItem('checkout', JSON.stringify(deliverValue))
   }
 
+
   GetAddress() {
-    this.api.GetAddress(this.one.toString()).subscribe((data) => {
+    this.api.GetAddress(this.session[0].id).subscribe((data) => {
       this.userAddress = data;
       console.log(this.userAddress);
     });
@@ -66,22 +84,54 @@ export class ClientCheckoutPage implements OnInit {
      console.log("encoded successfully")
   }}
 
-  submitForm() {
-   if(this.deliveryOption == false) this.checkout.setValidators(null)
-
-    if (this.checkout.valid) {
-            let order = {} as Order;
-            order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
-            order.userId = this.one.toString();
-            order.orderStatusId = 1;
-            order.cartId = this.OdrSmry.cartId
-            order.proofOfPayment = this.selectedFile
-            this.api.Checkout(order).subscribe();
-            console.log(order);
-    } else {
-      console.log('invalid form');
-    }
+  EditAddress(id: number)
+  {
+    localStorage.setItem('EditAddressId', JSON.stringify(id))
+    this.route.navigate(['/client-edit-address'])
   }
+
+  DeleteAddress(id: number)
+  {
+    this.api.DeleteSecondaryAddress(id).subscribe(res => {console.log(res);
+    })
+  }
+
+  submitForm() {
+
+    if(this.deliveryOption == false) 
+    {
+     this.checkout.get('address').clearValidators();
+     this.checkout.get('address').updateValueAndValidity();
+    }
+    
+ 
+     if (this.checkout.valid) {
+             let order = {} as Order;
+             order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
+             order.userId = this.session[0].id;
+             order.orderStatusId = 1;
+             order.proofOfPayment = this.selectedFile
+             this.api.ClientCheckout(order).subscribe(res => {
+               console.log(res.body);
+               
+             });
+             console.log(order);
+ 
+             this.checkout.get('address').setValidators(Validators.required);
+             this.checkout.get('address').updateValueAndValidity();
+ 
+             var orderdetails = {
+               'itemCount': 0,
+               'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
+               localStorage.setItem('checkout', JSON.stringify(orderdetails))
+         
+ 
+             this.showAlert();
+ 
+     } else {
+       console.log('invalid form');
+     }
+   }
 
   async showAlert() {
     const alert = await this.alert.create({
@@ -91,38 +141,15 @@ export class ClientCheckoutPage implements OnInit {
       buttons: [
         {
           text: 'Back To Home',
+          handler: () => {
+            this.route.navigate(['/landing-page'])
+          }
         },
       ],
     });
     await alert.present();
   }
 
-  BankingDetails(){
-    this.bankingdetails()
-   }
-   
-  async bankingdetails()
-  {
-   const modals = await this.modal.create({
-      component: BankingDetailsComponent,      
-      cssClass:"small-modal",
-    });
-    modals.onDidDismiss().then(() => {
-    
-    })
-    return await modals.present();
-  }
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Thank You For Your Order!',
-      message: 'At SAiCS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintable lifestyle with our top of the range and clinically tested products!',
-      buttons: [
-        {
-            text: 'Back to home'
-        },
-      ]
-    });
-    await alert.present();}
 
     
   }

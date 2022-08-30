@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, PopoverController } from '@ionic/angular';
+import { Address } from 'src/app/Models/Address';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { Address } from 'src/app/Models/Address';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
-  selector: 'app-edit-address',
-  templateUrl: './edit-address.page.html',
-  styleUrls: ['./edit-address.page.scss'],
+  selector: 'app-client-edit-address',
+  templateUrl: './client-edit-address.page.html',
+  styleUrls: ['./client-edit-address.page.scss'],
 })
-export class EditAddressPage implements OnInit {
+export class ClientEditAddressPage implements OnInit {
   deliveryOption=false
   newAddress: FormGroup
   OdrSmry: any;
@@ -21,11 +21,11 @@ export class EditAddressPage implements OnInit {
   setData: any;
   existingAddress: number;
   session: any 
-
+  
   constructor(public popoverController: PopoverController, public alert: AlertController,
-     private api: ApiService,  private fb: FormBuilder,private router: Router, private tmpStorage:TemporaryStorage) {
+    private api: ApiService,  private fb: FormBuilder,private router: Router, private tmpStorage:TemporaryStorage) { 
       this.existingAddress =  JSON.parse(localStorage.getItem('EditAddressId'));
-      }
+    }
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
@@ -41,6 +41,14 @@ export class EditAddressPage implements OnInit {
     });
 
     this.GetSecondaryAddressById(this.existingAddress)
+  }
+
+  GetCountries()
+  {
+ 
+   this.api.GetProvinces().subscribe(data => {
+     this.provinces = data
+   })
   }
 
   toggleValue()
@@ -61,14 +69,6 @@ export class EditAddressPage implements OnInit {
    localStorage.setItem('checkout', JSON.stringify(deliverValue))
   
   } 
-  
-  GetCountries()
-  {
- 
-   this.api.GetProvinces().subscribe(data => {
-     this.provinces = data
-   })
-  }
 
   GetSecondaryAddressById(id: number)
   {
@@ -107,7 +107,7 @@ export class EditAddressPage implements OnInit {
         if(res.body == "true")
         {
           localStorage.removeItem('EditAddressId')
-          this.router.navigate(['/ambassador-checkout-ii'])
+          this.router.navigate(['/client-checkout'])
         }
         // if(res.body == true)
         // {
