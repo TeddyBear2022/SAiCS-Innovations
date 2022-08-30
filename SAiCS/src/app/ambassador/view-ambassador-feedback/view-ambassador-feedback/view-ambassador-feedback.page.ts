@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-ambassador-feedback',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewAmbassadorFeedbackPage implements OnInit {
 
-  constructor() { }
+  constructor(private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
   }
 
 }

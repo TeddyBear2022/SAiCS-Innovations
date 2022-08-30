@@ -14,10 +14,10 @@ import { registerVM } from "../Models/ViewModels/registerVM"
       if(!localStorage.getItem('registerInfo' &&'accessInfo')){
         let registerInfo:registerationinfoVM[] = []
         let accessInfo:accessInfoVM[]=[]
-        let sessioninfo:registerVM[] =[]
+        //let sessioninfo:registerVM[] =[]
         localStorage.setItem('registerInfo', JSON.stringify(registerInfo))
         localStorage.setItem('accessInfo', JSON.stringify(accessInfo))
-        localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
+        //localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
       }
      }
 
@@ -62,6 +62,14 @@ import { registerVM } from "../Models/ViewModels/registerVM"
        sessioninfo.push(session)
        localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
      }
+
+     //Uploading user session information to localstorage so its accessible everywhere on the app while logged in
+     updateSession(session:any){
+      let sessioninfo:any[] =[]
+      if(localStorage.clear){}
+      sessioninfo.push(session)
+      localStorage.setItem('sessioninfo', JSON.stringify(sessioninfo))
+    }
 
      //get user session inforamtion
      getSessioninfo(){

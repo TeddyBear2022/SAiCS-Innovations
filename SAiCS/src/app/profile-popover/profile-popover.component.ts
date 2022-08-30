@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, PopoverController } from '@ionic/angular';
+import { ApiService } from '../Services/api.service';
 import { TemporaryStorage } from '../Services/TemporaryStorage.service';
 
 @Component({
@@ -10,7 +12,11 @@ import { TemporaryStorage } from '../Services/TemporaryStorage.service';
 })
 export class ProfilePopoverComponent implements OnInit {
 
-  constructor(public popoverController: PopoverController, private tempStorage:TemporaryStorage, private router:Router, private alert:AlertController) { }
+  constructor(public popoverController: PopoverController, 
+    private tempStorage:TemporaryStorage, 
+    private router:Router, 
+    private alert:AlertController,
+    private api:ApiService) { }
 
   ngOnInit() {}
 
@@ -33,15 +39,20 @@ export class ProfilePopoverComponent implements OnInit {
       header: 'Logout',
       message: 'Are you sure?',
       buttons: [{text: 'Yes', handler: ()=> {
-        this.tempStorage.clearRegistrationInfo()
-        this.router.navigate(['home'])
-        this.tempStorage.logout()
-        //this.router.navigate(['home'])
-        this.close()
-        console.log("logout")
+        this.api.Logout().subscribe(data =>
+          {
+            console.log(data)
+            if(data == true){
+            localStorage.clear()
+            this.router.navigate(['home'])
+            this.close()
+            console.log("logout")
+            }
+          })       
       }},{text: "No", handler: ()=>
       this.close()
-    }]
+    }
+  ]
     });
 
     await alert.present();

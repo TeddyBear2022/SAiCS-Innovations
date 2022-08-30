@@ -11,16 +11,20 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class AddFAQModalComponent implements OnInit {
 
+  //Variables
   FAQ:FormGroup
-  FAQs = [];
-  productFAQs=[];
-  accountFAQs=[];
-  deliveryFAQs=[];
-  dbCategories = []
-  lastFAQ=[]
-  constructor(private modal: ModalController, private api:ApiService, private alert: AlertController) { }
+  FAQs = []; 
+  faqCategory =[]
+  filteredFAQS = []
+  addedFAQ
+  testingFAQ
+  
+  constructor(private modal: ModalController, 
+    private api:ApiService, 
+    private alert: AlertController) { }
 
   ngOnInit() {
+    console.log(this.testingFAQ)
     this.FAQ = new FormGroup({
       faqtype: new FormControl(null, Validators.required),
       category: new FormControl('', Validators.required),
@@ -30,46 +34,29 @@ export class AddFAQModalComponent implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.api.GetFAQategory().subscribe(data => {
-      this.dbCategories = data
-      console.log(data)
+    this.api.GetAllFAQS().subscribe(data=> {
+      this.FAQs = data
     })
-    // this.api.GetAllFAQS().subscribe(data => {
-    //   this.lastFAQ = data
-    //   console.log(this.lastFAQ[this.lastFAQ.length-1].faqid)
-    // })
   }
-  // ionViewDidLeave(){
-  //   this.api.GetAllFAQS().subscribe(data=> {
-  //     console.log(data)
-  //     this.FAQs = data})
 
-  //   this.api.GetProductFAQ().subscribe(data =>
-  //     {
-  //       this.productFAQs = data
-  //       console.log(data)
-  //     })
+  FAQType(){
+     for(var category of this.FAQs){
+       if(category.faqtypeId == this.FAQ.get(['faqtype']).value){
+         this.faqCategory = category.faqcategories
+       }
+     }
+     console.log(this.faqCategory);
+    
+ }
 
-  //   this.api.GetAccountFAQ().subscribe(data =>
-  //     {
-  //       this.accountFAQs = data
-  //       console.log(data)
-  //     })
-      
-  //   this.api.GetDeliveryFAQ().subscribe(data =>
-  //     {
-  //       this.deliveryFAQs = data
-  //       console.log(data)
-  //     })
-  // }
+ FAQCategory(){
+  console.log(this.FAQ.get(['category']).value)
+ }
 
   dissmissModeal(){
-    this.modal.dismiss();
+    this.modal.dismiss({addedFaq: this.addedFAQ});
     
   }
-  // sendDataBack(addFAQ:FAQ){
-  //   this.modal.dismiss(addFAQ);
-  // }
 
   createFAQ(){
     //valid form
@@ -79,33 +66,32 @@ export class AddFAQModalComponent implements OnInit {
     newFAQ.faqquestion = this.FAQ.get('question').value;
     newFAQ.faqcategoryId = this.FAQ.get('category').value;
     newFAQ.faqtypeId = this.FAQ.get('faqtype').value;
-    // console.log(newFAQ)
+    
     this.api.CreateFAQ(newFAQ).subscribe(data => {
       if(data ==true){
-        // newFAQ.faqid =this.lastFAQ[this.lastFAQ.length-1].faqid +1
-        // this.sendDataBack(newFAQ)
-        this.dissmissModeal()
-        this.Success()
-        // console.log('Success')
+        this.api.GetAllFAQS().subscribe(data=> {
+          this.addedFAQ = data
+          console.log(this.addedFAQ)
+          this.dissmissModeal()
+          this.Success()
+        })
       }
       else{
         console.log('Unsuccessful')
       }
-    })  
+    }) 
   }
   //Invalid Form
   else{
     console.log('Invalid form')
   }
-
   }
 
   async Success() {
     const alert = await this.alert.create({
       cssClass: 'messageAlert',
       message: 'FAQ Has been successfully created',
-      buttons: [{text: 'Ok', handler: ()=> {
-        window.location.reload() 
+      buttons: [{text: 'Ok', handler: ()=> { 
       }
     }]
     });

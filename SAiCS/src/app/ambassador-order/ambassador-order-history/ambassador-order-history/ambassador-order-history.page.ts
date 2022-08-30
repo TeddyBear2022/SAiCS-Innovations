@@ -3,6 +3,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { ViewOrderhistoryDetailsComponent } from '../view-orderhistory-details/view-orderhistory-details.component';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-ambassador-order-history',
@@ -13,7 +14,7 @@ export class AmbassadorOrderHistoryPage implements OnInit {
 
   orders: any = []
   two= 2
-  constructor(public popoverController: PopoverController, private modalCtrl: ModalController, private api: ApiService) { }
+  constructor(public popoverController: PopoverController, private modalCtrl: ModalController, private api: ApiService, private menu:MenuController) { }
 
   ngOnInit() {
     this.ViewHistory()
@@ -42,6 +43,7 @@ export class AmbassadorOrderHistoryPage implements OnInit {
       console.log(this.orders);
       
     })
+    this.menu.enable(true, 'ambassador-menu');
   }
 
 // getTotalValue(id: number)

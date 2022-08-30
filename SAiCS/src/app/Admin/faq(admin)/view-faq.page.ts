@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -17,9 +17,14 @@ import { UpdateFaqModalComponent } from '../modals/update-faq-modal/update-faq-m
 })
 export class ViewFaqPage implements OnInit {
 
-  constructor(public popoverController: PopoverController, private modal: ModalController, private api:ApiService, private alert:AlertController) { }
+  constructor(public popoverController: PopoverController, 
+    private modal: ModalController, 
+    private api:ApiService, 
+    private alert:AlertController,
+    private menu:MenuController
+    ) { }
   //Variables
-   FAQs = [];
+   FAQs = []; // part of fixed
    productFAQs=[];
    accountFAQs=[];
    deliveryFAQs=[];
@@ -28,36 +33,20 @@ export class ViewFaqPage implements OnInit {
    chosenCategory:any;
    chosenfaqtype:any;
    dbCategories=[];
-   filter:boolean = false
+   filter:boolean = false // part of fixed
    showCategory
 
+
+   //new faq method
+   faqCategory =[]
+   filteredFAQS = []
+   categoryHeading
+   testingFAQS= "modal passing data"
+
   ngOnInit() {
-  //  this.api.GetAllFAQS().subscribe(data=> {
-  //    console.log(data)
-  //   this.FAQs = data})
+    this.menu.enable(true, 'admin-menu');
+    // this.menu.open('admin-menu')
 
-  //   this.api.GetProductFAQ().subscribe(data =>
-  //     {
-  //       this.productFAQs = data
-  //       console.log(data)
-  //     })
-
-  //   this.api.GetAccountFAQ().subscribe(data =>
-  //     {
-  //       this.accountFAQs = data
-  //       console.log(data)
-  //     })
-
-  //   this.api.GetDeliveryFAQ().subscribe(data =>
-  //     {
-  //       this.deliveryFAQs = data
-  //       console.log(data)
-  //     })
-  //     this.api.GetFAQategory().subscribe(data =>
-  //       {
-  //         this.dbCategory = data
-  //         console.log(data)
-  //       })
   }
   
    // Show Profile options when icon on right of navbar clicked function
@@ -72,31 +61,11 @@ export class ViewFaqPage implements OnInit {
 
    ionViewWillEnter(){
     this.api.GetAllFAQS().subscribe(data=> {
-      console.log(data)
-      this.FAQs = data})
-
-    this.api.GetProductFAQ().subscribe(data =>
-      {
-        this.productFAQs = data
-        //console.log(data)
-      })
-
-    this.api.GetAccountFAQ().subscribe(data =>
-      {
-        this.accountFAQs = data
-        //console.log(data)
-      })
       
-    this.api.GetDeliveryFAQ().subscribe(data =>
-      {
-        this.deliveryFAQs = data
-        //console.log(data)
-      })
-      this.api.GetFAQategory().subscribe(data =>
-        {
-          this.dbCategories = data
-          console.log(data)
-        })
+      this.FAQs = data
+      console.log(this.FAQs)
+    
+    })
    }
 
    ionViewDidEnter(){
@@ -106,26 +75,15 @@ export class ViewFaqPage implements OnInit {
    async createFAQ(){
      console.log("Open faq modal")
      const modal = await this.modal.create({
-       component: AddFAQModalComponent
+       component: AddFAQModalComponent,
+       componentProps: {testingFAQ: this.FAQs}
      });
-     modal.onDidDismiss().then(() => {
-      //  If all else fails
-      // window.location.reload() 
-      // let addFAQ = data.data
-      // if(addFAQ.faqcategoryId == 3){
-      //   this.deliveryFAQs.push(addFAQ)
-      //   console.log("add delvery faq")
-      // }
-      // if(addFAQ.faqcategoryId == 2){
-      //   this.productFAQs.push(addFAQ)
-      //   console.log("add product faq")
-      // }
-      // if(addFAQ.faqcategoryId == 1){
-      //   // addFAQ.faqid = addFAQ.faqid
-      //   this.accountFAQs.push(addFAQ)
-      //   console.log("add account faq")
-      // }
-      // console.log(addFAQ)
+     modal.onDidDismiss().then((data) => {
+      console.log(data.data.addedFaq)
+      
+      //make current list equal to the one sent from the modal
+      this.FAQs = data.data.addedFaq
+      
     })
      await modal.present();
    }
@@ -148,42 +106,54 @@ export class ViewFaqPage implements OnInit {
       component: UpdateFaqModalComponent,
       componentProps: {
         updateFAQs: faq,
+        faqs:this.FAQs
       },
       keyboardClose :  false
     });
+    modal.onDidDismiss().then((data) => {
+      console.log(data.data.updatedfaqs)
+      
+      //make current list equal to the one sent from the modal
+      this.FAQs = data.data.updatedfaqs
+      
+    })
     
     await modal.present();
   }
    
    FAQType(){
-     this.chosenfaqtype = this.faqType     
-     if(this.chosenCategory != null && this.chosenfaqtype != null){
+     this.chosenfaqtype = this.faqType   
+    if(this.faqType != null){
       this.filter = true
-      console.log(this.filter)
+      for(var category of this.FAQs){
+        if(category.faqtypeId == this.faqType){
+          this.faqCategory = category.faqcategories
+        }
+      }
     }
    else{
     this.filter = false
     console.log(this.filter)
    }
-   console.log(this.chosenfaqtype);
-     
   }
 
   FAQCategory(){
-    this.chosenCategory = this.category;
+  this.chosenCategory = this.category;
+  if(this.category != null && this.faqType != null){
+    this.filter = true
 
-    if(this.chosenCategory != null && this.chosenfaqtype != null){
-      this.filter = true
-
-     var index = this.dbCategories.findIndex(x=> x.faqcategoryId==this.chosenCategory)
-      this.showCategory = this.dbCategories[index]
-      console.log('proper index number:'+ index)
+    for(var filterfaqs of this.faqCategory){
+      if(filterfaqs.faqcategoryId == this.category){
+        this.filteredFAQS = filterfaqs.faqs
+      }
     }
-   else{
-    this.filter = false
-    console.log(this.filter)
-   }
-    console.log(this.chosenCategory)
+   var index = this.faqCategory.findIndex(x=> x.faqcategoryId == this.category)
+   this.categoryHeading = this.faqCategory[index].categoryName
+  }
+ else{
+  this.filter = false
+  console.log(this.filter)
+ }
   }
 
   DeleteFAQ(thisFAQs:any){
@@ -222,7 +192,7 @@ export class ViewFaqPage implements OnInit {
         deleteFAQ.faqtypeId = deleteFAQS.faqtypeId
         deleteFAQ.faqid = deleteFAQS.faqid
         console.log(deleteFAQ)
-        this.api.DeleteFAQ(deleteFAQS).subscribe(data => {
+        this.api.DeleteFAQ(deleteFAQS.faqid).subscribe(data => {
           if(data==true){
             this.Success()
           }

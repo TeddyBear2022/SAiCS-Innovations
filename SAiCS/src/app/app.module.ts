@@ -9,13 +9,16 @@ import { AppRoutingModule } from './app-routing.module';
 import{HttpClientModule} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { NavbarMenuPage } from './navbar-menu/navbar-menu.page';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 import { ReportComponentsModule } from './Report/report-components/report-components.module';
 import { AgGridModule } from 'ag-grid-angular';
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,NavbarMenuPage],
   entryComponents: [],
   imports: [BrowserModule, AgGridModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],

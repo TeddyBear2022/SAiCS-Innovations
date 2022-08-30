@@ -16,6 +16,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./next.page.scss'],
 })
 export class NextPage implements OnInit {
+  //Revamp begin
   registerInfo:registerationinfoVM
   register:FormGroup
   passwordMatchError:boolean= false
@@ -23,19 +24,21 @@ export class NextPage implements OnInit {
   registration: registerVM
   registrationinfo:registerationinfoVM[]= this.tempStorage.getRegisterInfo()
   
-  constructor(private tempStorage: TemporaryStorage, private api:ApiService, private route:Router, private alert:AlertController) { }
+  constructor(private tempStorage: TemporaryStorage, 
+    private api:ApiService, 
+    private route:Router, 
+    private alert:AlertController) { }
 
   ngOnInit() {
     this.register = new FormGroup({
-    //username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    confirmpassword: new FormControl('', Validators.required)
+    username:new FormControl(this.registrationinfo[0].emailaddress),
+    password: new FormControl('', Validators.compose([ Validators.required, Validators.minLength(14)])),
+    confirmpassword: new FormControl('',  Validators.compose([ Validators.required, Validators.minLength(14)]))
     
     })
-   
   }  
 
-  //Registtion successful alert
+  //Registration successful alert
   async success() {
     const alert = await this.alert.create({
       header: 'Registration',
@@ -53,9 +56,10 @@ export class NextPage implements OnInit {
     const alert = await this.alert.create({
       header: 'Registration',
       message: 'Your registration was sadly unsusccessful. Please ensure all the relevant details are present',
-      buttons: [ {text: 'OK'}]
+      buttons: [ {text: 'OK', handler: ()=> {
+        this.tempStorage.clearRegistrationInfo()
+        this.route.navigate(['home'])}}]
     });
-
     await alert.present();
   }
   
@@ -68,14 +72,13 @@ export class NextPage implements OnInit {
     else{
       if(this.register.get('password').value != this.register.get('confirmpassword').value){
         this.passwordMatchError = true
-        console.log("Passwords dont match")
-        
+        console.log("Passwords dont match") 
       }
      else
      {
     this.passwordMatchError = false  
-    var test:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.registrationinfo[0].emailaddress)
-    this.registration= new registerVM(test, this.registrationinfo[0])
+    var completedRegistration:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.registrationinfo[0].emailaddress)
+    this.registration= new registerVM(completedRegistration, this.registrationinfo[0])
     console.log(this.registration)
     this.api.registerUser(this.registration).subscribe(result => {
       console.log(result)
@@ -91,7 +94,7 @@ export class NextPage implements OnInit {
         this.unsuccessful()
       }
       if (response.status === 400){
-        console.log(response.error.text)
+        console.log(response.error.text+"something went wrong")
         this.unsuccessful()
       }
       

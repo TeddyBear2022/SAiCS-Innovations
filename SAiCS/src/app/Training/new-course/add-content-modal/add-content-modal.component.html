@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-item color="primary"><h2 style="margin-left: 10pt;"><b> Add Section Content </b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  <br>
+<form [formGroup]="AddContent" #localForm = 'ngForm' (ngSubmit)="CreateContent()" >
+  <div align="center">
+        <ion-label>Section name:</ion-label>
+        <ion-input formControlName="contentsectionname" type="text" placeholder="Enter a new section"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls['contentsectionname'].invalid">Please enter a valid section name</span>
+      <br>
+      <ion-label>Content heading:</ion-label>
+        <ion-input formControlName="contentheading" type="text" placeholder="Enter content(s) heading"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls['contentheading'].invalid">Please enter a valid content heading</span>
+      <br>
+      <ion-label>Google drive content link:</ion-label>
+        <ion-input formControlName="googledrivelink" type="text" placeholder="Paste google drive link"></ion-input>
+           <span *ngIf="localForm.submitted && AddContent.controls['googledrivelink'].invalid">Please enter a valid google drive link</span>
+           <span *ngIf="isExisting">Quiz answer already exists</span>
+      <br>
+      <ion-label>Youtube video heading:</ion-label>
+      <ion-input formControlName="youtubevideoheading" type="text" placeholder="Enter youtube video heading"></ion-input>
+         <span *ngIf="localForm.submitted && AddContent.controls['youtubevideoheading'].invalid">Please enter a valid youtube video heading</span>
+    <br>
+    <ion-label>Youtube Video link</ion-label>
+    <ion-input formControlName="youtubeLink" type="text" placeholder="Paste youtube video(s) link"></ion-input>
+       <span *ngIf="localForm.submitted && AddContent.controls['youtubeLink'].invalid">Please enter a valid youtube video link, Note: not a playlist one video</span>
+    <br><br>
+        <ion-buttons >
+          <ion-button type="submit" id="ModalBlueButtons" >
+            Add
+          </ion-button>
+          <ion-button  type="submit" id="ModalRedButtons" (click)="dismissModal()">
+            Close
+          </ion-button>
+        </ion-buttons> 
+<br>
+</div>    
+</form>
+</ion-content>
