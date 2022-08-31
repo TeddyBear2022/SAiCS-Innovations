@@ -11,7 +11,11 @@ ion-toolbar
     --background: #f5f5f5;
     --color : black;
   }
-
+  tbody tr:nth-child(even) 
+  {
+    background: #e8e7e1;
+  }
+  
   table
   {
     width: 80%;
@@ -19,6 +23,10 @@ ion-toolbar
 
   }
   
+  thead{
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+  }
   th{
     // background-color: #008080;
     color: black ;
@@ -26,9 +34,7 @@ ion-toolbar
     text-align: center;
   }
 
-  tbody{
-    // background-color: #f6ffff;
-  }
+  
 
   td{
     text-align: center;

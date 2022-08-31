@@ -9,6 +9,7 @@ import { TargetPageRoutingModule } from './target-routing.module';
 import { TargetPage } from './target.page';
 
 import { AssignTargetPage } from './Modals/assign-target/assign-target.page';
+import { UpdateTargetPage } from './Modals/update-target/update-target.page';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { AssignTargetPage } from './Modals/assign-target/assign-target.page';
     TargetPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [TargetPage ,AssignTargetPage],
-  entryComponents:[AssignTargetPage ]
+  declarations: [TargetPage ,AssignTargetPage,UpdateTargetPage],
+  entryComponents:[AssignTargetPage,UpdateTargetPage]
 })
 export class TargetPageModule {}
