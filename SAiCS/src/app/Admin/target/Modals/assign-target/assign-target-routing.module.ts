@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AssignTargetPage
+  },
+  {
+    path: 'update-target',
+    loadChildren: () => import('../update-target/update-target.module').then( m => m.UpdateTargetPageModule)
   }
 ];
 

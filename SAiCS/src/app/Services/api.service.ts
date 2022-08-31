@@ -33,6 +33,7 @@ import { MerchVM } from '../Models/ViewModels/MerchVM';
 import { CartItem } from '../Models/CartItem';
 import { OTPVM } from '../Models/ViewModels/OTPVM';
 import { ResetPasswordVM } from '../Models/ViewModels/ResetPasswordVM';
+import { Target } from '../Models/Target';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,12 @@ export class ApiService {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
     })
   };
+
+  // {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   }
 
   //get title
   getTitles():Observable<Title[]>{
@@ -490,4 +497,73 @@ export class ApiService {
   AccountExists(email:string):Observable<boolean>{
     return this.api.get<boolean>(this.apilink +`User/UserExist?email=${email}`)
   }
+
+  AllRegistrations(){
+    return this.api.get(this.apilink+ `Admin/GetAllRegistrations`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  SpecificRegistration(userId = localStorage.getItem('registrationRequest')){
+    return this.api.get(this.apilink+ `Admin/SpecificRegistrationInfo?regId=${userId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  AcceptRegistration(){
+
+  }
+  RejectRegistration(){
+    
+  }
+
+  AllTargetInfo(){
+    return this.api.get(this.apilink+ `Admin/GetAllTarget`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  CreateTarget(target:Target){
+    return this.api.post(this.apilink+ `Admin/CreateTarget`, target,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+    // UpdateTarget
+  }
+
+  UpdateTarget(target:Target){
+    return this.api.patch(this.apilink+ `Admin/UpdateTarget`, target,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  TargetExists(ambId:number):Observable<boolean>{
+    return this.api.get<boolean>(this.apilink+ `Admin/TargetExists?ambId=${ambId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  GetSpecificTarget(ambId:number){
+    return this.api.get(this.apilink+ `Admin/GetSpecificTarget?ambassadorId=${ambId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+
+  }
+  DeleteTarget(targetId:number){
+    return this.api.delete(this.apilink+ `Admin/DeleteTarget?targetID=${targetId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
 }

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Target Amount</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- If target already exist -->
+<form [formGroup]="UpdateTargetForm" #UpdatelocalForm = 'ngForm' >
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+  <label>Update Target Amount:</label><br>
+<ion-input id="targetamount" formControlName="updatetarget" placeholder="Enter An amount" type="number"></ion-input>
+<span *ngIf="UpdatelocalForm.submitted && UpdateTargetForm.controls.updatetarget.invalid">Please enter a valid amount </span>
+</ion-col>
+<ion-col></ion-col>
+<ion-col></ion-col>
+</ion-row>
+<br>
+<ion-row>
+  <ion-col size="6">
+    <label > Date From:</label>
+    <ion-input formControlName="updatedateFrom" type="Date"></ion-input>
+    <span *ngIf="UpdatelocalForm.submitted && UpdateTargetForm.controls.updatedateFrom.invalid">Please pick a date </span>
+  </ion-col>
+  <ion-col size="6">
+    <ion-label> Date To:</ion-label>
+    <ion-input  formControlName="updatedateTo" type="Date"></ion-input>
+    <span *ngIf="UpdatelocalForm.submitted && UpdateTargetForm.controls.updatedateTo.invalid">Please pick a date </span>
+  </ion-col>
+  <span *ngIf="UpdatelocalForm.submitted && this.UpdateTargetForm.get(['updatedateFrom']).value >=this.UpdateTargetForm.get(['updatedateTo']).value">Your start date cant be later than your end date</span>
+
+</ion-row>
+<br><br><br><br>
+<ion-row>
+  <ion-col></ion-col>
+  <ion-col></ion-col>
+  <ion-button (click)="UpdateTarget()" type="submit">Update</ion-button>
+  <ion-button (click)="Cancel()">Cancel</ion-button>
+</ion-row>
+</ion-grid>
+</form>
+
+</ion-content>

@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <h1 align="center">Registration Requests</h1>
+  <br>
+  <ion-item lines="none" >
+    <div align="center" slot="end">
+  <ion-input  id="searchbar"
+   placeholder="Search ambassador..."
+  (ionChange)="SearchAmbassador($event)">
+</ion-input>
+</div>
+<ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+</ion-item>
+  <br><br>
+  <table>
+    <thead align="center" >
+        <tr>
+          <th>Title</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Requested Ambassador Type</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>    
+    </thead>
+    <tbody align="center">
+    <tr *ngFor="let r of registrations">
+      <td >{{r.title.titleName}}</td>
+      <td>{{r.name}}</td>
+      <td>{{r.surname}}</td>
+      <td >{{r.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>
+      <td><ion-label id="Link" (click)="ViewRegistration(r.id)"> <u>View Details</u></ion-label></td>
+      <td><ion-button>Accept</ion-button></td>
+      <td><ion-button>Reject</ion-button></td>
+      </tr>
+    </tbody>
+    </table>
+    <!-- no results found -->
+    <!-- <div align="center" *ngIf="noResults == true">
+    <img src="./assets/noresultsfound3.gif" alt="No results found">
+    </div> -->
+</ion-content>
