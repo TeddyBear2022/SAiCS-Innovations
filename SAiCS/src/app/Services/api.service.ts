@@ -201,27 +201,42 @@ export class ApiService {
   //Get MerchTypes
   GetMerchTypes(): Observable<any>
   {
-    return this.api.get(this.apilink + 'Product/GetMerchTypes');
+    return this.api.get(this.apilink + 'Product/GetMerchTypes',{
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+    })});
   }
 
   GetMerchCat(): Observable<any>
   {
-    return this.api.get(this.apilink + 'Product/GetMerchCats');
+    return this.api.get(this.apilink + 'Product/GetMerchCats',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
   }
 
   GetMerchStatuses(): Observable<any>
   {
-    return this.api.get(this.apilink + 'Product/GetMerchStatuses');
+    return this.api.get(this.apilink + 'Product/GetMerchStatuses',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
   }
 
   CreateMerch(nMerch: MerchVM)
   {
-    return this.api.post(this.apilink + "Product/CreateMerch", nMerch,  {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + "Product/CreateMerch", nMerch, {observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
   GetAllMerch(): Observable<any>
   {
-    return this.api.get(this.apilink + 'Product/GetMerch')
+    return this.api.get(this.apilink + 'Product/GetMerch',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
   GetMerchById(id: number)
