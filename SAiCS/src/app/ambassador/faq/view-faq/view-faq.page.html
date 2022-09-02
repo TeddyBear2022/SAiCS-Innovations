@@ -32,24 +32,26 @@
       </ion-row>
       <br><br>
       <ion-row>
-        <ion-col size="4">
-          <ion-card>
+        <!-- <div align="center"> -->
+        <div align="center" >
+          <ion-card *ngFor="let f of faqCategories">
             <ion-card-header>
-              <ion-card-subtitle><ion-item ><ion-label>Orders</ion-label></ion-item></ion-card-subtitle>
+              <!-- <ion-card-subtitle><ion-item ><ion-label>Orders</ion-label></ion-item></ion-card-subtitle> -->
              
             </ion-card-header>
             <br>
             <ion-card-content>
-              All you need to know about orders
+              {{f.categoryName}}
               
             </ion-card-content>
             <ion-footer >
-              <div><a routerLink="/orders-faq">Learn more</a></div>
+              <ion-label (click)="showFAQ(f.faqcategoryId)"><u>Learn more</u></ion-label>
             </ion-footer>
           </ion-card>
-        </ion-col>
+        </div>
+      <!-- </div> -->
 
-        <ion-col size="4">
+        <!-- <ion-col size="4">
           <ion-card>
             <ion-card-header>
               <ion-card-subtitle><ion-item ><ion-label>Agents</ion-label></ion-item></ion-card-subtitle>
@@ -78,7 +80,7 @@
               <div><a routerLink="/rankings-faq">Learn More</a></div>
             </ion-footer>
           </ion-card>
-        </ion-col>
+        </ion-col> -->
 
       </ion-row>
     </ion-grid>

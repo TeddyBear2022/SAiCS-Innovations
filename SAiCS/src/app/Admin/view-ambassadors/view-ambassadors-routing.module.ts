@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ViewAmbassadorsPage
+  },
+  {
+    path: 'ambassador-ranking-modal',
+    loadChildren: () => import('./ambassador-ranking-modal/ambassador-ranking-modal.module').then( m => m.AmbassadorRankingModalPageModule)
   }
 ];
 
