@@ -280,6 +280,10 @@ import { AuthGuard } from './AuthGuards/auth-guard.guard';
     path: 'validate-registrations',
     loadChildren: () => import('./Admin/validate-registrations/validate-registrations.module').then( m => m.ValidateRegistrationsPageModule)
   },
+  {
+    path: 'view-faq-details',
+    loadChildren: () => import('./Ambassador/faq/view-faq-details/view-faq-details.module').then( m => m.ViewFaqDetailsPageModule)
+  },
 
 
 

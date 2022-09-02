@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
   selector: 'app-view-faq',
@@ -8,10 +10,28 @@ import { MenuController } from '@ionic/angular';
 })
 export class ViewFaqPage implements OnInit {
 
-  constructor(private menu:MenuController) { }
+  //Variables
+  faqCategories
+
+  constructor(private menu:MenuController, 
+    private api:ApiService, 
+    private route:Router) { }
 
   ngOnInit() {
+    //Menu
     this.menu.enable(true, 'ambassador-menu');
+    this.api.GetAmbassadorFAQS().subscribe(data => {
+      this.faqCategories = data
+      console.log(this.faqCategories)
+    })
+    console.log("show data")
+  }
+
+  showFAQ(catId){
+    console.log(catId);
+    
+    localStorage.setItem('faq', catId)
+    this.route.navigate(['/view-faq-details'])
   }
 
 }

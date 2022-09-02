@@ -76,4 +76,8 @@ export class AccessCourseIntroPage implements OnInit {
   Back(){
     this.route.navigate(['access-course'])
   }
+
+  StartQuiz(){
+    this.route.navigate(['start-quiz'])
+  }
 }

@@ -46,6 +46,9 @@ export class LandingPagePage implements OnInit {
     })
     this.session = this.tmpStorage.getSessioninfo()
   }
+  ionViewDidEnter(){
+    this.menu.enable(true, 'ambassador-menu');
+  }
 
 
  async GetCatalog()
