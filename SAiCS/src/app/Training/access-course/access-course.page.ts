@@ -32,8 +32,8 @@ export class AccessCoursePage implements OnInit {
 
   ionViewWillEnter(){
     this.api.AmbassadorAccessCourse().subscribe(data =>{
-      this.courses = data
-      console.log("Access course");
+      // this.courses = data
+      // console.log("Access course");
       console.log(data)
     })
   }
@@ -49,7 +49,7 @@ export class AccessCoursePage implements OnInit {
    AccessCourse(id:number){
     this.api.setAccessCourseId(id)
     console.log(id)
-    localStorage.setItem('course', id.toLocaleString())
+    localStorage.setItem('course', JSON.stringify(id))
     console.log("Access course")
     this.route.navigate(['access-course-intro'])
 

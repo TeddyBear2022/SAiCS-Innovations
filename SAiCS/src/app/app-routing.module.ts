@@ -296,7 +296,11 @@ import { AuthGuard } from './AuthGuards/auth-guard.guard';
   {
     path: 'client-orderhistory',
     loadChildren: () => import('./Client Order/client-orderhistory/client-orderhistory.module').then( m => m.ClientOrderhistoryPageModule)
+  },  {
+    path: 'client-special',
+    loadChildren: () => import('./Client/client-special/client-special.module').then( m => m.ClientSpecialPageModule)
   },
+
 
 
 

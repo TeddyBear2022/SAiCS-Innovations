@@ -44,7 +44,7 @@ export class ClientOrderhistoryPage implements OnInit {
       console.log(this.orders);
       
     })
-    this.menu.enable(true, 'ambassador-menu');
+    this.menu.enable(true, 'client-menu');
   }
 
   async ViewOrderDetails(id: number)

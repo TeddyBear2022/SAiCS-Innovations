@@ -37,13 +37,21 @@ ion-toolbar
   text-align: center;
 }
 
-    ion-select, ion-input{
+    ion-select, ion-input, select{
       color: black;
       border-bottom: solid 1pt black !important;
       width:300px !important;
       
     }
-
+/* <select placeholder="Product Type" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById(feedbackForm.value.productType)">
+              <option value="0">--Select--</option>
+              <option *ngFor="let m of MerchCat" value= {{m.merchCategoryId}}>{{m.merchCategoryName}}</option>
+            </select>
+            <br>
+            <select  placeholder="Product Name" formControlName="productName" *ngIf="feedbackForm.value.feedbackType  == 1">
+              <option value="0">--Select--</option>
+              <option *ngFor="let p of products" value="{{p.id}}">{{p.name}}</option>
+            </select>*/
     
     ion-select, ion-input[placeholder]
     {

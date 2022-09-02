@@ -9,6 +9,7 @@ import { TargetReportComponent } from '../target-report/target-report.component'
 import { LeaderboardReportComponent } from '../leaderboard-report/leaderboard-report.component';
 import { IonicModule } from '@ionic/angular';
 import { AgGridModule } from 'ag-grid-angular';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -25,7 +26,8 @@ import { AgGridModule } from 'ag-grid-angular';
   imports: [
     CommonModule,
     IonicModule.forRoot(),
-    AgGridModule
+    AgGridModule,
+    ReactiveFormsModule,
   ],
   exports:[
   ProductListReportComponent, 

@@ -3,6 +3,9 @@ import { ApiService } from 'src/app/Services/api.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import autoTable from 'jspdf-autotable';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-ambassador-list-report',
@@ -10,73 +13,139 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./ambassador-list-report.component.scss'],
 })
 export class AmbassadorListReportComponent implements OnInit {
-  rows = [];
-  temp = [];
+  reportForm: FormGroup;
+  rowData: any = [];
+  rankList: any = []
+  provinceList: any =[]
+  columnDefs: ColDef[] = [
+    { field: 'name', headerName: 'NAME' },
+    { field: 'surname', headerName: 'SURNAME' },
+    { field: 'email', headerName: 'EMAIL ADDRESS' },
+    { field: 'province', headerName: 'PROVINCE' },
+    { field: 'phone', headerName: 'PHONE NUMBER' },
+    { field: 'ranking', headerName: 'RANKING' },
+  ];
+  
 
-  columns = [
-    {prop: 'name', name: 'NAME' }, 
-    {prop: 'surname', name: 'SURNAME' },
-    { prop: 'email', name: 'EMAIL ADDRESS' },
-    { prop: 'province', name: 'PROVINCE' },
-    { prop: 'phone', name: 'PHONE NUMBER' },
-    {prop: 'ranking', name: 'RANKING' } ];
-
-  constructor(private api: ApiService) {
-    this.GetProductList()
-   }
-
-  ngOnInit() {}
-
-  async GetProductList()
-  {
-   var data = await this.api.AmbassadorListRep().toPromise()
-   var dataObj = JSON.parse(JSON.stringify(data));
-   
-   this.rows = dataObj 
-   this.temp = this.rows 
-   //console.log(this.productlist)
+  constructor(
+    private api: ApiService,
+    private fb: FormBuilder,
+    private alert: AlertController
+  ) {
+    //this.GetProductList()
   }
 
-  sortByCol(column) {
-    this.rows.sort((a, b) =>
-      a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0
-    );
+  ngOnInit() {
+    this.GetCategories()
+    this.reportForm = this.fb.group({
+      ranking: new FormControl('', Validators.required),
+      province: new FormControl('', Validators.required),
+    });
+  }
+
+  public defaultColDef: ColDef = {
+    //width: 170,
+    sortable: true,
+    unSortIcon: true,
+    wrapText: true, // <-- HERE
+    autoHeight: true,
+  };
+
+  
+  GetCategories()
+  {
+    this.api.GetProvinces().subscribe((res)=>{
+      this.provinceList = res
+      console.log(this.provinceList);
+      
+    })
+
+    this.api.getAmbassadorRankings().subscribe((res)=>{
+      this.rankList = res
+      console.log(this.rankList);
+      
+    })
+  
+  }
+
+  get dataCount()
+  {
+    return this.rowData.length
+  }
+
+
+  submitForm()
+  {
+    if(this.reportForm.valid)
+    {
+      let province =  this.reportForm.get('province').value 
+      let ranking =  this.reportForm.get('ranking').value 
+      
+      this.api.AmbassadorListRep(province, ranking).subscribe((res) => {
+        this.rowData = res;
+        console.log(this.rowData);
+  });
+
+      console.log(province, ranking);
+      
+    }
+    else
+    {
+      this.ErrorAlert("Please Enter Valid Information")
+    }
+  }
+
+  async ErrorAlert(message: string) {
+    const alert = await this.alert.create({
+      header: "Invalid Form",
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+    
   }
 
   async download() {
+    if(this.reportForm.valid)
+    {
     var doc = new jsPDF('p', 'pt', 'A4');
-
+    doc.setFontSize(14)
     var img = new Image();
     img.src = 'assets/SAICS no bg.png';
 
     autoTable(doc, {
       head: [
-        ['NAME', 'SURNAME', 'EMAIL ADDRESS', 'PROVINCE', 'PHONE NUMBER', 'RANKING'],
+        [
+          'NAME',
+          'SURNAME',
+          'EMAIL ADDRESS',
+          'PROVINCE',
+          'PHONE NUMBER',
+          'RANKING',
+        ],
       ],
-      body: this.rows.map((o) => {
-        return [
-          o.name,
-          o.surname,
-          o.email,
-          o.province,
-          o.phone,
-          o.ranking
-        ];
+      body: this.rowData.map((o) => {
+        return [o.name, o.surname, o.email, o.province, o.phone, o.ranking];
       }),
       margin: { top: 110, bottom: 50 },
       didDrawPage: function (data) {
-        doc.text('Ambassador List', 155, 70),
+        doc.text('Ambassador List', 155,50),
+        doc.text(`Generated on ${new Date().toDateString()}`, 155, 70),
           doc.addImage(img, 'png', -40, -60, 250, 250);
       },
-      headStyles:{
+      headStyles: {
         fillColor: '#ffffff',
         textColor: '#333333',
       },
-      showHead:  'everyPage'
+      showHead: 'everyPage',
     });
 
     doc.save('Ambassador List Report.pdf');
     //window.location.reload();
   }
-
+  else{
+    this.ErrorAlert("Generate Report before exporting")
+  }
+  }
 }

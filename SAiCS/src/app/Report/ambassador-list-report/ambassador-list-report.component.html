@@ -1,71 +1,53 @@
-<ion-button id="export" (click)="download()">
-  <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
-  <span>Export</span>
-</ion-button>
 
-<div style="align-items: center; display: flex; justify-content: center;">
-  <!-- <ngx-datatable [rows]="rows" [columns]="columns"> 
-  </ngx-datatable> -->
-  <table id="ProductList">
-    <thead>
-      <tr>
-        <th class="pointer" (click)="sortByCol('name')" style="width: 10%">
-          <span>
-            NAME
-            <ion-icon
-              name="code-outline"
-              class="theadIcon"
-              slot="end"
-            ></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('surname')" style="width: 15%">
-          <span>
-            SURNAME
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('email')">
-          <span>
-            EMAIL ADDRESS
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('province')" style="width: 20%">
-          <span>
-            PROVINCE
-            <ion-icon
-              name="code-outline"
-              class="theadIcon"
-              slot="end"
-            ></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('phone')" style="width: 15%">
-          <span>
-            PHONE NUMBER
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('ranking')" style="width: 10%">
-          <span>
-            RANKING
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let item of rows">
-        <tr>
-          <td>{{ item.name }}</td>
-          <td>{{ item.surname }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.province }}</td>
-          <td>{{ item.phone }}</td>
-          <td>{{ item.ranking }}</td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
-</div>
+<br />
+<ion-grid>
+  <ion-row>
+    <ion-item style="margin-left: 2%; --background:transparent;" lines="none">
+      <ion-label>
+        <h1>Ambassador List report</h1>
+        <h4>Total Ambassadors: {{dataCount}}</h4>
+      </ion-label>
+    </ion-item>
+
+  </ion-row>
+  <ion-row >
+    <div class="card">
+      <div class="container">
+        <form class="form-inline" [formGroup]="reportForm" (ngSubmit)="submitForm()">
+          <label for="email">Province:</label>
+          <select formControlName="ranking" slot="end">
+            <option value="" disabled selected>Select type</option>
+            <option value="0">Select All</option>
+            <option *ngFor="let m of provinceList" value="{{m.provinceId}}">{{m.provinceName}}</option>
+          </select>
+          <label for="pwd">Ranking:</label>
+          <select formControlName="province" slot="end">
+            <option value="" disabled selected>Select category</option>
+            <option value="0">Select All</option>
+            <option *ngFor="let m of rankList" value="{{m.ambassadorTypeId}}">{{m.ambassadorTypeName}}</option>
+          </select>
+          <ion-button type="submit" id="submitBtn">Generate</ion-button>
+        </form> 
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <ion-button id="export2" (click)="download()">
+      <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+      <span>Export</span>
+    </ion-button>
+  </ion-row>
+  <ion-row>
+    <br/>
+      <ag-grid-angular
+      style="height: 800px; width: 81%;"
+      class="ag-theme-alpine"
+      #specialGrid
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      
+    >
+    </ag-grid-angular>
+  </ion-row>
+</ion-grid>

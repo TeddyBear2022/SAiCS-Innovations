@@ -6,7 +6,7 @@
 
     
     <ion-buttons slot="secondary">
-      <ion-button shape="round">
+      <ion-button shape="round" routerLink="/clients-cart">
         <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -53,21 +53,19 @@
 
             <!--Display if Ambassador-->
             <ion-item *ngIf="feedbackForm.value.feedbackType  == 2" id="myAmbassadorItem">
-              <ion-label *ngFor="let a of myAmbassador"  formControlName="ambassador" name="ambassador" >
-                {{a.user.name}}  {{a.user.surname}}
+              <ion-label name="ambassador" >
+                {{myAmbassador.name}}
                 </ion-label>
             </ion-item>
               
            <br>
             <!--Display if product-->
-            <ion-select placeholder="Product Type" interface="popover" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById(feedbackForm.value.productType)">
-              <ion-select-option value="1">Cosmetics</ion-select-option>
-              <ion-select-option value="2">Lifestyle</ion-select-option>
-                <ion-select-option value="3">Slimming</ion-select-option>
+            <ion-select placeholder="Product Type" interface="popover" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById($event)">
+              <ion-select-option *ngFor="let m of MerchCat" value= {{m.merchCategoryId}}>{{m.merchCategoryName}}</ion-select-option>
             </ion-select>
             <br>
             <ion-select  placeholder="Product Name" interface="popover" formControlName="productName" *ngIf="feedbackForm.value.feedbackType  == 1">
-              <ion-select-option *ngFor="let p of products" value="{{p.productId}}">{{p.productName}}</ion-select-option>
+              <ion-select-option *ngFor="let p of products" value="{{p.id}}">{{p.name}}</ion-select-option>
             </ion-select>
             <br><br>
 
@@ -81,7 +79,7 @@
 
             <ion-row>
               <ion-col></ion-col>
-             <ion-col><ion-button  (click)="submitForm(feedbackForm.value.feedbackType)" [routerLink]="['./view-feedback']" type="submit" id="submitButton">Submit</ion-button></ion-col>
+             <ion-col><ion-button  (click)="submitForm(feedbackForm.value.feedbackType)"  type="submit" id="submitButton">Submit</ion-button></ion-col>
              <ion-col><ion-button (click)="presentAlert()" id="cancelButton">Cancel</ion-button></ion-col>
             </ion-row>
             

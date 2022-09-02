@@ -37,6 +37,7 @@ import { Target } from '../Models/Target';
 import { Special } from '../Models/Special';
 import { SpecialVM } from '../Models/ViewModels/SpecialVM';
 import { Address } from '../Models/Address';
+import { uOrderStatusVM } from '../Models/ViewModels/uOrderStatusVM';
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +104,11 @@ export class ApiService {
 
   //get ambassador rankings
   getAmbassadorRankings():Observable<AmbassadorType[]>{
-    return this.api.get<AmbassadorType[]>(this.apilink+"Admin/getAmbassadorTypes")
+    return this.api.get<AmbassadorType[]>(this.apilink+"Admin/getAmbassadorTypes",{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
   //Register user
   registerUser(registrationinfo:registerVM){
@@ -116,24 +121,33 @@ export class ApiService {
  
   //Feedback
 
-  CreateFeedback(newFeedback: Feedback): Observable<Feedback>
+  CreateFeedback(id: string, newFeedback: Feedback): Observable<any>
   {
-    return this.api.post<Feedback>(this.apilink + "Client/CreateFeedback", newFeedback)
+    return this.api.post(this.apilink +`Client/CreateFeedback?userId=${id}`, newFeedback,{ observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
-  GetAmbassadorFeedback(): Observable<FeedbackVM[]>
+  GetAmbassadorFeedback(id: number): Observable<any>
   {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetAmbassadorFeedback')
+    return this.api.get(this.apilink + `Client/GetAmbassadorFeedback?id=${id}`, {headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
-  GetProductFeedback(): Observable<FeedbackVM[]>
+  GetProductFeedback(id: number): Observable<any>
   {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetProductFeedback')
+    return this.api.get(this.apilink + `Client/GetProductFeedback?id=${id}`, {headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
-  DeleteFeedback(id: number): Observable<FeedbackVM[]>
+  DeleteFeedback(id: number): Observable<any>
   {
-    return this.api.delete<FeedbackVM[]>(this.apilink + `Client/DeleteFeedback?id=${id}`)
+    return this.api.delete(this.apilink + `Client/DeleteFeedback?id=${id}`,{observe: 'response', responseType: 'text', headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
   // Catalog
@@ -193,9 +207,12 @@ export class ApiService {
     return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ,this.httpOptions)
   }
   //Ambassadors
-  MyAmbassador(id: number): Observable<AmbassadorVM[]>
+  GetAssociatedAmbassador(id: number): Observable<any>
   {
-    return this.api.get<AmbassadorVM[]>(this.apilink + `Client/MyAmbassador?id=${id}`)
+    return this.api.get(this.apilink + `User/GetAssociatedAmbassador?id=${id}`,{
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   GetAllAmbassadors(): Observable<AmbassadorVM[]>
@@ -217,6 +234,14 @@ export class ApiService {
   GetMerchCat(): Observable<any>
   {
     return this.api.get(this.apilink + 'Product/GetMerchCats',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  ClientGetMerchCat(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'Client/GetMerchCats',{
     headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
   })});
@@ -299,85 +324,132 @@ export class ApiService {
   //Iteration 6 Amanda
   ViewCatalog()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
+    return this.api.get(this.apilink + "User/ViewCatalog",
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   AddToCart(id: string,newItem: CartItem)
   {
-    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ClientAddToCart(id: string,newItem: CartItem)
   {
-    return this.api.post(this.apilink + `ClientOrder/AddToCart?id=${id}`, newItem, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + `ClientOrder/AddToCart?id=${id}`, newItem, {observe: 'response',
+     responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
   
 
   GetCartItems(id: string)
   {
-    return this.api.get(this.apilink + `AmbassadorOrder/ViewCart?id=${id}`)
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewCart?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   ClientCartItems(id: string)
   {
-    return this.api.get(this.apilink + `ClientOrder/ViewCart?id=${id}`)
+    return this.api.get(this.apilink + `ClientOrder/ViewCart?id=${id}`,{
+    headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  
   }
 
   IncreaseCartItem(id: number)
   {
-  return this.api.post(this.apilink + `AmbassadorOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  return this.api.post(this.apilink + `AmbassadorOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text',headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ClientIncreaseCartItem(id: number)
   {
-  return this.api.post(this.apilink + `ClientOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  return this.api.post(this.apilink + `ClientOrder/IncreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text',headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   DecreaseCartItem(id: number)
   {
-  return this.api.post(this.apilink + `AmbassadorOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  return this.api.post(this.apilink + `AmbassadorOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text',headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ClientDecreaseCartItem(id: number)
   {
-  return this.api.post(this.apilink + `ClientOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text'})
+  return this.api.post(this.apilink + `ClientOrder/DecreaseCartItem?id=${id}`,undefined, {observe: 'response', responseType: 'text',
+  headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   RemoveFromCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'})
+    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ClientRemoveFromCart(id: number)
   {
-    return this.api.delete(this.apilink + `ClientOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'})
+    return this.api.delete(this.apilink + `ClientOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', responseType: 'text'
+  ,headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
 
   ClearCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?cartID=${id}`)
+    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?cartID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   ClientClearCart(id: number)
   {
-    return this.api.delete(this.apilink + `ClientOrder/ClearCart?cartID=${id}`)
+    return this.api.delete(this.apilink + `ClientOrder/ClearCart?cartID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
 
   GetAddress(id: string)
   {
-    return this.api.get(this.apilink +`User/GetSecondaryAddress?id=${id}`)
+    return this.api.get(this.apilink +`User/GetSecondaryAddress?id=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   Checkout(order: Order)
   {
-    return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + "AmbassadorOrder/Checkout", order, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ClientCheckout(order: Order)
   {
-    return this.api.post(this.apilink + "ClientOrder/Checkout", order, {observe: 'response', responseType: 'text'})
+    return this.api.post(this.apilink + "ClientOrder/Checkout", order, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   ValidateRefferralCode(refferalCode: string)
@@ -598,19 +670,45 @@ export class ApiService {
   }
 
   //Iteration 7
-  ProductListRep()
+  LoggedInName()
   {
-    return this.api.get(this.apilink + "Report/ProductListRep")
+    return this.api.get(this.apilink + "User/LoggedInName", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
   }
 
-  AmbassadorListRep()
+
+  ProductListRep(type: number, category: number)
   {
-    return this.api.get(this.apilink + "Report/AmbassadorListRep")
+    return this.api.get(this.apilink + `Report/ProductListRep?type=${type}&category=${category}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
+  AmbassadorListRep(province: number, ranking: number)
+  {
+    return this.api.get(this.apilink + `Report/AmbassadorListRep?province=${province}&ranking=${ranking}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
+  RecruitmentRep(month: number)
+  {
+    return this.api.get(this.apilink + `Report/RecruitmentRep?month=${month}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
   }
 
   GetSalesRep()
   {
-    return this.api.get(this.apilink + "Report/SalesRep")
+    return this.api.get(this.apilink + "Report/SalesRep", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
   }
 
   //Iteration 8 
@@ -676,6 +774,59 @@ export class ApiService {
     })
   }
 
+  ViewSalesOrder()
+  {
+    return this.api.get(this.apilink + "Ambassador/ViewSalesOrder", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  SalesOrderDetails(id: number)
+  {
+    return this.api.get(this.apilink + `Ambassador/SalesOrderDetails?id=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  SalesOrderById(id: number)
+  {
+    return this.api.get(this.apilink + `Ambassador/SalesOrderById?id=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  GetAllOrderStatuses()
+  {
+    return this.api.get(this.apilink + "Ambassador/GetAllOrderStatuses", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  UpdateSalesOrderStatus(order: uOrderStatusVM)
+  {
+    return this.api.put(this.apilink + "Ambassador/UpdateSalesOrderStatus", order, {observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  PurchasedProducts()
+  {
+    return this.api.get(this.apilink + "Client/PurchasedProducts", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  
+  }
 
   AccountExists(email:string):Observable<boolean>{
     return this.api.get<boolean>(this.apilink +`User/UserExist?email=${email}`)

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-view-feedback',
@@ -13,11 +14,14 @@ export class ViewFeedbackPage implements OnInit {
   //Variables
   AmbassadorFeedback = []
   ProductFeedback = []
-  constructor( private api: ApiService, public popoverController: PopoverController,public alertController: AlertController) { }
+  session: any;
+  constructor(private alert: AlertController, private menu: MenuController,private api: ApiService, private tmpStorage:TemporaryStorage,public popoverController: PopoverController,public alertController: AlertController) { }
 
   ngOnInit() {
-    setInterval(() =>this.GetAmbassadorFeedback(), 2100)
-    setInterval(() =>this.GetProductFeedback(), 2100)
+    this.menu.enable(true, 'client-menu');
+    this.session = this.tmpStorage.getSessioninfo()
+    this.GetAmbassadorFeedback()
+    this.GetProductFeedback()
   }
 
   
@@ -33,7 +37,7 @@ export class ViewFeedbackPage implements OnInit {
 
    async GetAmbassadorFeedback()
    {
-     await this.api.GetAmbassadorFeedback().subscribe(data => {
+     await this.api.GetAmbassadorFeedback(this.session[0].id).subscribe(data => {
        this.AmbassadorFeedback = data
        console.log(this.AmbassadorFeedback)
      })
@@ -41,7 +45,7 @@ export class ViewFeedbackPage implements OnInit {
 
    GetProductFeedback()
    {
-     this.api.GetProductFeedback().subscribe(data => {
+     this.api.GetProductFeedback(this.session[0].id).subscribe(data => {
       this.ProductFeedback = data
        console.log(this.ProductFeedback)
      })
@@ -52,6 +56,17 @@ export class ViewFeedbackPage implements OnInit {
      this.api.DeleteFeedback(id).subscribe((data) =>{
       console.log(data);})
    }
+
+   async ErrorAlert(message: string) {
+    const alert = await this.alert.create({
+      header: "Invalid Form",
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+    
+  }
 
    //alerts
    async presentAlert(id: number) {
@@ -72,7 +87,7 @@ export class ViewFeedbackPage implements OnInit {
           text: 'Yes',
           handler: () => {
             this.DeleteFeedback(id)
-            console.log('Confirm Ok');
+            console.log(id);
           }
         }
       ]

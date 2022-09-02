@@ -1,158 +1,54 @@
-<ion-button id="export" (click)="download()">
-  <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
-  <span>Export</span>
-</ion-button>
 
-<!-- <ion-grid>
-  <ion-row>
-    <ion-col size="6">
-      <ion-accordion-group>
-        <ion-accordion
-          value="first"
-          toggleIcon="chevron-down-outline"
-          toggleIconSlot="end"
-        >
-          <ion-item id="accordionHeader" slot="header">
-            <ion-label id="AdSearch">ADVANCED SEARCH</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <ion-grid>
-              <ion-row>
-                <ion-col col-4>
-                  <ion-label class="AdSearchOptions" style="margin-left: 1%"
-                    >Merchandise Type:</ion-label
-                  >
-                  <ion-select
-                    interface="popover"
-                    placeholder="Select type..."
-                    (ionChange)="onTypeSearch($event)"
-                  >
-                    <ion-select-option value=" ">All</ion-select-option>
-                    <ion-select-option value="package"
-                      >Package</ion-select-option
-                    >
-                    <ion-select-option value="product"
-                      >Product</ion-select-option
-                    >
-                  </ion-select>
-                </ion-col>
-                <ion-col col-4>
-                  <ion-label class="AdSearchOptions" style="margin-left: 1%"
-                    >Merchandise Category:</ion-label
-                  >
-                  <ion-select
-                    interface="popover"
-                    placeholder="Select category..."
-                    (ionChange)="onCatSearch($event)"
-                  >
-                    <ion-select-option value=" ">All</ion-select-option>
-                    <ion-select-option value="cosmetic"
-                      >Cosmetic</ion-select-option
-                    >
-                    <ion-select-option value="lifestyle"
-                      >Lifestyle</ion-select-option
-                    >
-                    <ion-select-option value="slimming"
-                      >Slimming</ion-select-option
-                    >
-                  </ion-select>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ion-col>
-  </ion-row>
-</ion-grid> -->
 <br />
-<div style="align-items: center; display: flex; justify-content: center; height: 100%;">
+<ion-grid>
+  <ion-row>
+    <ion-item style="margin-left: 2%; --background:transparent;" lines="none">
+      <ion-label>
+        <h1>Product List report</h1>
+        <h4>Total Products: {{dataCount}}</h4>
+      </ion-label>
+    </ion-item>
 
-  <ag-grid-angular
-  style="height: 100%; width: 80%;"
-  class="ag-theme-alpine"
-  #specialGrid
-  [rowData]="rowData"
-  [columnDefs]="columnDefs"
-  [defaultColDef]="defaultColDef"
->
-</ag-grid-angular>
-
-  <!-- <ngx-datatable [rows]="rows" [columns]="columns"> 
-  </ngx-datatable> -->
-  <!-- <table id="ProductList">
-    <thead>
-      <tr>
-        <th class="pointer" (click)="sortByCol('id')" style="width: 10%">
-          <span>
-            ID
-            <ion-icon
-              name="code-outline"
-              class="theadIcon"
-              slot="end"
-            ></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('item')" style="width: 15%">
-          <span>
-            ITEM
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('description')">
-          <span>
-            DESCRIPTION
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('merchType')" style="width: 20%">
-          <span>
-            MERCHANDISE TYPE
-            <ion-icon
-              name="code-outline"
-              class="theadIcon"
-              slot="end"
-            ></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('merchCat')" style="width: 15%">
-          <span>
-            MERCHANDISE CATEGORY
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th
-          class="pointer"
-          (click)="sortByCol('unitPrice')"
-          style="text-align: right; width: 12%"
-        >
-          <span>
-            UNIT PRICE
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-        <th class="pointer" (click)="sortByCol('status')" style="width: 10%">
-          <span>
-            STATUS
-            <ion-icon name="code-outline" class="theadIcon"></ion-icon>
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let item of rows">
-        <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.item }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.merchType }}</td>
-          <td>{{ item.merchCat }}</td>
-          <td style="text-align: right">
-            {{ item.unitPrice | currency: "ZAR":"symbol-narrow" }}
-          </td>
-          <td>{{ item.status }}</td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table> -->
-</div>
+  </ion-row>
+  <ion-row >
+    <div class="card">
+      <div class="container">
+        <form class="form-inline" [formGroup]="reportForm" #localForm = 'ngForm' (ngSubmit)="submitForm()">
+          <label for="email">Merchandise Type:</label>
+          <select formControlName="merchTypeId" slot="end">
+            <option value="" disabled selected>Select type</option>
+            <option value="0">Select All</option>
+            <option *ngFor="let m of merchTypes" value="{{m.merchTypeId}}">{{m.merchTypeName}}</option>
+          </select>
+          <label for="pwd">Merchandise Category:</label>
+          <select formControlName="merchCatId" slot="end">
+            <option value="" disabled selected>Select category</option>
+            <option value="0">Select All</option>
+            <option *ngFor="let m of merchCat" value="{{m.merchCategoryId}}">{{m.merchCategoryName}}</option>
+          </select>
+          <ion-button type="submit" id="submitBtn">Generate</ion-button>
+        </form> 
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <ion-button id="export2" (click)="download()">
+      <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+      <span>Export</span>
+    </ion-button>
+  </ion-row>
+  <ion-row>
+    <br/>
+    <!-- <ion-content style="align-items: center; display: flex; justify-content: center;"> -->
+      <ag-grid-angular
+      style="height: 800px; width: 81%;"
+      class="ag-theme-alpine"
+      #specialGrid
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      
+    >
+    </ag-grid-angular>
+  </ion-row>
+</ion-grid>

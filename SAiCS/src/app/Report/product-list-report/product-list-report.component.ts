@@ -5,6 +5,13 @@ import 'jspdf-autotable';
 import autoTable from 'jspdf-autotable';
 import { CurrencyPipe } from '@angular/common';
 import { ColDef } from 'ag-grid-community';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-list-report',
@@ -12,131 +19,137 @@ import { ColDef } from 'ag-grid-community';
   styleUrls: ['./product-list-report.component.scss'],
 })
 export class ProductListReportComponent implements OnInit {
+  reportForm: FormGroup;
+  rowData: any = [];
+  merchCat = [];
+  merchTypes = [];
 
-  rows = [];
-  temp = [];
-  allRows = [];
-  rowData: any= [];
-  
-  constructor(private api: ApiService, private cp: CurrencyPipe) {
-    
-   }
-   columnDefs: ColDef[] = [
-    {headerName: 'ID', field: 'id', width: 80},
-		{headerName: 'ITEM', field: 'item', width: 130},
-		{headerName: 'DESCRIPTION', field: 'description', wrapText: true, autoHeight: true, width: 250},
-		{headerName: 'MERCHANDISE TYPE', field: 'merchType'},
-    {headerName: 'MERCHANDISE CATEGORY', field: 'merchCat'},
-    {headerName: 'UNIT PRICE', field: 'unitPrice', width: 110, 
-    cellStyle: { 'text-align': "right" },
-    cellRenderer: (params) => this.cp.transform(params.value, 'ZAR', 'symbol-narrow')},
-    {headerName: 'STATUS', field: 'status', width: 120},
-	];
+  constructor(
+    private api: ApiService,
+    private cp: CurrencyPipe,
+    private fb: FormBuilder,
+    private alert:AlertController
+  ) {}
+  columnDefs: ColDef[] = [
+    { headerName: 'ID', field: 'id', width: 80 },
+    { headerName: 'ITEM', field: 'item', width: 130 },
+    {
+      headerName: 'DESCRIPTION',
+      field: 'description',
+      wrapText: true,
+      autoHeight: true,
+      width: 250,
+    },
+    { headerName: 'MERCHANDISE TYPE', field: 'merchType' },
+    { headerName: 'MERCHANDISE CATEGORY', field: 'merchCat' },
+    {
+      headerName: 'UNIT PRICE',
+      field: 'unitPrice',
+      width: 110,
+      cellStyle: { 'text-align': 'right' },
+      cellRenderer: (params) =>
+        this.cp.transform(params.value, 'ZAR', 'symbol-narrow'),
+    },
+    { headerName: 'STATUS', field: 'status', width: 120 },
+  ];
 
   public defaultColDef: ColDef = {
     //width: 170,
     sortable: true,
     unSortIcon: true,
-    wrapText: true,     // <-- HERE
+    wrapText: true, // <-- HERE
     autoHeight: true,
   };
 
-  // columns = [
-  //   {prop: 'id', name: 'ID' }, 
-  //   {prop: 'item', name: 'ITEM' },
-  //   { prop: 'description', name: 'DESCRIPTION' },
-  //   { prop: 'merchType', name: 'MERCHANDISE TYPE' },
-  //   { prop: 'merchCat', name: 'MERCHANDISE CATEGORY' },
-  //   {prop: 'unitPrice', name: 'UNIT PRICE' },
-  //   { prop: 'status', name: 'STATUS' } ];
-
-
   ngOnInit() {
-    this.GetProductList()
-    
+    this.GetMerchTypes();
+    this.GetMerchCat();
+    //this.GetProductList();
+    //this.LoggedInName()
+    this.reportForm = this.fb.group({
+      merchTypeId: new FormControl('', Validators.required),
+      merchCatId: new FormControl('', Validators.required),
+    });
   }
 
-  GetProductList()
+  LoggedInName()
   {
-  //  var data = await this.api.ProductListRep().toPromise()
-  //  var dataObj = JSON.parse(JSON.stringify(data));
-   
-  //  this.rows = dataObj 
-  //  this.temp = dataObj 
-   //console.log(this.productlist)
-
-   this.api.ProductListRep().subscribe(res =>
-    {
-      this.rowData =res
-      console.log(this.rowData);
+    this.api.LoggedInName().subscribe((res) =>{console.log(res);
     })
   }
+  GetMerchTypes() {
+    this.api.GetMerchTypes().subscribe((data) => {
+      this.merchTypes = data;
+      console.log('Loaded types successfully');
+    });
+  }
 
-  previousTypeFilter = ''
-  previousCatFilter = ''
+  GetMerchCat() {
+    this.api.GetMerchCat().subscribe((data) => {
+      this.merchCat = data;
+      console.log(this.merchCat);
+    });
+  }
 
-  onTypeSearch(event: Event)
+  get dataCount()
   {
-   //let nes = [] 
-    
-    const value = (event.target as HTMLInputElement).value.toLowerCase();
-    if(value != " ")
+    return this.rowData.length
+  }
+
+  submitForm() 
+  {
+    if(this.reportForm.valid)
     {
-      this.rows = this.filterRows(value, this.previousCatFilter)
+      let type =  this.reportForm.get('merchTypeId').value 
+      let category =  this.reportForm.get('merchCatId').value 
+      
+      this.api.ProductListRep(type, category).subscribe((res) => {
+        this.rowData = res;
+        console.log(this.rowData);
+  });
+
+      console.log(type, category);
+      
     }
     else
     {
-      this.GetProductList()
+      this.ErrorAlert("Please Enter Valid Information")
     }
-    
   }
 
-  onCatSearch(event: Event)
-  {
-   //let nes = [] 
-    
-    const value = (event.target as HTMLInputElement).value.toLowerCase();
+  async ErrorAlert(message: string) {
+    const alert = await this.alert.create({
+      header: "Invalid Form",
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
 
-    if(value != " "){
-      this.rows = this.filterRows(this.previousTypeFilter,value)
-    }
-    else{
-      this.GetProductList()
-    }
-    
+    await alert.present();
     
   }
-
-  filterRows(filterType, filterCat): any[]
-  {
-    return this.temp.filter(x => {
-    if(filterCat === " " && filterCat === " ")
-    {
-      this.rows = this.allRows
-    }
-    else{
-      return x.merchCat.toLowerCase() === filterCat || x.merchType.toLowerCase() === filterType
-    }})
-  }
-
-
-  // sortByCol(column) {
-  //   this.rows.sort((a, b) =>
-  //     a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0
-  //   );
-  // }
 
   async download() {
+    if(this.rowData.length)
+  {
     var doc = new jsPDF('p', 'pt', 'A4');
-
+    doc.setFontSize(14)
     var img = new Image();
     img.src = 'assets/SAICS no bg.png';
 
+
     autoTable(doc, {
       head: [
-        ['ID', 'ITEM', 'DESCRIPTION', 'MERCHANDISE TYPE', 'MERCHANDISE CATEGORY','UNIT PRICE','STATUS'],
+        [-
+          'ID',
+          'ITEM',
+          'DESCRIPTION',
+          'MERCHANDISE TYPE',
+          'MERCHANDISE CATEGORY',
+          'UNIT PRICE',
+          'STATUS',
+        ],
       ],
-      body: this.rows.map((o) => {
+      body: this.rowData.map((o) => {
         return [
           o.id,
           o.item,
@@ -144,22 +157,29 @@ export class ProductListReportComponent implements OnInit {
           o.merchType,
           o.merchCat,
           this.cp.transform(o.unitPrice, 'ZAR', 'symbol-narrow'),
-          o.status
+          o.status,
         ];
       }),
       margin: { top: 110, bottom: 50 },
       didDrawPage: function (data) {
-        doc.text('Product List Report', 155, 70),
-          doc.addImage(img, 'png', -40, -60, 250, 250);
+        doc.text('Product List Report', 155, 50),
+        doc.text(`Generated on ${new Date().toDateString()}`, 155, 70),
+        doc.addImage(img, 'png', -40, -60, 250, 250);
       },
-      headStyles:{
+      headStyles: {
         fillColor: '#ffffff',
         textColor: '#333333',
+        
       },
-      showHead:  'everyPage'
+      showHead: 'everyPage',
     });
 
     doc.save('Product List Report.pdf');
     //window.location.reload();
   }
+  else{
+    this.ErrorAlert("Generate Report before exporting")
+  }
+}
+
 }

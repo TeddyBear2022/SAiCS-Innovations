@@ -13,7 +13,7 @@
     <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button (click)="presentPopover($event)" shape="round">
         <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>    
@@ -37,43 +37,58 @@
     <th></th>
     </thead>
     <tbody>
-    <tr>
-    <td>#1</td>
-    <td>17/07/22</td>
-    <td>Jeff Smith</td>
-    <td>3</td>
-    <td>R1200,00</td>
-    <td><a routerLink="/view-order-details">View Details</a></td>
-    <td><a id="a1" href="./view-order-details">Update Order Status</a></td> 
-    </tr>
-    <tr>
-    <td>#2</td>
-    <td>18/07/22</td>
-    <td>Maria Garcia</td>
-    <td>5</td>
-    <td>R85,00</td>
-    <td><a routerLink="/view-order-details">View Details</a></td>
-    <td><a id="a1" href="google.com">Update Order Status</a></td> 
-    </tr>
-    <tr>
-    <td>#3</td>
-    <td>19/07/22</td>
-    <td>David Rodriguez</td>
-    <td>10</td>
-    <td>R450,00</td>
-    <td><a routerLink="/view-order-details">View Details</a></td>
-    <td><a id="a1" href="google.com">Update Order Status</a></td> 
-    </tr>
-    <tr>
-    <td>#4</td>
-    <td>20/07/22</td>
-    <td>Eyon Shih</td>
-    <td>12</td>
-    <td>R350,00</td>
-    <td><a routerLink="/view-order-details">View Details</a></td>
-    <td><a id="a1" href="google.com">Update Order Status</a></td> 
-    </tr>
+    <ng-container *ngFor="let o of orders" id="o.id">
+      <tr>
+        <td>{{o.id}}</td>
+        <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
+        <td>{{o.customer}}</td>
+        <td>{{o.quantity}}</td>
+        <td>{{o.amount | currency: 'ZAR':'symbol-narrow'}}</td>
+        <td> <ion-button (click)="ViewOrderDetail(o.id)" fill="clear" id="OrderDetsBtn">View Details</ion-button></td>
+        <td><ion-button (click)="setOpen(o.id)" fill="clear" id="UpdateDetsBtn">Update Order Status</ion-button></td> 
+        </tr>
+    </ng-container>
     </tbody>
     </table>
 
+    <!-- <ion-modal [isOpen]="isModalOpen" id="UpdateSatsModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Update Order Status</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false, 0)">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-grid>
+            <form [formGroup]="update" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
+              <ion-list>
+              <ion-item lines="none">
+                <ion-label>Order Status:</ion-label>
+                <select placeholder="Pick" slot="end" formControlName="status">
+                  <option value="" disabled selected>Select order status</option>
+                  <option *ngFor="let o of orderStats" value="{{o.orderStatusId}}">{{o.orderStatusName}}</option>
+                </select><br> 
+                <!-- <span *ngIf="localForm.submitted && merch.controls['merchCatId'].invalid">Required</span> -->
+              <!-- </ion-item>
+              <ion-item lines="none">
+                <ion-checkbox color="dark" [(ngModel)]="ionCheck.isChecked" [ngModelOptions]="{standalone: true}" [disabled]="true"></ion-checkbox>
+                <ion-label style="margin-left:10px !important; opacity : 1;">Delivery</ion-label>
+              </ion-item>
+              <ion-item lines="none" *ngIf="ionCheck.isChecked == true">
+                <ion-label>Tracking Number:</ion-label>
+                <ion-input slot="end" type="text" formControlName="tNumber"></ion-input><br>  -->
+                <!-- <span *ngIf="localForm.submitted && merch.controls['merchCatId'].invalid">Required</span> -->
+              <!-- </ion-item>
+              <ion-item lines="none">
+                <ion-button type="submit" slot="end" (click)="setOpen(true, 0)"  id="UpdateStatusBtn">Update</ion-button>
+              </ion-item>
+            </ion-list>
+            </form>
+          </ion-grid>
+        </ion-content>
+      </ng-template>
+    </ion-modal>  -->
 </ion-content>

@@ -60,11 +60,11 @@
       <tbody>
         <tr *ngFor="let f of ProductFeedback" id="{{f.feedbackId}}">
           <td>{{f.date}}</td>
-          <td>{{f.productTypeName}}</td>
-          <td>{{f.productName}}</td>
+          <td>{{f.category}}</td>
+          <td>{{f.name}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)="presentAlert(f.feedbackId)" fill="clear">
+            <ion-button (click)="presentAlert(f.id)" fill="clear">
             <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>
@@ -88,10 +88,10 @@
       <tbody >
         <tr *ngFor="let f of AmbassadorFeedback">
           <td>{{f.date}}</td>
-          <td>{{f.name}} {{f.surname}}</td>
+          <td>{{f.name}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)="presentAlert(f.feedbackId)" fill="clear">
+            <ion-button (click)="presentAlert(f.id)" fill="clear">
             <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>

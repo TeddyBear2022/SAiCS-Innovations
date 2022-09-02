@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
@@ -7,22 +8,28 @@ import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
-  selector: 'app-ambassador-special',
-  templateUrl: './ambassador-special.page.html',
-  styleUrls: ['./ambassador-special.page.scss'],
+  selector: 'app-client-special',
+  templateUrl: './client-special.page.html',
+  styleUrls: ['./client-special.page.scss'],
 })
-export class AmbassadorSpecialPage implements OnInit {
+export class ClientSpecialPage implements OnInit {
   merchandise = []
   session: any 
+  ItemQuantity: FormGroup
 
 
   constructor(public popoverController: PopoverController, 
-    private api: ApiService,public router: Router,  private tmpStorage:TemporaryStorage,
-    private menu:MenuController) { }
+    private api: ApiService,public router: Router, private tmpStorage:TemporaryStorage,
+    private menu:MenuController, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
     this.GetCatalog()
+    this.menu.enable(true, 'client-menu');
+
+    this.ItemQuantity = this.fb.group({
+      quantity: new FormControl('', Validators.required)
+    })
   }
 
   async GetCatalog()

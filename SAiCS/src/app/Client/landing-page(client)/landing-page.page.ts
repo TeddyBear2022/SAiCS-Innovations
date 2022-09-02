@@ -48,14 +48,14 @@ export class LandingPagePage implements OnInit {
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)
     })
-    this.session = this.tmpStorage.getSessioninfo()
+    
   }
 
 
  async GetCatalog()
 {
 
-  var data = await this.api.GetAllMerch().toPromise()
+  var data = await this.api.ViewCatalog().toPromise()
   var dataObj = JSON.parse(JSON.stringify(data));
   this.merchandise = dataObj;
   console.log(this.merchandise);

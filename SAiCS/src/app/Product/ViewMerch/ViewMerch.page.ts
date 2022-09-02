@@ -109,7 +109,7 @@ async presentToast() {
     duration: 5000
   });
   toast.present(); 
-  window.location.reload() 
+  //window.location.reload() 
 }
 
   //Profile popover
