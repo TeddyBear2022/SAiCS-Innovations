@@ -15,53 +15,139 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-  <h1 style="text-align: center;font-size: 50px;color: #333333;">Quiz Name</h1>
-  <!-- <ion-row *ngFor="let q of questions; let i = index">
-    
-    <div>
-      <br>
-      <ion-label>Question {{i+1}}: {{q.questions}}</ion-label><br>
+  <h1 style="text-align: center;font-size: 50px;color: #333333;">Ambassador Intro Course</h1>
 
-          <ion-radio-group (ionChange)="addPoint($event, i)" >
-        <ion-radio value="op1"></ion-radio><ion-label> {{q.option1}}</ion-label><br>
-        <ion-radio value="point"></ion-radio><ion-label> {{q.answers}}</ion-label><br>
-        <ion-radio value="op2"></ion-radio><ion-label> {{q.option2}}</ion-label><br>
-        <ion-radio value="op3"></ion-radio><ion-label> {{q.option3}}</ion-label><br>
-      </ion-radio-group>
-
-    <br>
-  </div>
-  </ion-row>
-  <br> -->
-
-
-  <ion-row *ngFor="let q of questionsList; let i = index">
-    
-    <div>
-      <br>
-      <ion-label>Question {{i+1}}: {{q[0].question}}</ion-label><br>
-      
-        <ion-radio-group (ionChange)="addPoint($event, i)" >
-        <ion-radio value="{{q[0].value}}"></ion-radio><ion-label > {{q[0].item}}</ion-label><br>
-        <ion-radio value="{{q[1].value}}"></ion-radio><ion-label> {{q[1].item}}</ion-label><br>
-        <ion-radio value="{{q[2].value}}"></ion-radio><ion-label> {{q[2].item}}</ion-label><br>
-        <ion-radio value="{{q[3].value}}"></ion-radio><ion-label> {{q[3].item}}</ion-label><br>
-      </ion-radio-group>
-
-    <br>
-  </div>
-  </ion-row>
-  <br>
-  
-</ion-grid>
-</ion-content>
-<ion-footer>
   <ion-row>
-    <ion-col></ion-col>
-    <ion-col></ion-col>
-    <ion-button (click)="CheckAnswers()">Submit</ion-button>
-    <ion-button color="danger" (click)=" StopQuiz()">Stop Quiz</ion-button>
-    
+  <ion-item style="width: 800px;">
+  <ion-col>
+  <h3>Quizzes</h3>
+
+  <ion-row>
+  <ion-card>
+    <ion-card-content>
+        <ion-col><ion-card-title> Marketing</ion-card-title></ion-col>
+        <ion-row>
+          <ion-progress-bar value="0.1"></ion-progress-bar>
+        
+      <ion-buttons>
+      <ion-button  id="Startbtn" routerLink="/quiz-session">
+        start
+      </ion-button>
+    </ion-buttons>
   </ion-row>
-</ion-footer>
+    </ion-card-content>
+  </ion-card>
+  
+  
+  <ion-card>
+    <ion-card-content>
+        <ion-col><ion-card-title> Closing deals</ion-card-title></ion-col>
+        <ion-row>
+          <ion-progress-bar value="0.1"></ion-progress-bar>
+        
+      <ion-buttons>
+      <ion-button id="Startbtn" routerLink="/quiz-session">
+        start
+      </ion-button>
+    </ion-buttons>
+  </ion-row>
+    </ion-card-content>
+  </ion-card>
+  </ion-row>
+
+  <ion-row>
+    <ion-card>
+      <ion-card-content>
+          <ion-col><ion-card-title> Ambassador responsibilities</ion-card-title></ion-col>
+          <ion-row>
+            <ion-progress-bar value="0.1"></ion-progress-bar>
+        <ion-buttons>
+        <ion-button id="Startbtn" routerLink="/quiz-session">
+          start
+        </ion-button>
+      </ion-buttons>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+          <ion-col><ion-card-title> SAiCS Products</ion-card-title></ion-col>
+          <ion-row>
+            <ion-progress-bar value="0.1"></ion-progress-bar>
+        <ion-buttons >
+        <ion-button id="Startbtn" routerLink="/quiz-session">
+          start
+        </ion-button>
+      </ion-buttons>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+
+  <h2>Course Content</h2>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 1- Introduction</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label>SAiCS Innovation Intro PDF</ion-label><br>
+        <ion-label>How to be an ambassador</ion-label>
+        <ion-label style="color: blue;" routerLink="/quiz-session">Intro Quiz</ion-label>
+        <ion-label routerLink="/begin-course" style="color:#08c10f;padding-left: 80%;">Start</ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 2- Marketing</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label><a routerLink="/" style="color:#0070c0;text-decoration:underline;padding-left: 80%;">Use Existing Address</a></ion-label>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Step 3- Closing Deals</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Third Content
+      </div>
+    </ion-accordion>
+    <ion-accordion value="fourth">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon ios="ios-arrow-down"></ion-icon>Step 4- Ambassadors</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="start">
+        Third Content
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-col>
+</ion-item>
+
+<ion-item style="width: 500px;">
+  <ion-row>
+  <ion-card class="IntroCourseSide">
+    <ion-card-content>
+      <img src="./assets/trainingImage.jpg" height='350' width='350' />
+      <ion-row><ion-progress-bar value="0.2" id="IntroCourseSideProgressBar" ></ion-progress-bar></ion-row><br>
+      <ion-buttons>
+
+  <ion-row><ion-button id="begincoursebtn">
+        Begin Course
+      </ion-button></ion-row>
+    </ion-buttons>
+        <br><br>
+        <p>This course was designed with the intention of equiping you to be the best SAiCS ambassador you can be.<br>
+          Included:<br>          
+          -5 Pdfs<br>         
+          -4 Quizzes<br>
+          -16 Videos</p>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-row>
+</ion-item>
+</ion-row>
+</ion-content>

@@ -596,27 +596,15 @@ export class ApiService {
   // }
 
   ViewAmbassadorFeedbackAdmin(){
-    return this.api.get(this.apilink+ `Admin/ViewAmbassadorFeedback`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    return this.api.get(this.apilink+ `Admin/ViewAmbassadorFeedback`,this.httpOptions)
   }
 
   ViewMerchFeedbackAdmin(){
-    return this.api.get(this.apilink+ `Admin/ViewMerchFeedback`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    return this.api.get(this.apilink+ `Admin/ViewMerchFeedback`,this.httpOptions)
   }
 
   ViewAllAmbassadors(){
-    return this.api.get(this.apilink + `Admin/ViewAmbassadors`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    return this.api.get(this.apilink + `Admin/ViewAmbassadors`,this.httpOptions)
   }
 
   SearchAmbassador(searchInput:string){
@@ -911,58 +899,5 @@ export class ApiService {
       })
     })
   }
-  GetAmbassadorRankings(){
-    return this.api.get(this.apilink+ `Admin/GetAmbassadorRankings`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
 
-  GetQuizData(courseId = localStorage.getItem('course')){
-    return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
-
-  QuizCompleted(completed:boolean = true){
-    return this.api.post(this.apilink+ `Training/QuizCompleted`, completed,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
-
-  AssignCourse(courseId:number){
-    return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
-  BankInputInfo(){
-    return this.api.get(this.apilink+ `Ambassador/BankInputInfo`)
-  }
-
-  InputInformation(){
-    return this.api.get(this.apilink+ `User/InputInformation`)
-  }
-
-  GetSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+ `Ambassador/GetSpecificFaq?categoryID=${categoryId}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
-  // GetAmbassadorFAQS
-  GetAmbassadorFAQS(){
-    return this.api.get(this.apilink+ `Ambassador/GetAmbassadorFAQS`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
 }

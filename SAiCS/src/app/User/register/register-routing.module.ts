@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: RegisterPage
-  },
-  {
-    path: 'banking-details',
-    loadChildren: () => import('./banking-details/banking-details.module').then( m => m.BankingDetailsPageModule)
   }
 ];
 

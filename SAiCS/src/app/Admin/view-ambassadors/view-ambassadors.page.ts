@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { AmbassadorRankingModalPage } from './ambassador-ranking-modal/ambassador-ranking-modal.page';
 
 @Component({
   selector: 'app-view-ambassadors',
@@ -16,27 +15,18 @@ export class ViewAmbassadorsPage implements OnInit {
   Ambassadors:any = []
   search:any
   noResults:boolean = false
-  AmbassadorRankings:any = []
 
   constructor(private popoverController:PopoverController, 
-    private api:ApiService, private modal: ModalController) { }
+    private api:ApiService) { }
 
   ngOnInit() {
- 
-  }
-
-  ionViewDidEnter(){
     this.api.ViewAllAmbassadors().subscribe(data =>
       {
         this.Ambassadors = data
         console.log(data);
         
       })
-
-      this.api.GetAmbassadorRankings().subscribe(data => {
-        //console.log(data)
-        this.AmbassadorRankings = data
-      })
+     
   }
 
   async presentPopover(event)
@@ -80,18 +70,5 @@ export class ViewAmbassadorsPage implements OnInit {
         this.Ambassadors = data
         
       })
-  }
-  MaintainAmbRankings(){
-    this.maintainAmbRanking()
-  }
-
-  async maintainAmbRanking(){
-    console.log("Open maintain category model");
-    const modal = await this.modal.create({
-      component: AmbassadorRankingModalPage,
-      componentProps:{ranking : this.AmbassadorRankings}
-    });
-    
-    await modal.present();
   }
 }

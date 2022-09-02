@@ -21,19 +21,18 @@ export class RegisterPage implements OnInit {
   AmbassadorForm:FormGroup
   ClientForm:FormGroup
   userType
-  inputInfo = undefined
 
   //revamp end
 
   // Variables declared for api retrival
-  // register:FormGroup;
-  // userTypeReg:any;
-  // userTypeID:NgModel
-  // AmbassadorRanking: NgModel
-  // titles= []
-  // userTypes= []
-  // countrys= []
-  // AmbassadorTypeIDs=[]
+  register:FormGroup;
+  userTypeReg:any;
+  userTypeID:NgModel
+  AmbassadorRanking: NgModel
+  titles= []
+  userTypes= []
+  countrys= []
+  AmbassadorTypeIDs=[]
   
   constructor(private api: ApiService, 
     private route : Router, 
@@ -70,32 +69,28 @@ export class RegisterPage implements OnInit {
     clientreferralcode:new FormControl('', Validators.required),
     })
     
-    this.api.InputInformation().subscribe(data=>{
-      this.inputInfo = data
-      console.log(data)
-    })
     //revamp end
 
    //Registeration form
-  //  this.register = new FormGroup({
-  //   usertypeID:new FormControl('', Validators.required),
-  //   titleID:new FormControl('', Validators.required),
-  //   name:new FormControl('', Validators.required),
-  //   surname:new FormControl('', Validators.required),
-  //   emailaddress:new FormControl('', Validators.required),
-  //   phonenumber:new FormControl('', Validators.required),
-  //   countryID:new FormControl('', Validators.required),
-  //   city:new FormControl('', Validators.required),
-  //   address:new FormControl('', Validators.required),
-  //   postalcode:new FormControl('', Validators.required),
-  //   idnumber:new FormControl(),
-  //   idphotoANDAddress:new FormControl(),
-  //   ambassadorType:new FormControl(),
-  //   aliasname:new FormControl(),
-  //   referralcode:new FormControl(),
-  //   aboutmyself:new FormControl(),
-  //   reasons:new FormControl(),
-  // })
+   this.register = new FormGroup({
+    usertypeID:new FormControl('', Validators.required),
+    titleID:new FormControl('', Validators.required),
+    name:new FormControl('', Validators.required),
+    surname:new FormControl('', Validators.required),
+    emailaddress:new FormControl('', Validators.required),
+    phonenumber:new FormControl('', Validators.required),
+    countryID:new FormControl('', Validators.required),
+    city:new FormControl('', Validators.required),
+    address:new FormControl('', Validators.required),
+    postalcode:new FormControl('', Validators.required),
+    idnumber:new FormControl(),
+    idphotoANDAddress:new FormControl(),
+    ambassadorType:new FormControl(),
+    aliasname:new FormControl(),
+    referralcode:new FormControl(),
+    aboutmyself:new FormControl(),
+    reasons:new FormControl(),
+  })
   }
 
   //REVAMP BEGIN
@@ -124,7 +119,7 @@ export class RegisterPage implements OnInit {
             this.registerInfo.addRegisterInfo(registrationInfo)
             
             //Navigate to the next page
-            this.AllInfoCorrectNotif(2)
+            this.AllInfoCorrectNotif()
            
           },(response: HttpErrorResponse) => {
             if (response.status === 404) {
@@ -166,10 +161,9 @@ export class RegisterPage implements OnInit {
               let registrationInfo:registerationinfoVM = this.RegisterForm.value
               registrationInfo.referralcode = this.ClientForm.get(['clientreferralcode']).value
               this.registerInfo.addRegisterInfo(registrationInfo)
-              
             
               //Navigate to the next page
-              this.AllInfoCorrectNotif(1)
+              this.AllInfoCorrectNotif()
 
               }
             },(response: HttpErrorResponse) => {
@@ -214,18 +208,12 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
 
-  async AllInfoCorrectNotif(usertype:number){
+  async AllInfoCorrectNotif(){
     const alert = await this.alert.create({
       header: "Are you sure?",
       message: "Are you sure you have fillied in all the information correctly?",
       buttons: [{text: 'yes', handler: () => {
-        if(usertype == 2){
-          this.route.navigate(["register/banking-details"])
-        }
-        if(usertype == 1){
-          this.route.navigate(["next"])
-        }
-        
+        this.route.navigate(["next"])
       }},{text: "No"}]
     });
 
@@ -248,76 +236,76 @@ export class RegisterPage implements OnInit {
 
 
 
-  // // User selected function
-  // UserTypeSelected(){
-  //   this.userTypeReg = this.userTypeID
-  //   console.log(this.userTypeReg);
-  //   // if(this.register.get('usertypeID').value == 3)
-  //   // {
-  //   //   this.register.get('idnumber').setValidators(Validators.required)
-  //   //   this.register.get('idphotoANDAddress').setValidators(Validators.required)
-  //   // }
+  // User selected function
+  UserTypeSelected(){
+    this.userTypeReg = this.userTypeID
+    console.log(this.userTypeReg);
+    // if(this.register.get('usertypeID').value == 3)
+    // {
+    //   this.register.get('idnumber').setValidators(Validators.required)
+    //   this.register.get('idphotoANDAddress').setValidators(Validators.required)
+    // }
     
-  //   if(this.register.get('usertypeID').value == 2)
-  //   {
-  //     this.register.get('ambassadorType').setValidators(Validators.required)
-  //     this.register.get('aliasname').setValidators(Validators.required)
-  //     this.register.get('referralcode').setValidators(Validators.required)
-  //     this.register.get('idnumber').setValidators(Validators.required)
-  //     this.register.get('idphotoANDAddress').setValidators(Validators.required)
-  //     this.register.get('aboutmyself').setValidators(Validators.required)
-  //     this.register.get('reasons').setValidators(Validators.required)
-  //   }
-  //   if(this.register.get('usertypeID').value == 1)
-  //   {
-  //     this.register.get('referralcode').setValidators(Validators.required)
-  //   }
-  //   // else
-  //   // {
-  //   //   this.register.get('idnumber').clearValidators()
-  //   //   this.register.get('idphotoANDAddress').clearValidators()
-  //   //   this.register.get('ambassadorType').clearValidators()
-  //   //   this.register.get('aliasname').clearValidators()
-  //   //   this.register.get('referralcode').clearValidators()   
-  //   //   this.register.get('aboutmyself').clearValidators()
-  //   //   this.register.get('reasons').clearValidators()
-  //   // }
-  // }
+    if(this.register.get('usertypeID').value == 2)
+    {
+      this.register.get('ambassadorType').setValidators(Validators.required)
+      this.register.get('aliasname').setValidators(Validators.required)
+      this.register.get('referralcode').setValidators(Validators.required)
+      this.register.get('idnumber').setValidators(Validators.required)
+      this.register.get('idphotoANDAddress').setValidators(Validators.required)
+      this.register.get('aboutmyself').setValidators(Validators.required)
+      this.register.get('reasons').setValidators(Validators.required)
+    }
+    if(this.register.get('usertypeID').value == 1)
+    {
+      this.register.get('referralcode').setValidators(Validators.required)
+    }
+    // else
+    // {
+    //   this.register.get('idnumber').clearValidators()
+    //   this.register.get('idphotoANDAddress').clearValidators()
+    //   this.register.get('ambassadorType').clearValidators()
+    //   this.register.get('aliasname').clearValidators()
+    //   this.register.get('referralcode').clearValidators()   
+    //   this.register.get('aboutmyself').clearValidators()
+    //   this.register.get('reasons').clearValidators()
+    // }
+  }
 
   
 
-  // //Step 2 of registering
-  // Next(){
-  //   if(this.register.invalid){
-  //     console.log("errors")
-  //   }
-  //   else{
-  //     this.registerInfo.addRegisterInfo(this.register.value)
-  //     if(this.register.get('usertypeID').value == 3){
-  //       this.route.navigate(["next"])
-  //       console.log(this.registerInfo.getRegisterInfo())
-  //     }
-  //     if(this.register.get('usertypeID').value == 1 || this.register.get('usertypeID').value == 2){
-  //     this.api.ValidateRefferralCode(this.register.get('referralcode').value).subscribe(data =>{
-  //       console.log(data)
-  //       this.route.navigate(["next"])
-  //       console.log(this.registerInfo.getRegisterInfo())
+  //Step 2 of registering
+  Next(){
+    if(this.register.invalid){
+      console.log("errors")
+    }
+    else{
+      this.registerInfo.addRegisterInfo(this.register.value)
+      if(this.register.get('usertypeID').value == 3){
+        this.route.navigate(["next"])
+        console.log(this.registerInfo.getRegisterInfo())
+      }
+      if(this.register.get('usertypeID').value == 1 || this.register.get('usertypeID').value == 2){
+      this.api.ValidateRefferralCode(this.register.get('referralcode').value).subscribe(data =>{
+        console.log(data)
+        this.route.navigate(["next"])
+        console.log(this.registerInfo.getRegisterInfo())
         
-  //       },(response: HttpErrorResponse) => {
-  //         if (response.status === 404) {
-  //           this.alertNotif("Refferal Doesn't exist!", "Opps!")
+        },(response: HttpErrorResponse) => {
+          if (response.status === 404) {
+            this.alertNotif("Refferal Doesn't exist!", "Opps!")
             
-  //         }
-  //         if (response.status === 500){
-  //           this.alertNotif("Internal error", "Opps!")
+          }
+          if (response.status === 500){
+            this.alertNotif("Internal error", "Opps!")
            
-  //         }
-  //         if (response.status === 400){
-  //           this.alertNotif("Something went wrong", "Opps!")
-  //         }
-  //       })
-  //     }
-  //   }
-  // }
+          }
+          if (response.status === 400){
+            this.alertNotif("Something went wrong", "Opps!")
+          }
+        })
+      }
+    }
+  }
 }
 

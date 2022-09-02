@@ -45,9 +45,6 @@ export class LandingPagePage implements OnInit {
    
     
   }
-  ionViewDidEnter(){
-    this.menu.enable(true, 'ambassador-menu');
-  }
 
 
  async GetCatalog()
