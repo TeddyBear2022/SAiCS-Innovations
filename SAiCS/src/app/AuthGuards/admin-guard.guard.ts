@@ -6,21 +6,23 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanLoad {
+export class AdminAuthGuard implements CanLoad {
 
   constructor(private route:Router, 
-    private alert:AlertController) {    
+    private alert:AlertController) {
+    
   }
-  
   canLoad() {
     const user = localStorage.getItem('UserRole');
     const isAuthenticated = !!(localStorage.getItem('token'));
 
-    if(isAuthenticated && (user == "Client" ||user == "Ambassador"|| user == "Admin")){
+    if(user == "Admin" && isAuthenticated == true){
       return true;
     }
+    
     else{
-      this.UnauthorizedNotif('You are not authorized to access this page please login :-)','Unauthorized!')
+
+      this.UnauthorizedNotif('You are not authorized to access this page, only Admin users are allowed please login :-)','Unauthorized!')
       if(this.alert.dismiss){
         this.route.navigate(['home'])
       }

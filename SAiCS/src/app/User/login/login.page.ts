@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
       this.api.SetToken(data.token.toString())
       this.api.session(logindetails).subscribe(sessioninfo =>{
         this.tempStorage.addSession(sessioninfo)
-        console.log(sessioninfo)
+        // console.log("user role:"+sessioninfo[0].userRoleId)
         console.log(this.tempStorage.getSessioninfo())
         let pagenavigation = this.tempStorage.getSessioninfo()
         
@@ -65,6 +65,7 @@ export class LoginPage implements OnInit {
         //Admin user
         if(pagenavigation[0].userRoleId == 3){
           this.router.navigate(['landing-page-admin'])
+          localStorage.setItem('UserRole',"Admin")
           // console.log("go to admin page")
         }
 
@@ -72,6 +73,7 @@ export class LoginPage implements OnInit {
         if(pagenavigation[0].userRoleId == 1){
           //console.log("go to client page")
           this.myOutput.emit(this.outputMessage);
+          localStorage.setItem('UserRole',"Client")
           this.router.navigate(['landing-page'])
         }
 
@@ -85,6 +87,7 @@ export class LoginPage implements OnInit {
             }
             if(applicationStatus[0].applicationStatusId==2){
               this.router.navigate(['ambassador-landing-page'])
+              localStorage.setItem('UserRole',"Ambassador")
             }
           })
           

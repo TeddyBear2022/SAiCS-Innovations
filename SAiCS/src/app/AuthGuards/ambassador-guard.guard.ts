@@ -6,21 +6,26 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanLoad {
+export class AmbassadorAuthGuard implements CanLoad {
 
-  constructor(private route:Router, 
-    private alert:AlertController) {    
+  constructor(private alert:AlertController, 
+    private route:Router) {
+    
   }
-  
+
   canLoad() {
     const user = localStorage.getItem('UserRole');
     const isAuthenticated = !!(localStorage.getItem('token'));
 
-    if(isAuthenticated && (user == "Client" ||user == "Ambassador"|| user == "Admin")){
+    if(user == "Ambassador" && isAuthenticated == true){
+      
       return true;
+
     }
+    
     else{
-      this.UnauthorizedNotif('You are not authorized to access this page please login :-)','Unauthorized!')
+
+      this.UnauthorizedNotif('You are not authorized to access this, only Ambassador users are allowed please login :-)','Unauthorized!')
       if(this.alert.dismiss){
         this.route.navigate(['home'])
       }

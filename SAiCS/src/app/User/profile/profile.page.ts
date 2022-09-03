@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { UpdateFaqModalComponent } from 'src/app/Admin/modals/update-faq-modal/update-faq-modal.component';
 import { DeleteUserVM } from 'src/app/Models/ViewModels/DeleteUserVM';
 import { ProfileVM } from 'src/app/Models/ViewModels/ProfileVM';
@@ -11,6 +11,7 @@ import { registerVM } from 'src/app/Models/ViewModels/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { UpdateBankingDetailsPage } from './update-banking-details/update-banking-details.page';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class ProfilePage implements OnInit {
     private alert:AlertController, 
     private route:Router, 
     private api: ApiService, 
-    private menu:MenuController)
+    private menu:MenuController, 
+    private modal: ModalController)
     {
      
     }
@@ -101,6 +103,24 @@ export class ProfilePage implements OnInit {
     console.log
     (this.userRoleID)
 
+  }
+
+  UpdateBankingDetails(){
+    this.updateBank()
+  }
+  async updateBank()
+  {
+    
+   const modals = await this.modal.create({
+      component: UpdateBankingDetailsPage, 
+      componentProps: {bank: "bank" }
+
+      // id: 'addquizClass',
+    });
+    modals.onDidDismiss().then((data) => {
+      console.log(data.data)
+    })
+     await modals.present();
   }
 
   close()

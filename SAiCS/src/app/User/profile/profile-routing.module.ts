@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage
+  },
+  {
+    path: 'update-banking-details',
+    loadChildren: () => import('./update-banking-details/update-banking-details.module').then( m => m.UpdateBankingDetailsPageModule)
   }
 ];
 
