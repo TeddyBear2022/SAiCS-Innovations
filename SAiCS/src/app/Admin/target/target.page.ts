@@ -73,7 +73,7 @@ TargetDoesntExists(){
     const alert = await this.alert.create({
       header: header,
       message: message,
-      buttons: [{text: 'Yes', handler:()=>{
+      buttons: [{text: 'confirm', handler:()=>{
       console.log("Delete target", targetId);
       this.api.DeleteTarget(targetId).subscribe(data => {
         console.log(data)
@@ -86,7 +86,7 @@ TargetDoesntExists(){
       })
 
       }},
-    {text: "No"}]
+    {text: "Cancel"}]
     });
 
     await alert.present();

@@ -16,13 +16,13 @@
        <ion-col size="5.5">
         
          <br><br>
-        <ion-select formControlName="usertypeID"  placeholder="User type">
+        <ion-select formControlName="usertypeID" interface="popover"  placeholder="User type">
           <ion-select-option  value=1>Client</ion-select-option>
           <ion-select-option  value=2>Ambassador</ion-select-option>
         </ion-select>
         <span *ngIf="BasicInfoForm.submitted && RegisterForm.controls.usertypeID.invalid">Please select a User Type</span>
         <br>
-        <ion-select formControlName="titleID" placeholder="Title" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">
+        <ion-select formControlName="titleID" interface="popover" placeholder="Title" style="border: 0; color: black;background-color: #f5f5f5;  border-bottom: solid 1pt black ;border-radius: 0px !important;width:65%; margin-left: 25%;margin-right: 25%;">
           <div *ngIf="inputInfo != undefined">
           <ion-select-option  *ngFor="let x of inputInfo.titles" value={{x.titleId}}>{{x.titleName}}</ion-select-option>
         </div>
@@ -41,7 +41,7 @@
         <ion-input type="phonenumber"  placeholder="Phone Number" formControlName="phonenumber"> </ion-input>
         <span *ngIf="BasicInfoForm.submitted && RegisterForm.controls.phonenumber.invalid">Please enter a valid phone number</span>
         <br>
-        <ion-select formControlName="countryID" placeholder="Country" id="country" >       
+        <ion-select formControlName="countryID" interface="popover" placeholder="Country" id="country" >       
           <ion-select-option  value=1>South Africa</ion-select-option>
         </ion-select>
         <span *ngIf="BasicInfoForm.submitted && RegisterForm.controls.countryID.invalid">Please select a country</span>
@@ -74,7 +74,7 @@
        <ion-col size="5.5" *ngIf="this.RegisterForm.get(['usertypeID']).value == 2">
         <form [formGroup]="AmbassadorForm" #AmbassadorInfoForm= 'ngForm'>
         <br><br>
-        <ion-select formControlName="ambassadorType" placeholder="Select Ambassador Ranking"  >
+        <ion-select formControlName="ambassadorType" interface="popover" placeholder="Select Ambassador Ranking"  >
           <div *ngIf="inputInfo != undefined">
           <ion-select-option *ngFor="let t of inputInfo.ambassadorTypes" value= {{t.ambassadorTypeId}}>{{t.ambassadorTypeName}}</ion-select-option>
           </div>

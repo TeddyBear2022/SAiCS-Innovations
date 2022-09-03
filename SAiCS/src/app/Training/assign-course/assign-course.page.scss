@@ -1,8 +1,16 @@
 #AssignCourseTable{
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%
+    // width: 100%;
+    margin: 4%;
 }
+#searchbar{
+  width: 300px;;
+  float: right;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
 
 #AssignCourseTable td, #AssignCourseTable th {
     border: 1px solid #ddd;
@@ -45,6 +53,13 @@ ion-toolbar
     --background: #f5f5f5;
     --color : black;
   }
+  #buttons{
+    margin-top: 800px ;
+  }
+  ion-footer{
+    --background: #f5f5f5;
+    --color : black;
+  }
 
 //   h1
 //   {
@@ -82,10 +97,22 @@ ion-toolbar
     height: 50px;
   }
 
+  #Assigned{
+    color: green;
+  }
+
+  #NoCourses{
+    color: red;
+  }
+
   #a1{
     color: #08c10f;
   }
 
+  ion-item{
+    --background: #f5f5f5;
+    
+  }
 
   #button{
     color: white;

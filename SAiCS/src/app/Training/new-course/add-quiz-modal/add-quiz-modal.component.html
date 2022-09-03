@@ -1,9 +1,10 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>
-        Add Quiz 
+        <ion-item ><h2 style="margin-left: 10pt;"><b>Add Quiz  </b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
       </ion-title>
-      <ion-icon slot="end" name="close" (click)="dismissModal()" (ngSubmit)="CreateQuiz()"></ion-icon>
+      <!-- <ion-icon slot="end" name="close" (click)="dismissModal()" (ngSubmit)="CreateQuiz()"></ion-icon> -->
+      
     </ion-toolbar>
   </ion-header>
  
@@ -14,9 +15,11 @@
       <ion-row>
         <div>
         <ion-col>
+          <form [formGroup]="QuizName">
           <ion-label>Quiz Name:</ion-label>
            <ion-input formControlName="quizname" type="text" placeholder="Enter quiz name"></ion-input>
-          <span *ngIf="localForm.submitted && AddQuiz.controls['quizname'].invalid">*Required</span>
+          <span *ngIf="localForm.submitted && QuizName.controls['quizname'].invalid">*Required</span>
+        </form>
         </ion-col>
       </div>
         </ion-row>
@@ -27,21 +30,21 @@
 <br>
           <ion-label>Question:</ion-label>
           <ion-input formControlName="quizquestion" type="text" placeholder="Enter a question"></ion-input> 
-          <span *ngIf="(localForm.submitted ||ListError) && AddQuiz.controls['quizquestion'].invalid">*Required</span>
+          <span *ngIf="localForm.submitted && AddQuiz.controls['quizquestion'].invalid ">*Required</span>
 <br>
           <ion-label>Answer:</ion-label>
            <ion-input formControlName="quizanswer" type="text" placeholder="Enter the answer"></ion-input>
-           <span *ngIf="(localForm.submitted ||ListError) && AddQuiz.controls['quizanswer'].invalid">*Required</span>
+           <span *ngIf="localForm.submitted  && AddQuiz.controls['quizanswer'].invalid">*Required</span>
 <br>
            <ion-label>Other options:</ion-label>
-           <ion-input formControlName="option1" type="text" placeholder="Enter the answer"></ion-input>
-           <span *ngIf="(localForm.submitted ||ListError) && AddQuiz.controls['option1'].invalid">*Required</span>
+           <ion-input formControlName="option1" type="text" placeholder="Enter the optional answer"></ion-input>
+           <span *ngIf="localForm.submitted  && AddQuiz.controls['option1'].invalid">*Required</span>
            <br>
-           <ion-input formControlName="option2" type="text" placeholder="Enter the answer"></ion-input>
-           <span *ngIf="(localForm.submitted ||ListError) && AddQuiz.controls['option2'].invalid">*Required</span>
+           <ion-input formControlName="option2" type="text" placeholder="Enter the optional answer"></ion-input>
+           <span *ngIf="localForm.submitted && AddQuiz.controls['option2'].invalid">*Required</span>
            <br>
-           <ion-input formControlName="option3" type="text" placeholder="Enter the answer"></ion-input>
-           <span *ngIf="(localForm.submitted ||ListError) && AddQuiz.controls['option3'].invalid">*Required</span>
+           <ion-input formControlName="option3" type="text" placeholder="Enter the optional answer"></ion-input>
+           <span *ngIf="localForm.submitted  && AddQuiz.controls['option3'].invalid">*Required</span>
            <br>
            <ion-button  (click)="AddToQuestionBank()">Add</ion-button>
           </ion-col>
@@ -57,14 +60,23 @@
           </div>
           <br>
         </ion-row>
-          <ion-buttons>
-            <ion-button type="submit" (click)="CreateQuiz()" id="ModalBlueButtons">
-              Add
-            </ion-button>
-            <ion-button type="submit" id="ModalRedButtons" (click)="dismissModal()">
-              Close
-            </ion-button>
-          </ion-buttons>
+        <br><br>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col></ion-col>
+        <ion-buttons>
+          <ion-button type="submit" (click)="CreateQuiz()" id="ModalBlueButtons">
+            Create
+          </ion-button>
+          <ion-button type="submit" id="ModalRedButtons" (click)="dismissModal()">
+            Close
+          </ion-button>
+        </ion-buttons>
+        </ion-row>
     </form> 
-  </ion-grid>  
+  </ion-grid> 
   </ion-content>
+  <!-- <ion-footer>
+    
+  </ion-footer> -->
+ 

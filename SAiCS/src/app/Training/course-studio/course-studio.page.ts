@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
@@ -58,6 +59,23 @@ export class CourseStudioPage implements OnInit {
           this.courses = data
           // console.log(data);
           
+        },(response: HttpErrorResponse) => {
+        
+          if (response.status === 404) {
+            
+             //this.alertNotif("User doesnt exist or wrong password","Opps!")
+            // this.DissmissLoading()
+            this.unsuccessful("Something went wrong...course was not deleted. Please try again later","Oops")
+             console.log("User doesnt exist or wrong password")
+          }
+          if (response.status === 500){
+            this.unsuccessful("Something went wrong...course was not deleted. Please try again later","Oops")
+          }
+          if (response.status === 400){
+            this.unsuccessful("Something went wrong...course was not deleted. Please try again later","Oops")
+            console.log("wrong password an error")
+          }
+          
         })
       })
     }},{text:"No"}]
@@ -74,5 +92,15 @@ export class CourseStudioPage implements OnInit {
      });
      return await popover.present();
    }
+
+   async unsuccessful(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
 
 }

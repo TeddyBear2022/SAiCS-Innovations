@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-<!-- <form > -->
+<form [formGroup]="discount" #Form= 'ngForm'>
 <div align="center">
 <ion-row>
 <div align="left"  style="font-size: 14pt; color:#333333;"><label ><i><b>Ambassador Rankings:</b></i></label></div>
@@ -18,19 +18,23 @@
     <ion-select-option *ngFor="let r of ranking" value="{{r.ambassadorTypeId}}">{{r.ambassadorTypeName}}</ion-select-option>
   </ion-select>
 </ion-row>
+
 <ion-row *ngIf="this.updateRanking != undefined">
-  <ion-row><ion-input readonly="true" placeholder="Ambassador ranking" [value]="this.updateRanking.ambassadorTypeName" ></ion-input> <ion-input type="number" placeholder="Discount percentage" [value]="this.updateRanking.discountPercentage" [(ngModel)]="this.updateRanking.discountPercentage" ></ion-input><ion-label id="percentage">%</ion-label><br></ion-row>
-  <ion-row><span *ngIf="error == true"> Please enter a valid discount percentage</span></ion-row>
+  
+  <ion-row><ion-input readonly="true" placeholder="Ambassador ranking" [value]="this.updateRanking.ambassadorTypeName" ></ion-input> 
+    <ion-input *ngIf="updateRanking != undefined" formControlName="ambDiscount" placeholder="Discount percentage" ></ion-input><ion-label id="percentage">%</ion-label><br></ion-row>
+  <ion-row>
+    <span *ngIf="this.discount.controls.ambDiscount.invalid && Form.submitted"> Please enter a valid discount percentage</span></ion-row>
 </ion-row>
 
 <ion-row id="buttons">
   <ion-col></ion-col>
   <ion-col></ion-col>
-  <ion-button (click)="AssignAmbRanking()">Assign</ion-button>
-  <ion-button color="danger">Cancel</ion-button>
+  <ion-button type="submit" (click)="AssignAmbRanking()">Assign</ion-button>
+  <ion-button color="danger" (click)="Close()">Cancel</ion-button>
 </ion-row>
 </div>
-<!-- </form> -->
+</form>
 </ion-content>
 <ion-footer>
   

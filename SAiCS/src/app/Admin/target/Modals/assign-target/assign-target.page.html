@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Assign Target</ion-title>
+    <ion-title>Create Target</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -29,7 +29,7 @@
     <ion-input  formControlName="dateTo" type="Date"></ion-input>
     <span *ngIf="CreatelocalForm.submitted && CreateTargetForm.controls.dateTo.invalid">Please pick a date </span>
   </ion-col>
-<span *ngIf="CreatelocalForm.submitted && this.CreateTargetForm.get(['dateFrom']).value >=this.CreateTargetForm.get(['dateTo']).value">Your start date cant be later than your end date</span>
+<span *ngIf="CreatelocalForm.submitted && this.CreateTargetForm.get(['dateFrom']).value >=this.CreateTargetForm.get(['dateTo']).value">Your start date can't be later than your end date</span>
 </ion-row>
 <br><br><br><br>
 <ion-row>

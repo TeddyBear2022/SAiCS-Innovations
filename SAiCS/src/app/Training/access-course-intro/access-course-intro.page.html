@@ -49,8 +49,8 @@
               <ion-label slot="start">{{sectionContent.sectionName}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
-              <ion-label>-{{sectionContent.contentHeading}}</ion-label><br>
-              <div (click)="OpenYT(sectionContent.youtubeLink)"><ion-label >-{{sectionContent.youtubeHeading}}</ion-label> </div>
+              <div (click)="openDrive(sectionContent.contentLink)"><ion-label>-{{sectionContent.contentHeading}} (Click)</ion-label></div><br>
+              <div (click)="OpenYT(sectionContent.youtubeLink)"><ion-label >-{{sectionContent.youtubeHeading}} (Click)</ion-label> </div>
             </div>
           </ion-accordion>
         </ion-accordion-group>
@@ -73,6 +73,7 @@
   <ion-col size="5" id="UploadSection">
     <div align="center" id="card">
     <ion-card id="courseDetails">
+      
       <div *ngIf="ytVideo == true">
         <youtube-player 
         [videoId]="youtubeVieo" 
@@ -80,8 +81,7 @@
         [height]="250" 
         [width]="500">
       </youtube-player>
-      <!-- <script src="https://www.youtube.com/iframe_api??showinfo=0&enablejsapi=1&origin=http://localhost:8100/access-course-intro"></script> -->
-      <div>
+       <div>
         <ion-textarea placeholder="Notes..." style="height: 300px; width:410px;">
   
         </ion-textarea>
@@ -96,4 +96,5 @@
   </form>
 </ion-grid>
   </ion-content>
+ 
   

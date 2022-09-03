@@ -36,7 +36,7 @@ export class AddContentModalComponent implements OnInit {
     ({
       contentsectionname:new FormControl('', Validators.required),
       contentheading:new FormControl('', Validators.required),
-      googledrivelink: new FormControl('',Validators.compose([Validators.required])),
+      googledrivelink: new FormControl('',Validators.compose([Validators.required, Validators.pattern(/^(https:\/\/drive.google.com\/drive)/)])),
       youtubevideoheading: new FormControl('', Validators.required),
       youtubeLink:new FormControl('', Validators.compose([Validators.required, Validators.pattern(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/)]))
     });

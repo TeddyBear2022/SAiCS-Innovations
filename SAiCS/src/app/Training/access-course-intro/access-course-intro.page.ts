@@ -80,4 +80,7 @@ export class AccessCourseIntroPage implements OnInit {
   StartQuiz(){
     this.route.navigate(['start-quiz'])
   }
+  openDrive(url){
+    window.open(url, '_blank').focus();
+  }
 }

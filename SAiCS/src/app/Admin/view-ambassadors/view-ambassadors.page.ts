@@ -91,7 +91,14 @@ export class ViewAmbassadorsPage implements OnInit {
       component: AmbassadorRankingModalPage,
       componentProps:{ranking : this.AmbassadorRankings}
     });
+    modal.onDidDismiss().then((info) => {
+      console.log(info.data.amytypes)
+      if(info.data.status == true){
+      this.AmbassadorRankings = info.data.amytypes
+    }
+    })
     
     await modal.present();
+    
   }
 }

@@ -147,30 +147,54 @@ export class ApiService {
   //FAQs
 
   CreateFAQ(faq:FAQ){
-    return this.api.post(this.apilink+'Admin/createFAQ',faq ,this.httpOptions)
+    return this.api.post(this.apilink+'Admin/createFAQ',faq ,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
   // faqID
   DeleteFAQ(faqID:number):Observable<boolean>{
-    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`,this.httpOptions)
+    return this.api.delete<boolean>(this.apilink + `Admin/deleteFAQ?faqID=${faqID}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetAccountFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ',this.httpOptions)
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetAccountFAQ',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetProductFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ',this.httpOptions)
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetProductFAQ',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetDeliveryFAQ(): Observable<FAQ[]>
   {
-    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ',this.httpOptions)
+    return this.api.get<FAQ[]>(this.apilink + 'Client/GetDeliveryFAQ',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetAllFAQS(): Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS',this.httpOptions)
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getAllFAQS',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   //FAQ Category
@@ -329,7 +353,11 @@ export class ApiService {
 
   UpdateUser(user: ProfileVM):Observable<boolean>
   {
-    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user,this.httpOptions)
+    return this.api.patch<boolean>(this.apilink + `User/updateUser`, user, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
   PositionRequests():Observable<any[]>{
     return this.api.get<any[]>(this.apilink+`Admin/PositionRequests`)
@@ -337,11 +365,19 @@ export class ApiService {
   
   //Course
   CreateCourse(newCourse:NewCourseVM):Observable<boolean>{
-    return this.api.post<boolean>(this.apilink + `Training/CreateCourse`, newCourse )
+    return this.api.post<boolean>(this.apilink + `Training/CreateCourse`, newCourse , {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetAllCourses():Observable<any[]>{
-    return this.api.get<any[]>(this.apilink+ `Training/GetAllCourses`)
+    return this.api.get<any[]>(this.apilink+ `Training/GetAllCourses`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   setCourseId(courseId :number){
@@ -405,19 +441,35 @@ export class ApiService {
   }
 
   DeleteQuiz(quizId:number){
-    return this.api.delete(this.apilink + `Training/DeleteQuiz?quizId=${quizId}`)
+    return this.api.delete(this.apilink + `Training/DeleteQuiz?quizId=${quizId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   DeleteCourseQuestion(questionBankId:number){
-    return this.api.delete(this.apilink + `Training/DeleteCourseQuestion?questionBankId=${questionBankId}`)
+    return this.api.delete(this.apilink + `Training/DeleteCourseQuestion?questionBankId=${questionBankId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   DeleteCourse(courseId:number){
-    return this.api.delete(this.apilink + `Training/DeleteCourse?courseId=${courseId}`)
+    return this.api.delete(this.apilink + `Training/DeleteCourse?courseId=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   CreateSectionContent(sectionContent: SectionContent){
-    return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent) 
+    return this.api.post(this.apilink+ `Training/CreateSectionContent`, sectionContent,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    }) 
   }
 
   //Forgot password
@@ -626,6 +678,21 @@ export class ApiService {
   // GetAmbassadorFAQS
   GetAmbassadorFAQS(){
     return this.api.get(this.apilink+ `Ambassador/GetAmbassadorFAQS`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  AssignCourseData(){
+    return this.api.get(this.apilink+ `Training/AssignCourseData`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  UpdateAmbassadorDiscounts(update){
+    return this.api.post(this.apilink+`Admin/UpdateAmbassadorDiscounts`, update, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

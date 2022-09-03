@@ -91,25 +91,25 @@ export class NextPage implements OnInit {
     var completedRegistration:accessInfoVM = new accessInfoVM(this.register.get('password').value,this.registrationinfo[0].emailaddress)
     this.registration= new registerVM(completedRegistration, this.registrationinfo[0], JSON.parse(localStorage.getItem('bankAccount')))
     console.log(this.registration)
-    // this.api.registerUser(this.registration).subscribe(result => {
-    //   console.log(result)
-    //   this.success();
-    // },(response: HttpErrorResponse) => {
+    this.api.registerUser(this.registration).subscribe(result => {
+      console.log(result)
+      this.success();
+    },(response: HttpErrorResponse) => {
         
-    //   if (response.status === 404) {
-    //     console.log("User already exists")
-    //     this.useExists()
-    //   }
-    //   if (response.status === 500){
-    //     console.log("Encountered an error"+response.error.text)
-    //     this.unsuccessful()
-    //   }
-    //   if (response.status === 400){
-    //     console.log("something went wrong"+response.error.text)
-    //     this.unsuccessful()
-    //   }
+      if (response.status === 404) {
+        console.log("User already exists")
+        this.useExists()
+      }
+      if (response.status === 500){
+        console.log("Encountered an error"+response.error.text)
+        this.unsuccessful()
+      }
+      if (response.status === 400){
+        console.log("something went wrong"+response.error.text)
+        this.unsuccessful()
+      }
       
-    // })
+    })
 
      }
     }

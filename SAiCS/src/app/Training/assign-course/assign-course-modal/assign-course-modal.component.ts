@@ -8,9 +8,16 @@ import { ModalController } from '@ionic/angular';
 })
 export class AssignCourseModalComponent implements OnInit {
 
+  //Variables
+  allcourses
+  assignedCourses
+
   constructor(private modal: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.allcourses)
+    console.log(this.assignedCourses)
+  }
   dismissModal()
   {
     this.modal.dismiss();

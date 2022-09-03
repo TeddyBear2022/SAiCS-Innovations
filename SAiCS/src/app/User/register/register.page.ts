@@ -22,6 +22,7 @@ export class RegisterPage implements OnInit {
   ClientForm:FormGroup
   userType
   inputInfo = undefined
+  selectedFile:any 
 
   //revamp end
 
@@ -97,6 +98,12 @@ export class RegisterPage implements OnInit {
   //   reasons:new FormControl(),
   // })
   }
+  ionViewDidEnter(){
+    this.api.InputInformation().subscribe(data=>{
+      this.inputInfo = data
+      console.log(data)
+    })
+  }
 
   //REVAMP BEGIN
   NoRefferralCode(){
@@ -114,10 +121,13 @@ export class RegisterPage implements OnInit {
         console.log("continue, its ambassador user", this.AmbassadorForm.value, this.RegisterForm.value);
         this.api.ValidateRefferralCode(this.AmbassadorForm.get(['ambassadorreferralcode']).value).subscribe(data=>
           {
+            //Convert file for the api
+            this.onFileSelected(this.AmbassadorForm.get(['idphoto']).value)
             //send information to the next page through an object
             let registrationInfo:registerationinfoVM = this.RegisterForm.value
             registrationInfo.referralcode = this.AmbassadorForm.get(['ambassadorreferralcode']).value
-            registrationInfo.iDPhoto = this.AmbassadorForm.get(['idphoto']).value
+            registrationInfo.iDPhoto = this.selectedFile
+            
             registrationInfo.idnumber = this.AmbassadorForm.get(['idnumber']).value
             registrationInfo.ambassadortype = this.AmbassadorForm.get(['ambassadorType']).value
             registrationInfo.aboutMyself = this.AmbassadorForm.get(['motivation']).value
@@ -240,6 +250,22 @@ export class RegisterPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+  //file to base64
+  onFileSelected(path) {
+    let file = path;
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+      if (encoded.length % 4 > 0) {
+        encoded += '='.repeat(4 - (encoded.length % 4));
+      }
+      this.selectedFile = encoded;
+      console.log('encoded successfully');
+    };
   }
 
   //REVAMP END

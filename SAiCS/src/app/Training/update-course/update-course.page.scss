@@ -42,14 +42,17 @@ ion-accordion-group{
      
 }
 ion-button{
-    // --ion-color-primary:  #08c10f;
-	// --ion-color-primary-rgb: 8,193,15;
-	// --ion-color-primary-contrast: #ffffff;
-	// --ion-color-primary-contrast-rgb: 255,255,255;
-	// --ion-color-primary-shade: #07aa0d;
-	// --ion-color-primary-tint: #21c727;
+   
     margin-right: 1%;
 
+}
+#SpecifiButtopns{
+    --ion-color-primary:  #08c10f;
+	--ion-color-primary-rgb: 8,193,15;
+	--ion-color-primary-contrast: #ffffff;
+	--ion-color-primary-contrast-rgb: 255,255,255;
+	--ion-color-primary-shade: #07aa0d;
+	--ion-color-primary-tint: #21c727;
 }
 #UploadSection{
     // border: black solid 1px;
@@ -100,3 +103,22 @@ ion-card{
     border: solid 1px black;
     border-radius: 10px;
 }
+ion-toolbar{
+    --background: white;
+    --color : black;
+    // border-bottom: solid 5px black;
+    // margin-left: 10pt;
+    // border-radius: 50px;
+  }
+
+// ion-item{
+//     --ion-color-primary: #e5e5e5;
+// 	--ion-color-primary-rgb: 229,229,229;
+// 	--ion-color-primary-contrast: #000000;
+// 	--ion-color-primary-contrast-rgb: 0,0,0;
+// 	--ion-color-primary-shade: #cacaca;
+// 	--ion-color-primary-tint: #e8e8e8;
+//     --background: white;
+
+//  // background-color: white;
+// }
