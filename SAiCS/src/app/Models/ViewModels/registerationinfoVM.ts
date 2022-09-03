@@ -12,7 +12,7 @@ export class registerationinfoVM{
     postalCode:number
     idnumber:string| null
     referralcode:string
-    iDPhoto:File;
+    iDPhoto:string;
     ambassadortype:number
     aboutMyself:string;
 }

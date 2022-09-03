@@ -99,7 +99,7 @@
       <ion-label style="margin-left: 17%;margin-right: 0%;">
         Upload ID (Back and Front)
       </ion-label><br>
-      <input formControlName="idphoto"  type="file" accept="application/pdf">
+      <input formControlName="idphoto"  type="file" accept="application/pdf" (change)="onFileSelected($event)">
       <span *ngIf="BasicInfoForm.submitted && AmbassadorForm.controls.idphoto.invalid">Please upload a valid id photo pdf document</span>
       <br><br>
 

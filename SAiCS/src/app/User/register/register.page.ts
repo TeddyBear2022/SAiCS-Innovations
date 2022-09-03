@@ -122,7 +122,7 @@ export class RegisterPage implements OnInit {
         this.api.ValidateRefferralCode(this.AmbassadorForm.get(['ambassadorreferralcode']).value).subscribe(data=>
           {
             //Convert file for the api
-            this.onFileSelected(this.AmbassadorForm.get(['idphoto']).value)
+            
             //send information to the next page through an object
             let registrationInfo:registerationinfoVM = this.RegisterForm.value
             registrationInfo.referralcode = this.AmbassadorForm.get(['ambassadorreferralcode']).value
@@ -254,8 +254,8 @@ export class RegisterPage implements OnInit {
 
 
   //file to base64
-  onFileSelected(path) {
-    let file = path;
+  onFileSelected(event) {
+    let file = event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
