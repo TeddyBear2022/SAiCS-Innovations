@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'banking-details',
     loadChildren: () => import('./banking-details/banking-details.module').then( m => m.BankingDetailsPageModule)
+  },
+  {
+    path: 'no-refferral-code',
+    loadChildren: () => import('./modals/no-refferral-code/no-refferral-code.module').then( m => m.NoRefferralCodePageModule)
   }
 ];
 

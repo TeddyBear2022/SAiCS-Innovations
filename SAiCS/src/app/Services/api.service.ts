@@ -288,41 +288,73 @@ export class ApiService {
   // }
   //View Ambassadors
   ViewAmbassadors(credentials: credentialsVM):Observable<any[]>{
-    return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials)
+    return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
-  ViewClients(credentials: credentialsVM){
-    return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials)
+  ViewClients(){
+    return this.api.get(this.apilink+ 'Ambassador/ViewCurrentClients',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   //Iteration 6 Amanda
   ViewCatalog()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/Catalog")
+    return this.api.get(this.apilink + "AmbassadorOrder/Catalog",{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   AddToCart(id: string,newItem: CartItem[])
   {
-    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem)
+    return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetCartItems()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/ViewCart")
+    return this.api.get(this.apilink + "AmbassadorOrder/ViewCart",{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   RemoveFromCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`)
+    return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   ClearCart(id: number)
   {
-    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`)
+    return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?itemID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   GetAddress(id: string)
   {
-    return this.api.get(this.apilink +`AmbassadorOrder/GetAddress?userID=${id}`)
+    return this.api.get(this.apilink +`AmbassadorOrder/GetAddress?userID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   Checkout(order: Order)
@@ -393,7 +425,9 @@ export class ApiService {
   }
 
   GetCourseDetails(id=this.updateCourseId){
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+    var specicCourse = localStorage.getItem('updateCourse')
+    var courseID = specicCourse.replace(',','')
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseID}`)
   }
 
   GetAccessCourseDetails(){
@@ -530,7 +564,11 @@ export class ApiService {
   }
 
   SearchCurrentAgents(searchInput:string, userid:string){
-    return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,this.httpOptions)
+    return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   AmbassadorAccessCourse():Observable<any[]>{
@@ -576,12 +614,12 @@ export class ApiService {
       })
     })
   }
-  AcceptRegistration(){
+  // AcceptRegistration(){
 
-  }
-  RejectRegistration(){
+  // }
+  // RejectRegistration(){
     
-  }
+  // }
 
   AllTargetInfo(){
     return this.api.get(this.apilink+ `Admin/GetAllTarget`,{
@@ -661,7 +699,11 @@ export class ApiService {
     })
   }
   BankInputInfo(){
-    return this.api.get(this.apilink+ `Ambassador/BankInputInfo`)
+    return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   InputInformation(){
@@ -693,6 +735,44 @@ export class ApiService {
 
   UpdateAmbassadorDiscounts(update){
     return this.api.post(this.apilink+`Admin/UpdateAmbassadorDiscounts`, update, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  AccceptRegistration(application){
+    return this.api.post(this.apilink+`Admin/AccceptRegistration`, application, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  RejectRegistration(application){
+    return this.api.post(this.apilink+`Admin/RejectRegistration`, application, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  AuditTrail(){
+    return this.api.get(this.apilink+`Admin/AuditTrail`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  AuditTrailByTransactionType(type){
+    return this.api.get(this.apilink+`Admin/AuditTrailByTransactionType?type=${type}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  UpdateBankDetails(bAccountUpdate){
+    return this.api.patch(this.apilink+`Ambassador/UpdateBankDetails`,bAccountUpdate, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

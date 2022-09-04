@@ -63,7 +63,7 @@
     </thead>
     <tbody >
     <tr *ngFor="let ambassador of ambassadorsList">
-    <td>mr</td>
+    <td>{{ambassador.user.title.titleName}}</td>
     <td>{{ambassador.user.name}} </td>
     <td>{{ambassador.user.surname}}</td>
     <td>{{ambassador.user.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>

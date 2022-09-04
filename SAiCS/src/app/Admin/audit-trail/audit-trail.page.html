@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <h1 align="center">Audit Trail</h1>
+  <br>
+  <!-- <ion-item lines="none" > -->
+    <div align="center" >
+  <ion-select id="searchbar" placeholder="Select a transaction type" interface="popover" (ionChange)="Filter($event)">
+    <ion-select-option>Select A Transaction Type</ion-select-option>
+    <ion-select-option>Create</ion-select-option>
+    <ion-select-option>Update</ion-select-option>
+    <ion-select-option>Delete</ion-select-option>
+  </ion-select>
+</div>
+<!-- <ion-icon slot="end" name="search" ></ion-icon> -->
+<!-- </ion-item> -->
+  <br><br><br>
+  <table>
+    <thead align="center" >
+        <tr>
+          <th style="width: 100px;">Audit Trail ID</th>
+          <th style="width: 110px;">Transaction Type</th>
+          <th style="width: 80px;">Table Name</th>
+          <th>Affected Columns</th>
+          <th>Date Stamp</th>
+          <th>New Values</th>
+          <th>Old Values</th>
+          <th>UserId</th>
+          <!-- <th>Primary Key</th> -->
+        </tr>    
+    </thead>
+    <tbody align="center">
+    <tr *ngFor="let a of auditTrails">
+      <td >{{a.auditTrailId}}</td>
+      <td>{{a.transactionType}}</td>
+      <td>{{a.tableName}}</td>
+      <td><div *ngIf="a.affectedColumns == null">None</div><div *ngIf="a.affectedColumns != null">{{a.affectedColumns}}</div></td>
+      <td>{{a.dateTime | date: 'dd/MM/yyyy'}}</td>
+      <td >{{a.newValues}}</td>
+      <td><div *ngIf="a.oldValues == null">None</div><div *ngIf="a.oldValues != null">{{a.oldValues}}</div></td>
+      <td>{{a.userId}}</td>
+      <!-- <td></td > -->
+      </tr>
+    </tbody>
+    </table>
+    <!-- no results found -->
+    <!-- <div align="center" *ngIf="noResults == true">
+    <img src="./assets/noresultsfound3.gif" alt="No results found">
+    </div> -->
+</ion-content>

@@ -39,7 +39,7 @@
             <ion-row id="Questions" *ngIf="this.UpdateQuestionBankForm.get(['updateordelete']).value== 1">
               <div>
               <ion-col>
-                <select formControlName="questionChosen" (change)="QuestionChosen()">
+                <select formControlName="questionChosen"  (change)="QuestionChosen()">
                   <option value= null disabled >Select A Question</option>
                   <option  *ngFor="let question of UpdateQuestionBankInfo;let i = index" value="{{i}}">{{question.questions}}</option>
                 </select>
@@ -95,7 +95,7 @@
          <ion-input formControlName="newoption3" type="text" placeholder="Enter the answer"></ion-input>
          <span *ngIf="localForm.submitted  && newQuestionBankForm.controls['newoption3'].invalid">*Required</span>
          <br>
-         <ion-button  (click)="AddToQuestionBank()">Add</ion-button>
+         <ion-button type="submit" (click)="AddToQuestionBank()">Add</ion-button>
         </ion-col>
       </div>
         </ion-row>

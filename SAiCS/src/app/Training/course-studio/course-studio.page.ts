@@ -36,6 +36,7 @@ export class CourseStudioPage implements OnInit {
   }
   UpdateCourse(id:number){
     console.log(id);
+    localStorage.setItem('updateCourse',id.toLocaleString())
     this.api.setCourseId(id)
     this.router.navigate(['update-course']);
   }
@@ -54,6 +55,9 @@ export class CourseStudioPage implements OnInit {
       
       this.api.DeleteCourse(id).subscribe(data=>{
         // console.log(data);
+        if(data == true){
+          this.successfullyDeleted("The course was successfully deleted","Success")
+        }
         this.api.GetAllCourses().subscribe(data =>{
           // this.courses.push(data);
           this.courses = data
@@ -94,6 +98,15 @@ export class CourseStudioPage implements OnInit {
    }
 
    async unsuccessful(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+  async successfullyDeleted(message:string, header:string) {
     const alert = await this.alert.create({
       header: header,
       message: message,

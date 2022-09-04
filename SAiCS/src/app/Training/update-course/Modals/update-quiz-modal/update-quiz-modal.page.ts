@@ -95,15 +95,19 @@ AddToQuestionBank(){
     this.api.CreateQuizQuestion(questionItem).subscribe(data => 
       {
         console.log(data);
+        if(data == true){
+          this.alertNotif("Question was successfully created", "Success")
+        }
         this.api.GetCourseQuestionBank(questionItem.QuizId).subscribe(data=>{
           this.UpdateQuestionBankInfo = data
           console.log(data);
-          
+          this.newQuestionBankForm.setValue({newquizquestion:'', newquizanswer:'',newoption1:'',newoption2:'',newoption3:''})
+          this.UpdateQuestionBankForm.reset('questionChosen')
         })
       })
     
-    this.newQuestionBankForm.reset()
-    this.UpdateQuestionBankForm.reset('questionChosen')
+    // this.newQuestionBankForm.reset()
+    
 // this.QuestionBankList.push(questionItem)
   }
   else{
@@ -140,12 +144,18 @@ AddToQuestionBank(){
     this.api.UpdateQuizQuestion(updateQuizQuestions).subscribe(data=> 
       {
         console.log(data)
+        if(data == true){
+          this.alertNotif("Question has been updated successfully","Success")
+          this.UpdateQuestionBankForm.reset('questionChosen')
+          this.questionSelected = false
+        }
         this.api.GetCourseQuestionBank(this.UpdateQuizInfo.quizId).subscribe(data=>{
           this.UpdateQuestionBankInfo = data
           console.log(data);
           
         })
       })
+
     }
     else{
       console.log("invalid update form");
@@ -214,9 +224,13 @@ AddToQuestionBank(){
     console.log(this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questionBankId)
     this.api.DeleteCourseQuestion(this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questionBankId).subscribe(data =>{
       console.log(data)
-      this.UpdateQuestionBankForm.reset('questionChosen')
+      // this.UpdateQuestionBankForm.reset('questionChosen')
       // this.UpdateQuestionBankForm.reset('questionChosen')
       // this.UpdateQuestionBankInfo.splice(this.UpdateQuestionBankForm.get(['questionChosen']).value,1)
+      this.questionSelected = false
+      if(data == true){
+        this.alertNotif("Question was successfully deleted", "Success")
+      }
       this.api.GetCourseQuestionBank(this.UpdateQuizInfo.quizId).subscribe(data=>{
         this.UpdateQuestionBankInfo = data
         console.log(data);

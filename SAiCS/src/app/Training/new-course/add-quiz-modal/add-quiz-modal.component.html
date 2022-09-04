@@ -46,7 +46,7 @@
            <ion-input formControlName="option3" type="text" placeholder="Enter the optional answer"></ion-input>
            <span *ngIf="localForm.submitted  && AddQuiz.controls['option3'].invalid">*Required</span>
            <br>
-           <ion-button  (click)="AddToQuestionBank()">Add</ion-button>
+           <ion-button type="submit" (click)="AddToQuestionBank()">Add</ion-button>
           </ion-col>
         </div>
           </ion-row>

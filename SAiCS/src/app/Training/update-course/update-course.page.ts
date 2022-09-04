@@ -101,7 +101,9 @@ export class UpdateCoursePage implements OnInit {
       UpdateCourse.CourseName=coursenameArray.toString()
       let courseDescriptionArray =  this.courseUpdateDetails.get(['updatedescription']).value
       UpdateCourse.Description =  courseDescriptionArray.toString()
-      UpdateCourse.CourseId = this.api.getCourseId()
+      var specicCourse = localStorage.getItem('updateCourse')
+      var courseID = specicCourse.replace(',','')
+      UpdateCourse.CourseId = Number(courseID)
       console.log(UpdateCourse);
       this.api.UpdateCourse(UpdateCourse).subscribe(data=>
         {

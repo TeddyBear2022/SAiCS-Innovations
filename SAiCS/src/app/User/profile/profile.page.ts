@@ -30,6 +30,7 @@ export class ProfilePage implements OnInit {
   //Data from form to delete or update
   form:FormGroup
   AdminUserForm:FormGroup
+  // bankAccount = []
   
   constructor(public popoverController: PopoverController, 
     private tempStorage:TemporaryStorage, 
@@ -56,6 +57,12 @@ export class ProfilePage implements OnInit {
     this.profileinfo = this.tempStorage.getSessioninfo()
     console.log(this.profileinfo[0])
     this.userRoleID = this.profileinfo[0].userRoleId
+
+   // console.log(this.profileinfo[0].ambassadors[0].bankAccount)
+  //  if( this.profileinfo[0].ambassadors.length ==0){
+  //   this.bankAccount = this.profileinfo[0].ambassadors[0].bankAccount
+  //  }
+    
 
     //Set menu
     if(this.userRoleID == 1){
@@ -110,15 +117,18 @@ export class ProfilePage implements OnInit {
   }
   async updateBank()
   {
-    
+  let bankaccountInfo =this.profileinfo[0].ambassadors[0].bankAccount
+ 
    const modals = await this.modal.create({
       component: UpdateBankingDetailsPage, 
-      componentProps: {bank: "bank" }
+      componentProps: {bankInfo: bankaccountInfo }
 
       // id: 'addquizClass',
     });
     modals.onDidDismiss().then((data) => {
       console.log(data.data)
+      bankaccountInfo = data.data.bankUpdate
+      
     })
      await modals.present();
   }

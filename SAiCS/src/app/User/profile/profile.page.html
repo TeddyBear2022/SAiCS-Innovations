@@ -4,7 +4,7 @@
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
 
-    <ion-buttons slot="secondary">
+    <ion-buttons slot="secondary" *ngIf="this.userRoleID == 1 ||this.userRoleID == 2">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
@@ -112,9 +112,9 @@
             <ion-item lines="none">
               <ion-label style="text-align: right;color: #3f51b5;"><a href="/reset-password">Change Password?</a></ion-label>
             </ion-item>
+            <ion-label style="text-align: right;color: #3f51b5; margin-left: 52%;" *ngIf="this.userRoleID == 2" (click)="UpdateBankingDetails()"><u>Change Banking details?</u></ion-label>
             <ion-item lines="none">
-        
-              <ion-label style="text-align: right;color: #3f51b5;" *ngIf="this.userRoleID == 2" (click)="UpdateBankingDetails()">Change Banking details?</ion-label>
+              
             </ion-item>
           </ion-list>
          

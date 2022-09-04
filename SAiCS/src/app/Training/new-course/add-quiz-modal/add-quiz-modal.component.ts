@@ -66,6 +66,8 @@ AddToQuestionBank(){
     questionItem.Option3 =  this.AddQuiz.get(['option3']).value
     
 this.QuestionBankList.push(questionItem)
+// this.AddQuiz.setValue({quizquestion: ' ', quizanswer: ' ',option1:' ',option2:' ',option3:' '  })
+// this.AddQuiz.reset()
 // this.AddQuiz.reset()
 console.log(this.AddQuiz.value)
   }

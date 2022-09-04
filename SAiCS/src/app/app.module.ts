@@ -8,18 +8,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import{HttpClientModule} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarMenuPage } from './navbar-menu/navbar-menu.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { ReportComponentsModule } from './Report/report-components/report-components.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AddContentModalComponent } from './Training/new-course/add-content-modal/add-content-modal.component';
 //import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
-  declarations: [AppComponent,NavbarMenuPage],
+  declarations: [AppComponent,NavbarMenuPage,AddContentModalComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule,Ng2SearchPipeModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, NgbModule, FormsModule,Ng2SearchPipeModule,ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],
   bootstrap: [AppComponent],
 })

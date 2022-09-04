@@ -25,7 +25,7 @@ export class BankingDetailsPage implements OnInit {
       AccountNumber: new FormControl('',Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern("^[0-9]*$")]) ),
       BankId: new FormControl('', Validators.required),
       AccountTypeId: new FormControl('', Validators.required),
-      AccountHolder: new FormControl('', Validators.required)
+      AccountHolder: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/^([a-zA-Z]*)(\s)([a-zA-Z]*)$/)]))
       })
 
     //inputs from api
@@ -43,6 +43,7 @@ export class BankingDetailsPage implements OnInit {
     }
     if(this.BankingDetails.valid){
       let bAccount:BankAccount =this.BankingDetails.value
+      bAccount.AccountNumber = Number(bAccount.AccountNumber)
       localStorage.setItem('bankAccount',JSON.stringify(bAccount) )
       console.log(bAccount)
       this.route.navigate(['next'])

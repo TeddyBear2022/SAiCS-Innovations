@@ -19,9 +19,10 @@ import { AddContentModalComponent } from './add-content-modal/add-content-modal.
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    NewCoursePageRoutingModule
+    NewCoursePageRoutingModule,
+    
   ],
-  declarations: [NewCoursePage,AddQuizModalComponent,AddContentModalComponent],
+  declarations: [NewCoursePage,AddQuizModalComponent],
   entryComponents:[AddQuizModalComponent,AddContentModalComponent] 
 })
 export class NewCoursePageModule {}
