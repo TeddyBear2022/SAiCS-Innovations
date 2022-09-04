@@ -8,27 +8,20 @@
 </ion-header>
 
 <ion-content>
-  
-  <div class="modal"  id="ModalContent"  >
+  <ion-grid>
+  <!-- <div class="modal"  id="ModalContent"  > -->
   <h3>Courses:</h3>
-  <br> 
-    <ion-radio-group>
-      <ion-list-header>    
-        <ion-radio ></ion-radio>
-        <ion-label >Ambassador Intro Course</ion-label>
-    </ion-list-header>
+  <ion-row id="radio" *ngFor="let x of allcourses">
+    <div >
+  <ion-radio value="{{x.courseId}}" checked="true"></ion-radio>
+  <ion-label>{{x.courseName}}</ion-label>
+</div>
+</ion-row>
 
-    <ion-list-header>    
-        <ion-radio ></ion-radio>
-        <ion-label >Advanced Training</ion-label>
-    </ion-list-header>
-
-    <ion-list-header>    
-        <ion-radio ></ion-radio>
-        <ion-label >Selling 101</ion-label>
-    </ion-list-header>
-  </ion-radio-group>
-
+<ion-row >
+  <ion-col></ion-col>
+  <ion-col></ion-col>
+  <div id="buttons">
   <ion-buttons>
     <ion-button id="ModalBlueButtons" >
       Assign
@@ -37,5 +30,8 @@
       Close
     </ion-button>
   </ion-buttons>
-</div>
+  </div>
+</ion-row>
+<!-- </div> -->
+</ion-grid>
 </ion-content>

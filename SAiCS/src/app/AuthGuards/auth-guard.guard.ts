@@ -11,21 +11,15 @@ export class AuthGuard implements CanLoad {
   constructor(private route:Router, 
     private alert:AlertController) {    
   }
+  
   canLoad() {
+    const user = localStorage.getItem('UserRole');
     const isAuthenticated = !!(localStorage.getItem('token'));
 
-    if(isAuthenticated){
+    if(isAuthenticated && (user == "Client" ||user == "Ambassador"|| user == "Admin")){
       return true;
     }
     else{
-      // const navigation = this.route.getCurrentNavigation();
-      // console.log('nav', navigation)
-      // let url ='/';
-
-      // if(navigation){
-      //   url = navigation.extractedUrl.toString()
-      // }
-      // console.log('got url', url)
       this.UnauthorizedNotif('You are not authorized to access this page please login :-)','Unauthorized!')
       if(this.alert.dismiss){
         this.route.navigate(['home'])

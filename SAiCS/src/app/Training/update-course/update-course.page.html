@@ -27,11 +27,13 @@
   <ion-grid>
 <h1 style="text-align: center;font-size: 50px;color: #333333;">Update Course</h1>
 <ion-row>
+  <ion-button id="SpecifiButtopns" (click)="Back()"  style="margin-right: 90%; color: white; border-radius: 20%;">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+  </ion-button>
   <ion-col></ion-col>
-  <ion-col></ion-col>
-    <ion-button type="submit" style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
-      Update
-    </ion-button>
+  <ion-button id="SpecifiButtopns" type="submit" style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
+    Update
+  </ion-button>
 </ion-row>
 <ion-row>
   <ion-col size="5" id="UploadSection">
@@ -50,10 +52,11 @@
     </ion-col>
   <ion-col size="7" id="leftSection">
 <div class="CourseLeft">
+ 
+  <h2 style="color: #333333">Course Content</h2> 
   <ion-button fill="white" data-backdrop="static" data-keyboard="false" (click)="AddContent()">
     <ion-icon name="add-circle-outline" size="large" id="addIcon" style="color: #08c10f;" ></ion-icon>
-  </ion-button><br>
-  <h2 style="color: #333333">Course Content</h2>  
+  </ion-button><br> 
    <ion-item style="width: 800px;">
     <ion-col>
   <ion-accordion-group *ngFor="let sectionContent of sectionContent;let i = index">
@@ -71,18 +74,17 @@
   </ion-accordion-group>
 </ion-col>
 </ion-item>
-<span>Please add some section content for this course </span>
+<span *ngIf="sectionContent.length == 0">Please add some section content for this course </span>
 
 <h2>Quiz</h2>
 <!-- <ion-select style="border: black solid 1px;width:40%;" placeholder="Course Section"></ion-select> -->
 <ion-card>
 <ion-card-content *ngFor="let quiz of quiz">
   <label>{{quiz.quizName}}</label><br><br>
-  <ion-button slot="end" (click)="UpdateQuiz()">Edit</ion-button>
+  <ion-button slot="end" (click)="UpdateQuiz()"><ion-icon name="create-outline"></ion-icon></ion-button>
 </ion-card-content>
 </ion-card>
 </div>
-<span >Please create a quiz for this course </span>
 </ion-col>
 
 </ion-row>

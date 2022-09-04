@@ -95,15 +95,19 @@ AddToQuestionBank(){
     this.api.CreateQuizQuestion(questionItem).subscribe(data => 
       {
         console.log(data);
+        if(data == true){
+          this.alertNotif("Question was successfully created", "Success")
+        }
         this.api.GetCourseQuestionBank(questionItem.QuizId).subscribe(data=>{
           this.UpdateQuestionBankInfo = data
           console.log(data);
-          
+          this.newQuestionBankForm.setValue({newquizquestion:'', newquizanswer:'',newoption1:'',newoption2:'',newoption3:''})
+          this.UpdateQuestionBankForm.reset('questionChosen')
         })
       })
     
-    this.newQuestionBankForm.reset()
-    this.UpdateQuestionBankForm.reset('questionChosen')
+    // this.newQuestionBankForm.reset()
+    
 // this.QuestionBankList.push(questionItem)
   }
   else{
@@ -140,12 +144,18 @@ AddToQuestionBank(){
     this.api.UpdateQuizQuestion(updateQuizQuestions).subscribe(data=> 
       {
         console.log(data)
+        if(data == true){
+          this.alertNotif("Question has been updated successfully","Success")
+          this.UpdateQuestionBankForm.reset('questionChosen')
+          this.questionSelected = false
+        }
         this.api.GetCourseQuestionBank(this.UpdateQuizInfo.quizId).subscribe(data=>{
           this.UpdateQuestionBankInfo = data
           console.log(data);
           
         })
       })
+
     }
     else{
       console.log("invalid update form");
@@ -171,7 +181,11 @@ AddToQuestionBank(){
   }
 
   Update(){
-    if(this.UpdateQuiz.valid){
+    if(this.QuestionBankList.length == 0){
+      this.alertNotif("You need to have atleast one question for your quiz!","Oops")
+    }
+
+    if(this.UpdateQuiz.valid && this.QuestionBankList.length != 0){
     this.quizError= false
     let updateQuiz:Quiz = new Quiz()
     updateQuiz.QuizName= this.UpdateQuiz.get(['updatequizname']).value
@@ -194,6 +208,37 @@ AddToQuestionBank(){
     }
     
     
+  }
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+  DeleteCourseQuestion(){
+    console.log(this.UpdateQuestionBankInfo)
+    console.log(this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questionBankId)
+    this.api.DeleteCourseQuestion(this.UpdateQuestionBankInfo[this.UpdateQuestionBankForm.get(['questionChosen']).value].questionBankId).subscribe(data =>{
+      console.log(data)
+      // this.UpdateQuestionBankForm.reset('questionChosen')
+      // this.UpdateQuestionBankForm.reset('questionChosen')
+      // this.UpdateQuestionBankInfo.splice(this.UpdateQuestionBankForm.get(['questionChosen']).value,1)
+      this.questionSelected = false
+      if(data == true){
+        this.alertNotif("Question was successfully deleted", "Success")
+      }
+      this.api.GetCourseQuestionBank(this.UpdateQuizInfo.quizId).subscribe(data=>{
+        this.UpdateQuestionBankInfo = data
+        console.log(data);
+        
+      })
+      console.log(this.UpdateQuestionBankInfo)
+    }
+    )
   }
 
 }

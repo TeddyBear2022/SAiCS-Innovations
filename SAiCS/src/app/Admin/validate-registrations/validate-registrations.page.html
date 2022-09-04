@@ -54,8 +54,8 @@
       <td>{{r.surname}}</td>
       <td >{{r.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>
       <td><ion-label id="Link" (click)="ViewRegistration(r.id)"> <u>View Details</u></ion-label></td>
-      <td><ion-button>Accept</ion-button></td>
-      <td><ion-button>Reject</ion-button></td>
+      <td><ion-button (click)="Accept(r.applications[0])">Accept</ion-button></td>
+      <td><ion-button (click)="Reject(r.applications[0])">Reject</ion-button></td>
       </tr>
     </tbody>
     </table>

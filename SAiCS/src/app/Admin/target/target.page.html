@@ -5,11 +5,7 @@
         
       </ion-menu-button>
     </ion-buttons>    
-    <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    
     <ion-label slot="secondary" style="color: white;"></ion-label>
 
     <ion-buttons slot="end">
@@ -38,10 +34,10 @@
     <tr *ngFor="let t of targets"> 
     <td>{{t.distributor.ambassadorType.ambassadorTypeName}}</td>
     <td>{{t.distributor.user.name + " " + t.distributor.user.surname}} </td>
-    <td><div *ngIf="t.target == null">Not Set</div><div *ngIf="t.target != null">{{"R"+t.target.target1}}</div></td>
+    <td><div *ngIf="t.target == null">Not Set</div><div *ngIf="t.target != null">{{"R"+ t.target.target1}}</div></td>
     <td><div *ngIf="t.target == null">Not Set</div><div *ngIf="t.target != null">{{t.target.startDate|date: 'dd/MM/yyyy'}}</div></td>
     <td><div *ngIf="t.target == null">Not Set</div><div *ngIf="t.target != null">{{t.target.endDate|date: 'dd/MM/yyyy'}}</div></td>
-    <td><ion-label id="Create" (click)="AssignTarget(t.distributor.ambassadorId)">Assign</ion-label></td>
+    <td><ion-label id="Create" (click)="AssignTarget(t.distributor.ambassadorId)">Create</ion-label></td>
     <td><ion-label id="Update" (click)="UpdateTarget(t.distributor.ambassadorId)">Update</ion-label></td>
     <td><ion-label id="Delete" *ngIf="t.target == null" (click)="TargetDoesntExists()">Delete</ion-label><ion-label id="Delete" *ngIf="t.target != null" (click)="DeleteTarget(t.target.targetId)">Delete</ion-label></td>
     </tr>

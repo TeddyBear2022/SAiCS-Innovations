@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { UpdateFaqModalComponent } from 'src/app/Admin/modals/update-faq-modal/update-faq-modal.component';
 import { DeleteUserVM } from 'src/app/Models/ViewModels/DeleteUserVM';
 import { ProfileVM } from 'src/app/Models/ViewModels/ProfileVM';
@@ -11,6 +11,7 @@ import { registerVM } from 'src/app/Models/ViewModels/registerVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { UpdateBankingDetailsPage } from './update-banking-details/update-banking-details.page';
 
 
 @Component({
@@ -29,13 +30,15 @@ export class ProfilePage implements OnInit {
   //Data from form to delete or update
   form:FormGroup
   AdminUserForm:FormGroup
+  // bankAccount = []
   
   constructor(public popoverController: PopoverController, 
     private tempStorage:TemporaryStorage, 
     private alert:AlertController, 
     private route:Router, 
     private api: ApiService, 
-    private menu:MenuController)
+    private menu:MenuController, 
+    private modal: ModalController)
     {
      
     }
@@ -54,6 +57,12 @@ export class ProfilePage implements OnInit {
     this.profileinfo = this.tempStorage.getSessioninfo()
     console.log(this.profileinfo[0])
     this.userRoleID = this.profileinfo[0].userRoleId
+
+   // console.log(this.profileinfo[0].ambassadors[0].bankAccount)
+  //  if( this.profileinfo[0].ambassadors.length ==0){
+  //   this.bankAccount = this.profileinfo[0].ambassadors[0].bankAccount
+  //  }
+    
 
     //Set menu
     if(this.userRoleID == 1){
@@ -101,6 +110,27 @@ export class ProfilePage implements OnInit {
     console.log
     (this.userRoleID)
 
+  }
+
+  UpdateBankingDetails(){
+    this.updateBank()
+  }
+  async updateBank()
+  {
+  let bankaccountInfo =this.profileinfo[0].ambassadors[0].bankAccount
+ 
+   const modals = await this.modal.create({
+      component: UpdateBankingDetailsPage, 
+      componentProps: {bankInfo: bankaccountInfo }
+
+      // id: 'addquizClass',
+    });
+    modals.onDidDismiss().then((data) => {
+      console.log(data.data)
+      bankaccountInfo = data.data.bankUpdate
+      
+    })
+     await modals.present();
   }
 
   close()

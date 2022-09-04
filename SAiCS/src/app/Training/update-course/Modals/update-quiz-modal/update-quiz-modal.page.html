@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Update Quiz 
+      <ion-item ><h2 style="margin-left: 10pt;"><b> Update Quiz  </b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
     </ion-title>
     <!-- <ion-icon slot="end" name="close" (click)="dismissModal()" (ngSubmit)="CreateQuiz()"></ion-icon> -->
   </ion-toolbar>
@@ -15,25 +15,31 @@
       <form [formGroup]="UpdateQuiz" #updateQuizlocalForm = 'ngForm' >
       <div>
       <ion-col>
+        <div>
         <ion-label>Quiz Name:</ion-label>
          <ion-input formControlName="updatequizname" type="text" placeholder="Enter quiz name"></ion-input>
         <span *ngIf="quizError">*Required</span>
+      </div>
       </ion-col>
     </div>
   </form>
     </ion-row>
 
+    
       <form [formGroup]="UpdateQuestionBankForm" #updatelocalForm = 'ngForm' >
-      <select formControlName="updateordelete" (change)="UpdateDeleteOption()">
+      
+      <select id="UorD" formControlName="updateordelete" (change)="UpdateDeleteOption()">
         <option value="1">Update Existing Questions</option>
         <option value="2">Adding More Questions</option>
       </select>
+      
+      
 <br>
             <!-- Updating questions -->
             <ion-row id="Questions" *ngIf="this.UpdateQuestionBankForm.get(['updateordelete']).value== 1">
               <div>
               <ion-col>
-                <select formControlName="questionChosen" (change)="QuestionChosen()">
+                <select formControlName="questionChosen"  (change)="QuestionChosen()">
                   <option value= null disabled >Select A Question</option>
                   <option  *ngFor="let question of UpdateQuestionBankInfo;let i = index" value="{{i}}">{{question.questions}}</option>
                 </select>
@@ -58,7 +64,7 @@
                <span *ngIf="updatelocalForm.submitted && UpdateQuestionBankForm.controls['updateoption3'].invalid">*Required</span>
                <br>
                <ion-button  type="submit" (click)="UpdateQuestionBank()">Update</ion-button>
-               <ion-button >Delete</ion-button>
+               <ion-button type="submit" (click)="DeleteCourseQuestion()">Delete</ion-button>
               </div>
               </ion-col>
             </div>
@@ -89,7 +95,7 @@
          <ion-input formControlName="newoption3" type="text" placeholder="Enter the answer"></ion-input>
          <span *ngIf="localForm.submitted  && newQuestionBankForm.controls['newoption3'].invalid">*Required</span>
          <br>
-         <ion-button  (click)="AddToQuestionBank()">Add</ion-button>
+         <ion-button type="submit" (click)="AddToQuestionBank()">Add</ion-button>
         </ion-col>
       </div>
         </ion-row>

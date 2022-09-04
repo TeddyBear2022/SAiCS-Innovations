@@ -134,6 +134,9 @@ export class NewCoursePage implements OnInit {
           if (response.status === 400){
             this.alertNotif("Something went wrong","Opps")
           }
+          if (response.status === 404){
+            this.alertNotif("The course you created already exists! Please try making a new course that doesn't exist","Opps")
+          }
           
         }
         )

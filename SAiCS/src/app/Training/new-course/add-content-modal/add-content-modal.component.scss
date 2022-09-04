@@ -19,7 +19,7 @@ ion-input,ion-textarea{
 }
 
 ion-toolbar{
-    --background: #e5e5e5;
+    --background: white;
     --color : black;
     // border-bottom: solid 5px black;
     // margin-left: 10pt;
@@ -33,6 +33,7 @@ ion-item{
 	--ion-color-primary-contrast-rgb: 0,0,0;
 	--ion-color-primary-shade: #cacaca;
 	--ion-color-primary-tint: #e8e8e8;
+    --background: white;
 
  // background-color: white;
 }

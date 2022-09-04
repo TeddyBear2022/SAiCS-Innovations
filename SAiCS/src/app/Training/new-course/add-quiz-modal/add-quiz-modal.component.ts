@@ -13,9 +13,10 @@ import { QuestionBank } from 'src/app/Models/QuestionBank';
 })
 export class AddQuizModalComponent implements OnInit {
 
+  QuizName:FormGroup
   AddQuiz:FormGroup;
   QuestionBankList = []
-  ListError=false
+  reset=false
   newQuiz
 
   constructor(private modal: ModalController, 
@@ -25,8 +26,14 @@ export class AddQuizModalComponent implements OnInit {
     private fb: FormBuilder,) { 
   }
   ngOnInit() {
+    //Quiz name
+    this.QuizName = new FormGroup({
+      quizname : new FormControl('', Validators.required)
+    })
+
+    //Quiz mini section
     this.AddQuiz = new FormGroup({
-      quizname:new FormControl('', Validators.required),
+      //quizname:new FormControl('', Validators.required),
       quizquestion:new FormControl('', Validators.required),
       quizanswer:new FormControl('', Validators.required),
       option1:new FormControl('', Validators.required),
@@ -36,12 +43,8 @@ export class AddQuizModalComponent implements OnInit {
 }
 
 AddToQuestionBank(){
-  if(this.AddQuiz.get(['quizquestion']).value !='' ||
-  this.AddQuiz.get(['quizanswer']).value !=''||
-  this.AddQuiz.get(['option1']).value !='' ||
-  this.AddQuiz.get(['option2']).value !='' ||
-  this.AddQuiz.get(['option3']).value !=''){
-    this.ListError= false
+  if(this.AddQuiz.valid){
+    // this.reset= true
   let newQuestionBankItem:{
     question:string, 
     answer:string,
@@ -61,11 +64,15 @@ AddToQuestionBank(){
     questionItem.Option1 =this.AddQuiz.get(['option1']).value
     questionItem.Option2 =this.AddQuiz.get(['option2']).value
     questionItem.Option3 =  this.AddQuiz.get(['option3']).value
-  
+    
 this.QuestionBankList.push(questionItem)
+// this.AddQuiz.setValue({quizquestion: ' ', quizanswer: ' ',option1:' ',option2:' ',option3:' '  })
+// this.AddQuiz.reset()
+// this.AddQuiz.reset()
+console.log(this.AddQuiz.value)
   }
   else{
-    this.ListError=true
+    // this.ListError=true
     console.log("invalid form");
   }
   
@@ -80,11 +87,14 @@ this.QuestionBankList.push(questionItem)
   }
 
   CreateQuiz(){
-    if(this.QuestionBankList.length>=1 && this.AddQuiz.get(['quizname']).value != ''){
-      this.newQuiz= {status:"true", quizname: this.AddQuiz.get(['quizname']).value, 
+    if(this.QuestionBankList.length==1 ){
+      console.log("show console message")
+    }
+    if(this.QuestionBankList.length>=1 && this.QuizName.valid){
+      this.newQuiz= {status:"true", quizname: this.QuizName.get(['quizname']).value, 
       questions: this.QuestionBankList}
       this.dismissModal()
-      console.log("quiz")
+      console.log(this.newQuiz)
     }
     else{
       console.log("invalid")

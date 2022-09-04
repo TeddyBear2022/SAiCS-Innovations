@@ -22,7 +22,7 @@ export class UpdateCoursePage implements OnInit {
   //Variables
   courseDetails
   course
-  sectionContent;
+  sectionContent:any = [];
   quiz=[];
   questionBank=[];
   quizavailable= false
@@ -95,13 +95,15 @@ export class UpdateCoursePage implements OnInit {
   }
 
   UpdateCourse(){
-    if(this.courseUpdateDetails.valid){
+    if(this.courseUpdateDetails.valid && this.sectionContent.length != 0){
       let UpdateCourse:Course= new Course();
       let coursenameArray = this.courseUpdateDetails.get(['updatecoursename']).value
       UpdateCourse.CourseName=coursenameArray.toString()
       let courseDescriptionArray =  this.courseUpdateDetails.get(['updatedescription']).value
       UpdateCourse.Description =  courseDescriptionArray.toString()
-      UpdateCourse.CourseId = this.api.getCourseId()
+      var specicCourse = localStorage.getItem('updateCourse')
+      var courseID = specicCourse.replace(',','')
+      UpdateCourse.CourseId = Number(courseID)
       console.log(UpdateCourse);
       this.api.UpdateCourse(UpdateCourse).subscribe(data=>
         {
@@ -189,11 +191,21 @@ export class UpdateCoursePage implements OnInit {
     });
     modals.onDidDismiss().then((data) => {
       console.log(data)
-      this.sectionContent = data.data.sectionContentList
+      if(data.data.sectionContentList == undefined){
+        console.log("Modal closed")
+      }
+      else{
+        this.sectionContent = data.data.sectionContentList
       console.log('section content from update course', data.data.sectionContentList)
       // console.log( data.data.sectionContentList);
+      }
+      
           
     })
     return await modals.present();
   }
+  Back(){
+    this.router.navigate(['course-studio'])
+   }
+ 
 }

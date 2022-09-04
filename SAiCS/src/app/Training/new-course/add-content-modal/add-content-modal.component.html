@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <ion-item color="primary"><h2 style="margin-left: 10pt;"><b> Add Section Content </b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
+      <ion-item ><h2 style="margin-left: 10pt;"><b> Add Section Content </b> </h2> <ion-icon  slot="end" (click)="dismissModal()" name="close-outline"></ion-icon></ion-item>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +28,7 @@
     <br>
     <ion-label>Youtube Video link</ion-label>
     <ion-input formControlName="youtubeLink" type="text" placeholder="Paste youtube video(s) link"></ion-input>
-       <span *ngIf="localForm.submitted && AddContent.controls['youtubeLink'].invalid">Please enter a valid youtube video link, Note: not a playlist one video</span>
+       <span *ngIf="localForm.submitted && AddContent.controls['youtubeLink'].invalid">Please enter a valid youtube video link, Note: not a playlist video link</span>
     <br><br>
         <ion-buttons >
           <ion-button type="submit" id="ModalBlueButtons" >
