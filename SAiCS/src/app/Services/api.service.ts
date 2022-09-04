@@ -392,11 +392,7 @@ export class ApiService {
     {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
-    })},{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    })})
   }
 
   AddToCart(id: string,newItem: CartItem)
@@ -465,11 +461,7 @@ export class ApiService {
     return this.api.delete(this.apilink + `AmbassadorOrder/RemoveFromCart?itemID=${id}`, {observe: 'response', 
     responseType: 'text',headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
-})},{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+})})
   }
 
   ClientRemoveFromCart(id: number)
@@ -486,11 +478,7 @@ export class ApiService {
     return this.api.delete(this.apilink + `AmbassadorOrder/ClearCart?cartID=${id}`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
-    })},{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    })})
   }
 
   ClientClearCart(id: number)
@@ -506,9 +494,6 @@ export class ApiService {
   GetAddress(id: string)
   {
     return this.api.get(this.apilink +`User/GetSecondaryAddress?id=${id}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-    })},{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
@@ -728,13 +713,6 @@ export class ApiService {
     })
   }
 
-  ClientViewOrderDetails(id: number)
-  {
-    return this.api.get(this.apilink + `ClientOrder/ViewOrderDetails?id=${id}`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })})
-  }
 
   SearchCurrentAgents(searchInput:string, userid:string){
     return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,{
@@ -745,13 +723,6 @@ export class ApiService {
   }
 
 
-  ProductListRep(type: number, category: number)
-  {
-    return this.api.get(this.apilink + `Report/ProductListRep?type=${type}&category=${category}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })} )
-  }
 
   AmbassadorListRep(province: number, ranking: number)
   {
@@ -836,13 +807,7 @@ export class ApiService {
       })} )
   }
 
-  AmbassadorListRep(province: number, ranking: number)
-  {
-    return this.api.get(this.apilink + `Report/AmbassadorListRep?province=${province}&ranking=${ranking}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })} )
-  }
+ 
 
   TopSeller(province: number, ranking: number)
   {
