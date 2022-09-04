@@ -114,24 +114,6 @@ export class UpdateMerchModalComponent implements OnInit {
     uMerch.merchTypeId = this.updateMerch.value.merchTypeId;
     uMerch.merchCategoryId = this.updateMerch.value.merchCatId;
 
-    //add product attributes
-
-    // let product = {} as Product;
-    // product.productName = this.updateProductForm.value.productName
-    // product.description = this.updateProductForm.value.description
-    // product.productTypeId = this.updateProductForm.value.productTypeId
-    // product.productImage = this.selectedFile
-
-    //add price
-    // let price = {} as Price;
-    // price.price1 = this.updateProductForm.value.price
-
-    //add to viewmodel
-    // let viewModel = {} as ProductVM;
-    // viewModel.product = product
-    // viewModel.price = price
-
-    // update product
     
     this.api.UpdateMerch(this.existingProduct, uMerch).subscribe((res) =>{
       if(res.body == "Item Updated successfully")
@@ -179,18 +161,18 @@ export class UpdateMerchModalComponent implements OnInit {
   
       await alert.present();
     }
-    else {
+    // else {
 
-      const alert = await this.alertController.create({
-        cssClass: 'messageAlert',
-        header: 'Invalid Form',
-        message: "Please Ensure All Fields Are not Empty",
-        buttons: ['OK']
-      });
+    //   const alert = await this.alertController.create({
+    //     cssClass: 'messageAlert',
+    //     header: 'Invalid Form',
+    //     message: "Please Ensure All Fields Are not Empty",
+    //     buttons: ['OK']
+    //   });
       
-      await alert.present();
-      //console.log('invalid form');
-    }
+    //   await alert.present();
+    //   //console.log('invalid form');
+    // }
     
   }
 

@@ -15,13 +15,20 @@ export class ViewFeedbackPage implements OnInit {
   AmbassadorFeedback = []
   ProductFeedback = []
   session: any;
+  feedbackType =""
   constructor(private alert: AlertController, private menu: MenuController,private api: ApiService, private tmpStorage:TemporaryStorage,public popoverController: PopoverController,public alertController: AlertController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo()
-    this.GetAmbassadorFeedback()
-    this.GetProductFeedback()
+
+    this.feedbackType = ""
+    
+  }
+
+  ionViewWillEnter()
+  {
+    this.feedbackType = ""
   }
 
   
@@ -51,10 +58,34 @@ export class ViewFeedbackPage implements OnInit {
      })
    }
 
-   DeleteFeedback(id: number)
+
+   DeleteFeedback(id: number, feedbackType: number)
    {
      this.api.DeleteFeedback(id).subscribe((data) =>{
+      if(feedbackType == 1)
+     {
+      this.GetProductFeedback()
+     }
+     else if(feedbackType == 2)
+     {
+      this.GetAmbassadorFeedback()
+     }
+
       console.log(data);})
+   }
+
+   PresentFeeback(value)
+   {
+     let present = value
+
+     if(present == 1)
+     {
+      this.GetProductFeedback()
+     }
+     else if(present == 2)
+     {
+      this.GetAmbassadorFeedback()
+     }
    }
 
    async ErrorAlert(message: string) {
@@ -69,29 +100,29 @@ export class ViewFeedbackPage implements OnInit {
   }
 
    //alerts
-   async presentAlert(id: number) {
-    const alert = await this.alertController.create({
-      cssClass: 'alertCancel',
-      header: 'Delete REQUEST',
-      message: 'Are you sure you want to permanently delete this feedback?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
+  //  async presentAlert(id: number) {
+  //   const alert = await this.alertController.create({
+  //     cssClass: 'alertCancel',
+  //     header: 'Delete REQUEST',
+  //     message: 'Are you sure you want to permanently delete this feedback?',
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //         cssClass: 'secondary',
+  //         handler: () => {
             
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Yes',
-          handler: () => {
-            this.DeleteFeedback(id)
-            console.log(id);
-          }
-        }
-      ]
-    });
+  //           console.log('Confirm Cancel');
+  //         }
+  //       }, {
+  //         text: 'Yes',
+  //         handler: () => {
+  //           this.DeleteFeedback(id)
+  //           console.log(id);
+  //         }
+  //       }
+  //     ]
+  //   });
 
-    await alert.present();}
+  //   await alert.present();}
 }

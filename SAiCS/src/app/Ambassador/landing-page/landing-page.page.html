@@ -99,7 +99,7 @@
     <ion-row>
       <ion-col size="3" *ngFor="let m of merchandise; let i = index">
         <ion-card class="productCard" id="{{m.id}}">
-          <ion-card-header style="text-align: center;" routerLink="/product-details">
+          <ion-card-header style="text-align: center;" (click)="ViewItem(m.id)">
             <ion-button slot="end" menu="main-menu" ></ion-button><img src="data:image/png;base64,{{m.image}}" />
           </ion-card-header>
           <ion-card-content>
@@ -110,7 +110,7 @@
                 <ion-icon size="large" name="bag-remove" id="toolbarCartIcon"></ion-icon>
               </ion-button>
 
-              <ion-input readonly id="{{i}}" class="quantityInput" [(ngModel)]="m.quantity" value="{{m.quantity}}" name="{{m.quantity}}" style=" text-align: center;" inputmode="numeric"></ion-input>
+              <ion-input id="{{i}}" class="quantityInput" value="m.quantity" [(ngModel)]="m.quantity" onkeyup="if(this.value<0){this.value= this.value * -1}" name="{{m.quantity}}" style=" text-align: center;" inputmode="numeric"></ion-input>
              
               <ion-button shape="round" style="color: #0070c0;" (click)="incrementQty(i)">
                 <ion-icon size="large" name="bag-add" id="toolbarCartIcon"></ion-icon>

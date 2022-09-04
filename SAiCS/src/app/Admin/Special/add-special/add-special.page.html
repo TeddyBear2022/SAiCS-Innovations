@@ -3,11 +3,7 @@
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
     <ion-label slot="secondary" id="toolbarUserName"
       >John van de Merwe</ion-label
     >
@@ -32,14 +28,6 @@
     (ngSubmit)="submitForm()"
   >
     <ion-grid>
-      <ion-row>
-        <ion-item-group style="float: right; margin-left: 75%">
-          <ion-searchbar
-            id="searchProductBar"
-            placeholder="Search for item from list"
-          ></ion-searchbar>
-        </ion-item-group>
-      </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-item no-padding lines="none" color="none">
@@ -90,6 +78,7 @@
                   <ion-input
                     type="number"
                     formControlName="sPrice"
+                    oninput="this.value = Math.abs(this.value)"
                   ></ion-input>
                 </ion-col>
               </ion-row>

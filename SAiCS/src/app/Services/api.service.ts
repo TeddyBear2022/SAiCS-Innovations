@@ -150,17 +150,6 @@ export class ApiService {
   })})
   }
 
-  // Catalog
-  // GetCatalog()
-  // {
-  //   return this.api.get<Product[]>(this.apilink + `User/GetCatalog`)
-  // }
-
-  // GetProductsById(id: number): Observable<Product[]>
-  // {
-  //   return this.api.get<Product[]>(this.apilink + `Client/GetCatalogByCategory?id=${id}`)
-  // }
-
   //FAQs
 
   CreateFAQ(faq:FAQ){
@@ -273,34 +262,57 @@ export class ApiService {
 
   GetMerchById(id: number)
   {
-    return this.api.get(this.apilink + `Product/GetMerchById?id=${id}`)
+    return this.api.get(this.apilink + `Product/GetMerchById?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
   
   //Update product
   UpdateMerch(id: number, uMerch: MerchVM)
   {
-    return this.api.put(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch, {observe: 'response', responseType: 'text'})
+    return this.api.put(this.apilink + `Product/UpdateMerch?id=${id}`, uMerch, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   DeleteMerch(id: number)
   {
-    return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`)
+    return this.api.delete(this.apilink + `Product/DeleteMerch?id=${id}`,
+    {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   AmbassadorDiscount(id)
   {
-    return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`)
+    return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   GetVAT()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
+    return this.api.get(this.apilink + "User/GetVAT",{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  UpdateVAT(id: number, amount: number)
+  {
+    return this.api.put(this.apilink + `Admin/UpdateVAT?id=${id}&amount=${amount}`,{observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   
   ClientGetVAT()
   {
-    return this.api.get(this.apilink + "ClientOrder/GetVAT")
+    return this.api.get(this.apilink + "ClientOrder/GetVAT",{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
 
@@ -325,6 +337,15 @@ export class ApiService {
   ViewCatalog()
   {
     return this.api.get(this.apilink + "User/ViewCatalog",
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
+  ViewCatalogItem(id: number)
+  {
+    return this.api.get(this.apilink + `User/ViewCatalogItem?id=${id}`,
     {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
@@ -360,9 +381,7 @@ export class ApiService {
   {
     return this.api.get(this.apilink + `ClientOrder/ViewCart?id=${id}`,{
     headers: new HttpHeaders({
-        Authorization: 'Bearer ' + localStorage.getItem("token")
-  })})
-  
+        Authorization: 'Bearer ' + localStorage.getItem("token")})})
   }
 
   IncreaseCartItem(id: number)
@@ -651,22 +670,34 @@ export class ApiService {
 
   OrderHistory(id: string)
   {
-    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`)
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
   }
 
   ClientOrderHistory(id: string)
   {
-    return this.api.get(this.apilink + `ClientOrder/ViewOrderHistory?userID=${id}`)
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderHistory?userID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
   }
 
   ViewOrderDetails(id: number)
   {
-    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderDetails?id=${id}`)
+    return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderDetails?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
   }
 
   ClientViewOrderDetails(id: number)
   {
-    return this.api.get(this.apilink + `ClientOrder/ViewOrderDetails?id=${id}`)
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderDetails?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
   }
 
   //Iteration 7
@@ -695,6 +726,22 @@ export class ApiService {
       })} )
   }
 
+  TopSeller(province: number, ranking: number)
+  {
+    return this.api.get(this.apilink + `Report/TopSeller?province=${province}&ranking=${ranking}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
+  TargetRep(From: Date, To: Date)
+  {
+    return this.api.get(this.apilink + `Report/TargetRep?From=${From}&To=${To}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
   RecruitmentRep(month: number)
   {
     return this.api.get(this.apilink + `Report/RecruitmentRep?month=${month}`, {
@@ -703,9 +750,9 @@ export class ApiService {
       })} )
   }
 
-  GetSalesRep()
+  GetSalesRep(report: any)
   {
-    return this.api.get(this.apilink + "Report/SalesRep", {
+    return this.api.post(this.apilink + "Report/SalesRep",report, {observe: 'response', responseType: 'text',
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })} )
@@ -742,6 +789,15 @@ export class ApiService {
   GetAllSpecials()
   {
     return this.api.get(this.apilink + "Admin/GetAllSpecials", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  ViewCatelogSpecials()
+  {
+    return this.api.get(this.apilink + "User/ViewCatelogSpecials", {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

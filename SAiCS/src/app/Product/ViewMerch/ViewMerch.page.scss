@@ -10,6 +10,18 @@ ion-content {
   color: #08c10f;
 }
 
+#typeSelect
+{
+  border: 1px solid black;
+  width: 180px;
+  height: 35px;
+  border-radius: 3px;
+  --background:white;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+}
+
 #searchProductBar{
     align-self: center;
     --background: #ffffff;
@@ -18,6 +30,9 @@ ion-content {
     --border-radius: 20px;
    
 }
+
+::ng-deep .VATClass{--width: 400px !important;
+  --height: 300px !important;}
 
 /*Filterbox styling*/
 #filterBox{

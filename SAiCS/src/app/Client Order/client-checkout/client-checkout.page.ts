@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, ModalController} from '@ionic/angular';
+import { AlertController, MenuController, ModalController} from '@ionic/angular';
 import { Order } from 'src/app/Models/Order';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
@@ -30,9 +30,11 @@ export class ClientCheckoutPage implements OnInit {
     private api: ApiService,
     private fb: FormBuilder,
     private route:Router,
-    private tmpStorage:TemporaryStorage) { }
+    private tmpStorage:TemporaryStorage,
+    private menu: MenuController,) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo()
     this.GetAddress();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
@@ -93,6 +95,7 @@ export class ClientCheckoutPage implements OnInit {
   DeleteAddress(id: number)
   {
     this.api.DeleteSecondaryAddress(id).subscribe(res => {console.log(res);
+      this.GetAddress();
     })
   }
 
@@ -142,7 +145,7 @@ export class ClientCheckoutPage implements OnInit {
         {
           text: 'Back To Home',
           handler: () => {
-            this.route.navigate(['/landing-page'])
+            this.route.navigate(['./landing-page'])
           }
         },
       ],

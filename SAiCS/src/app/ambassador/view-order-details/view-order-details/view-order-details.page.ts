@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
 import * as FileSaver from 'file-saver';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-order-details',
@@ -14,7 +15,7 @@ export class ViewOrderDetailsPage implements OnInit {
   details: any = []
   subtotal = 0;
 
-  constructor(private router: Router, private api: ApiService) {
+  constructor(private router: Router, private api: ApiService,private menu: MenuController,) {
     router.events
       .subscribe((event: NavigationStart) => {
         if (event.navigationTrigger === 'popstate') {
@@ -24,6 +25,7 @@ export class ViewOrderDetailsPage implements OnInit {
    }
 
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
    this.orderId = JSON.parse(localStorage.getItem('SalesOrderDetails')) 
    this.SalesOrderDetails(this.orderId)
   }

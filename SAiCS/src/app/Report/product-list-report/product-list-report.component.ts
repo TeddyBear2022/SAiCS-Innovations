@@ -108,7 +108,7 @@ export class ProductListReportComponent implements OnInit {
         console.log(this.rowData);
   });
 
-      console.log(type, category);
+  this.reportForm.reset()
       
     }
     else
@@ -131,6 +131,8 @@ export class ProductListReportComponent implements OnInit {
   async download() {
     if(this.rowData.length)
   {
+    this.reportForm.reset();
+    
     var doc = new jsPDF('p', 'pt', 'A4');
     doc.setFontSize(14)
     var img = new Image();

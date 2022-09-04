@@ -80,13 +80,13 @@ export class ViewAmbassadorCartPage implements OnInit {
   RemoveFromCart(item) {
     this.api.RemoveFromCart(item.id).subscribe(res =>{
       console.log(res.body);
-      
+      this.loadCart();
     })
   }
 
   ClearCart() {
     this.api.ClearCart(this.items[0].cartId).subscribe();
-    window.location.reload();
+    this.loadCart();
   }
 
 //Calculations

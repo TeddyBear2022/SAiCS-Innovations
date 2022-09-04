@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -12,14 +12,16 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./ambassador-order-history.page.scss'],
 })
 export class AmbassadorOrderHistoryPage implements OnInit {
-
+  @ViewChild('keywordsInput' ) fileInput: ElementRef<HTMLInputElement>;
   orders: any = []
   session: any
   constructor(public popoverController: PopoverController, private tmpStorage:TemporaryStorage, private modalCtrl: ModalController, private api: ApiService, private menu:MenuController) { }
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
+    this.fileInput.nativeElement.click()
     this.ViewHistory()
+
   }
 
 

@@ -18,12 +18,11 @@ export class LandingPagePage implements OnInit {
   
   merchandise = []
   products: any
-  ItemQuantity: FormGroup
   session: any 
 
   constructor(
   public popoverController: PopoverController, 
-  private api: ApiService, private fb: FormBuilder,
+  private api: ApiService,
   private route:Router,
   private tmpStorage:TemporaryStorage,
   private menu:MenuController){}
@@ -41,14 +40,7 @@ export class LandingPagePage implements OnInit {
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
     this.menu.enable(true, 'client-menu');
-    // this.menu.open('client-menu')
-    // this.menu.close()
     this.GetCatalog()
-
-    this.ItemQuantity = this.fb.group({
-      quantity: new FormControl('', Validators.required)
-    })
-    
   }
 
 
@@ -65,6 +57,7 @@ AddToCart(id)
 {
     
 var item = this.merchandise.find(x => x.id === id)
+if (item.quantity > 0) {
  let newItem = {} as CartItem
  newItem.merchandiseId = item.id 
  newItem.specialId = null
@@ -72,6 +65,9 @@ var item = this.merchandise.find(x => x.id === id)
  newItem.quantity = item.quantity
 
 this.api.ClientAddToCart(this.session[0].id, newItem).subscribe((res) => {console.log(res.body);});
+} else {
+  console.log('Inavlid Form');
+}
 
 }
 
@@ -88,6 +84,12 @@ ViewCart(){
   console.log("cart");
   
 this.route.navigate(['clients-cart'])
+}
+
+ViewItem(id: number)
+{
+  localStorage.setItem('CatalogItem', JSON.stringify(id))
+  this.route.navigate(['/item-details'])
 }
 
 }

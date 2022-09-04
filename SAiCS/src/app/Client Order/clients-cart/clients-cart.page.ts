@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
-
 
 @Component({
   selector: 'app-clients-cart',
@@ -13,149 +12,140 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./clients-cart.page.scss'],
 })
 export class ClientsCartPage implements OnInit {
-
   items: any = [];
   deliveryOption = false;
   vat = 0;
-  session: any 
+  session: any;
 
-  constructor(public popoverController:PopoverController, private tmpStorage:TemporaryStorage,private alertController: AlertController,private api: ApiService, private route:Router) { }
+  constructor(
+    public popoverController: PopoverController,
+    private tmpStorage: TemporaryStorage,
+    private alertController: AlertController,
+    private api: ApiService,
+    private route: Router,
+    private menu: MenuController,
+  ) {}
 
   ngOnInit() {
-    this.session = this.tmpStorage.getSessioninfo()
-    this.ViewCart()
+    this.menu.enable(true, 'client-menu');
+    this.session = this.tmpStorage.getSessioninfo();
+    this.ViewCart();
     this.loadCart();
-    
-    
-}
-async ViewCart()
-{
-  var vatData = await this.api.ClientGetVAT().toPromise();
-  var vatObj = JSON.parse(JSON.stringify(vatData));
-  this.vat = vatObj;
-  console.log(`discount: ${this.vat}`);   
-      
-      
-}
+  }
+  async ViewCart() {
+    var vatData = await this.api.ClientGetVAT().toPromise();
+    var vatObj = JSON.parse(JSON.stringify(vatData));
+    this.vat = vatObj;
+    console.log(`discount: ${this.vat}`);
+  }
 
-loadCart()
-{
-    this.api.ClientCartItems(this.session[0].id).subscribe(res =>{
-      this.items = res
+  loadCart() {
+    console.log(this.session[0].id)
+    this.api.ClientCartItems(this.session[0].id).subscribe((res) => {
+      this.items = res;
+      console.log("Request Sent");
+      
       console.log(this.items);
-      
-    })
-  
-}
+    });
+  }
 
-increment(item) {
-  // the quantity and price and get new subtotal
-  item.quantity += 1;
-  this.api.ClientIncreaseCartItem(item.id).subscribe((res) => {
-    console.log(res.body);
-    
-  })
-}
-
-decrement(item) {
-  // the quantity and price and get new subtotal
-  if (item.quantity > 1) {
-    item.quantity -= 1;
-    this.api.ClientDecreaseCartItem(item.id).subscribe((res) =>{
+  increment(item) {
+    // the quantity and price and get new subtotal
+    item.quantity += 1;
+    this.api.ClientIncreaseCartItem(item.id).subscribe((res) => {
       console.log(res.body);
-      
-    })
-  }
-}
-
-RemoveFromCart(item) {
-  this.api.ClientRemoveFromCart(item.id).subscribe(res =>{
-    console.log(res.body);
-    
-  })
-}
-
-ClearCart() {
-  this.api.ClientClearCart(this.items[0].cartId).subscribe();
-  window.location.reload();
-}
-
-
-// toggleValue()
-// {
-// if(this.deliveryOption == true)
-// this.totalCost += 200
-// else
-// this.totalCost -= 200
-
-// console.log(this.totalCost)
-//   return this.totalCost 
-// }   
-
-//Calculations
-get Subtotal() {
-  return this.items.reduce(
-    (sum, x) => ({
-      quantity: 1,
-      price: sum.price + x.quantity * x.price,
-    }),
-    { quantity: 1, price: 0 }
-  ).price;
-}
-get CalculatedVAT()
-  {
-    return this.vat * this.Subtotal
+    });
   }
 
-  get OrderTotal()
-  {
-    if(this.deliveryOption == true)
-    {
-      return (this.Subtotal + 200) 
+  decrement(item) {
+    // the quantity and price and get new subtotal
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+      this.api.ClientDecreaseCartItem(item.id).subscribe((res) => {
+        console.log(res.body);
+      });
     }
-    else{
-      return this.Subtotal 
-    }
+  }
+
+  RemoveFromCart(item) {
+    this.api.ClientRemoveFromCart(item.id).subscribe((res) => {
+      console.log(res.body);
+      this.loadCart();
+    });
+
+  }
+
+  ClearCart() {
+    this.api.ClientClearCart(this.items[0].cartId).subscribe(res =>{
+      this.items.clear()
+      //this.loadCart();
+    });
     
+ 
   }
 
-  get TotalItems()
-  {
-    return this.items.length
+
+
+  //Calculations
+  get Subtotal() {
+    return this.items.reduce(
+      (sum, x) => ({
+        quantity: 1,
+        price: sum.price + x.quantity * x.price,
+      }),
+      { quantity: 1, price: 0 }
+    ).price;
+  }
+  get CalculatedVAT() {
+    return this.vat * this.Subtotal;
   }
 
-  async presentPopover(event)
-  {
+  get OrderTotal() {
+    if (this.deliveryOption == true) {
+      return this.Subtotal + 200;
+    } else {
+      return this.Subtotal;
+    }
+  }
+
+  get TotalItems() {
+    return this.items.length;
+  }
+
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header:'Thank You For Your Order!',
-      message: 'At SAiCS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintable lifestyle with our top of the range and clinically tested products!',
-      cssClass : 'ThankYouAlert',
+      header: 'Thank You For Your Order!',
+      message:
+        'At SAiCS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintable lifestyle with our top of the range and clinically tested products!',
+      cssClass: 'ThankYouAlert',
       buttons: [
         {
-            text: 'Back to home'
+          text: 'Back to home',
         },
-      ]
+      ],
     });
-    await alert.present();}
- 
-   //Place order
-   PlaceOrder() {
-    var orderdetails = {
-      'itemCount': this.TotalItems, 
-      'vat': this.CalculatedVAT, 'subtotal': this.Subtotal, 'totalCost': this.OrderTotal, 'deliveryOption': this.deliveryOption}
-      localStorage.setItem('checkout', JSON.stringify(orderdetails))
-
-      this.route.navigate(['client-checkout'])
+    await alert.present();
   }
 
-  
-}
+  //Place order
+  PlaceOrder() {
+    var orderdetails = {
+      itemCount: this.TotalItems,
+      vat: this.CalculatedVAT,
+      subtotal: this.Subtotal,
+      totalCost: this.OrderTotal,
+      deliveryOption: this.deliveryOption,
+    };
+    localStorage.setItem('checkout', JSON.stringify(orderdetails));
 
+    this.route.navigate(['client-checkout']);
+  }
+}

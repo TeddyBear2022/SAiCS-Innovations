@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -10,15 +10,20 @@ import { ApiService } from 'src/app/Services/api.service';
   styleUrls: ['./delivery-faq.page.scss'],
 })
 export class DeliveryFaqPage implements OnInit {
-  DeliveryFAQs: FAQ[]
-  showText: any = []
-  constructor(public popoverController: PopoverController, private api:ApiService){}
+  DeliveryFAQs: FAQ[];
+  showText: any = [];
+  constructor(
+    public popoverController: PopoverController,
+    private api: ApiService,
+    private menu: MenuController
+  ) {
+    this.menu.enable(true, 'client-menu');
+  }
 
-  async presentPopover(event)
-  {
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }
@@ -47,20 +52,18 @@ export class DeliveryFaqPage implements OnInit {
   // txtClick4(){
   //   this.display4 = !this.display4
   // }
-  hoverStateIn(index){
+  hoverStateIn(index) {
     this.showText[index] = true;
   }
 
-  hoverStateOut(index){
+  hoverStateOut(index) {
     this.showText[index] = false;
   }
 
-  GetDeliveryFAQ(){
-    this.api.GetDeliveryFAQ().subscribe(data =>
-      {
-        this.DeliveryFAQs = data
-        console.log(data)
-      })
+  GetDeliveryFAQ() {
+    this.api.GetDeliveryFAQ().subscribe((data) => {
+      this.DeliveryFAQs = data;
+      console.log(data);
+    });
   }
-
 }

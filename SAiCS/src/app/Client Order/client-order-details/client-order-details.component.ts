@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class ClientOrderDetailsComponent implements OnInit {
   orderItems: any = [];
   data: any
 
-  constructor(private modalCtrl: ModalController, private api: ApiService) { }
+  constructor(private modalCtrl: ModalController, private api: ApiService, private menu: MenuController,) {
+    this.menu.enable(true, 'client-menu');
+   }
 
   ngOnInit() {
     this.OrderDetails(this.order)

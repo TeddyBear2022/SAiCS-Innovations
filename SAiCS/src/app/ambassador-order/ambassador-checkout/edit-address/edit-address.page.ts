@@ -35,7 +35,7 @@ export class EditAddressPage implements OnInit {
       address: new FormControl('', [Validators.required]),
       city:new FormControl('', [Validators.required]),
       postalCode:new FormControl('', [Validators.required]),
-      phone:['', [Validators.required, Validators.min(10)]],
+      phone:['', [Validators.required,  Validators.minLength(10), Validators.maxLength(12), Validators.min(0)]],
       country: new FormControl('', [Validators.required]),
       province:new FormControl('', [Validators.required])
     });

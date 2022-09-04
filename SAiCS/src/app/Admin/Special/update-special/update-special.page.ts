@@ -105,7 +105,8 @@ export class UpdateSpecialPage implements OnInit {
 
   submitForm()
   {
-    if(this.addForm.valid && this.specialItemsArr.length > 0)
+    if(this.addForm.valid && this.specialItemsArr.length > 0 &&
+      this.addForm.get(['startDate']).value <=this.addForm.get(['endDate']).value)
     {
       let nSpecial = {} as Special;
       nSpecial.specialId = this.existingSpecial

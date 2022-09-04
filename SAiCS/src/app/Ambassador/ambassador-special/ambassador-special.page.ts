@@ -21,13 +21,14 @@ export class AmbassadorSpecialPage implements OnInit {
     private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'ambassador-menu');
     this.session = this.tmpStorage.getSessioninfo()
     this.GetCatalog()
   }
 
   async GetCatalog()
   {
-  var data = await this.api.GetAllSpecials().toPromise()
+  var data = await this.api.ViewCatelogSpecials().toPromise()
   var dataObj = JSON.parse(JSON.stringify(data));
   this.merchandise = dataObj;
   console.log(this.merchandise);
@@ -39,17 +40,18 @@ AddToCart(id)
 {
     
 var item = this.merchandise.find(x => x.id === id)
+if (item.quantity > 0) {
  let newItem = {} as CartItem
  newItem.merchandiseId = item.specialCategory == 1? item.id : null
  newItem.specialId = item.specialCategory == 2? item.id : null
  newItem.price = item.price
  newItem.quantity = item.quantity
- 
-let one = 2 
 
-this.api.AddToCart(one.toString(), newItem).subscribe((res) => {console.log(res.body);});
+this.api.AddToCart(this.session[0].id, newItem).subscribe((res) => {console.log(res.body);});
+} else {
+  console.log('Inavlid Form');
+}
 
-//  console.log(newItem)
 }
 
   incrementQty(index: number) {

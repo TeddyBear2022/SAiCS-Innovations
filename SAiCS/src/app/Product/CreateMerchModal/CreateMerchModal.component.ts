@@ -95,21 +95,23 @@ export class CreateMerchModalComponent implements OnInit {
 
       // create product
      this.api.CreateMerch(nMerch).subscribe((res) =>{
-      if(res.body == 'Item already Exists')
+      console.log(res.body);
+      
+      if(res.body == "Item Created")
       {
         this.isExisting = true
+        
       }
-      else{
+      else if(res.body == "Item Created")
+      {
         this.isExisting = false
         this.presentToast()
-        this.dismissModal()
+        this.modalCtrl.dismiss();
       }
       
      }, (error) => {console.log(error)})
-
      
-     
-    } else {
+    }else {
       console.log('invalid form');
     }
   }
@@ -127,6 +129,6 @@ export class CreateMerchModalComponent implements OnInit {
       duration: 5000,
     });
     toast.present();
-    window.location.reload();
+    //window.location.reload();
   }
 }

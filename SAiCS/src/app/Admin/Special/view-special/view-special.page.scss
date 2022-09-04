@@ -59,3 +59,8 @@ ion-content {--padding-start:0%;}
       #delete{--background: #f44336; text-transform: none; font-style: italic;}
   }
 
+
+::ng-deep .SpecialTypeClass{
+  --width: 400px !important;
+  --height: 300px !important;
+}

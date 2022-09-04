@@ -6,16 +6,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="updateMerch" #localForm = 'ngForm' class="ion-padding">
+  <form [formGroup]="updateMerch" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="ConfirmUpdate()">
    
       <ion-item-group>
-        <ion-label>Product Name:</ion-label>
+        <ion-label style="margin-left: 10%;">Merchandise Name:</ion-label>
         <ion-input formControlName="merchName"></ion-input>
         <span *ngIf="localForm.submitted && updateMerch.controls['merchName'].invalid">Required</span>
       </ion-item-group>
 
       <ion-item-group>
-        <ion-label>Merchandise Type:</ion-label>
+        <ion-label style="margin-left: 10%;">Merchandise Type:</ion-label>
         <select placeholder="Pick" formControlName="merchTypeId">
           <option value="" disabled selected>Select product type</option>
           <option *ngFor="let m of merchTypes" value="{{m.merchTypeId}}">{{m.merchTypeName}}</option>
@@ -24,7 +24,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <ion-label>Merchandise Category:</ion-label>
+        <ion-label style="margin-left: 10%;">Merchandise Category:</ion-label>
         <select placeholder="Pick" formControlName="merchCatId">
           <option value="" disabled selected>Select product type</option>
           <option *ngFor="let m of merchCat" value="{{m.merchCategoryId}}">{{m.merchCategoryName}}</option>
@@ -34,13 +34,13 @@
 
       
       <ion-item-group>
-        <ion-label>Merchandise Price:</ion-label>
-        <ion-input formControlName="price" type="number" min="0"></ion-input>
-        <span *ngIf="localForm.submitted && updateMerch.controls['price'].invalid">Required: The minimum price is R30</span>
+        <ion-label style="margin-left: 10%;">Merchandise Price:</ion-label>
+        <ion-input formControlName="price" type="number" min="0" oninput="this.value = Math.abs(this.value)"></ion-input>
+        <span *ngIf="localForm.submitted && updateMerch.controls['price'].invalid">Required</span>
       </ion-item-group> 
 
       <ion-item-group>
-        <ion-label>Merchandise Image:</ion-label>
+        <ion-label style="margin-left: 10%;">Merchandise Image:</ion-label>
         <ion-input formControlName="merchImage" type="file" (change)="onFileSelected($event)"></ion-input>
       </ion-item-group>
 
@@ -51,7 +51,7 @@
       </ion-item-group>
 
       <ion-item-group>
-        <ion-label>Status:</ion-label>
+        <ion-label style="margin-left: 0%;">Availability:</ion-label>
         <select placeholder="Pick" formControlName="status">
           <option value="" disabled selected>Select status</option>
           <option *ngFor="let m of merchStatus" value="{{m.merchStatusId}}">{{m.merchStatusName}}</option>
@@ -60,7 +60,7 @@
       </ion-item-group>
 
         <ion-item-group style="float: right;">
-          <ion-button id="update" slot="end" (click)="ConfirmUpdate()">Update</ion-button>
+          <ion-button id="update" slot="end" type="submit">Update</ion-button>
           <ion-button id="cancel" slot="end" (click)="dismissModal()">Cancel</ion-button>
         </ion-item-group>
   </form>

@@ -102,6 +102,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   DeleteAddress(id: number)
   {
     this.api.DeleteSecondaryAddress(id).subscribe(res => {console.log(res);
+      this.GetAddress();
     })
   }
 

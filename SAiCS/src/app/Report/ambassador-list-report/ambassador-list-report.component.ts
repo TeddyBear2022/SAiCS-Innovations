@@ -86,7 +86,7 @@ export class AmbassadorListReportComponent implements OnInit {
         console.log(this.rowData);
   });
 
-      console.log(province, ranking);
+ 
       
     }
     else
@@ -109,6 +109,7 @@ export class AmbassadorListReportComponent implements OnInit {
   async download() {
     if(this.reportForm.valid)
     {
+      this.reportForm.reset()
     var doc = new jsPDF('p', 'pt', 'A4');
     doc.setFontSize(14)
     var img = new Image();

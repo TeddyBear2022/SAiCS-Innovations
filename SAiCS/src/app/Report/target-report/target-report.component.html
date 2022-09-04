@@ -1,4 +1,44 @@
-<ion-button id="export">
-  <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
-  <span>Export</span>
-   </ion-button>
+
+<br />
+<ion-grid>
+  <ion-row>
+    <ion-item style="margin-left: 2%; --background:transparent;" lines="none">
+      <ion-label>
+        <h1>Target Report</h1>
+      </ion-label>
+    </ion-item>
+
+  </ion-row>
+  <ion-row >
+    <div class="card">
+      <div class="container">
+        <form class="form-inline" [formGroup]="reportForm" (ngSubmit)="submitForm()">
+          <label for="email">Start Date:</label>
+          <input type="date" formControlName="startDate"/>
+          <label for="email">End Date:</label>
+          <input type="date" formControlName="endDate"/>
+          <ion-button type="submit" id="submitBtn">Generate</ion-button>
+        </form> 
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <ion-button id="export2" (click)="download()">
+      <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+      <span>Export</span>
+    </ion-button>
+  </ion-row>
+  <ion-row>
+    <br/>
+      <ag-grid-angular
+      style="height: 800px; width: 80%;"
+      class="ag-theme-alpine"
+      #specialGrid
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      
+    >
+    </ag-grid-angular>
+  </ion-row>
+</ion-grid>

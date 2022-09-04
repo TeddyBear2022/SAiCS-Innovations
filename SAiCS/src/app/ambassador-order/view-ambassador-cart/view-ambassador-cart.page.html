@@ -123,9 +123,10 @@
                       type="text"
                       [(ngModel)]="x.quantity"
                       [ngModelOptions]="{standalone: true}"
-                      name=""
                       value="{{x.quantity}}"
+                      name=""
                       min="1"
+                      readonly
                     />
 
                     <button

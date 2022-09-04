@@ -38,11 +38,12 @@
   
 
   <ion-row>
-    <ion-select placeholder="Feedback Type" interface="popover" 
-    name="feedbackType" ngModel #feedbackType="ngModel">
-      <ion-select-option value="1">Product</ion-select-option>
-      <ion-select-option value="2" >Ambassador</ion-select-option>
-    </ion-select>
+    <select placeholder="Feedback Type" interface="popover" 
+    name="feedbackType" ngModel #feedbackType="ngModel" (ngModelChange)="PresentFeeback($event)">
+      <option value="" disabled selected>Select Feedback</option>
+      <option value="1">Product</option>
+      <option value="2" >Ambassador</option>
+    </select>
   </ion-row>
 
 <ion-row>
@@ -64,10 +65,13 @@
           <td>{{f.name}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)="presentAlert(f.id)" fill="clear">
+            <ion-button (click)="DeleteFeedback(f.id, feedbackType.value)" fill="clear">
             <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>
+        </tr>
+        <tr *ngIf="ProductFeedback.length == 0">
+          <td colspan="5">No result</td>
         </tr>
       </tbody>
     </table>
@@ -91,10 +95,13 @@
           <td>{{f.name}}</td>
           <td>{{f.description}}</td>
           <td>
-            <ion-button (click)="presentAlert(f.id)" fill="clear">
+            <ion-button (click)="DeleteFeedback(f.id, feedbackType.value)" fill="clear">
             <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
             </ion-button>
           </td>
+        </tr>
+        <tr *ngIf="AmbassadorFeedback.length == 0">
+          <td colspan="5">No result</td>
         </tr>
       </tbody>
     </table>

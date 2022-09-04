@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { Address } from 'src/app/Models/Address';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -22,12 +22,13 @@ export class ClientEditAddressPage implements OnInit {
   existingAddress: number;
   session: any 
   
-  constructor(public popoverController: PopoverController, public alert: AlertController,
+  constructor(public popoverController: PopoverController,private menu: MenuController, public alert: AlertController,
     private api: ApiService,  private fb: FormBuilder,private router: Router, private tmpStorage:TemporaryStorage) { 
       this.existingAddress =  JSON.parse(localStorage.getItem('EditAddressId'));
     }
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo()
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
     this.GetCountries()
@@ -35,7 +36,7 @@ export class ClientEditAddressPage implements OnInit {
       address: new FormControl('', [Validators.required]),
       city:new FormControl('', [Validators.required]),
       postalCode:new FormControl('', [Validators.required]),
-      phone:['', [Validators.required, Validators.min(10)]],
+      phone:['', [Validators.required,  Validators.minLength(10), Validators.maxLength(12), Validators.min(0)]],
       country: new FormControl('', [Validators.required]),
       province:new FormControl('', [Validators.required])
     });

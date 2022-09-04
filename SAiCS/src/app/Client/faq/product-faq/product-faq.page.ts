@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -10,15 +10,20 @@ import { ApiService } from 'src/app/Services/api.service';
   styleUrls: ['./product-faq.page.scss'],
 })
 export class ProductFaqPage implements OnInit {
-  ProductFAQs: FAQ[]
-  showText: any = []
-  constructor(public popoverController: PopoverController, private api:ApiService){}
+  ProductFAQs: FAQ[];
+  showText: any = [];
+  constructor(
+    public popoverController: PopoverController,
+    private api: ApiService,
+    private menu: MenuController
+  ) {
+    this.menu.enable(true, 'client-menu');
+  }
 
-  async presentPopover(event)
-  {
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }
@@ -27,7 +32,6 @@ export class ProductFaqPage implements OnInit {
     this.GetProductFAQ();
   }
 
-   
   // display: boolean = false;
   // display2: boolean = false;
   // display3: boolean = false;
@@ -43,20 +47,18 @@ export class ProductFaqPage implements OnInit {
   // txtClick3(){
   //   this.display3 = !this.display3
   // }
-  hoverStateIn(index){
+  hoverStateIn(index) {
     this.showText[index] = true;
   }
 
-  hoverStateOut(index){
+  hoverStateOut(index) {
     this.showText[index] = false;
   }
 
-  GetProductFAQ(){
-    this.api.GetProductFAQ().subscribe(data =>
-      {
-        this.ProductFAQs = data
-        console.log(data)
-      })
+  GetProductFAQ() {
+    this.api.GetProductFAQ().subscribe((data) => {
+      this.ProductFAQs = data;
+      console.log(data);
+    });
   }
-
 }

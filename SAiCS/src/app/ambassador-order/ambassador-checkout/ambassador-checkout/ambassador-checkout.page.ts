@@ -31,7 +31,7 @@ export class AmbassadorCheckoutPage implements OnInit {
       address: ['', [Validators.required]],
       city:['', [Validators.required]],
       postalCode:['', [Validators.required]],
-      phone:['', [Validators.required, Validators.min(10)]],
+      phone:['', [Validators.required, Validators.minLength(10), Validators.maxLength(12), Validators.min(0)]],
       country: ['', [Validators.required]],
       province:['', [Validators.required]]
     });

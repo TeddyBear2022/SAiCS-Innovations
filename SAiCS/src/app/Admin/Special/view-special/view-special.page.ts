@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { MaintainSpecialTypeComponent } from '../maintain-special-type/maintain-special-type.component';
 
 @Component({
   selector: 'app-view-special',
@@ -16,7 +17,8 @@ export class ViewSpecialPage implements OnInit {
   constructor( public popoverController: PopoverController,
     private api: ApiService, private router: Router,
     public alertController: AlertController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private modalCtrl: ModalController,
     ) { }
 
   ngOnInit() {
@@ -36,9 +38,15 @@ export class ViewSpecialPage implements OnInit {
   }
 
 
-  createSpecial()
+ async createSpecialType()
   {
-
+    const modal = await this.modalCtrl.create({
+      component: MaintainSpecialTypeComponent,
+      cssClass: 'SpecialTypeClass',
+      
+    });
+  
+    await modal.present();
   }
 
   updateSpecial(id: number)
