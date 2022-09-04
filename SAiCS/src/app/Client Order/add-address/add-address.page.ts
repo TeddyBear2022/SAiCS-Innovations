@@ -17,6 +17,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 export class AddAddressPage implements OnInit {
   deliveryOption = false;
   newAddress: FormGroup;
+  isExisting: boolean = false;
   OdrSmry: any;
   countries: any;
   provinces: any;
@@ -80,11 +81,28 @@ export class AddAddressPage implements OnInit {
 
       this.api.NewAddress(address).subscribe((res) => {
         console.log(res.body);
+        if(res.body == "Exists")
+        {
+          this.ErrorAlert()
+        }
+        else{this.router.navigate(['/client-checkout']); this.newAddress.reset()}
+
+
       });
-      this.router.navigate(['/client-checkout']);
+      
     } else {
       console.log('Invalid Form');
     }
+  }
+
+  async ErrorAlert() {
+    const alert = await this.alert.create({
+      header: 'Invalid Form',
+      message: "Address Already Exists",
+      buttons: [{ text: 'OK' }],
+    });
+
+    await alert.present();
   }
 
   async presentPopover(event) {

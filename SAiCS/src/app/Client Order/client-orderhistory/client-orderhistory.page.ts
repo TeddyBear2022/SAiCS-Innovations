@@ -18,6 +18,7 @@ export class ClientOrderhistoryPage implements OnInit {
   orders: any = [];
   session: any;
   @ViewChild('All' ) fileInput: ElementRef;
+  @ViewChild('clickOnView') clickOnView: ElementRef;
 
   constructor(
     private modalCtrl: ModalController,
@@ -31,6 +32,10 @@ export class ClientOrderhistoryPage implements OnInit {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo();
     this.ViewHistory();
+  }
+
+  ionViewDidEnter(){
+    document.getElementById("All").style.display = 'flex';
   }
 
   openOrder(evt, cityName) {

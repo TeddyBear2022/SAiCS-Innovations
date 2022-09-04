@@ -206,7 +206,10 @@ export class ApiService {
 
   GetAllAmbassadors(): Observable<AmbassadorVM[]>
   {
-    return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors')
+    return this.api.get<AmbassadorVM[]>(this.apilink + 'User/GetAllAmbassadors', {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   
@@ -296,8 +299,16 @@ export class ApiService {
   {
     return this.api.get(this.apilink + "User/GetVAT",{headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
-})})
+   })})
   }
+
+  AgentAccountInfo(id: string)
+  {
+    return this.api.get(this.apilink + `User/AgentAccountInfo?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+   })})
+  }
+
 
   UpdateVAT(id: number, amount: number)
   {
@@ -308,12 +319,12 @@ export class ApiService {
   }
 
   
-  ClientGetVAT()
-  {
-    return this.api.get(this.apilink + "ClientOrder/GetVAT",{headers: new HttpHeaders({
-      Authorization: 'Bearer ' + localStorage.getItem("token")
-})})
-  }
+//   ClientGetVAT()
+//   {
+//     return this.api.get(this.apilink + "ClientOrder/GetVAT",{headers: new HttpHeaders({
+//       Authorization: 'Bearer ' + localStorage.getItem("token")
+// })})
+//   }
 
 
   UploadImage(file: FormData)
@@ -327,10 +338,16 @@ export class ApiService {
   // }
   //View Ambassadors
   ViewAmbassadors(credentials: credentialsVM):Observable<any[]>{
-    return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials)
+    return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
   ViewClients(credentials: credentialsVM){
-    return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials)
+    return this.api.post(this.apilink+ 'Ambassador/ViewClients', credentials, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   //Iteration 6 Amanda
@@ -440,7 +457,8 @@ export class ApiService {
 
   ClientClearCart(id: number)
   {
-    return this.api.delete(this.apilink + `ClientOrder/ClearCart?cartID=${id}`,{
+    return this.api.delete(this.apilink + `ClientOrder/ClearCart?cartID=${id}`,{observe: 'response', responseType: 'text'
+    ,
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
     })})
@@ -522,7 +540,10 @@ export class ApiService {
   }
 
   GetCourseDetails(id=this.updateCourseId){
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`)
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
   GetAccessCourseDetails(){

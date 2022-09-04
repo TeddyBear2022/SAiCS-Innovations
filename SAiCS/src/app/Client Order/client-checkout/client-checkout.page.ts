@@ -19,9 +19,11 @@ export class ClientCheckoutPage implements OnInit {
   OdrSmry: any;
   session: any
   isModalOpen = false;
+  AgentAccount: any
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
+    
   }
 
    constructor(public alertController: AlertController, 
@@ -47,6 +49,11 @@ export class ClientCheckoutPage implements OnInit {
       pdfFile:['', [Validators.required]]
     });
   }
+  
+  ionViewDidEnter(){
+    this.GetAddress();
+    this.AgentAccountInfo()
+  }
 
   toggleValue() {
     var deliverValue = JSON.parse(localStorage.getItem('checkout'))
@@ -70,6 +77,13 @@ export class ClientCheckoutPage implements OnInit {
     this.api.GetAddress(this.session[0].id).subscribe((data) => {
       this.userAddress = data;
       console.log(this.userAddress);
+    });
+  }
+
+  AgentAccountInfo() {
+    this.api.AgentAccountInfo(this.session[0].id).subscribe((data) => {
+      this.AgentAccount = data;
+      console.log(this.AgentAccount);
     });
   }
 
@@ -116,25 +130,35 @@ export class ClientCheckoutPage implements OnInit {
              order.proofOfPayment = this.selectedFile
              this.api.ClientCheckout(order).subscribe(res => {
                console.log(res.body);
+               if(res.body == "Order Placed")
+               {
+                this.checkout.get('address').setValidators(Validators.required);
+                this.checkout.get('address').updateValueAndValidity();
+    
+                this.showAlert();
+               }
+               else 
+               {
+                this.ErrorAlert()
+               }
                
              });
-             console.log(order);
- 
-             this.checkout.get('address').setValidators(Validators.required);
-             this.checkout.get('address').updateValueAndValidity();
- 
-             var orderdetails = {
-               'itemCount': 0,
-               'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
-               localStorage.setItem('checkout', JSON.stringify(orderdetails))
-         
- 
-             this.showAlert();
+             //console.log(order)
  
      } else {
        console.log('invalid form');
      }
    }
+
+   async ErrorAlert() {
+    const alert = await this.alert.create({
+      header: 'OOPS!',
+      message: "Something went wrong during the processing of this order. Please try again!",
+      buttons: [{ text: 'OK' }],
+    });
+
+    await alert.present();
+  }
 
   async showAlert() {
     const alert = await this.alert.create({
@@ -145,6 +169,10 @@ export class ClientCheckoutPage implements OnInit {
         {
           text: 'Back To Home',
           handler: () => {
+            var orderdetails = {
+              'itemCount': 0,
+              'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
+              localStorage.setItem('checkout', JSON.stringify(orderdetails))
             this.route.navigate(['./landing-page'])
           }
         },

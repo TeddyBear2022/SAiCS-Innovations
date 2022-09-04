@@ -14,8 +14,9 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 export class ClientsCartPage implements OnInit {
   items: any = [];
   deliveryOption = false;
-  vat = 0;
+  vat:any ;
   session: any;
+  ItemsLoaded: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
@@ -29,14 +30,20 @@ export class ClientsCartPage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo();
-    this.ViewCart();
+    
     this.loadCart();
+    this.ViewCart();
   }
-  async ViewCart() {
-    var vatData = await this.api.ClientGetVAT().toPromise();
-    var vatObj = JSON.parse(JSON.stringify(vatData));
-    this.vat = vatObj;
-    console.log(`discount: ${this.vat}`);
+
+
+  ViewCart() {
+    let amount
+   this.api.GetVAT().subscribe((res) =>{
+    amount = res
+    this.vat = amount.amount;
+      console.log(this.vat);
+    })
+    
   }
 
   loadCart() {
@@ -47,6 +54,8 @@ export class ClientsCartPage implements OnInit {
       
       console.log(this.items);
     });
+
+    this.ItemsLoaded = true
   }
 
   increment(item) {
@@ -76,11 +85,11 @@ export class ClientsCartPage implements OnInit {
   }
 
   ClearCart() {
-    this.api.ClientClearCart(this.items[0].cartId).subscribe(res =>{
-      this.items.clear()
+    this.api.ClientClearCart(this.items[0].cartId).subscribe((res) =>{
+      console.log(res.body);
       //this.loadCart();
     });
-    
+    this.items.length = 0
  
   }
 
@@ -96,6 +105,7 @@ export class ClientsCartPage implements OnInit {
       { quantity: 1, price: 0 }
     ).price;
   }
+
   get CalculatedVAT() {
     return this.vat * this.Subtotal;
   }

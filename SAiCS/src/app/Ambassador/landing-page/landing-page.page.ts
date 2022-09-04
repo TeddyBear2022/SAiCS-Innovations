@@ -52,6 +52,8 @@ export class LandingPagePage implements OnInit {
     console.log(this.merchandise);
   }
 
+  public setBorderColor: boolean = false;
+  selectedItem;
   AddToCart(id) {
     var item = this.merchandise.find((x) => x.id === id);
     if (item.quantity > 0) {
@@ -63,8 +65,11 @@ export class LandingPagePage implements OnInit {
       this.api.AddToCart(this.session[0].id, newItem).subscribe((res) => {
         console.log(res.body);
       });
+      item.quantity = 0
     } else {
       console.log('Inavlid Form');
+      this.setBorderColor = true;
+      this.selectedItem = item.id
     }
   }
 
@@ -78,11 +83,33 @@ export class LandingPagePage implements OnInit {
 
   incrementQty(index: number) {
     this.merchandise[index].quantity += 1;
+
+    if(this.merchandise[index].quantity == 0)
+    {
+    this.setBorderColor = true;
+    this.merchandise[index].id
+    }
+    else
+    {
+      this.setBorderColor = false;
+    this.merchandise[index].id
+    }
   }
 
   decrementQty(index: number) {
     if (this.merchandise[index].quantity > 0)
       this.merchandise[index].quantity -= 1;
+
+      if(this.merchandise[index].quantity == 0)
+      {
+      this.setBorderColor = true;
+      this.merchandise[index].id
+      }
+      else
+      {
+        this.setBorderColor = false;
+      this.merchandise[index].id
+      }
   }
 
   viewCart(merchandise) {
@@ -93,5 +120,18 @@ export class LandingPagePage implements OnInit {
 {
   localStorage.setItem('CatalogItem', JSON.stringify(id))
   this.router.navigate(['/product-details'])
+}
+
+SelectByCategory(e)
+{
+  let value = e.target.value
+  //this.api.ViewCatalog()
+console.log("vakue");
+
+  if(value == 5)
+  {
+    console.log(value);
+    
+  }
 }
 }

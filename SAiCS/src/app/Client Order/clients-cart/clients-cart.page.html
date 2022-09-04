@@ -144,7 +144,7 @@
             </tbody>
           </table>
 
-          <div *ngIf="items == undefined || items.length == 0" id="emptyCard">
+          <div *ngIf="ItemsLoaded == true && items == undefined || items.length == 0" id="emptyCard">
             <div
               style="
                 justify-content: center;
@@ -223,6 +223,7 @@
             </ion-item>
             <ion-item lines="none">
               <ion-input
+                readonly
                 *ngIf="deliveryOption"
                 id="deliveryInput"
                 type="text"

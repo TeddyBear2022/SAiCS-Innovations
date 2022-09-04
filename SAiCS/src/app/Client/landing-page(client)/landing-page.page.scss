@@ -96,6 +96,10 @@ color: black;
   --ion-color-secondary-tint: #f6f6f6;
 }
 
+.InvalidInput {
+  border: 2px solid #f44336;
+}
+
 ion-select{
 border: solid 1pt black;
 border-radius: 12px !important;

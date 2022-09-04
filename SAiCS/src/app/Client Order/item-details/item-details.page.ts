@@ -18,7 +18,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class ItemDetailsPage implements OnInit {
   Item: any;
-  ItemFeedback: any;
+  ItemFeedback: any = [];
   ItemId: any;
   ItemQuantity = 0;
   session: any;

@@ -71,6 +71,9 @@
       <p>{{i.description}}
       </p>
      </ion-card>
+     <ion-card *ngIf="ItemFeedback.length == 0">
+      <h6>There are currentlty no reviews</h6>
+     </ion-card>
     </div>
 
 </ion-content>
