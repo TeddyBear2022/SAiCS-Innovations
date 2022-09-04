@@ -35,6 +35,7 @@ export class ViewFaqPage implements OnInit {
    dbCategories=[];
    filter:boolean = false // part of fixed
    showCategory
+   categorySelected = false
 
 
    //new faq method
@@ -122,9 +123,11 @@ export class ViewFaqPage implements OnInit {
   }
    
    FAQType(){
-     this.chosenfaqtype = this.faqType   
+     this.chosenfaqtype = this.faqType 
+     
     if(this.faqType != null){
-      this.filter = true
+      // this.filter = true
+      
       for(var category of this.FAQs){
         if(category.faqtypeId == this.faqType){
           this.faqCategory = category.faqcategories
@@ -139,9 +142,10 @@ export class ViewFaqPage implements OnInit {
 
   FAQCategory(){
   this.chosenCategory = this.category;
+  
   if(this.category != null && this.faqType != null){
     this.filter = true
-
+    
     for(var filterfaqs of this.faqCategory){
       if(filterfaqs.faqcategoryId == this.category){
         this.filteredFAQS = filterfaqs.faqs
@@ -149,9 +153,12 @@ export class ViewFaqPage implements OnInit {
     }
    var index = this.faqCategory.findIndex(x=> x.faqcategoryId == this.category)
    this.categoryHeading = this.faqCategory[index].categoryName
+   this.categorySelected = true
+   console.log(this.filteredFAQS)
   }
  else{
   this.filter = false
+  this.categorySelected = false
   console.log(this.filter)
  }
   }

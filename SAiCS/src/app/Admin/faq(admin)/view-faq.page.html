@@ -24,6 +24,11 @@
 <ion-content >
   <ion-grid>
     <br>
+    <ion-row>
+      <ion-col></ion-col>
+    <div align="center"><h1>FAQs</h1></div>
+    <ion-col></ion-col>
+  </ion-row>
   <ion-row>
     <ion-button fill="clear" data-backdrop="static" data-keyboard="false" (click)="createFAQ()" >
       <ion-icon name="add-circle-outline" size="large" id="addIcon" ></ion-icon>
@@ -44,14 +49,23 @@
     <ion-select placeholder="Category" [(ngModel)]="category" (ionChange)="FAQCategory()" interface="popover" >
        <ion-select-option *ngFor="let dbCategory of faqCategory" value="{{dbCategory.faqcategoryId}}">{{dbCategory.categoryName}}</ion-select-option>
     </ion-select>
-    <a (click)="MaintainCategory()"><u> Maintain Category?</u></a>
+    <a style="color: #0000EE;" (click)="MaintainCategory()"><u> Maintain Category?</u></a>
   </ion-row>
 
   <section *ngIf="filter">
+    
+    
   <section >
     <h2>{{categoryHeading}}</h2>
     <ion-row>
       <br>
+      <ion-row *ngIf="filteredFAQS.length == 0">
+       
+      <div align="center" style="margin-left: 30%;" ><br><img src="/assets/Empty3.gif" height="400px" width="600px"><br>
+        
+      </div>
+      <h2 style="margin-left: 60%;" >Empty</h2>
+    </ion-row>
       <ng-container *ngFor="let FAQ of filteredFAQS" >
         <ng-container >
       <ion-card>
@@ -74,9 +88,15 @@
         </ion-item>
       <!-- </div> -->
       </ion-card>
-    </ng-container>
-    </ng-container>
+        </ng-container>
+        
+    </ng-container >
+     
     </ion-row>
+    <!-- <ion-row *ngIf="filter">
+      
+    </ion-row> -->
+    
   </section>
 </section>
 </ion-grid>
