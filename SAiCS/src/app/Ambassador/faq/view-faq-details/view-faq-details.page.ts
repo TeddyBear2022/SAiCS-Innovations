@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { FAQ } from 'src/app/Models/FAQ';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
@@ -15,7 +16,8 @@ export class ViewFaqDetailsPage implements OnInit {
   showText: any = []
   constructor(public popoverController: PopoverController, 
     private api:ApiService, 
-    private menu:MenuController){}
+    private menu:MenuController, 
+    private route:Router){}
 
   async presentPopover(event)
   {
@@ -43,6 +45,8 @@ export class ViewFaqDetailsPage implements OnInit {
     this.showText[index] = false;
   }
 
-  
+  Back(){
+   this.route.navigate(['view-ambassador-faq']) 
+  }
 
 }
