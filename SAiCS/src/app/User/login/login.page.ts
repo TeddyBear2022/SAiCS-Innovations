@@ -97,12 +97,12 @@ export class LoginPage implements OnInit {
         
         if (response.status === 404) {
           
-           this.alertNotif("User doesnt exist or wrong password","Opps!")
+           this.alertNotif("User doesnt exist or wrong password","Oops!")
           // this.DissmissLoading()
            console.log("User doesnt exist or wrong password")
         }
         if (response.status === 500){
-          this.alertNotif("Encountered an error","Opps!")
+          this.alertNotif("Encountered an error","Oops!")
           // this.DissmissLoading()
           console.log("Encountered an error")
         }

@@ -32,7 +32,8 @@
       </ion-row>
       <br><br>
       <ion-row>
-        <div align="center" >
+        <!-- <div align="center" > -->
+          <ng-container>
           <ion-card *ngFor="let f of faqCategories">
             <ion-card-header>
             </ion-card-header>
@@ -45,7 +46,8 @@
               <ion-label (click)="showFAQ(f.faqcategoryId)"><u>Learn more</u></ion-label>
             </ion-footer>
           </ion-card>
-        </div>
+        </ng-container>
+        <!-- </div> -->
 
       </ion-row>
     </ion-grid>

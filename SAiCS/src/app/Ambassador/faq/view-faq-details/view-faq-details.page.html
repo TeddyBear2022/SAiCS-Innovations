@@ -34,10 +34,8 @@
 
   <ion-card class="accfaq-margin">
     <ion-card-header>
-      <ion-card-title><ion-label >Add Category name</ion-label></ion-card-title>
+      <ion-card-title><ion-label *ngIf="DeliveryFAQs != undefined">{{DeliveryFAQs[0].faqcategory.categoryName}}</ion-label></ion-card-title>
     </ion-card-header>
-
-
     <br>
 
     <ion-card-content>

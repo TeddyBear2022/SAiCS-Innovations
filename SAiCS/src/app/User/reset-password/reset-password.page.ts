@@ -58,6 +58,7 @@ export class ResetPasswordPage implements OnInit {
       //Log
       this.resetPwdToken = data.token.toString()
       console.log(data)
+      this.OtpSent("A SMS message with the OTP pin has been sent to the associated account's phone number","")
 
       if(data != null){
       this.EmailSent = false
@@ -88,6 +89,10 @@ export class ResetPasswordPage implements OnInit {
     
   }
 
+  ResendOTP(){
+    this.EmailResetPassword()
+  }
+
   ValidateOTP(){
     if(this.OTPForm.valid == true){
       console.log(this.OTPForm.value)
@@ -103,11 +108,11 @@ export class ResetPasswordPage implements OnInit {
         },(response: HttpErrorResponse) => {
         
         if (response.status === 404) {
-          this.alertNotif("User doesnt exist!","Opps!")
+          this.alertNotif("Incorrect OTP pin. Please enter the correct OTP pin!","Oops!")
           console.log("Incorrect OTP pin")
         }
         if (response.status === 500){
-          this.alertNotif("Encountered an error","Opps!")
+          this.alertNotif("Encountered an error","Oops!")
           console.log("Encountered an error")
         }
         if (response.status === 400){
@@ -166,6 +171,16 @@ export class ResetPasswordPage implements OnInit {
       buttons: [{text: 'OK', handler: ()=>{
         this.route.navigate(['home'])
       }}]
+    });
+
+    await alert.present();
+  }
+
+  async OtpSent(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
     });
 
     await alert.present();
