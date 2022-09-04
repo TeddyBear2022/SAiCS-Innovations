@@ -7,7 +7,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./view-faq.page.scss'],
 })
 export class ViewFaqPage implements OnInit {
-
+  
   constructor(private menu:MenuController) { }
 
   ngOnInit() {
