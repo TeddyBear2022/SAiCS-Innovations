@@ -121,7 +121,7 @@ export class MaintainCategoryModalComponent implements OnInit {
       cssClass: 'messageAlert',
       header: 'Success',
       // subHeader: 'Subtitle',
-      message: 'Category Has been successfully deleted',
+      message: 'Category has been successfully deleted',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
         window.location.reload() 
@@ -139,6 +139,7 @@ export class MaintainCategoryModalComponent implements OnInit {
       message: 'Category has been successfully created',
       buttons: [{text: 'Ok', handler: ()=> {
         this.modal.dismiss();
+        window.location.reload()
          
       }
     }]

@@ -90,7 +90,7 @@ export class AddFAQModalComponent implements OnInit {
   async Success() {
     const alert = await this.alert.create({
       cssClass: 'messageAlert',
-      message: 'FAQ Has been successfully created',
+      message: 'FAQ has been successfully created',
       buttons: [{text: 'Ok', handler: ()=> { 
       }
     }]
