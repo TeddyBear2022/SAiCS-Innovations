@@ -9,37 +9,44 @@
 
 <ion-content>
   <ion-grid>
-  <!-- <form [formGroup]="UpdateQuiz" #localForm = 'ngForm' >    -->
+  <form [formGroup]="UpdateQuiz" #UpdatelocalForm = 'ngForm' >   
     <br>
     <ion-row>
-      <form [formGroup]="UpdateQuiz" #updateQuizlocalForm = 'ngForm' >
-      <div>
+      <!-- <form [formGroup]="UpdateQuiz" #updateQuizlocalForm = 'ngForm' > -->
+      <!-- <div> -->
+        <ion-col></ion-col>
       <ion-col>
         <div>
         <ion-label>Quiz Name:</ion-label>
          <ion-input formControlName="updatequizname" type="text" placeholder="Enter quiz name"></ion-input>
-        <span *ngIf="quizError">*Required</span>
+        <span *ngIf="UpdatelocalForm.submitted &&  UpdateQuiz.controls['updatequizname'].invalid">*Required</span>
       </div>
       </ion-col>
-    </div>
-  </form>
+      <ion-col></ion-col>
+    <!-- </div> -->
+  <!-- </form> -->
     </ion-row>
 
     
       <form [formGroup]="UpdateQuestionBankForm" #updatelocalForm = 'ngForm' >
-      
-      <select id="UorD" formControlName="updateordelete" (change)="UpdateDeleteOption()">
+      <ion-row>
+      <ion-col></ion-col>
+      <select id="UorD" formControlName="updateordelete" placeholder="Please select to update or delete a question" (change)="UpdateDeleteOption()">
+        <option value= null disabled >Select A Option</option>
         <option value="1">Update Existing Questions</option>
         <option value="2">Adding More Questions</option>
       </select>
+      <ion-col></ion-col>
+    </ion-row>
       
       
 <br>
             <!-- Updating questions -->
             <ion-row id="Questions" *ngIf="this.UpdateQuestionBankForm.get(['updateordelete']).value== 1">
-              <div>
+              <!-- <div> -->
+                <ion-col></ion-col>
               <ion-col>
-                <select formControlName="questionChosen"  (change)="QuestionChosen()">
+                <select id="QuestionChosen" formControlName="questionChosen"  (change)="QuestionChosen()">
                   <option value= null disabled >Select A Question</option>
                   <option  *ngFor="let question of UpdateQuestionBankInfo;let i = index" value="{{i}}">{{question.questions}}</option>
                 </select>
@@ -64,17 +71,19 @@
                <span *ngIf="updatelocalForm.submitted && UpdateQuestionBankForm.controls['updateoption3'].invalid">*Required</span>
                <br>
                <ion-button  type="submit" (click)="UpdateQuestionBank()">Update</ion-button>
-               <ion-button type="submit" (click)="DeleteCourseQuestion()">Delete</ion-button>
+               <ion-button color="danger" type="submit" (click)="DeleteCourseQuestion()">Delete</ion-button>
               </div>
               </ion-col>
-            </div>
+              <ion-col></ion-col>
+                          <!-- </div> -->
               </ion-row>
             </form>
                <br> <br>
       <form [formGroup]="newQuestionBankForm" #localForm = 'ngForm' >
       <!-- Adding more question -->
       <ion-row id="Questions" *ngIf="this.UpdateQuestionBankForm.get(['updateordelete']).value== 2">
-        <div>
+        <!-- <div> -->
+          <ion-col></ion-col>
         <ion-col >
 <br>
         <ion-label>Question:</ion-label>
@@ -97,21 +106,25 @@
          <br>
          <ion-button type="submit" (click)="AddToQuestionBank()">Add</ion-button>
         </ion-col>
-      </div>
+        <ion-col></ion-col>
+      <!-- </div> -->
         </ion-row>
          <br> <br>
          <ion-row>
         <br>
       </ion-row>
     </form>
-        <ion-buttons>
-          <ion-button type="submit" (click)="Update()" id="ModalBlueButtons">
-            Save changes
-          </ion-button>
-          <ion-button type="submit" id="ModalRedButtons" (click)="dismissModal()">
-            Close
-          </ion-button>
-        </ion-buttons>
-  <!-- </form>  -->
+    <br><br>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col></ion-col>
+        <ion-button type="submit" (click)="Update()" id="ModalBlueButtons">
+          Save changes
+        </ion-button>
+        <ion-button type="submit" color="danger" (click)="dismissModal()">
+          Close
+        </ion-button>
+      </ion-row>
+  </form> 
 </ion-grid>  
 </ion-content>

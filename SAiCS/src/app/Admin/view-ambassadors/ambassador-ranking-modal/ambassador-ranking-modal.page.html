@@ -14,7 +14,7 @@
 </ion-row>
 <ion-row>
   <ion-select placeholder="Select a ranking" interface="popover" (ionChange)="SelectedAmbassadorRanking($event)">
-    <ion-select-option >Select a ranking</ion-select-option>
+    <ion-select-option disabled="true" >Select a ranking</ion-select-option>
     <ion-select-option *ngFor="let r of ranking" value="{{r.ambassadorTypeId}}">{{r.ambassadorTypeName}}</ion-select-option>
   </ion-select>
 </ion-row>

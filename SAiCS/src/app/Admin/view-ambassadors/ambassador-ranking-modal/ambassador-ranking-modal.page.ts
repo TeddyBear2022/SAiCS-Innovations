@@ -56,7 +56,7 @@ export class AmbassadorRankingModalPage implements OnInit {
         console.log(data)
         
         this.api.GetAmbassadorRankings().subscribe(data => {
-          this.alertNotif("Ambassador ranking has been updates","Success")
+          this.alertNotif("Ambassador ranking has been updated","Success")
           this.ranking = data
         })
       })

@@ -101,9 +101,7 @@ export class ApiService {
     return this.api.post(this.apilink+"User/getUserSessionInfo", logindetails)
   }
   
-  SearchAmbassador(searchInput:string){
-    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`,this.httpOptions)
-  }
+ 
 
   //get ambassador rankings
   GetAmbassadorRankings(){
@@ -636,7 +634,7 @@ export class ApiService {
     return this.accessCourseID;
   }
 
-  GetCourseDetails(id=this.updateCourseId){
+  GetCourseDetails(){
     var specicCourse = localStorage.getItem('updateCourse')
     var courseID = specicCourse.replace(',','')
     return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseID}`)
@@ -771,6 +769,13 @@ export class ApiService {
     })
   }
 
+  SearchAmbassador(searchInput:string){
+    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
 
   SearchCurrentAgents(searchInput:string, userid:string){
     return this.api.get(this.apilink+`Ambassador/SearchCurrentAgents?userid=${userid}&searchInput=${searchInput}`,{
@@ -1159,4 +1164,13 @@ export class ApiService {
       })
     })
   }
+
+  SearchAmbassadorReg(searchInput:string){
+    return this.api.get(this.apilink+`Admin/SearchAmbassadorReg?nameorsurname=${searchInput}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  // 
 }

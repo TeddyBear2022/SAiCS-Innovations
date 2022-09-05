@@ -22,15 +22,19 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
   <br>
   <h1 align="center">View Ambassadors</h1>
   <br>
+  
+  <!-- <ion-button (click)="MaintainAmbRankings()">maintain ambassador ranking discount</ion-button> -->
   <ion-item lines="none" >
     <div align="center" slot="end">
   <ion-input  id="searchbar"
-   placeholder="Search ambassador..."
+   placeholder="Search ambassador,Eg John"
   (ionChange)="SearchAmbassador($event)">
-</ion-input>
+</ion-input><br>
+<label style="color:#0000EE ;" (click)="MaintainAmbRankings()"><u>Maintain Ambassador Discounts</u></label>
 </div>
 <ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
 </ion-item>
@@ -51,7 +55,7 @@
     <td>{{a.user.name + " "+ a.user.surname}}</td>
     <td >{{a.ambassadorType.ambassadorTypeName}}</td>
     <td>{{a.user.email}}</td>
-    <td>{{a.user.phoneNumber}}</td>
+    <td>+27{{a.user.phoneNumber}}</td>
     </tr>
     <tr>
     </tbody>
@@ -60,4 +64,5 @@
     <div align="center" *ngIf="noResults == true">
     <img src="./assets/noresultsfound3.gif" alt="No results found">
     </div>
+  </ion-grid>
 </ion-content>
