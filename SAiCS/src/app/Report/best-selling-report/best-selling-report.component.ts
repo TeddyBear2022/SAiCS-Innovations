@@ -8,6 +8,8 @@ import 'jspdf-autotable';
 import autoTable from 'jspdf-autotable';
 import { ChartType, ChartOptions, } from 'chart.js';
 import Chart from 'chart.js/auto'
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-best-selling-report',
@@ -100,48 +102,9 @@ export class BestSellingReportComponent implements OnInit {
         options: {
           responsive: true,
           indexAxis: 'y',
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              text: 'Chart.js Bar Chart'
-            }
-          }}
+          }
       });
-    // this.barChart = new Chart(this.barCanvas.nativeElement, {
-    //   type: 'bar',
-    //   data: {
-    //     labels: [data.name],
-    //     datasets: [
-    //       {
-    //         label: 'My First Dataset',
-    //         data: [data.quantity],
-    //         backgroundColor: [
-    //           'rgb(255, 99, 132)',
-    //           'rgb(54, 162, 235)',
-    //           'rgb(255, 205, 86)',
-    //         ],
-    //       },
-    //       ,
-    //     ],
-    //   },
-    //   options: {
-    //     indexAxis: "y",
-    //     scales: {
-    //       y: {
-    //         type: 'linear',
-    //         ticks: {
-    //           color: "blue",
-    //           font: {
-    //             size: 24
-    //           },
-    //         },
-    //       }
-    //     }
-    //   }
-    // });
+   
   }
 
   async ErrorAlert(message: string) {
@@ -157,43 +120,25 @@ export class BestSellingReportComponent implements OnInit {
   async download() {
     if(this.rowData.length)
     {
-      this.reportForm.reset()
-    var doc = new jsPDF('p', 'pt', 'A4');
-    doc.setFontSize(14);
-    var img = new Image();
-    img.src = 'assets/SAICS no bg.png';
-
-    autoTable(doc, {
-      head: [
-        ['MERCHANDISE NAME', 'PRICE', 'QUANTITY', 'TOTAL SALES'],
-      ],
-      body: this.rowData.map((o) => {
-        return [
-          o.name,
-          this.cp.transform(o.price, 'ZAR', 'symbol-narrow'),
-          o.quantity,
-          this.cp.transform(o.total, 'ZAR', 'symbol-narrow'),
-        ];
-      }),
-      margin: { top: 110, bottom: 50 },
-      didDrawPage: function (data) {
-        doc.text('Monthly Sales Report', 155, 50),
-        doc.text(`Generated on ${new Date().toDateString()}`, 155, 70),
-        doc.addImage(img, 'png', -40, -60, 250, 250);
-      },
-      headStyles: {
-        fillColor: '#ffffff',
-        textColor: '#333333',
-      },
-      showHead: 'everyPage',
-    });
-
-    doc.save('Sales Report.pdf');
     
+    // var img = new Image();
+    // img.src = 'assets/SAICS no bg.png';
+
+   
+     html2canvas(document.querySelector("#myChart")).then((canvas: HTMLCanvasElement)  => {
+      var pdfFile = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
+      var imgData  = canvas.toDataURL("image/jpeg", 1.0);
+      pdfFile.text('Monthly Sales Report', 155, 50),
+      pdfFile.text(`Generated on ${new Date().toDateString()}`, 155, 70),
+      pdfFile.addImage(imgData,0,0,100, 100);
+      pdfFile.save('Best Selling Report.pdf');})
     //window.location.reload();
   }
-  else{
+  else
+  {
     this.ErrorAlert("Generate Report before exporting")
   }
 }
 }
+
+
