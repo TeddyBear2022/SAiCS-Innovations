@@ -32,6 +32,7 @@ export class UpdateQuizModalPage implements OnInit {
   }
   
   ngOnInit() {
+    console.log(this.UpdateQuizInfo)
 
     //Update Quiz Question
     this.UpdateQuestionBankForm = new FormGroup({
@@ -57,25 +58,8 @@ export class UpdateQuizModalPage implements OnInit {
 
     //Update Quiz
     this.UpdateQuiz = new FormGroup({
-      //Update or delete form fields
-      //updateordelete: new FormControl('Please choose an option'),
-
       //New quiz questions form fields
-      updatequizname:new FormControl(this.UpdateQuizInfo.quizName, Validators.required),
-      // quizquestion:new FormControl('', Validators.required),
-      // quizanswer:new FormControl('', Validators.required),
-      // option1:new FormControl('', Validators.required),
-      // option2:new FormControl('', Validators.required),
-      // option3:new FormControl('', Validators.required),
-
-      //update quiz questions form fields
-      // updatequizquestion:new FormControl('', Validators.required),
-      // updatequizanswer:new FormControl('', Validators.required),
-      // updateoption1:new FormControl('', Validators.required),
-      // updateoption2:new FormControl('', Validators.required),
-      // updateoption3:new FormControl('', Validators.required),
-
-      // questionChosen:new FormControl(null)
+      updatequizname:new FormControl(this.UpdateQuizInfo.quizName, Validators.required)
   });
 }
 
@@ -106,13 +90,8 @@ AddToQuestionBank(){
         })
       })
     
-    // this.newQuestionBankForm.reset()
-    
-// this.QuestionBankList.push(questionItem)
   }
   else{
-    //this.ListError=true
-
     console.log("invalid form");
   }
   
@@ -181,11 +160,11 @@ AddToQuestionBank(){
   }
 
   Update(){
-    if(this.QuestionBankList.length == 0){
+    if(this.UpdateQuestionBankInfo.length == 0){
       this.alertNotif("You need to have atleast one question for your quiz!","Oops")
     }
 
-    if(this.UpdateQuiz.valid && this.QuestionBankList.length != 0){
+    if(this.UpdateQuiz.valid && this.UpdateQuestionBankInfo.length != 0){
     this.quizError= false
     let updateQuiz:Quiz = new Quiz()
     updateQuiz.QuizName= this.UpdateQuiz.get(['updatequizname']).value
@@ -193,9 +172,10 @@ AddToQuestionBank(){
     console.log(updateQuiz);
     this.api.UpdateQuiz(updateQuiz).subscribe(data =>
       {
-        this.api.GetCourseQuiz(this.api.getCourseId()).subscribe(data=>
+        this.api.GetCourseQuiz(Number(localStorage.getItem('updateCourse'))).subscribe(data=>
           {
             this.UpdateQuizInfo =  data
+            console.log(data)
             this.dismissModal()
           })
         
@@ -203,7 +183,7 @@ AddToQuestionBank(){
     }
     else{
       this.quizError = true
-      console.log("Invalid form");
+      console.log("Invalid form", this.UpdateQuiz.errors);
       
     }
     

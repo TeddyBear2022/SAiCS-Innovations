@@ -17,9 +17,11 @@ export class ViewAmbassadorsPage implements OnInit {
   search:any
   noResults:boolean = false
   AmbassadorRankings:any = []
+  ambassadorRankingsInput
 
   constructor(private popoverController:PopoverController, 
-    private api:ApiService, private modal: ModalController) { }
+    private api:ApiService, 
+    private modal: ModalController) { }
 
   ngOnInit() {
  
@@ -37,6 +39,13 @@ export class ViewAmbassadorsPage implements OnInit {
         //console.log(data)
         this.AmbassadorRankings = data
       })
+
+      this.api.InputInformation().subscribe(data=>{
+        this.ambassadorRankingsInput = data
+        console.log(data)
+      })
+      
+      
   }
 
   async presentPopover(event)
@@ -101,4 +110,6 @@ export class ViewAmbassadorsPage implements OnInit {
     await modal.present();
     
   }
+
+  
 }

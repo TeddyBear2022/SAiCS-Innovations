@@ -172,8 +172,8 @@ export class UpdateCoursePage implements OnInit {
     });
     modals.onDidDismiss().then((data) => {
       console.log(data.data.updatedQuiz);
-      this.quiz = []
-        this.quiz.push(data.data.updatedQuiz)
+      this.quiz[0] = data.data.updatedQuiz
+        // this.quiz.push(data.data.updatedQuiz)
     })
     return await modals.present();
   }

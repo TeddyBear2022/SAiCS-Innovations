@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
@@ -12,6 +13,8 @@ import { ApiService } from 'src/app/Services/api.service';
 export class ValidateRegistrationsPage implements OnInit {
 
   registrations:any = []
+  noResults = false
+  search
 
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
@@ -34,11 +37,39 @@ export class ValidateRegistrationsPage implements OnInit {
     })
   }
 
-  Search(){
-
-  }
   SearchAmbassador(event){
-    
+    // console.log(event.detail.value);
+    this.search = event.detail.value
+    if(this.search == ''){
+      this.ClearSearch()
+    }
+  }
+
+  Search(){
+    console.log("search...",this.search)
+    this.api.SearchAmbassadorReg(this.search).subscribe(data =>{
+      this.noResults = false 
+      this.registrations = data
+      console.log(data);
+      
+    },(response: HttpErrorResponse) => {
+        
+      if (response.status === 404) {
+        this.noResults = true 
+        console.log("Search result not found")
+      }
+      
+  })
+}
+
+  ClearSearch(){
+    console.log("clear");
+    this.noResults = false 
+    this.api.AllRegistrations().subscribe(data =>
+      {
+        this.registrations = data
+        
+      })
   }
   async presentPopover(event)
   {
