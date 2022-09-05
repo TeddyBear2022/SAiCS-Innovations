@@ -1,0 +1,35 @@
+ion-card{
+    width: 100%;
+    height: 600px;
+    margin: 1%;
+    border: solid black 1px;
+}
+ion-input{
+    border-bottom: solid 1pt black ;
+    width: 10px;
+    margin-right: 40%;
+    margin-top: 2%;
+
+  }
+  ion-label{
+    margin-top: 2%;
+  }
+
+  img{
+    margin: 3%;
+  }
+
+  ion-select{
+    color: black;
+    border-radius: 11px !important;
+    height: 27pt;
+    background-color: white;
+    border: solid 1pt black;
+    width: 65%;
+    margin-right: 40%;
+    margin-top: 2%;
+  }
+
+  span{
+    color: red;
+  }

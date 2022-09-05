@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br><div align="center"><h1>Clients</h1></div><br>
+  <ion-item lines="none" >
+    <div align="center" slot="end">
+   <ion-input  id="searchbar"
+    placeholder="Search Clients..."
+   (ionChange)="SearchAmbassador($event)">
+ </ion-input>
+ </div>
+ <ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+ </ion-item>
+  <br><br>
+  <table>
+    <thead align=center>
+    
+    <th>Title</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of clientList">
+    <td>{{x.user.title.titleName}}</td>
+    <td>{{x.user.name }}</td>
+    <td>{{x.user.surname}}</td>
+    <td>{{x.user.email}}</td>
+    <td>+27{{x.user.phoneNumber}}</td>
+    </tr>
+    
+    </tbody>
+    </table>
+
+    
+    <ion-row> 
+      <ion-col style="margin-top: 18%;">
+        <div id="bubbles">
+          <svg >
+            <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+            <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+            <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+          </svg>
+      </div>
+      </ion-col>
+    </ion-row>
+
+</ion-content>
+
+
+
+
+
+
+
+
+
+

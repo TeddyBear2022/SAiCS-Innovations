@@ -1,0 +1,42 @@
+input{
+    border: 1px solid black;
+    --background:white;
+    height: 30px;
+    width: 100px;
+}
+
+span{color: #f44336; margin-right: 40%;}
+form
+{
+    --padding-start: 0%;
+    text-align: center;
+    ion-item-group{padding: 10px;}
+    ion-label{font-style: italic;
+        padding: 5px;
+        font-weight: bold;
+        margin-right: 35%;
+        color: #333333;}
+}
+
+
+#UpdateStatusBtn {
+    --background: #0d6efd;
+    text-transform: none;
+    height: 35px;
+    width: 100px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  ion-list {
+    --ion-item-background: transparent;
+  }
+
+  ion-content,
+ion-toolbar {
+  --background: #f1f1f1;
+  --color: #333333 !important;
+  ion-title {
+    font-weight: bolder;
+  }
+}

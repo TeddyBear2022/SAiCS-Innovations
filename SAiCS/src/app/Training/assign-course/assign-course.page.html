@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons> 
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br><br>
+<!-- <div id="TopSection"> -->
+  <ion-row>
+  <ion-col><ion-select id="SelectAgent" placeholder="Select Agent Rank" interface="popover">
+    <ion-select-option>Junior Agent</ion-select-option>
+    <ion-select-option>Agent</ion-select-option>
+    <ion-select-option>Senior Agent</ion-select-option>
+    <ion-select-option>Manager</ion-select-option>
+    <ion-select-option>Entrepreneur</ion-select-option>
+    <ion-select-option>Distributor</ion-select-option>
+  </ion-select>
+</ion-col>
+<ion-col></ion-col>
+<ion-col><ion-item lines="none" >
+  <div align="center" slot="end">
+<ion-input  id="searchbar"
+ placeholder="Search ambassador...">
+</ion-input>
+</div>
+<ion-icon slot="end" name="search" ></ion-icon>
+</ion-item></ion-col>
+
+</ion-row>
+
+<!-- </div> -->
+<ion-row>
+  <ion-col>
+    <table id="AssignCourseTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Full Name</th>
+          <th>Ranking</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Course Assigned</th>
+          <th></th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of ambassadorsEnrollments">
+          <td>{{x.ambassador.user.title.titleName}}</td>
+          <td>{{x.ambassador.user.name + " "+ x.ambassador.user.surname}}</td>
+          <td>{{x.ambassador.ambassadorType.ambassadorTypeName}}</td>
+          <td>{{x.ambassador.user.email}}</td>
+          <td>+27{{x.ambassador.user.phoneNumber}}</td>
+          <td ><div *ngIf="x.enrolled ==null" id="NoCourses">No Course assigned yet</div><div *ngIf="x.enrolled != null" id="Assigned">Course(s) assigned</div></td>
+          <td><ion-button (click)="AssignCourse()">Assign Course</ion-button></td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+</ion-content>

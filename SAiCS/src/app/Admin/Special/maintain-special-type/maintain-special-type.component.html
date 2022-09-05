@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Maintain Special Type</ion-title>
+    <ion-button slot="end" large fill="transparent" (click)="dismissModal()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <form [formGroup]="update" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
+      <ion-list>
+      <ion-item lines="none">
+        <ion-grid>
+          <ion-row>
+            <ion-label>Special Type:</ion-label>
+          </ion-row>
+          <ion-row>
+            <input type="text" formControlName="typeName"/><br>
+          </ion-row>
+          <ion-row>
+            <span *ngIf="localForm.submitted && update.controls['typeName'].invalid">Required</span>
+          </ion-row>
+        </ion-grid>
+        
+          
+       
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button type="submit" slot="end" id="UpdateStatusBtn">Update</ion-button>
+      </ion-item>
+    </ion-list>
+    </form>
+  </ion-grid>
+</ion-content>

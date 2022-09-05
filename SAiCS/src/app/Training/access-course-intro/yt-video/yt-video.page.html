@@ -1,0 +1,30 @@
+<script src="https://www.youtube.com/iframe_api?origin=http://localhost:8100/access-course-intro"></script>
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round" id="ProfileIcon">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-content>
+   
+  <div>
+    <youtube-player 
+    videoId="jfKfPfyJRdk" 
+    suggestedQuality="highres" 
+    [height]="250" 
+    [width]="500">
+  </youtube-player>
+</div>
+  </ion-content>
+  

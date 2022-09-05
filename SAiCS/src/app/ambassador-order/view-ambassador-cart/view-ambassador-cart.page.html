@@ -1,0 +1,282 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"> </ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white"
+      >John van de Merwe</ion-label
+    >
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon
+          size="large"
+          name="person-circle"
+          id="person-circle"
+          style="color: white"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  ><br /><br />
+  <ion-grid>
+    <ion-row>
+      <ion-col size="9">
+        <ion-card
+          id="Cart"
+          style="float: left; width: 85%; height: 650px; margin-left: 4%; overflow: scroll;"
+          ><br />
+
+          <p
+            style="
+              font-size: 27px;
+              font-weight: 150;
+              color: black;
+              text-decoration-color: black;
+              text-align: left;
+              margin-left: 7%;
+              float: left;
+            "
+          >
+            Shopping Cart
+          </p>
+          <ion-button
+            id="clearButton"
+            [disabled]="items == undefined || items.length == 0"
+            (click)="ClearCart()"
+            >Clear Cart</ion-button
+          ><br /><br />
+          <hr
+            style="
+              border: none;
+              border-top: 2px double #333;
+              color: #333;
+              overflow: visible;
+              text-align: center;
+              height: 5px;
+              width: 93%;
+              margin-left: 3%;
+            "
+          />
+          <br />
+
+          <table id="Carttable" *ngIf="items.length > 0">
+            <thead>
+              <tr>
+                <th width="40%">PRODUCT DETAILS</th>
+                <th width="20%">QUANTITY</th>
+                <th width="20%">PRICE</th>
+                <th width="20%">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let x of items; let i = index">
+                <tr>
+                  <td>
+                    <div class="containerItem" id="{{x.id}}">
+                      <br /><br />
+                      <img
+                        src="data:image/png;base64,{{x.image}}"
+                        height="80cm"
+                        width="30cm"
+                      />
+                      <p>
+                        <br />
+                        <span style="color: black; font-size: 15px"
+                          >{{x.name}}</span
+                        ><br />
+                        <ion-button
+                          fill="clear"
+                          style="
+                            color: #f44336;
+                            font-size: 14px;
+                            text-transform: none;
+                          "
+                          (click)=" RemoveFromCart(x)"
+                          >Remove</ion-button
+                        >
+                      </p>
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      style="
+                        font-size: 20px;
+                        background-color: white;
+                        margin-top: 51px;
+                      "
+                      (click)="decrement(x)"
+                    >
+                      <ion-icon name="remove-outline"></ion-icon>
+                    </button>
+                    <input
+                      style="width: 30px; margin-bottom: 5px"
+                      type="text"
+                      [(ngModel)]="x.quantity"
+                      [ngModelOptions]="{standalone: true}"
+                      value="{{x.quantity}}"
+                      name=""
+                      min="1"
+                      readonly
+                    />
+
+                    <button
+                      type="button"
+                      style="font-size: 20px; background-color: white"
+                      (click)="increment(x)"
+                    >
+                      <ion-icon name="add-outline"></ion-icon>
+                    </button>
+                  </td>
+                  <td><span>R{{x.price}} </span></td>
+                  <td>
+                    <span #itemTotalSpan
+                      >{{ x.price * x.quantity | currency:
+                      'ZAR':'symbol-narrow'}}</span
+                    >
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+
+          <div *ngIf="items == undefined || items.length == 0" id="emptyCard">
+            <div
+              style="
+                justify-content: center;
+                align-items: center;
+                display: flex;
+              "
+            >
+              <img src="./assets/empty-cart.svg" alt="" />
+            </div>
+            <div style="justify-content: center; text-align: center">
+              <h4>
+                Your cart is currently empty.
+                <a href="/ambassador-landing-page">Continue Shopping</a>
+              </h4>
+            </div>
+          </div>
+          <!-- <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%; margin-left: 7%;"> -->
+          <!-- <br /> -->
+          <span *ngIf="items.length > 0"
+            ><a
+              style="font-size: 15px; margin-left: 25px; padding: 2%;"
+              href="/ambassador-landing-page"
+            >
+              <ion-icon name="arrow-back-outline"></ion-icon>Continue
+              Shopping</a
+            >
+          </span>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="2">
+        <ion-card
+          id="ordersummary"
+          style="margin-left: 50%; width: 150%; height: 650px"
+        >
+          <p
+            id="OrderSumP"
+            style="
+              font-size: 19px;
+              font-weight: 150;
+              color: black;
+              text-decoration-color: black;
+              text-align: center;
+            "
+          >
+            Order Summary
+          </p>
+          <hr
+            style="
+              border: none;
+              margin: auto;
+              border-top: 2px double #333;
+              color: #333;
+              overflow: visible;
+              text-align: center;
+              height: 5px;
+              width: 90%;
+            "
+          />
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label>Items: {{TotalItems}}</ion-label>
+              <ion-label slot="end"
+                >{{Subtotal | currency: 'ZAR':'symbol-narrow'}}</ion-label
+              >
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label slot="start">Shipping</ion-label>
+              <ion-toggle
+                slot="end"
+                [disabled]="items == undefined || items.length == 0"
+                [checked]="deliveryOption==true? true: false"
+                [(ngModel)]="deliveryOption"
+              ></ion-toggle
+              ><br />
+            </ion-item>
+            <ion-item lines="none">
+              <ion-input
+              readonly
+                *ngIf="deliveryOption"
+                id="deliveryInput"
+                type="text"
+                placeholder="Courier - R200"
+              ></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Discount</ion-label>
+              <ion-label slot="end"
+                >{{AmbassadorDiscount | currency:
+                'ZAR':'symbol-narrow'}}</ion-label
+              >
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>VAT Amount</ion-label>
+              <ion-label slot="end"
+                >{{CalculatedVAT | currency: 'ZAR':'symbol-narrow'}}</ion-label
+              >
+            </ion-item>
+            <hr
+              style="
+                border: none;
+                border-top: 1px double #333;
+                color: #333;
+                overflow: visible;
+                text-align: center;
+                height: 5px;
+                width: 85%;
+              "
+            />
+            <ion-item lines="none">
+              <ion-label>Total Cost</ion-label>
+              <ion-label slot="end"
+                >{{OrderTotal | currency: 'ZAR':'symbol-narrow'}}</ion-label
+              >
+            </ion-item>
+            <ion-item lines="none">
+              <ion-button
+                style="--background: #08c10f; width: 60%; text-transform: none"
+                [disabled]="items == undefined || items.length == 0"
+                id="button"
+                (click)="PlaceOrder()"
+                >Place Order</ion-button
+              >
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

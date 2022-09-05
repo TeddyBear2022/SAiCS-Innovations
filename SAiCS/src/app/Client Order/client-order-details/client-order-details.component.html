@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Order No. {{data.id}}
+    </ion-title>
+    <ion-button slot="end" large fill="transparent" (click)="dismissModal()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item  lines="none">
+      <ion-label>Order Status: {{data.status}}</ion-label>
+    </ion-item>
+    <ion-item  lines="none">
+      <ion-label>
+       <p>Subtotal</p> 
+       <p *ngIf="data.delivery != null">Delivery Charges</p> 
+       <p>VAT Amount (Inclusive)</p> 
+      </ion-label>
+      <ion-label  slot="end"> 
+        <p>{{subtotal | currency: 'ZAR':'symbol-narrow'}}</p> 
+        <p *ngIf="data.delivery != null">{{200 | currency: 'ZAR':'symbol-narrow'}}</p> 
+        <p>{{subtotal * vat | currency: 'ZAR':'symbol-narrow'}}</p> 
+      </ion-label>
+    </ion-item>
+    <hr style="border: none; border-top: 2px solid black; margin: auto; text-align: center; height: 5px; width: 90%;">
+    <ion-item  lines="none">
+      <ion-label>Order Total</ion-label>
+      <ion-label slot="end">{{OrderTotal | currency: 'ZAR':'symbol-narrow'}}</ion-label>
+    </ion-item>
+
+    <h4 style="margin-left: 3%; color: #333333; font-weight: 600;">Order Details</h4>
+    <ion-item  lines="none">
+      <ion-label>
+       <p>Order Items </p> 
+       <p *ngFor="let o of orderItems">{{o.name}} x {{o.quantity}}</p> 
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        <p *ngIf="data.delivery != null"> Delivery</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

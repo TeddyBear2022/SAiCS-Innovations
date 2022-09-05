@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round" routerLink="/clients-cart">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <br>
+  <h1 style="font-weight: 600;">My Orders</h1>
+
+  <div class="tab">
+    <button class="tablinks" (click)="openOrder($event, 'All')">All Orders</button>
+    <button class="tablinks" (click)="openOrder($event, 'Pending')">Pending</button>
+    <button class="tablinks" (click)="openOrder($event, 'Complete')">Complete</button>
+
+    <div style="margin-left: 40%; display: inline; ">
+      <input style="margin-top: 1% ;" type="date" id="birthday" name="birthday">
+      <span style="padding: 1%;"><b>To</b></span>
+      <input type="date" id="birthday" name="birthday">
+    </div>
+    
+  </div>
+  
+
+  <div id="All" class="tabcontent">
+    <!-- <h3>London</h3> -->
+      <table style="margin-left: 8% !important;">
+        <thead>
+        <th>Order No.</th>
+        <th>Order Date</th>
+        <th>Order Status</th>
+        <th>Total</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let o of orders" id="o.id">
+        <tr>
+        <td>{{o.id}}</td>
+        <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
+        <td>{{o.status}}</td>
+        <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
+        <td><ion-button #clickOnView id="clickOnView" (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
+        </tr>
+        <tr>
+        </ng-container>
+        </tbody>
+        </table>
+  </div>
+  
+  <div id="Pending" class="tabcontent">
+    <!-- <h3>Paris</h3> -->
+    <table style="margin-left: 8% !important;">
+      <thead>
+      <th>Order No.</th>
+      <th>Order Date</th>
+      <th>Order Status</th>
+      <th>Total</th>
+      <th></th>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let o of orders" id="o.id">
+          <tr *ngIf="o.status == 'Pending'">
+          <td>{{o.id}}</td>
+          <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
+          <td>{{o.status}}</td>
+          <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
+          <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
+          </tr>
+          <tr>
+          </ng-container>
+      </tbody>
+      </table>
+  </div>
+  
+  <div id="Complete" class="tabcontent">
+    <!-- <h3>Tokyo</h3> -->
+    <table style="margin-left: 8% !important;">
+      <thead>
+      <th>Order No.</th>
+      <th>Order Date</th>
+      <th>Order Status</th>
+      <th>Total</th>
+      <th></th>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let o of orders" id="o.id">
+          <tr *ngIf="o.status == 'Complete'">
+          <td>{{o.id}}</td>
+          <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
+          <td>{{o.status}}</td>
+          <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
+          <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
+          </tr>
+          <tr>
+          </ng-container>
+      </tbody>
+      </table>
+  </div>
+</ion-content>
+

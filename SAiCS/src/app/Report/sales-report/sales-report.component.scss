@@ -1,0 +1,112 @@
+
+h1, h4{
+  font-weight: 600;
+  color: #333333;
+}
+#export2 {
+  text-transform: none;
+  font-weight: bold;
+  --background: #08c10f;
+  width: 140px;
+  margin-top: 1%;
+  margin-left: 80%;
+  span {
+    color: white !important;
+  }
+}
+
+#accordionHeader {
+  --background: #0070c0;
+}
+
+.iionicon s-ion-icon {
+  font-size: 50px;
+  color: red !important;
+}
+
+::ng-deep .ag-theme-alpine .ag-cell-value {
+  line-height: 20px !important;
+  word-break: normal; /* prevent words from breaking */
+  padding-top: 5px; /* space top */
+  padding-bottom: 5px; /* space bottom */
+}
+
+::ng-deep .ag-theme-alpine .ag-header-cell-text {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  background-color: white;
+}
+
+::ng-deep .ag-theme-alpine .ag-row {
+  background-color: white;
+}
+
+.ag-theme-alpine{
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  --ag-borders: none;
+  background: white;
+  //--ag-header-background-color:
+}
+
+
+::ng-deep .ag-theme-alpine .ag-header {
+  background: white;
+  border-bottom: 2px solid #cccccc;
+}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  // padding: 10px;
+  //width: 100%;
+  justify-content: flex-end;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline select {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border:0;
+  border-bottom: 1px solid black;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin-right: 2%;
+}
+
+.card {
+  width: 70%;
+  border: 1px solid #062b80;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 21%;
+}
+
+.container{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#submitBtn
+{
+  text-transform: none;
+  font-style: italic;
+  --background: #0070c0;
+}
+
+

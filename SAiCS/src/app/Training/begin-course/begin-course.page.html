@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round" routerLink="/clients-cart">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div>
+  <ion-row>
+     <ion-col><ion-progress-bar value="0.1"></ion-progress-bar></ion-col> 
+      <ion-col><h1 style="color: 33333;text-align: center;">Step1 -Introduction</h1></ion-col>
+        <ion-col><ion-buttons>
+         <ion-button id="Nextbtn" routerLink="/quiz-session">
+           Next
+         </ion-button>
+        </ion-buttons>
+      </ion-col>
+</ion-row>
+<ion-row>
+  <img src="assets/quiz.jpg" height="600" width="1500"/>
+</ion-row>
+  </div>
+</ion-content>

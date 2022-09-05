@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Assign Course 
+    </ion-title>
+    <ion-icon slot="end" name="close" (click)="dismissModal()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+  <!-- <div class="modal"  id="ModalContent"  > -->
+  <h3>Courses:</h3>
+  <ion-row id="radio" *ngFor="let x of allcourses">
+    <div >
+  <ion-radio value="{{x.courseId}}" checked="true"></ion-radio>
+  <ion-label>{{x.courseName}}</ion-label>
+</div>
+</ion-row>
+
+<ion-row >
+  <ion-col></ion-col>
+  <ion-col></ion-col>
+  <div id="buttons">
+  <ion-buttons>
+    <ion-button id="ModalBlueButtons" >
+      Assign
+    </ion-button>
+    <ion-button id="ModalRedButtons" (click)="dismissModal()">
+      Close
+    </ion-button>
+  </ion-buttons>
+  </div>
+</ion-row>
+<!-- </div> -->
+</ion-grid>
+</ion-content>

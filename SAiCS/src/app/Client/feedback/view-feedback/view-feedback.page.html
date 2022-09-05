@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-align-items-center">
+    <ion-col>
+      <h1 style="font-weight: bold; text-align: center;">Your Valuable Feedback!</h1>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-button fill="clear" routerLink="/feedback">
+      <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
+    </ion-button>
+  </ion-row>
+  
+
+  <ion-row>
+    <select placeholder="Feedback Type" interface="popover" 
+    name="feedbackType" ngModel #feedbackType="ngModel" (ngModelChange)="PresentFeeback($event)">
+      <option value="" disabled selected>Select Feedback</option>
+      <option value="1">Product</option>
+      <option value="2" >Ambassador</option>
+    </select>
+  </ion-row>
+
+<ion-row>
+  <ion-col>
+    <table id="feedbackTable" *ngIf="feedbackType.value == 1">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Product Type</th>
+          <th>Product Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of ProductFeedback" id="{{f.feedbackId}}">
+          <td>{{f.date}}</td>
+          <td>{{f.category}}</td>
+          <td>{{f.name}}</td>
+          <td>{{f.description}}</td>
+          <td>
+            <ion-button (click)="DeleteFeedback(f.id, feedbackType.value)" fill="clear">
+            <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+        <tr *ngIf="ProductFeedback.length == 0">
+          <td colspan="5">No result</td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <table id="feedbackTable" *ngIf="feedbackType.value == 2">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Ambassador Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr *ngFor="let f of AmbassadorFeedback">
+          <td>{{f.date}}</td>
+          <td>{{f.name}}</td>
+          <td>{{f.description}}</td>
+          <td>
+            <ion-button (click)="DeleteFeedback(f.id, feedbackType.value)" fill="clear">
+            <ion-icon name="trash" size="large" id="deleteIcon"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+        <tr *ngIf="AmbassadorFeedback.length == 0">
+          <td colspan="5">No result</td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-col>
+</ion-row>
+
+    
+</ion-content>

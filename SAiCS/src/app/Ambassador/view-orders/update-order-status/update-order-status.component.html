@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Order Status</ion-title>
+    <ion-button slot="end" large fill="transparent" (click)="dismissModal()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <form [formGroup]="update" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
+      <ion-list>
+      <ion-item lines="none">
+        <ion-label>Order Status:</ion-label>
+        <select formControlName="status" slot="end">
+          <option [ngValue]="" disabled selected>Select order status</option>
+          <option *ngFor="let o of orderStats" [value]="o.orderStatusId">{{o.orderStatusName}}</option>
+        </select><br> 
+        <span *ngIf="localForm.submitted && update.controls['status'].invalid">Required</span>
+       </ion-item>
+      <ion-item lines="none">
+        <ion-checkbox color="dark" [(ngModel)]="ionCheck.isChecked" [ngModelOptions]="{standalone: true}" [disabled]="true"></ion-checkbox>
+        <ion-label style="margin-left:10px !important; opacity : 1;">Delivery</ion-label>
+      </ion-item>
+      <ion-item lines="none" *ngIf="ionCheck.isChecked == true">
+        <ion-label>Tracking Number:</ion-label>
+        <ion-input slot="end" type="text" formControlName="tNumber"></ion-input><br>  
+        <!-- <span *ngIf="localForm.submitted && merch.controls['merchCatId'].invalid">Required</span> -->
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button type="submit" slot="end" id="UpdateStatusBtn">Update</ion-button>
+      </ion-item>
+    </ion-list>
+    </form>
+  </ion-grid>
+</ion-content>
