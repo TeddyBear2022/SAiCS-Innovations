@@ -16,6 +16,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 export class AmbassadorCheckoutPage implements OnInit {
   deliveryOption=false
   newAddress: FormGroup
+  isExisting: boolean = false;
   OdrSmry: any;
   countries: any;
   provinces: any;
@@ -78,9 +79,14 @@ export class AmbassadorCheckoutPage implements OnInit {
 
     this.api.NewAddress(address).subscribe((res) => {
       console.log(res.body);
+      if(res.body == "Exists")
+        {
+          this.ErrorAlert()
+        }
+        else{this.router.navigate(['/ambassador-checkout-ii']); this.newAddress.reset()}
       
     });
-    this.router.navigate(['/ambassador-checkout-ii'])
+    
   }
   else
   {
@@ -88,6 +94,16 @@ export class AmbassadorCheckoutPage implements OnInit {
     
   }
  }
+
+ async ErrorAlert() {
+  const alert = await this.alert.create({
+    header: 'Invalid Form',
+    message: "Address Already Exists",
+    buttons: [{ text: 'OK' }],
+  });
+
+  await alert.present();
+}
 
 //Profile popover
 async presentPopover(event)

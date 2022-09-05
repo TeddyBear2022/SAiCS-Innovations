@@ -24,6 +24,9 @@ export class AmbassadorOrderHistoryPage implements OnInit {
 
   }
 
+  ionViewDidEnter(){
+    document.getElementById("All").style.display = 'flex';
+  }
 
   openOrder(evt, cityName) {
     var i, tabcontent, tablinks;

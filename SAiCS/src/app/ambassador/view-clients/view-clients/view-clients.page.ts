@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
@@ -14,7 +15,7 @@ export class ViewClientsPage implements OnInit {
 
   constructor( private tmpStorage:TemporaryStorage,
     private api:ApiService,
-    private menu:MenuController) { }
+    private menu:MenuController, public popoverController: PopoverController,) { }
 
   clientList;
   noResults:boolean = false
@@ -69,6 +70,14 @@ export class ViewClientsPage implements OnInit {
       }
       
   })
+  }
+
+  async presentPopover(event) {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event,
+    });
+    return await popover.present();
   }
 
 }

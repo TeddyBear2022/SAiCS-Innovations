@@ -60,11 +60,9 @@
     <ion-row>
       <br>
       <ion-row *ngIf="filteredFAQS.length == 0">
-       
-      <div align="center" style="margin-left: 30%;" ><br><img src="/assets/Empty3.gif" height="400px" width="600px"><br>
-        
+      <div align="center" style="margin-left: 40%;" ><br><img src="/assets/Empty3.gif" height="400px" width="600px"><br>
       </div>
-      <h2 style="margin-left: 60%;" >Empty</h2>
+      <h2 style="margin-left: 45%;" >Curretly there are no FAQs for this category</h2>
     </ion-row>
       <ng-container *ngFor="let FAQ of filteredFAQS" >
         <ng-container >

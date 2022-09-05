@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ViewFaqDetailsPage implements OnInit {
 
-  DeliveryFAQs: FAQ[]
+  DeliveryFAQs
   showText: any = []
   constructor(public popoverController: PopoverController, 
     private api:ApiService, 

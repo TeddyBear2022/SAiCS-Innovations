@@ -24,6 +24,10 @@ export class ViewSpecialPage implements OnInit {
   ngOnInit() {
     this.GetInfo()
   }
+  
+  ionViewDidEnter(){
+    this. GetInfo()
+  }
 
   GetInfo()
   {
@@ -45,6 +49,10 @@ export class ViewSpecialPage implements OnInit {
       cssClass: 'SpecialTypeClass',
       
     });
+
+    modal.onDidDismiss().then((data) => {
+      this.GetInfo()
+    })
   
     await modal.present();
   }
@@ -66,7 +74,9 @@ export class ViewSpecialPage implements OnInit {
           text: 'Confirm',
           cssClass: 'Confirm',
           handler: () => {
-            this.api.DeleteSpecial(id).subscribe(() => console.log("deleted successfully"))
+            this.api.DeleteSpecial(id).subscribe(() => {
+              this.GetInfo()
+              console.log("deleted successfully")})
             this.presentToast()
             console.log('Confirm Ok');
           }

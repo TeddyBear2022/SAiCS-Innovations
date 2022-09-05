@@ -351,7 +351,11 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     loadChildren: () => import('./Admin/audit-trail/audit-trail.module').then( m => m.AuditTrailPageModule),
     // canLoad: [AdminAuthGuard]
   },
-
+  {
+    path: 'view-faq-details',
+    loadChildren: () => import('./Ambassador/faq/view-faq-details/view-faq-details.module').then( m => m.ViewFaqDetailsPageModule),
+    canLoad: [AmbassadorAuthGuard]
+  },
 
 
   ];

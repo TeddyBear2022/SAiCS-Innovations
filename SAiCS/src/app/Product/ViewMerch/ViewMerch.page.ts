@@ -32,6 +32,11 @@ export class ViewMerchPage implements OnInit {
     this.GetAllMerch()
     this.GetMerchCat()
   }
+
+  ionViewDidEnter(){
+    this.GetAllMerch()
+    this.GetMerchCat()
+  }
   
   GetMerchCat() {
     this.api.GetMerchCat().subscribe((data) => {
@@ -75,6 +80,9 @@ onTypeSelect(e)
     
   });
  
+  modal.onDidDismiss().then((data) => {
+    this.GetAllMerch()
+  })
 
   await modal.present();
 }
@@ -87,7 +95,6 @@ async maintainVAT()
     
   });
  
-
   await modal.present();
 }
 
@@ -101,6 +108,11 @@ async updateProduct(id: number)
      existingProduct: id
     }
   });
+
+  modal.onDidDismiss().then((data) => {
+    this.GetAllMerch()
+  })
+  
   await modal.present();
 }
 

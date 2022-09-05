@@ -61,7 +61,7 @@ export class LeaderboardReportComponent implements OnInit {
       
     })
 
-    this.api.getAmbassadorRankings().subscribe((res)=>{
+    this.api.GetAmbassadorRankings().subscribe((res)=>{
       this.rankList = res
       console.log(this.rankList);
       

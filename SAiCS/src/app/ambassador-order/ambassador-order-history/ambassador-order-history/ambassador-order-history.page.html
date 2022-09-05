@@ -1,20 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button auto-hide="false">
-        
-      </ion-menu-button>
-    </ion-buttons>    
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
     <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      <ion-button shape="round" routerLink="/clients-cart">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
-        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
       </ion-button>
     </ion-buttons>    
   </ion-toolbar>
@@ -26,7 +28,7 @@
   <h1 style="font-weight: 600;">My Orders</h1>
 
   <div class="tab">
-    <button #keywordsInput class="tablinks" (click)="openOrder($event, 'All')">All Orders</button>
+    <button class="tablinks" (click)="openOrder($event, 'All')">All Orders</button>
     <button class="tablinks" (click)="openOrder($event, 'Pending')">Pending</button>
     <button class="tablinks" (click)="openOrder($event, 'Complete')">Complete</button>
 
@@ -56,7 +58,7 @@
         <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
         <td>{{o.status}}</td>
         <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
-        <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
+        <td><ion-button #clickOnView id="clickOnView" (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
         </tr>
         <tr>
         </ng-container>
@@ -80,7 +82,7 @@
           <td>{{o.id}}</td>
           <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{o.status}}</td>
-          <td style="text-align: left;">{{o.price * o.quantity | currency: 'ZAR':'symbol-narrow'}}</td>
+          <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
           <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
           </tr>
           <tr>
@@ -105,7 +107,7 @@
           <td>{{o.id}}</td>
           <td>{{o.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{o.status}}</td>
-          <td style="text-align: left;">{{o.price * o.quantity | currency: 'ZAR':'symbol-narrow'}}</td>
+          <td style="text-align: right;">{{o.amount| currency: 'ZAR':'symbol-narrow'}}</td>
           <td><ion-button (click)="ViewOrderDetails(o.id)" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 14px;">View Details</ion-button></td>
           </tr>
           <tr>
@@ -114,3 +116,4 @@
       </table>
   </div>
 </ion-content>
+

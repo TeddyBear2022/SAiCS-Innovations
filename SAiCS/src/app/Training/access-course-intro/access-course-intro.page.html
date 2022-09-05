@@ -62,7 +62,7 @@
 <ion-card-content *ngFor="let quiz of quiz">
   {{quiz.quizName}}
   <ion-item > 
-    <ion-button slot="end">Start</ion-button>
+    <ion-button slot="end" (click)="StartQuiz()">Start</ion-button>
   </ion-item>
 </ion-card-content>
 
@@ -96,5 +96,3 @@
   </form>
 </ion-grid>
   </ion-content>
- 
-  

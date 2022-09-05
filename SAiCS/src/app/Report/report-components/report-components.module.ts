@@ -10,6 +10,8 @@ import { LeaderboardReportComponent } from '../leaderboard-report/leaderboard-re
 import { IonicModule } from '@ionic/angular';
 import { AgGridModule } from 'ag-grid-angular';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Chart } from 'chart.js';
+
 
 
 

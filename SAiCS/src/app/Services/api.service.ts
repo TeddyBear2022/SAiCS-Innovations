@@ -101,15 +101,28 @@ export class ApiService {
     return this.api.post(this.apilink+"User/getUserSessionInfo", logindetails)
   }
   
+  SearchAmbassador(searchInput:string){
+    return this.api.get(this.apilink+`Admin/SearchAmbassador?nameorsurname=${searchInput}`,this.httpOptions)
+  }
 
   //get ambassador rankings
-  getAmbassadorRankings():Observable<AmbassadorType[]>{
-    return this.api.get<AmbassadorType[]>(this.apilink+"Admin/getAmbassadorTypes",{
+  GetAmbassadorRankings(){
+    return this.api.get(this.apilink+ `Admin/GetAmbassadorRankings`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
     })
   }
+
+  
+  AmbassadorAccessCourse():Observable<any[]>{
+    return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   //Register user
   registerUser(registrationinfo:registerVM){
     return this.api.post(this.apilink+"User/RegisterUser", registrationinfo );
@@ -234,6 +247,34 @@ export class ApiService {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
     })})
+  }
+
+  AssignCourse(courseId:number){
+    return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  GetQuizData(courseId = localStorage.getItem('course')){
+    return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  QuizCompleted(completed:boolean = true){
+    return this.api.post(this.apilink+ `Training/QuizCompleted`, completed,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  InputInformation(){
+    return this.api.get(this.apilink+ `User/InputInformation`)
   }
 
   
@@ -368,6 +409,15 @@ export class ApiService {
       })
     })
   }
+
+  GetSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+ `Ambassador/GetSpecificFaq?categoryID=${categoryId}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   ViewClients(){
     return this.api.get(this.apilink+ 'Ambassador/ViewCurrentClients',{
       headers: new HttpHeaders({
@@ -470,6 +520,14 @@ export class ApiService {
   ,headers: new HttpHeaders({
     Authorization: 'Bearer ' + localStorage.getItem("token")
 })})
+  }
+
+  GetAmbassadorFAQS(){
+    return this.api.get(this.apilink+ `Ambassador/GetAmbassadorFAQS`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
 
@@ -825,6 +883,14 @@ export class ApiService {
       })} )
   }
 
+  TopProduct(report: any)
+  {
+    return this.api.post(this.apilink + "Report/TopProduct",report, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
   RecruitmentRep(month: number)
   {
     return this.api.get(this.apilink + `Report/RecruitmentRep?month=${month}`, {
@@ -832,6 +898,7 @@ export class ApiService {
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })} )
   }
+
 
   GetSalesRep(report: any)
   {

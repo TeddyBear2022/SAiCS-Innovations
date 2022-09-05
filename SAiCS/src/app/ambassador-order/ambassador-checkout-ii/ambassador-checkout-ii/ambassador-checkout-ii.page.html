@@ -105,7 +105,7 @@
             <ion-toggle slot="end" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption" (ngModelChange)="toggleValue()" [ngModelOptions]="{standalone: true}"></ion-toggle><br>
           </ion-item>
           <ion-item lines="none">
-            <ion-input *ngIf="deliveryOption"  id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
+            <ion-input *ngIf="deliveryOption"  readonly  id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Discount</ion-label>
@@ -137,9 +137,6 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Ambassador Banking Details</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Close</ion-button>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -147,19 +144,19 @@
          
           <ion-item lines="none">
             <ion-label slot="start">Ambassador Name:</ion-label>
-            <ion-label slot="end"> John Pieterson</ion-label>
+            <ion-label slot="end"> {{AgentAccount.name}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-label slot="start">Bank Name:</ion-label>
-            <ion-label slot="end">FNB</ion-label>
+          <ion-label slot="end">{{AgentAccount.bankName}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-label slot="start">Account Number:</ion-label>
-            <ion-label slot="end">62819064176</ion-label>
+          <ion-label slot="end">{{AgentAccount.accNumber}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-label slot="start">Account Type:</ion-label>
-            <ion-label slot="end">Transmission</ion-label>
+            <ion-label slot="end">{{AgentAccount.accType}}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <ion-button slot="end" size="default" (click)="setOpen(false)">Ok</ion-button>

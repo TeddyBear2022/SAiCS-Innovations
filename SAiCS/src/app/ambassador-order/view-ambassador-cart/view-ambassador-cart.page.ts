@@ -27,8 +27,9 @@ export class ViewAmbassadorCartPage implements OnInit {
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
-    this.ViewCart();
     this.loadCart();
+    this.ViewCart();
+    
   }
 
 
@@ -39,11 +40,12 @@ export class ViewAmbassadorCartPage implements OnInit {
     this.discount = dataObj;
     console.log(`discount: ${this.discount}`);
     
-    var vatData = await this.api.GetVAT().toPromise();
-    var vatObj = JSON.parse(JSON.stringify(vatData));
-    this.vat = vatObj;
-    console.log(`discount: ${this.vat}`);
-
+    let amount
+   this.api.GetVAT().subscribe((res) =>{
+    amount = res
+    this.vat = amount.amount;
+      console.log(this.vat);
+    })
     
   }
 
@@ -86,7 +88,7 @@ export class ViewAmbassadorCartPage implements OnInit {
 
   ClearCart() {
     this.api.ClearCart(this.items[0].cartId).subscribe();
-    this.loadCart();
+    this.items.length = 0
   }
 
 //Calculations

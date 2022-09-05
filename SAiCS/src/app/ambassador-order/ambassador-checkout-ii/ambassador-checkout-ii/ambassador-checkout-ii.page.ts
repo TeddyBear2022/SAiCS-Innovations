@@ -26,6 +26,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   OdrSmry: any;
   session: any
   isModalOpen = false;
+  AgentAccount: any
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -51,6 +52,18 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     this.checkout = this.fb.group({
       address: ['', [Validators.required]],
       pdfFile:['', [Validators.required]]
+    });
+  }
+
+  ionViewDidEnter(){
+    this.GetAddress();
+    this.AgentAccountInfo()
+  }
+
+  AgentAccountInfo() {
+    this.api.AgentAccountInfo(this.session[0].id).subscribe((data) => {
+      this.AgentAccount = data;
+      console.log(this.AgentAccount);
     });
   }
 
@@ -123,21 +136,20 @@ export class AmbassadorCheckoutIiPage implements OnInit {
             order.proofOfPayment = this.selectedFile
             this.api.Checkout(order).subscribe(res => {
               console.log(res.body);
-              
+
+               if(res.body == "Order Placed")
+               {
+                this.checkout.get('address').setValidators(Validators.required);
+                this.checkout.get('address').updateValueAndValidity();
+    
+                this.showAlert();
+               }
+               else 
+               {
+                this.ErrorAlert()
+               }
             });
             console.log(order);
-
-            this.checkout.get('address').setValidators(Validators.required);
-            this.checkout.get('address').updateValueAndValidity();
-
-            var orderdetails = {
-              'itemCount': 0, 'discount': 0,
-              'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
-              localStorage.setItem('checkout', JSON.stringify(orderdetails))
-        
-
-            this.showAlert();
-
     } else {
       console.log('invalid form');
     }
@@ -152,11 +164,26 @@ export class AmbassadorCheckoutIiPage implements OnInit {
         {
           text: 'Back To Home',
           handler: () => {
+            var orderdetails = {
+              'itemCount': 0, 'discount': 0,
+              'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
+              localStorage.setItem('checkout', JSON.stringify(orderdetails))
+              
             this.router.navigate(['/ambassador-landing-page'])
           }
         },
       ],
     });
+    await alert.present();
+  }
+
+  async ErrorAlert() {
+    const alert = await this.alert.create({
+      header: 'OOPS!',
+      message: "Something went wrong during the processing of this order. Please try again!",
+      buttons: [{ text: 'OK' }],
+    });
+
     await alert.present();
   }
 

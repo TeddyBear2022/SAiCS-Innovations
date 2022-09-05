@@ -46,7 +46,7 @@
     <ion-row>
       <ion-col size="3" *ngFor="let m of merchandise; let i = index">
         <ion-card class="productCard" id="{{m.id}}">
-          <ion-card-header style="text-align: center;" routerLink="/product-details">
+          <ion-card-header style="text-align: center;">
             <ion-button slot="end" menu="main-menu" ></ion-button><img src="data:image/png;base64,{{m.image}}" />
           </ion-card-header>
           <ion-card-content>

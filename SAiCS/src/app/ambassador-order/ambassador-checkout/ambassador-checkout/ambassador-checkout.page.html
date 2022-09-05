@@ -111,7 +111,7 @@
             <ion-toggle slot="end" disabled="true" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption" (ngModelChange)="toggleValue()"></ion-toggle><br>
           </ion-item>
           <ion-item lines="none">
-            <ion-input *ngIf="deliveryOption" id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
+            <ion-input *ngIf="deliveryOption" readonly id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Discount</ion-label>

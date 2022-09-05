@@ -39,11 +39,11 @@
             </ion-card-header>
             <br>
             <ion-card-content>
-              All you need to know about orders
+              {{f.categoryName}}
               
             </ion-card-content>
             <ion-footer >
-              <div><a routerLink="/orders-faq">Learn more</a></div>
+              <ion-label (click)="showFAQ(f.faqcategoryId)"><u>Learn more</u></ion-label>
             </ion-footer>
           </ion-card>
         </ng-container>
