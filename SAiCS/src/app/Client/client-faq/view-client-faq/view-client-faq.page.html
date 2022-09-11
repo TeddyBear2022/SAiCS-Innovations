@@ -1,0 +1,73 @@
+
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        <ion-icon slot=”icon-only” name=”menu”></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>    
+
+
+    <ion-buttons slot="secondary">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="presentPopover($event)" shape="round">
+          <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+        </ion-button>
+      </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div id="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col> 
+          <ion-label><h1>Let Us Answer Your Questions!</h1></ion-label>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <br><br>
+      <ion-row>
+        <!-- <div align="center" > -->
+          <ng-container>
+          <ion-card *ngFor="let f of faqCategories">
+            <ion-card-header>
+            </ion-card-header>
+            <br>
+            <ion-card-content>
+              {{f.categoryName}}
+              
+            </ion-card-content>
+            <ion-footer >
+              <ion-label (click)="showFAQ(f.faqcategoryId)"><u>Learn more</u></ion-label>
+            </ion-footer>
+          </ion-card>
+        </ng-container>
+        <!-- </div> -->
+
+      </ion-row>
+    </ion-grid>
+ </div>
+
+ <ion-row> 
+  <ion-col style="margin-top: 48%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
+  </div>
+  </ion-col>
+</ion-row>
+
+</ion-content>

@@ -1,35 +1,145 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Maintain Special Type</ion-title>
-    <ion-button slot="end" large fill="transparent" (click)="dismissModal()">
-      <ion-icon name="close-outline"></ion-icon>
-    </ion-button>
-  </ion-toolbar>
+    <ion-item color="primary"
+      ><h2 style="margin-left: 10pt"><b>Maintain Special Type</b></h2>
+      <ion-icon
+        slot="end"
+        (click)="dismissModal()"
+        name="close-outline"
+      ></ion-icon
+    ></ion-item>
+ </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <ion-grid>
-    <form [formGroup]="update" #localForm = 'ngForm' class="ion-padding" (ngSubmit)="submitForm()">
-      <ion-list>
-      <ion-item lines="none">
-        <ion-grid>
-          <ion-row>
-            <ion-label>Special Type:</ion-label>
-          </ion-row>
-          <ion-row>
-            <input type="text" formControlName="typeName"/><br>
-          </ion-row>
-          <ion-row>
-            <span *ngIf="localForm.submitted && update.controls['typeName'].invalid">Required</span>
-          </ion-row>
-        </ion-grid>
-        
-          
-       
-      </ion-item>
-      <ion-item lines="none">
-        <ion-button type="submit" slot="end" id="UpdateStatusBtn">Update</ion-button>
-      </ion-item>
-    </ion-list>
-    </form>
-  </ion-grid>
+<ion-content>
+  <div align="center" style="margin-top: 4%">
+    <ion-grid>
+      <ion-row>
+        <ion-item-group>
+          <ion-label style=" margin-right: 35%;">Select Action:</ion-label>
+          <ion-select
+            placeholder="Select action"
+            interface="popover"
+            [(ngModel)]="typeSelected"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="ActionSelected($event)"
+            style=" margin-left: 10%;"
+          >
+            <ion-select-option value="1">Add special type</ion-select-option>
+            <ion-select-option value="2">Update special type</ion-select-option>
+            <ion-select-option value="3">Delete special type</ion-select-option>
+          </ion-select>
+        </ion-item-group>
+      </ion-row>
+
+      <ion-row *ngIf="typeSelected == 1">
+        <form
+          [formGroup]="addForm"
+          #localForm="ngForm"
+        >
+          <ion-item-group>
+            <ion-label style="margin-right: 50%;">Add special type:</ion-label>
+
+            <ion-item lines="none" style="--background: #f1f1f1;">
+              <ion-input
+                formControlName="addName"
+                placeholder="Enter product name"
+                style=" margin-left: 1%;"
+              ></ion-input>
+              <ion-button fill="clear" shape="round" (click)="CreateType()">
+                <ion-icon
+                  name="add-circle-outline"
+                  size="large"
+                  id="addIcon"
+                  style="margin-left: 2%"
+                ></ion-icon>
+              </ion-button>
+            </ion-item>
+            <span
+              *ngIf="localForm.submitted && addForm.controls['addName'].invalid"
+              >Required</span
+            >
+            <span *ngIf="isExisting" style="margin-left: 15%;">Special type already exists</span>
+          </ion-item-group>
+        </form>
+      </ion-row>
+
+      <ion-row *ngIf="typeSelected == 2">
+        <form
+          [formGroup]="update"
+          #updateForm="ngForm"
+        >
+          <ion-item-group>
+            <ion-label>Select special type:</ion-label>
+            <select
+              formControlName="updateType"
+              interface="popover"
+              (change)="TransferUpdate($event)"
+              style=" margin-right: 14%;"
+            >
+              <option value="" selected disabled>Select special type</option>
+              <option *ngFor="let s of specialTypes" value="{{ s.id }}">
+                {{ s.type }}
+              </option>
+            </select>
+            <span
+              *ngIf="
+                updateForm.submitted && update.controls['updateType'].invalid
+              "
+              >Required</span
+            >
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-label>Update special type:</ion-label>
+
+            <ion-item lines="none" style="--background: #f1f1f1">
+              <ion-input
+                formControlName="updateName"
+                placeholder="Enter product name"
+              ></ion-input>
+              <ion-button fill="clear" shape="round" type="submit" (click)="submitForm()">
+                <ion-icon
+                  size="large"
+                  name="create"
+                  style="color: #0070c0"
+                ></ion-icon>
+              </ion-button>
+            </ion-item>
+            <span
+              *ngIf="
+                updateForm.submitted && update.controls['updateName'].invalid
+              "
+              >Required</span
+            >
+          </ion-item-group>
+        </form>
+      </ion-row>
+
+      <ion-row *ngIf="typeSelected == 3">
+        <ion-card id="specialItemsCard">
+          <ion-content
+            style="top: 0%; --background: white"
+            [scrollEvents]="true"
+          >
+            <ion-list>
+              <ion-item *ngFor="let s of specialTypes" lines="none"
+                >{{ s.type }}
+                <ion-fab-button
+                  (click)="RemoveItem(s.id)"
+                  color="light"
+                  slot="end"
+                >
+                  <ion-icon name="close"></ion-icon>
+                </ion-fab-button>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </div>
+  
+  <div style="margin-left: 75%;" *ngIf="typeSelected > 0">
+    <ion-button id="cancelButton" (click)="dismissModal()">Cancel</ion-button>
+  </div>
 </ion-content>

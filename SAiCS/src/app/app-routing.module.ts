@@ -30,26 +30,6 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
       canLoad: [ClientAuthGuard]
     },
     {
-      path: 'faq',
-      loadChildren: () => import('./Client/faq/faq.module').then( m => m.FAQPageModule),
-      canLoad: [ClientAuthGuard]
-    },
-    {
-      path: 'account-faq',
-      loadChildren: () => import('./Client/faq/account-faq/account-faq.module').then( m => m.AccountFaqPageModule ),
-      canLoad: [ClientAuthGuard]
-    },
-    {
-      path: 'product-faq',
-      loadChildren: () => import('./Client/faq/product-faq/product-faq.module').then( m => m.ProductFaqPageModule ),
-      canLoad: [ClientAuthGuard]
-    },
-    {
-      path: 'delivery-faq',
-      loadChildren: () => import('./Client/faq/delivery-faq/delivery-faq.module').then( m => m.DeliveryFaqPageModule ),
-      canLoad: [ClientAuthGuard]
-    },
-    {
       path: 'reset-password',
       loadChildren: () => import('./User/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule )
     },
@@ -356,6 +336,14 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     loadChildren: () => import('./Ambassador/faq/view-faq-details/view-faq-details.module').then( m => m.ViewFaqDetailsPageModule),
     canLoad: [AmbassadorAuthGuard]
   },
+  {
+    path: 'view-client-faq',
+    loadChildren: () => import('./Client/client-faq/view-client-faq/view-client-faq.module').then( m => m.ViewClientFaqPageModule)
+  },
+  {
+    path: 'view-client-faq-details',
+    loadChildren: () => import('./Client/client-faq/view-client-faq-details/view-client-faq-details.module').then( m => m.ViewClientFaqDetailsPageModule)
+  }
 
 
   ];

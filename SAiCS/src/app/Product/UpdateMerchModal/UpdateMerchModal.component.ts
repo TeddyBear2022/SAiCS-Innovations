@@ -189,6 +189,5 @@ export class UpdateMerchModalComponent implements OnInit {
       duration: 5000,
     });
     toast.present();
-    window.location.reload();
   }
 }

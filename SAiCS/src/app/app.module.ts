@@ -15,10 +15,11 @@ import { NavbarMenuPage } from './navbar-menu/navbar-menu.page';
 import { ReportComponentsModule } from './Report/report-components/report-components.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddContentModalComponent } from './Training/new-course/add-content-modal/add-content-modal.component';
+import { PhoneNumberPipe } from './Pipes/phone-number.pipe';
 //import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
-  declarations: [AppComponent,NavbarMenuPage,AddContentModalComponent],
+  declarations: [AppComponent,NavbarMenuPage,AddContentModalComponent, PhoneNumberPipe],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,ReactiveFormsModule, NgbModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CurrencyPipe],

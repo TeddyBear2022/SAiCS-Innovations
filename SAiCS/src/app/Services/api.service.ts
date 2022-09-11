@@ -416,6 +416,14 @@ export class ApiService {
     })
   }
 
+  ClientSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+ `Client/GetSpecificFaq?categoryID=${categoryId}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   ViewClients(){
     return this.api.get(this.apilink+ 'Ambassador/ViewCurrentClients',{
       headers: new HttpHeaders({
@@ -522,6 +530,14 @@ export class ApiService {
 
   GetAmbassadorFAQS(){
     return this.api.get(this.apilink+ `Ambassador/GetAmbassadorFAQS`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  GetClientFAQS(){
+    return this.api.get(this.apilink+ `Client/GetClientFAQS`, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
@@ -785,7 +801,30 @@ export class ApiService {
     })
   }
 
+  CreateSpecialType(Name: string)
+  {
+    return this.api.post(this.apilink + `Admin/CreateSpecialType?Name=${Name}`, null,{observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
 
+  UpdateSpecialType(Id:number, Name: string)
+  {
+    return this.api.put(this.apilink + `Admin/UpdateSpecialType?id=${Id}&Name=${Name}`, null, {observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
+  DeleteSpecialType(id: number)
+  {
+    return this.api.delete(this.apilink + `Admin/DeleteSpecialType?id=${id}`,
+    {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
 
   AmbassadorListRep(province: number, ranking: number)
   {
