@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { LandingPagePageRoutingModule } from './landing-page-routing.module';
 
 import { LandingPagePage } from './landing-page.page';
+import { FilterPipe } from 'src/app/Pipes/filter.pipe';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
+//import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -14,8 +17,10 @@ import { LandingPagePage } from './landing-page.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    LandingPagePageRoutingModule
+    LandingPagePageRoutingModule,
+    PipesModule
   ],
-  declarations: [LandingPagePage]
+  declarations: [LandingPagePage],
+  exports: []
 })
 export class LandingPagePageModule {}

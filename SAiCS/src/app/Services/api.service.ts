@@ -333,6 +333,13 @@ export class ApiService {
 })})
   }
   
+  GetMerchImage(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetMerchImage?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
   //Update product
   UpdateMerch(id: number, uMerch: MerchVM)
   {
@@ -451,7 +458,7 @@ export class ApiService {
     })})
   }
 
-  AddToCart(id: string,newItem: CartItem)
+  AddToCart(id: string, newItem: CartItem)
   {
     return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', 
     responseType: 'text',headers: new HttpHeaders({

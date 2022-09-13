@@ -134,7 +134,7 @@ export class ClientCheckoutPage implements OnInit {
                {
                 this.checkout.get('address').setValidators(Validators.required);
                 this.checkout.get('address').updateValueAndValidity();
-    
+                
                 this.showAlert();
                }
                else 
@@ -173,6 +173,7 @@ export class ClientCheckoutPage implements OnInit {
               'itemCount': 0,
               'vat': 0, 'subtotal': 0, 'totalCost': 0, 'deliveryOption': 0}
               localStorage.setItem('checkout', JSON.stringify(orderdetails))
+              localStorage.removeItem("cart_items");
             this.route.navigate(['./landing-page'])
           }
         },

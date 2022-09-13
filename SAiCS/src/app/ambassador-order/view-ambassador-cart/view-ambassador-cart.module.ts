@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ViewAmbassadorCartPageRoutingModule } from './view-ambassador-cart-routing.module';
 
 import { ViewAmbassadorCartPage } from './view-ambassador-cart.page';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewAmbassadorCartPageRoutingModule
+    ViewAmbassadorCartPageRoutingModule,
+    PipesModule
   ],
   declarations: [ViewAmbassadorCartPage]
 })

@@ -5,11 +5,11 @@
     </ion-buttons>
 
 
-    <ion-buttons slot="secondary">
+    <!-- <ion-buttons slot="secondary">
       <ion-button shape="round" routerLink="/clients-cart">
         <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
     
     <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
 
@@ -80,7 +80,7 @@
                     <div class="containerItem" id="{{x.id}}">
                       <br /><br />
                       <img
-                        src="data:image/png;base64,{{x.image}}"
+                      [src]="imageArray[i] | safe: 'url'"
                         height="80cm"
                         width="30cm"
                       />

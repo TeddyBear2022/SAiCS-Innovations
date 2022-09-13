@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
-import { CartItem } from 'src/app/Models/CartItem';
-import { CartVM } from 'src/app/Models/ViewModels/CartVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
@@ -16,17 +14,20 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 export class LandingPagePage implements OnInit {
 
   public setBorderColor: boolean = false;
-
   merchandise = []
-  products: any
   session: any 
+  selectedItem;
+  filterKeys = ['name', 'catID', 'type'];
+  search;
+  categorysearch;
 
   constructor(
   public popoverController: PopoverController, 
   private api: ApiService,
   private route:Router,
   private tmpStorage:TemporaryStorage,
-  private menu:MenuController){}
+  private menu:MenuController,
+  private cartService: CartService){}
   
   async presentPopover(event)
   {
@@ -44,6 +45,14 @@ export class LandingPagePage implements OnInit {
     this.GetCatalog()
   }
 
+  get TotalItems()
+  {
+   // this.cartService.getItems();
+   this.cartService.loadCart();
+    var cartItemCount = []
+    cartItemCount =this.cartService.getItems();
+    return cartItemCount.length
+  }
 
  async GetCatalog()
 {
@@ -56,21 +65,28 @@ export class LandingPagePage implements OnInit {
 
 }
 
-selectedItem;
 AddToCart(id)
 {
     
 var item = this.merchandise.find(x => x.id === id)
-var div = document.getElementById( `m${id}`);
 if (item.quantity > 0) {
- let newItem = {} as CartItem
- newItem.merchandiseId = item.id 
- newItem.specialId = null
- newItem.price = item.price
- newItem.quantity = item.quantity
+//  let newItem = {} as CartItem
+//  newItem.merchandiseId = item.id 
+//  newItem.specialId = null
+//  newItem.price = item.price
+//  newItem.quantity = item.quantity
 
-this.api.ClientAddToCart(this.session[0].id, newItem).subscribe((res) => {console.log(res.body);});
-item.quantity = 0
+// this.api.ClientAddToCart(this.session[0].id, newItem).subscribe((res) => {console.log(res.body);});
+// item.quantity = 0
+
+if(!this.cartService.itemInCart(item))
+      {
+        //for storage 
+        var addItem = {'id':item.id, 'name': item.name, 'price': item.price,  'quantity': item.quantity} 
+        console.log(addItem);
+        this.cartService.addToCart(addItem);
+     }
+      item.quantity = 0
 } 
 else 
 {
@@ -127,28 +143,28 @@ ViewItem(id: number)
   this.route.navigate(['/item-details'])
 }
 
-SelectByCategory(e)
-{
-  // let value = e.target.value
-  //this.api.ViewCatalog()
-console.log("vakue");
+// SelectByCategory(e)
+// {
+//   // let value = e.target.value
+//   //this.api.ViewCatalog()
+// console.log("vakue");
 
-  if(e == 5)
-  {
-    console.log(e);
+//   if(e == 5)
+//   {
+//     console.log(e);
     
-  }
-  else
-  {
-    this.api.ViewCatalog().subscribe((res) =>{
-      this.merchandise = this.merchandise.filter(x =>{
-        if(e = 4)
-        return x.typeID == e
-        else
-        return x.catID == e 
-      })
-    }) 
-  }
-}
+//   }
+//   else
+//   {
+//     this.api.ViewCatalog().subscribe((res) =>{
+//       this.merchandise = this.merchandise.filter(x =>{
+//         if(e = 4)
+//         return x.typeID == e
+//         else
+//         return x.catID == e 
+//       })
+//     }) 
+//   }
+// }
 
 }

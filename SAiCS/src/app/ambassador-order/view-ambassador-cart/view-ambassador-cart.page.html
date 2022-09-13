@@ -3,17 +3,18 @@
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"> </ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
+    <!-- Removing Cart Icon: Doesnt make sense -->
+    <!-- <ion-buttons slot="secondary">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" style="color: #08c10f"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-label slot="secondary" style="color: white"
       >John van de Merwe</ion-label
     >
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button (click)="presentPopover($event)" shape="round">
         <ion-icon
           size="large"
           name="person-circle"
@@ -83,8 +84,8 @@
                   <td>
                     <div class="containerItem" id="{{x.id}}">
                       <br /><br />
-                      <img
-                        src="data:image/png;base64,{{x.image}}"
+                        <img
+                        [src]="imageArray[i] | safe: 'url'"
                         height="80cm"
                         width="30cm"
                       />

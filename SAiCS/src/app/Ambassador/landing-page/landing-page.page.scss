@@ -91,3 +91,32 @@ ion-select{
 .InvalidInput {
   border: 2px solid #f44336;
 }
+
+#cartButton{
+  ion-badge {
+		position: absolute;
+		opacity: 0.9;
+        top: -8%;
+        right: -3%;
+
+		& ~ ion-icon {
+			margin-right: 1.2rem;
+		}
+  }
+}
+
+.cart-length {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  z-index: 10;
+  background-color: #9c27b0;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

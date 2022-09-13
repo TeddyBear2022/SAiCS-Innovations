@@ -5,15 +5,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-
-  apilink:string = "https://localhost:44343/api/"
-  currentImage = [];
   items = [];
+  private cartItemCount = new BehaviorSubject(0);
 
   constructor() {}
-
-  
-  //public itemsSubject =new BehaviorSubject<any>([]);
 
   addToCart(addItem) {
     this.items = JSON.parse(localStorage.getItem('cart_items')) || [];
@@ -30,11 +25,17 @@ export class CartService {
      }
 
     this.saveCart();
+    this.cartItemCount.next(this.cartItemCount.value + 1);
 
   }
 
   getItems() {
     return this.items;
+  }
+
+  getCartItemCount() {
+    this.loadCart()
+    return this.items.length;
   }
 
   loadCart() {
@@ -48,6 +49,7 @@ export class CartService {
   clearCart() {
     this.items = [];
     localStorage.removeItem('cart_items');
+    this.cartItemCount.next(0);
   }
 
   removeItem(item) {
@@ -56,6 +58,7 @@ export class CartService {
     if (index > -1) {
       this.items.splice(index, 1);
       this.saveCart();
+      this.cartItemCount.next(this.cartItemCount.value - 1);
     }
   }
 

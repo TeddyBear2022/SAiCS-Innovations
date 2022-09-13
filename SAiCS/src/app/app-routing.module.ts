@@ -343,7 +343,12 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
   {
     path: 'view-client-faq-details',
     loadChildren: () => import('./Client/client-faq/view-client-faq-details/view-client-faq-details.module').then( m => m.ViewClientFaqDetailsPageModule)
-  }
+  },
+  {
+    path: 'ambassador-special',
+    loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special.module').then( m => m.AmbassadorSpecialPageModule)
+  },
+
 
 
   ];

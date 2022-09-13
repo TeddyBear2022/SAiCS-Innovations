@@ -19,7 +19,7 @@ export class AmbassadorOrderHistoryPage implements OnInit {
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
-    this.fileInput.nativeElement.click()
+    //this.fileInput.nativeElement.click()
     this.ViewHistory()
 
   }
