@@ -8,13 +8,17 @@ import { ClientOrderhistoryPageRoutingModule } from './client-orderhistory-routi
 
 import { ClientOrderhistoryPage } from './client-orderhistory.page';
 import { ClientOrderDetailsComponent } from '../client-order-details/client-order-details.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ClientOrderhistoryPageRoutingModule
+    ClientOrderhistoryPageRoutingModule,
+    NgxPaginationModule
+    
   ],
   declarations: [ClientOrderhistoryPage, ClientOrderDetailsComponent],
   entryComponents: [ClientOrderDetailsComponent]

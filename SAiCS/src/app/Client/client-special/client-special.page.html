@@ -47,7 +47,7 @@
       <ion-col size="3" *ngFor="let m of merchandise; let i = index">
         <ion-card class="productCard" id="{{m.id}}">
           <ion-card-header style="text-align: center;">
-            <ion-button slot="end" menu="main-menu" ></ion-button><img src="data:image/png;base64,{{m.image}}" />
+            <ion-button slot="end" menu="main-menu" ></ion-button><img [src]="m.image | safe: 'url' " />
           </ion-card-header>
           <ion-card-content>
             <ion-card-title  name="ItemName" value="p.itemName">{{m.name}}</ion-card-title>

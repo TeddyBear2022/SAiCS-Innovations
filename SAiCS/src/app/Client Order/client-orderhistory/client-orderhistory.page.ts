@@ -16,7 +16,12 @@ import { ClientOrderDetailsComponent } from '../client-order-details/client-orde
 })
 export class ClientOrderhistoryPage implements OnInit {
   orders: any = [];
+  orderTray: any = [];
   session: any;
+  p
+  p1
+  p2
+
   @ViewChild('All' ) fileInput: ElementRef;
   @ViewChild('clickOnView') clickOnView: ElementRef;
 
@@ -26,7 +31,14 @@ export class ClientOrderhistoryPage implements OnInit {
     private api: ApiService,
     public popoverController: PopoverController,
     private menu: MenuController
-  ) {}
+  ) {
+    for (let key in this.orders) {
+      if (this.orders.hasOwnProperty(key)) {
+        this.orderTray.push(this.orders[key]);
+      }
+    }
+  
+  }
 
   ngOnInit() {
     this.menu.enable(true, 'client-menu');

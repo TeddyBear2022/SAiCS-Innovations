@@ -315,16 +315,18 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
   },
   {
     path: 'client-edit-address',
-    loadChildren: () => import('./Client Order/client-edit-address/client-edit-address.module').then( m => m.ClientEditAddressPageModule)
+    loadChildren: () => import('./Client Order/client-edit-address/client-edit-address.module').then( m => m.ClientEditAddressPageModule),
+    canLoad: [ClientAuthGuard]
   },
   {
     path: 'client-orderhistory',
-    loadChildren: () => import('./Client Order/client-orderhistory/client-orderhistory.module').then( m => m.ClientOrderhistoryPageModule)
+    loadChildren: () => import('./Client Order/client-orderhistory/client-orderhistory.module').then( m => m.ClientOrderhistoryPageModule),
+    canLoad: [ClientAuthGuard]
   },
   {
     path: 'client-special',
     loadChildren: () => import('./Client/client-special/client-special.module').then( m => m.ClientSpecialPageModule),
-    canLoad: [AmbassadorAuthGuard]
+    canLoad: [ClientAuthGuard]
   },
   {
     path: 'audit-trail',

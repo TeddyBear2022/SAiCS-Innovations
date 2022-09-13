@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -15,20 +16,24 @@ export class ViewFeedbackPage implements OnInit {
   AmbassadorFeedback = []
   ProductFeedback = []
   session: any;
-  feedbackType =""
+  select = new FormControl();
+  p
+  p1
+  
   constructor(private alert: AlertController, private menu: MenuController,private api: ApiService, private tmpStorage:TemporaryStorage,public popoverController: PopoverController,public alertController: AlertController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo()
 
-    this.feedbackType = ""
+    this.select.setValue("")
     
   }
 
-  ionViewWillEnter()
+  ionViewDidEnter()
   {
-    this.feedbackType = ""
+    this.select.setValue("")
+    
   }
 
   

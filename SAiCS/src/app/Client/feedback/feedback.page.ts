@@ -112,8 +112,9 @@ export class FeedbackPage implements OnInit {
       });
 
       this.presentToast();
+      history.back()
       this.feedbackForm.reset();
-      this.router.navigate(['/feedback/view-feedback']);
+      //this.router.navigate(['/feedback/view-feedback']);
     } else {
       console.log('Invalid Form');
     }
@@ -129,6 +130,13 @@ export class FeedbackPage implements OnInit {
       this.feedbackForm.get('productType').reset();
     }
   }
+
+  Cancel()
+  {
+    history.back()
+    //routerLink="/feedback/view-feedback"
+  }
+  
   //alerts
   // async presentAlert() {
   //   const alert = await this.alertController.create({
