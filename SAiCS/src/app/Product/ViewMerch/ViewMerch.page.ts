@@ -16,8 +16,8 @@ export class ViewMerchPage implements OnInit {
   merchCat = [];
   merchCatOption = 'All'
   typeSelect: any
-  filterString = '';
-  filtered;
+  filterKeys = ['id','name', 'description'];
+  search;
   
 
   constructor(
@@ -153,39 +153,17 @@ DeleteItem(id: number)
     {
       message = "Item deleted Sucessfully deleted"
       this.Notif(message) 
+      this.presentToast()
     }
-     else if(res.body == "Status Updated")
+     else
      {
-        message = `Could not delete purchased Item, Status updated to "Out of Sotck"`
-        this.Notif(message) 
+        this.Notif(res.body) 
      }
     this.GetAllMerch()
   })
-  this.presentToast()
+  
   console.log('Confirm Ok');
 }
-
-
-
-searchFunction(e) {
-  this.api.GetAllMerch().subscribe(data =>
-    {
-      this.merch = data
-
-      this.merch = this.merch.filter(x => this.isMatch(x))
-      console.log(this.merch);
-    })
-  
-}
-
-isMatch(item) {
-  if (item instanceof Object) {
-    return Object.keys(item).some((k) => this.isMatch(item[k]));
-  } else {
-    return item.toString().indexOf(this.filterString) > -1;
-  }
-}
-
 
 async Notif(message:string) {
   const alert = await this.alert.create({

@@ -13,6 +13,7 @@ import { NavbarMenuPage } from './navbar-menu/navbar-menu.page';
 //import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AddContentModalComponent } from './Training/new-course/add-content-modal/add-content-modal.component';
 
+
 //import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AddContentModalComponent } from './Training/new-course/add-content-moda
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    
     
   ],
   providers: [

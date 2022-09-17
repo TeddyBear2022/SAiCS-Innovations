@@ -350,6 +350,10 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'ambassador-special',
     loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special.module').then( m => m.AmbassadorSpecialPageModule)
   },
+  {
+    path: 'merch-maintenance',
+    loadChildren: () => import('./Product/merch-maintenance/merch-maintenance.module').then( m => m.MerchMaintenancePageModule)
+  },
 
 
 

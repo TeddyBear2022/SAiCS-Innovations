@@ -10,6 +10,7 @@ import { ViewMerchPage } from './ViewMerch.page';
 import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
 import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.component';
 import { MaintainVatComponent } from '../maintain-vat/maintain-vat.component';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { MaintainVatComponent } from '../maintain-vat/maintain-vat.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    ViewProductPageRoutingModule
+    ViewProductPageRoutingModule,
+    PipesModule
   ],
   declarations: [ViewMerchPage, CreateMerchModalComponent, UpdateMerchModalComponent, MaintainVatComponent],
   entryComponents: [CreateMerchModalComponent,UpdateMerchModalComponent, MaintainVatComponent]

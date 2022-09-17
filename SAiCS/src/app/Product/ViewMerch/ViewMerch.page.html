@@ -23,16 +23,16 @@
         <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
       </ion-button>
     </ion-col>
-    <!-- <ion-col>
-      <ion-input [(ngModel)]="filterString" id="searchProductBar" placeholder="Search Product..."></ion-input>
-    </ion-col> -->
+    <ion-col>
+      <ion-searchbar [(ngModel)]="search" id="searchProductBar" placeholder="Search Product..."></ion-searchbar>
+    </ion-col>
   </ion-row>
 
   <ion-row>
     <!-- Filter box -->
    <ion-col size="2.1">
     <ion-row>
-      <ion-button (click)="maintainVAT()" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintain VAT</ion-button>
+      <ion-button routerLink="/merch-maintenance" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintain VAT</ion-button>
     </ion-row>
 
     <ion-row>
@@ -83,10 +83,10 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let m of merch">
+        <ng-container *ngFor="let m of merch | filter:search:filterKeys">
           <tr *ngIf="m.catID == merchCatOption || merchCatOption == 'All'">
             <td>{{m.id}}</td>
-            <td><img src="data:image/png;base64,{{m.image}}" height="100px" alt='The Image' /></td>
+            <td><img [src]="m.image | safe: 'url'" height="100px" alt='The Image' /></td>
             <td>{{m.name}}</td>
             <td>{{m.category}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>

@@ -310,6 +310,14 @@ export class ApiService {
   })});
   }
 
+  // GetMerchStatuses(): Observable<any>
+  // {
+  //   return this.api.get(this.apilink + 'Product/GetMerchStatuses',{
+  //   headers: new HttpHeaders({
+  //     Authorization: 'Bearer ' + localStorage.getItem("token")
+  // })});
+  // }
+
   CreateMerch(nMerch: MerchVM)
   {
     return this.api.post(this.apilink + "Product/CreateMerch", nMerch, {observe: 'response', responseType: 'text',

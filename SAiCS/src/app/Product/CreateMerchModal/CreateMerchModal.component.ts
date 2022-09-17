@@ -97,16 +97,16 @@ export class CreateMerchModalComponent implements OnInit {
      this.api.CreateMerch(nMerch).subscribe((res) =>{
       console.log(res.body);
       
-      if(res.body == "Item Created")
+      if(res.body == "Created")
+      {
+        this.isExisting = false
+        this.dismissModal() 
+        this.presentToast()
+      }
+      else if(res.body == "Exists")
       {
         this.isExisting = true
         
-      }
-      else if(res.body == "Item Created")
-      {
-        this.isExisting = false
-        this.presentToast()
-        this.modalCtrl.dismiss();
       }
       
      }, (error) => {console.log(error)})
