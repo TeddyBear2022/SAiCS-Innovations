@@ -23,6 +23,8 @@ export class RegisterPage implements OnInit {
   userType
   inputInfo = undefined
   selectedFile:any 
+  isModalOpen = false;
+  getRefCode: any
   
   constructor(private api: ApiService, 
     private route : Router, 
@@ -73,9 +75,20 @@ export class RegisterPage implements OnInit {
   }
 
   //REVAMP BEGIN
-  NoRefferralCode(){
-    console.log("No refferral code");
+  NoRefferralCode(isOpen: boolean){
+
+  this.api.NoRefCode().subscribe((res) => {
+    this.getRefCode = res
+     console.log(this.getRefCode);})
+    
+    this.isModalOpen = isOpen;
   }
+
+  CloseRefferralCode(isOpen: boolean){
+      
+      this.isModalOpen = isOpen;
+  }
+    
 
   Step2(){
     // if ambassador validate everything then conitinue

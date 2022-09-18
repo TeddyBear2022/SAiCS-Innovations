@@ -3,7 +3,6 @@ import {  Router } from '@angular/router';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
-import { MaintainSpecialTypeComponent } from '../maintain-special-type/maintain-special-type.component';
 
 @Component({
   selector: 'app-view-special',
@@ -14,53 +13,94 @@ export class ViewSpecialPage implements OnInit {
   specials: any= []
   specialTypes: any = [];
   specialOption = 'All'
+  imageArray: any = [];
+  filterKeys = ['name', 'description','type'];
+  search;
+  p;
+
   constructor( public popoverController: PopoverController,
     private api: ApiService, private router: Router,
     public alertController: AlertController,
     public toastController: ToastController,
-    private modalCtrl: ModalController,
+    private alert:AlertController
     ) { }
 
   ngOnInit() {
     this.GetInfo()
+   
+   // console.log(this.specials);
   }
   
   ionViewDidEnter(){
-    this. GetInfo()
+    this.GetInfo()
+    //this.GetMerchImage()
   }
 
   GetInfo()
   {
-      this.api.GetSpecialTypes().subscribe(res => {
-        this.specialTypes = res
+  
+
+    this.api.GetAllSpecials().subscribe((data) => {
+      this.specials = data
+      this.imageArray = new Array(this.specials.length).fill(null);
+    console.log(this.imageArray);
+
+    this.specials.forEach((obj: any) => {
+      let index = this.specials.findIndex(x => x.id == obj.id);
+    console.log(`index: ${index}`);
+
+      this.api.GetSpImage(obj.id).subscribe((baseImage: any) =>{
+        //console.log(baseImage);
+        this.imageArray[index] = baseImage.image
       })
+    })
 
-      this.api.GetAllSpecials().subscribe(res => {
-        this.specials = res
-      })
-
-  }
-
-
- async createSpecialType()
-  {
-    const modal = await this.modalCtrl.create({
-      component: MaintainSpecialTypeComponent,
-      cssClass: 'SpecialTypeClass',
-      
     });
 
-    modal.onDidDismiss().then((data) => {
-      this.GetInfo()
-    })
-  
-    await modal.present();
+      this.api.GetSpecialTypes().subscribe(res => {
+        this.specialTypes = res
+        //console.log(this.specials);
+        
+      })
+
   }
+
+  // GetMerchImage()
+  // {
+  //   this.imageArray = new Array(this.specials.length).fill(null);
+  //   console.log(this.imageArray);
+
+  //   this.specials.forEach((obj: any) => {
+  //     let index = this.specials.findIndex(x => x.id == obj.id);
+  //   console.log(`index: ${index}`);
+
+  //     this.api.GetSpImage(obj.id).subscribe((baseImage: any) =>{
+  //       //console.log(baseImage);
+  //       this.imageArray[index] = baseImage.image
+  //     })
+  //   })
+  // }
+
+  PerformDelete(id: number)
+  {
+    this.api.DeleteSpecial(id).subscribe((res) => {
+      if(res.body == "Deleted")
+      {
+        this.GetInfo()
+        this.presentToast()
+        console.log('Confirm Ok');
+      }
+      else
+      {
+        this.Notif(res.body) 
+      }
+      })
+  }
+
 
   updateSpecial(id: number)
   {
     localStorage.setItem('UpdateId', JSON.stringify(id))
-
     this.router.navigate(['/update-special'])
   }
 
@@ -74,11 +114,7 @@ export class ViewSpecialPage implements OnInit {
           text: 'Confirm',
           cssClass: 'Confirm',
           handler: () => {
-            this.api.DeleteSpecial(id).subscribe(() => {
-              this.GetInfo()
-              console.log("deleted successfully")})
-            this.presentToast()
-            console.log('Confirm Ok');
+           this.PerformDelete(id)
           }
         },
         {
@@ -94,6 +130,16 @@ export class ViewSpecialPage implements OnInit {
     });
   
     await alert.present();
+  }
+
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+  
+    await alert.present();
+    
   }
 
   //success alert

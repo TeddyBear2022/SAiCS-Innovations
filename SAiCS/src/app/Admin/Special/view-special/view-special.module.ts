@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ViewSpecialPageRoutingModule } from './view-special-routing.module';
 
 import { ViewSpecialPage } from './view-special.page';
-import { MaintainSpecialTypeComponent } from '../maintain-special-type/maintain-special-type.component';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -15,9 +16,10 @@ import { MaintainSpecialTypeComponent } from '../maintain-special-type/maintain-
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    ViewSpecialPageRoutingModule
+    ViewSpecialPageRoutingModule,
+    PipesModule,
+    NgxPaginationModule
   ],
-  declarations: [ViewSpecialPage, MaintainSpecialTypeComponent],
-  entryComponents: [MaintainSpecialTypeComponent]
+  declarations: [ViewSpecialPage],
 })
 export class ViewSpecialPageModule {}

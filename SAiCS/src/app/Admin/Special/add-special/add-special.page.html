@@ -139,13 +139,14 @@
         <ion-col size="6">
           <div id="productTable">
             <ag-grid-angular
-              style="height: 500px"
+              style="height: 600px"
               class="ag-theme-alpine"
               #specialGrid
               [rowData]="rowData"
               [columnDefs]="columnDefs"
               [rowSelection]="rowSelection"
               [rowMultiSelectWithClick]="true"
+              [pagination]="true"
               (rowSelected)="onRowSelected($event)"
               (selectionChanged)="onSelectionChanged($event)"
             >

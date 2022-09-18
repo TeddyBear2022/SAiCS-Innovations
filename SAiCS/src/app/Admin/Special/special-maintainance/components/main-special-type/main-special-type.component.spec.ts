@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MaintainSpecialTypeComponent } from './maintain-special-type.component';
+import { MainSpecialTypeComponent } from './main-special-type.component';
 
-describe('MaintainSpecialTypeComponent', () => {
-  let component: MaintainSpecialTypeComponent;
-  let fixture: ComponentFixture<MaintainSpecialTypeComponent>;
+describe('MainSpecialTypeComponent', () => {
+  let component: MainSpecialTypeComponent;
+  let fixture: ComponentFixture<MainSpecialTypeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MaintainSpecialTypeComponent ],
+      declarations: [ MainSpecialTypeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MaintainSpecialTypeComponent);
+    fixture = TestBed.createComponent(MainSpecialTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

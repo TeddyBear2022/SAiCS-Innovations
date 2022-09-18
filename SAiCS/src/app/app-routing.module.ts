@@ -354,6 +354,12 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'merch-maintenance',
     loadChildren: () => import('./Product/merch-maintenance/merch-maintenance.module').then( m => m.MerchMaintenancePageModule)
   },
+  {
+    path: 'special-maintainance',
+    loadChildren: () => import('./Admin/Special/special-maintainance/special-maintainance.module').then( m => m.SpecialMaintainancePageModule)
+  },
+
+
 
 
 

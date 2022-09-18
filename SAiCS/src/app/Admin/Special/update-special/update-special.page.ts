@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { AgGridAngular } from 'ag-grid-angular';
 import { RowSelectedEvent, SelectionChangedEvent } from 'ag-grid-community';
 import { Special } from 'src/app/Models/Special';
@@ -36,9 +36,7 @@ export class UpdateSpecialPage implements OnInit {
   setData: any;
 
   constructor(private router: Router,public popoverController: PopoverController,
-    private api: ApiService,private fb: FormBuilder) { 
-    // const navigation = this.router.getCurrentNavigation();
-    // const state = navigation.extras.state as {existingSpecial: number};
+    private api: ApiService,private fb: FormBuilder, private alert:AlertController) { 
     this.existingSpecial =  JSON.parse(localStorage.getItem('UpdateId'));
   }
 
@@ -105,6 +103,8 @@ export class UpdateSpecialPage implements OnInit {
 
   submitForm()
   {
+    let message = ""
+
     if(this.addForm.valid && this.specialItemsArr.length > 0 &&
       this.addForm.get(['startDate']).value <=this.addForm.get(['endDate']).value)
     {
@@ -124,12 +124,18 @@ export class UpdateSpecialPage implements OnInit {
 
       this.api.UpdateSpecial(vmSpecial).subscribe(res =>{
         console.log(res.body);
-        if(res.body == "Special updated")
+        if(res.body == "Updated")
         {
+          this.addForm.reset()
           localStorage.removeItem('UpdateId')
-          this.router.navigate(['/view-special'])
+          history.back()
         }
       })
+    }
+    else if(this.addForm.valid && this.specialItemsArr.length > 0 && this.addForm.get(['startDate']).value > this.addForm.get(['endDate']).value)
+    {
+       message = "Please ensure that the start and end date are in the correct format"
+       this.Notif(message)
     }
     else
     {
@@ -190,6 +196,16 @@ export class UpdateSpecialPage implements OnInit {
   {
     localStorage.removeItem('UpdateId')
     this.router.navigate(['/view-special'])
+  }
+
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+  
+    await alert.present();
+    
   }
 
 

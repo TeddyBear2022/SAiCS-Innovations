@@ -18,7 +18,7 @@ export class CreateMerchModalComponent implements OnInit {
   merch: FormGroup;
   merchTypes = [];
   merchCat = [];
-  merchStatus = [];
+  merchStatus: any = [];
   selectedFile: any;
   isExisting: boolean = false;
 
@@ -41,7 +41,6 @@ export class CreateMerchModalComponent implements OnInit {
       description: new FormControl('', Validators.required),
       merchImage: new FormControl('', Validators.required),
       price: new FormControl('', [Validators.required]),
-      status: new FormControl('', Validators.required),
     });
   }
 
@@ -63,7 +62,8 @@ export class CreateMerchModalComponent implements OnInit {
   GetMerchStatuses() {
     this.api.GetMerchStatuses().subscribe((data) => {
       this.merchStatus = data;
-      console.log("Loaded statuses successfully");
+      this.merchStatus = this.merchStatus.find(x => x.merchStatusName == "In Stock")
+      console.log(this.merchStatus);
     });
   }
 
@@ -89,7 +89,7 @@ export class CreateMerchModalComponent implements OnInit {
       nMerch.description = this.merch.value.description;
       nMerch.merchImage = this.selectedFile;
       nMerch.price = this.merch.value.price;
-      nMerch.statusId = this.merch.value.status;
+      nMerch.statusId = this.merchStatus.merchStatusId;
       nMerch.merchTypeId = this.merch.value.merchTypeId;
       nMerch.merchCategoryId = this.merch.value.merchCatId;
 

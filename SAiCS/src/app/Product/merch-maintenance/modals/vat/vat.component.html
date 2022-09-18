@@ -7,9 +7,8 @@
                     <tr>
                         <th></th>
                         <th>
-                            <input [(ngModel)]="search" id="searchBox" class="form-control" placeholder="Search by name" [ngModelOptions]="{standalone: true}">
                         </th>
-                        <th>
+                        <th style="text-align: right;">
                             <ion-button id="addBtn" (click)="startCreate()" [disabled]="isAddClicked || isEditClicked">
                                 <ion-icon name="add-outline"></ion-icon>
                             </ion-button>
@@ -17,7 +16,7 @@
                     </tr>
                 <tr>
                     <th width="12%">ID</th>
-                  <th>Name</th>
+                  <th>Percentage</th>
                   <th>
                     Action:
                   </th>
@@ -30,11 +29,11 @@
                         </td>
                         <td>
                             <input
-                            type="text"
+                            type="number"
                             class="form-control"
-                            formControlName="formName"
-                            [ngStyle]="{'border':localForm.submitted && lookUpForm.controls['formName'].invalid?'1px solid red':'' }"
-                            placeholder="name"
+                            formControlName="vatPercentage"
+                            [ngStyle]="{'border':localForm.submitted && lookUpForm.value.vatPercentage <= -1?'1px solid red':''}"
+                           
                           />
                         </td>
                         <td>
@@ -46,48 +45,47 @@
                             </ion-button>
                         </td>
                     </tr>
-                  <tr *ngFor="let data of merchStatus | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
+                  <tr *ngFor="let data of lookUpArr | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
                     
-                    <td>{{data.id}}</td>
+                    <td>{{data.vatid}}</td>
 
                     <td class="form-group">
-                    <ng-container *ngIf="!editCache[data.id].edit; else nameInputTpl">
-                        {{data.name}}
+                    <ng-container *ngIf="!editCache[data.vatid].edit; else nameInputTpl">
+                        {{data.vatPercentage}}
                     </ng-container>
                     <ng-template  #nameInputTpl>
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
-                        [(ngModel)]="editCache[data.id].data.name"
+                        [(ngModel)]="editCache[data.vatid].data.vatPercentage"
                         [ngModelOptions]="{standalone: true}"
-                        placeholder="name"
-                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.id].data.name == ''?'1px solid red':'' }"
+                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.vatid].data.vatPercentage <= -1?'1px solid red':'' }"
                       />
                     </ng-template>
                     </td>
 
                     <td>
-                        <ng-container *ngIf="!editCache[data.id].edit; else actionbtn">
-                            <ion-button (click)="startEdit(data.id)" fill="transparent" [disabled]="isAddClicked">
+                        <ng-container *ngIf="!editCache[data.vatid].edit; else actionbtn">
+                            <ion-button (click)="startEdit(data.vatid)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="editBtn" name="create-outline"></ion-icon>
                             </ion-button>
-                            <ion-button (click)="remove(data.id)" fill="transparent" [disabled]="isAddClicked">
+                            <ion-button (click)="remove(data.vatid)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="deleteBtn" name="trash-bin-outline"></ion-icon>
                             </ion-button>
                         </ng-container>
 
                         <ng-template  #actionbtn>
-                        <ion-button (click)="saveEdit(data.id)" fill="transparent">
+                        <ion-button (click)="saveEdit(data.vatid)" fill="transparent">
                             <ion-icon id="editBtn" name="checkmark-outline"></ion-icon>
                         </ion-button>
-                        <ion-button (click)="cancelEdit(data.id)" fill="transparent">
+                        <ion-button (click)="cancelEdit(data.vatid)" fill="transparent">
                             <ion-icon id="deleteBtn" name="ban-outline"></ion-icon>
                         </ion-button>
                     </ng-template>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="3" *ngIf="merchStatus.length == 0">
+                    <td colspan="3" *ngIf="lookUpArr.length == 0">
                         No Result
                     </td>
                   </tr>

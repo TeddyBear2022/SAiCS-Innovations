@@ -121,8 +121,25 @@
         <ion-input formControlName="clientreferralcode" id="refferralcode" ></ion-input>
         <span *ngIf="BasicInfoForm.submitted && ClientForm.controls.clientreferralcode.invalid">Please enter your refferral code</span>
         <br>
-        <ion-label style="color: #3f51b5;" (click)="NoRefferralCode()"><u>Do you have a referal Code?</u></ion-label>
+        <ion-label style="color: #3f51b5;" (click)="NoRefferralCode(true)"><u>Do you have a referal Code?</u></ion-label>
       </form>
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="CloseRefferralCode(false)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <!-- <qrcode [qrdata]="'myAngularxQrCode'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+          </ion-content>
+        </ng-template>
+      </ion-modal>
   </ion-col>
      </ion-row>
 

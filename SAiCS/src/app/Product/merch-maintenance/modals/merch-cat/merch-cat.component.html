@@ -46,7 +46,7 @@
                             </ion-button>
                         </td>
                     </tr>
-                  <tr *ngFor="let data of merchStatus | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
+                  <tr *ngFor="let data of lookUpArr | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
                     
                     <td>{{data.id}}</td>
 
@@ -87,7 +87,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="3" *ngIf="merchStatus.length == 0">
+                    <td colspan="3" *ngIf="lookUpArr.length == 0">
                         No Result
                     </td>
                   </tr>

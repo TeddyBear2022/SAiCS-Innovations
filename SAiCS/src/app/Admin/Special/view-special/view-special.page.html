@@ -22,12 +22,15 @@
         <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
       </ion-button>
     </ion-col>
+    <ion-col>
+      <ion-searchbar [(ngModel)]="search" id="searchProductBar" placeholder="Search Special..."></ion-searchbar>
+    </ion-col>
   </ion-row>
   <ion-row>
     <!-- Filter box -->
    <ion-col size="2.1">
     <ion-row>
-      <ion-button (click)="createSpecialType()" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintain Special Type</ion-button>
+      <ion-button routerLink="/special-maintainance" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintainance</ion-button>
     </ion-row>
 
     <ion-card id="filterBox">
@@ -67,10 +70,10 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let s of specials">
+        <ng-container *ngFor="let s of specials | filter:search:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
           <tr  *ngIf="s.typeId == specialOption || specialOption == 'All'">
             <td> <div class="containerItem" id="{{s.id}}" style="display:inline-block;vertical-align:top;">
-              <img src="data:image/png;base64,{{s.image}}" style="height:75px; width:80px; padding-right: 10%;"  alt='The Image' />
+              <img [src]="imageArray[i]  | safe: 'url'" style="height:75px; width:80px; padding-right: 10%;"  alt='The Image' />
            
                 
           </div>
@@ -95,4 +98,10 @@
      </table>
   </ion-col>
   </ion-row>
+  <ion-row>
+    <div class="pagination">
+      <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </ion-row>
+  <br>
 </ion-content>

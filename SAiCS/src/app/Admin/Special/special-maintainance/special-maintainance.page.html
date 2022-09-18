@@ -24,10 +24,8 @@
     <ion-col size="6">
       <ion-label style="margin-left: 5%;">Select Entity:</ion-label>
       <ion-select interface="popover" placeholder="Select option" #maintainOpt name="maintainOpt" ngModel>
-        <ion-select-option value="cat">Merch Category</ion-select-option>
-        <ion-select-option value="type">Merch Type</ion-select-option>
-        <ion-select-option value="status">Merch Status</ion-select-option>
-        <ion-select-option value="VAT">VAT</ion-select-option>
+        <ion-select-option value="cat">Special Category</ion-select-option>
+        <ion-select-option value="type">Special Type</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="6">
@@ -35,8 +33,6 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-<app-merch-status *ngIf="maintainOpt.value == 'status'"></app-merch-status>
-<app-merch-cat *ngIf="maintainOpt.value == 'cat'"></app-merch-cat>
-<app-merch-type *ngIf="maintainOpt.value == 'type'"></app-merch-type>
-<app-vat *ngIf="maintainOpt.value == 'VAT'"></app-vat>
+<app-main-special-type *ngIf="maintainOpt.value == 'type'"></app-main-special-type>
+<app-main-special-cat *ngIf="maintainOpt.value == 'cat'"></app-main-special-cat>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import {RowSelectedEvent, SelectionChangedEvent} from 'ag-grid-community';
@@ -36,7 +36,8 @@ export class AddSpecialPage implements OnInit {
   constructor(
     public popoverController: PopoverController,
      private api: ApiService,
-     private fb: FormBuilder, private router: Router) { }
+     private fb: FormBuilder, private router: Router,
+     private alert:AlertController) { }
 
   ngOnInit() {
     this.GetSpecialOptions()
@@ -118,6 +119,8 @@ export class AddSpecialPage implements OnInit {
 
   submitForm()
   {
+    let message = ""
+
     if(this.addForm.valid && this.specialItemsArr.length > 0 &&
       this.addForm.get(['startDate']).value <=this.addForm.get(['endDate']).value)
     {
@@ -134,20 +137,43 @@ export class AddSpecialPage implements OnInit {
       vmSpecial.Special = nSpecial
       vmSpecial.SpecialItems = this.specialItemsArr
       
-      //console.log(nSpecial);
-      
       this.api.addSpecial(vmSpecial).subscribe(res =>{
-        console.log(res.body);
-        this.router.navigate(['/view-special'])
+        if(res.body == "Created")
+        {
+          history.back()
+          this.addForm.reset()
+        }
+        else if(res.body == "Exists")
+        {
+          message = "This item already Exists"
+          this.Notif(message);
+        }
+
+       
       })
       
     }
+    else if(this.addForm.valid && this.specialItemsArr.length > 0 && this.addForm.get(['startDate']).value > this.addForm.get(['endDate']).value)
+    {
+       message = "Please ensure that the start and end date are in the correct format"
+       this.Notif(message)
+    }
     else{
-       
+    // message = "Please Ensure that all the form values are filled in correctly"
+    //    this.Notif(message)
       console.log("Invalid Form");
     }
   }
 
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+  
+    await alert.present();
+    
+  }
   
   //Profile popover
   async presentPopover(event)

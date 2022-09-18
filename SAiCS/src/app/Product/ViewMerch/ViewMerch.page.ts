@@ -3,7 +3,6 @@ import { AlertController, ModalController, PopoverController, ToastController } 
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
-import { MaintainVatComponent } from '../maintain-vat/maintain-vat.component';
 import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.component';
 
 @Component({
@@ -15,9 +14,10 @@ export class ViewMerchPage implements OnInit {
   merch = []
   merchCat = [];
   merchCatOption = 'All'
-  typeSelect: any
-  filterKeys = ['id','name', 'description'];
+  filterKeys = ['name', 'description'];
   search;
+  typeSelect = "";
+  p;
   
 
   constructor(
@@ -55,20 +55,6 @@ GetAllMerch()
     })
 }
 
-onTypeSelect(e)
-{
-  let type = e.target.value
-
-  //console.log();
-  
-  this.api.GetAllMerch().subscribe(data =>
-    {
-      this.merch = data
-
-      this.merch = this.merch.filter(x => x.typeID == type)
-      console.log(this.merch);
-    })
-}
   
 
 //create product
@@ -84,17 +70,6 @@ onTypeSelect(e)
     this.GetAllMerch()
   })
 
-  await modal.present();
-}
-
-async maintainVAT()
-{
- const modal = await this.modalCtrl.create({
-    component: MaintainVatComponent,
-    cssClass: 'VATClass',
-    
-  });
- 
   await modal.present();
 }
 

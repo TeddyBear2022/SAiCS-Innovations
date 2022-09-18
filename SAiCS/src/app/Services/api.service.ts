@@ -38,6 +38,9 @@ import { Special } from '../Models/Special';
 import { SpecialVM } from '../Models/ViewModels/SpecialVM';
 import { Address } from '../Models/Address';
 import { uOrderStatusVM } from '../Models/ViewModels/uOrderStatusVM';
+import { MerchStatus } from '../Models/MerchStatus';
+import { MerchCategory } from '../Models/MerchCategory';
+import { MerchType } from '../Models/MerchType';
 
 @Injectable({
   providedIn: 'root'
@@ -310,13 +313,52 @@ export class ApiService {
   })});
   }
 
-  // GetMerchStatuses(): Observable<any>
-  // {
-  //   return this.api.get(this.apilink + 'Product/GetMerchStatuses',{
-  //   headers: new HttpHeaders({
-  //     Authorization: 'Bearer ' + localStorage.getItem("token")
-  // })});
-  // }
+  CreateLookUp(table: string, value: string): Observable<any>
+  {
+    return this.api.post(this.apilink + `Product/CreateMerchStatus?table=${table}&value=${value}`,null,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  DeleteLookUp(table: string, value: number): Observable<any>
+  {
+    return this.api.post(this.apilink + `Product/DeleteLookUp?table=${table}&id=${value}`,null,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateMerchStatus(status: MerchStatus): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Product/UpdateMerchStatus',status,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateMerchCategory(cat: MerchCategory): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Product/UpdateMerchCategory',cat,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateMerchType(data: MerchType): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Product/UpdateMerchType',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+
 
   CreateMerch(nMerch: MerchVM)
   {
@@ -344,6 +386,21 @@ export class ApiService {
   GetMerchImage(id: number)
   {
     return this.api.get(this.apilink + `User/GetMerchImage?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  GetSpImage(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetSpImage?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  NoRefCode()
+  {
+    return this.api.get(this.apilink + `User/NoRefCode`,{responseType: 'text',headers: new HttpHeaders({
+      
       Authorization: 'Bearer ' + localStorage.getItem("token")
 })})
   }
@@ -380,6 +437,13 @@ export class ApiService {
    })})
   }
 
+  GetAllVAT()
+  {
+    return this.api.get(this.apilink + "Product/GetAllVAT",{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+   })})
+  }
+
   AgentAccountInfo(id: string)
   {
     return this.api.get(this.apilink + `User/AgentAccountInfo?id=${id}`,{headers: new HttpHeaders({
@@ -390,7 +454,7 @@ export class ApiService {
 
   UpdateVAT(id: number, amount: number)
   {
-    return this.api.put(this.apilink + `Admin/UpdateVAT?id=${id}&amount=${amount}`,{observe: 'response', 
+    return this.api.put(this.apilink + `Admin/UpdateVAT?id=${id}&amount=${amount}`,null,{observe: 'response', 
     responseType: 'text',headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
 })})
@@ -832,6 +896,14 @@ export class ApiService {
       })} )
   }
 
+  UpdateSpecialCategory(Id:number, Name: string)
+  {
+    return this.api.put(this.apilink + `Admin/UpdateSpecialCategory?id=${Id}&Name=${Name}`, null, {observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
   DeleteSpecialType(id: number)
   {
     return this.api.delete(this.apilink + `Admin/DeleteSpecialType?id=${id}`,
@@ -986,6 +1058,16 @@ export class ApiService {
       })
     })
   }
+
+  GetSpecialCategory()
+  {
+    return this.api.get(this.apilink + "Admin/GetSpecialCategory", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   // AcceptRegistration(){
 
   addSpecial(special: SpecialVM)
@@ -996,7 +1078,7 @@ export class ApiService {
   })})
   }
 
-  GetAllSpecials()
+  GetAllSpecials(): Observable<any>
   {
     return this.api.get(this.apilink + "Admin/GetAllSpecials", {
       headers: new HttpHeaders({
@@ -1034,6 +1116,8 @@ export class ApiService {
   DeleteSpecial(id: number)
   {
     return this.api.delete(this.apilink + `Admin/DeleteSpecial?id=${id}`, {
+      observe: 'response', 
+      responseType: 'text',
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

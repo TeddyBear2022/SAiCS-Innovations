@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MaintainVatComponent } from './maintain-vat.component';
+import { VatComponent } from './vat.component';
 
-describe('MaintainVatComponent', () => {
-  let component: MaintainVatComponent;
-  let fixture: ComponentFixture<MaintainVatComponent>;
+describe('VatComponent', () => {
+  let component: VatComponent;
+  let fixture: ComponentFixture<VatComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MaintainVatComponent ],
+      declarations: [ VatComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MaintainVatComponent);
+    fixture = TestBed.createComponent(VatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

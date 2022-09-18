@@ -55,11 +55,7 @@
 
       <ion-item-group>
         <ion-label style="margin-left: 0%;">Availability:</ion-label>
-        <select placeholder="Pick" formControlName="status">
-          <option value="" disabled selected>Select status</option>
-          <option *ngFor="let m of merchStatus" value="{{m.merchStatusId}}">{{m.merchStatusName}}</option>
-        </select><br> 
-        <span *ngIf="localForm.submitted && merch.controls['status'].invalid">Required</span>
+        <label style="margin-right: 41%;">{{merchStatus.merchStatusName}}</label>
       </ion-item-group>
 
       <ion-item-group style="float: right;">

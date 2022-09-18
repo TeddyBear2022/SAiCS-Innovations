@@ -32,14 +32,14 @@
     <!-- Filter box -->
    <ion-col size="2.1">
     <ion-row>
-      <ion-button routerLink="/merch-maintenance" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintain VAT</ion-button>
+      <ion-button routerLink="/merch-maintenance" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintainance</ion-button>
     </ion-row>
 
     <ion-row>
-      <select placeholder="Pick" id="typeSelect" name="typeSelect" (change)="onTypeSelect($event)">
-          <option value="" disabled selected>Select product type</option>
-          <option value="1">Product</option>
-          <option value="2">Package</option>
+      <select placeholder="Pick" id="typeSelect" name="typeSelect" [(ngModel)]="typeSelect">
+          <option value="" selected>Select product type</option>
+          <option value="Product">Product</option>
+          <option value="Package">Package</option>
         </select>
     </ion-row>
 
@@ -83,7 +83,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let m of merch | filter:search:filterKeys">
+        <ng-container *ngFor="let m of merch | filter:search:filterKeys | filter:typeSelect:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
           <tr *ngIf="m.catID == merchCatOption || merchCatOption == 'All'">
             <td>{{m.id}}</td>
             <td><img [src]="m.image | safe: 'url'" height="100px" alt='The Image' /></td>
@@ -93,7 +93,7 @@
             <td>{{m.price | currency: 'ZAR':'symbol-narrow'}}</td>
             <td style="display: block;text-align: center;">
               <ion-button id="update" (click)="updateProduct(m.id)">Update</ion-button>
-              <ion-button id="delete" *ngIf="m.status == 'In Stock'" (click)="DeleteMerch(m.id)">Remove</ion-button>
+              <ion-button id="delete" (click)="DeleteMerch(m.id)">Remove</ion-button>
             </td>
           </tr>
         </ng-container>
@@ -101,5 +101,11 @@
      </table>
   </ion-col>
   </ion-row>
+  <ion-row>
+    <div class="pagination">
+      <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </ion-row>
+  <br>
 </ion-grid>
 </ion-content>
