@@ -63,7 +63,15 @@
           <td>{{x.ambassador.user.email}}</td>
           <td>+27{{x.ambassador.user.phoneNumber}}</td>
           <td ><div *ngIf="x.enrolled ==null" id="NoCourses">No Course assigned yet</div><div *ngIf="x.enrolled != null" id="Assigned">Course(s) assigned</div></td>
-          <td><ion-button (click)="AssignCourse()">Assign Course</ion-button></td>
+          <td><ion-list>
+            <ion-item lines="none">
+              <ion-select placeholder="Select all the courses that apply" [multiple]="true" (ionChange)=" Format($event)"  [(ngModel)]="assignedCourses">
+                <ion-select-option  *ngFor="let x of courses" value="{{x.courseId}}">{{x.courseName}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list></td>
+          <!-- <td><ion-button (click)="AssignCourse()">Assign Course</ion-button></td> -->
+          
         </tr>
       </tbody>
     </table>

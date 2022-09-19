@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { RegistrationReqVm } from 'src/app/Models/ViewModels/RegistrationReqVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -15,6 +17,8 @@ export class ValidateRegistrationsPage implements OnInit {
   registrations:any = []
   noResults = false
   search
+  inputInfo
+  RegistrationForm:FormGroup
 
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
@@ -25,7 +29,17 @@ export class ValidateRegistrationsPage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
 
+    this.RegistrationForm = new FormGroup({
+      ambtype: new FormControl('', Validators.required)
+    })
+
+    this.RegistrationForm.reset()
+
     this.api.AllRegistrations().subscribe(data => {
+      console.log(data)
+    })
+    this.api.InputInformation().subscribe(data=>{
+      this.inputInfo = data 
       console.log(data)
     })
   }
@@ -35,6 +49,8 @@ export class ValidateRegistrationsPage implements OnInit {
       console.log(data)
       this.registrations = data
     })
+
+    this.RegistrationForm.reset()
   }
 
   SearchAmbassador(event){
@@ -86,19 +102,27 @@ export class ValidateRegistrationsPage implements OnInit {
     this.route.navigate(['validate-registrations/view-ambassador-info'])
   }
 
-  Accept(request){
-    this.api.AccceptRegistration(request).subscribe(data => {
-      console.log(data)
-      if(data ==true){
-        this.api.AllRegistrations().subscribe(data => {
-          this.alertNotif("Registration has been accepted","Success")
-          console.log(data)
-          this.registrations = data
+  ShowAmbType(event){
+    console.log(event)
+  }
+  Accept(request, ambassadorType){
+    let regRequest:RegistrationReqVm = new RegistrationReqVm()
+    regRequest.Registration = request
+    regRequest.SelectedRanking =Number(ambassadorType)
+    console.log(regRequest)
+    // r.ambassadors[0].ambassadorType.ambassadorTypeId =
+    // this.api.AccceptRegistration(request).subscribe(data => {
+    //   console.log(data)
+    //   if(data ==true){
+    //     this.api.AllRegistrations().subscribe(data => {
+    //       this.alertNotif("Registration has been accepted","Success")
+    //       console.log(data)
+    //       this.registrations = data
 
-        })
-      }
-    })
-    console.log(request)
+    //     })
+    //   }
+    // })
+    // console.log(request)
   }
   Reject(request){
     this.api.RejectRegistration(request).subscribe(data => {

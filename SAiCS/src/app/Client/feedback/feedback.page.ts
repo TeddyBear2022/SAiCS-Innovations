@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController, ToastController } from '@ionic/angular';
 import { Feedback } from 'src/app/Models/Feedback';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -18,7 +18,12 @@ export class FeedbackPage implements OnInit {
   //products: Product[]
   ambassador: number
   constructor(
-  private api: ApiService, public popoverController: PopoverController,public formBuilder: FormBuilder,public alertController: AlertController,public toastController: ToastController){
+  private api: ApiService, 
+  public popoverController: PopoverController,
+  public formBuilder: FormBuilder,
+  public alertController: AlertController,
+  public toastController: ToastController, 
+  private menu:MenuController){
     
     this.feedbackForm = formBuilder.group({
       feedbackType: [''],
@@ -40,6 +45,7 @@ export class FeedbackPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
     this.MyAmbassador()
   }
 

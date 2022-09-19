@@ -56,7 +56,7 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     {
       path: 'feedback',
       loadChildren: () => import('./Client/feedback/feedback.module').then( m => m.FeedbackPageModule),
-      canLoad: [ClientAuthGuard]
+      canLoad: [AuthGuard]
     },
     {
       path: 'profile',

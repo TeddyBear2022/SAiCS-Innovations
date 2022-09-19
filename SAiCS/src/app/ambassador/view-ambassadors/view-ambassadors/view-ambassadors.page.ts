@@ -62,6 +62,7 @@ export class ViewAmbassadorsPage implements OnInit {
     this.api.SearchCurrentAgents(this.search, this.userSesionInfo[0].id).subscribe(data =>{
       this.noResults = false 
       this.ambassadorsList = data
+      console.log(this.ambassadorsList)
       
     },(response: HttpErrorResponse) => {
         

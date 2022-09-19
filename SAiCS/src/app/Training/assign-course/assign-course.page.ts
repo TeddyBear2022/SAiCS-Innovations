@@ -14,6 +14,7 @@ export class AssignCoursePage implements OnInit {
   //Variables
   ambassadorsEnrollments:any = []
   courses:any = []
+  assignedCourses=['11', '12', '13']
 
   constructor(private modal: ModalController,
     private menu:MenuController, 
@@ -53,6 +54,10 @@ ionViewDidEnter(){
     
     })
     return await modals.present();
+  }
+
+  Format(event){
+    console.log(event)
   }
 
 }

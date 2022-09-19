@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -13,9 +13,13 @@ export class ViewFeedbackPage implements OnInit {
   //Variables
   AmbassadorFeedback = []
   ProductFeedback = []
-  constructor( private api: ApiService, public popoverController: PopoverController,public alertController: AlertController) { }
+  constructor( private api: ApiService, 
+    public popoverController: PopoverController,
+    public alertController: AlertController, 
+    private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'client-menu');
     setInterval(() =>this.GetAmbassadorFeedback(), 2100)
     setInterval(() =>this.GetProductFeedback(), 2100)
   }

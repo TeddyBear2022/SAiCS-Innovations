@@ -11,12 +11,26 @@
   <ion-grid>
   <!-- <div class="modal"  id="ModalContent"  > -->
   <h3>Courses:</h3>
-  <ion-row id="radio" *ngFor="let x of allcourses">
+  <ion-row id="radio" *ngFor="let x of allcourses" >
     <div >
-  <ion-radio value="{{x.courseId}}" checked="true"></ion-radio>
+      <!-- [(ngModel)]="course" -->
+  <ion-radio-group [(ngModel)]="course">
+  <ion-radio value= "{{x.courseId}}" checked="true"></ion-radio>
   <ion-label>{{x.courseName}}</ion-label>
+</ion-radio-group>
 </div>
 </ion-row>
+<!-- <ion-row>
+  <ion-list>
+    <ion-item>
+      <ion-select placeholder="Select all fruits that apply" [multiple]="true">
+        <ion-select-option value="apples">Apples</ion-select-option>
+        <ion-select-option value="oranges">Oranges</ion-select-option>
+        <ion-select-option value="bananas">Bananas</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-row> -->
 
 <ion-row >
   <ion-col></ion-col>
