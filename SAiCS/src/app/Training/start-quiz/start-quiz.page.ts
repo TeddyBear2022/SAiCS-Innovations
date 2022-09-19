@@ -19,7 +19,7 @@ export class StartQuizPage implements OnInit {
   score:number=0
   total:number 
   arr = [];
-
+  username
 
   //proper
   questionsList =[]
@@ -40,7 +40,7 @@ export class StartQuizPage implements OnInit {
       console.log(data)
       this.QuestionArray()
     })
-    
+    this.username = localStorage.getItem('UserName')
   }
 
   QuestionArray(){

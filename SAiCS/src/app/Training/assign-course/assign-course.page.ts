@@ -15,6 +15,7 @@ export class AssignCoursePage implements OnInit {
   ambassadorsEnrollments:any = []
   courses:any = []
   assignedCourses=['11', '12', '13']
+  username
 
   constructor(private modal: ModalController,
     private menu:MenuController, 
@@ -26,6 +27,7 @@ export class AssignCoursePage implements OnInit {
       this.ambassadorsEnrollments = data
       console.log(data)
     })
+    this.username = localStorage.getItem('UserName')
   }
 ionViewDidEnter(){
   this.api.AssignCourseData().subscribe(data => {
@@ -38,6 +40,7 @@ ionViewDidEnter(){
     console.log(data);
     
   })
+  this.username = localStorage.getItem('UserName')
 }
 
   AssignCourse(){

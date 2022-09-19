@@ -15,11 +15,12 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class LandingPagePage implements OnInit {
 
-  
+  //Variables
   products: any
   ItemQuantity: FormGroup
   inputValue: number  = 1
   session=[]
+  username
 
   constructor(
   public popoverController: PopoverController, 
@@ -43,6 +44,8 @@ export class LandingPagePage implements OnInit {
     // this.menu.open('client-menu')
     // this.menu.close()
     this.GetCatalog()
+
+    this.username = localStorage.getItem('UserName')
 
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)

@@ -16,10 +16,12 @@ export class ViewClientsPage implements OnInit {
     private api:ApiService,
     private menu:MenuController) { }
 
+  //Variables
   clientList;
   noResults:boolean = false
   search:any
   userSesionInfo = [];
+  username
   
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -35,7 +37,7 @@ export class ViewClientsPage implements OnInit {
         console.log(this.clientList)
       })
     // this.ambassadorsList = this.api.ViewAmbassadors(this.userSesionInfo[0].userId).subscribe()
-    
+    this.username = localStorage.getItem('UserName')
   }
   SearchAmbassador(event){
     this.search = event.detail.value

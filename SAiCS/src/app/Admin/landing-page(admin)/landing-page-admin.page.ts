@@ -9,11 +9,14 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class LandingPageAdminPage implements OnInit {
 
+  //Variable
+  username
   constructor(public popoverController: PopoverController,
     private menu:MenuController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
+    this.username = localStorage.getItem('UserName')
   }
 
    // Show Profile optionss when icon on right of navbar clicked function

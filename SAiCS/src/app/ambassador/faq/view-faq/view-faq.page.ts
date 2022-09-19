@@ -12,6 +12,7 @@ export class ViewFaqPage implements OnInit {
 
   //Variables
   faqCategories
+  username
 
   constructor(private menu:MenuController, 
     private api:ApiService, 
@@ -25,6 +26,7 @@ export class ViewFaqPage implements OnInit {
       console.log(this.faqCategories)
     })
     console.log("show data")
+    this.username = localStorage.getItem('UserName')
   }
 
   showFAQ(catId){

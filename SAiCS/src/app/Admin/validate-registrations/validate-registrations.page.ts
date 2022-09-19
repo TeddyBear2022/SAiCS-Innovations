@@ -14,11 +14,13 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ValidateRegistrationsPage implements OnInit {
 
+  //Variables
   registrations:any = []
   noResults = false
-  search
+  search = undefined
   inputInfo
   RegistrationForm:FormGroup
+  username
 
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
@@ -42,6 +44,8 @@ export class ValidateRegistrationsPage implements OnInit {
       this.inputInfo = data 
       console.log(data)
     })
+
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewDidEnter(){
@@ -62,24 +66,33 @@ export class ValidateRegistrationsPage implements OnInit {
   }
 
   Search(){
-    console.log("search...",this.search)
-    this.api.SearchAmbassadorReg(this.search).subscribe(data =>{
-      this.noResults = false 
-      this.registrations = data
-      console.log(data);
-      
-    },(response: HttpErrorResponse) => {
+    
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+      console.log("search...",this.search)
+      this.api.SearchAmbassadorReg(this.search).subscribe(data =>{
+        this.noResults = false 
+        this.registrations = data
+        console.log(data);
         
-      if (response.status === 404) {
-        this.noResults = true 
-        console.log("Search result not found")
-      }
-      
-  })
+      },(response: HttpErrorResponse) => {
+          
+        if (response.status === 404) {
+          this.noResults = true 
+          console.log("Search result not found")
+        }
+        
+    })
+    }
+ 
 }
 
   ClearSearch(){
     console.log("clear");
+    this.search= undefined
     this.noResults = false 
     this.api.AllRegistrations().subscribe(data =>
       {
@@ -106,24 +119,26 @@ export class ValidateRegistrationsPage implements OnInit {
     console.log(event)
   }
   Accept(request, ambassadorType){
+    //Registration request object
     let regRequest:RegistrationReqVm = new RegistrationReqVm()
     regRequest.Registration = request
     regRequest.SelectedRanking =Number(ambassadorType)
-    console.log(regRequest)
-    // r.ambassadors[0].ambassadorType.ambassadorTypeId =
-    // this.api.AccceptRegistration(request).subscribe(data => {
-    //   console.log(data)
-    //   if(data ==true){
-    //     this.api.AllRegistrations().subscribe(data => {
-    //       this.alertNotif("Registration has been accepted","Success")
-    //       console.log(data)
-    //       this.registrations = data
 
-    //     })
-    //   }
-    // })
-    // console.log(request)
+    //Accept registration request api request
+    this.api.AccceptRegistration(regRequest).subscribe(data => {
+      console.log(data)
+      if(data ==true){
+        this.api.AllRegistrations().subscribe(data => {
+          this.alertNotif("Registration has been accepted","Success")
+          console.log(data)
+          this.registrations = data
+
+        })
+      }
+    })
+    console.log(regRequest)
   }
+
   Reject(request){
     this.api.RejectRegistration(request).subscribe(data => {
       console.log(data)

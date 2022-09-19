@@ -15,6 +15,7 @@ export class ViewFeedbackAdminPage implements OnInit {
   FilterForm:FormGroup
   AmbassadorFeedback:any = []
   MerchFeedback:any = []
+  username
 
   constructor(private popoverController: PopoverController, 
     private api:ApiService, 
@@ -26,7 +27,7 @@ export class ViewFeedbackAdminPage implements OnInit {
     this.FilterForm = new FormGroup({
       feedbackType: new FormControl()
     })
-
+    this.username = localStorage.getItem('UserName')
     this.menu.enable(true, 'admin-menu');
 
     this.api.ViewAmbassadorFeedbackAdmin().subscribe(data =>{

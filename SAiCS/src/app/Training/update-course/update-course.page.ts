@@ -29,6 +29,7 @@ export class UpdateCoursePage implements OnInit {
   courseUpdateDetails:FormGroup;
   courseName=[]
   courseDescription=[]
+  username
   
   constructor(private modal:ModalController,
     private menu:MenuController, 
@@ -63,7 +64,7 @@ export class UpdateCoursePage implements OnInit {
     })
     // console.log(this.questionBank);
     // console.log(this.courseDetails.course);
-    
+    this.username = localStorage.getItem('UserName')
   }
   UpdateSection(sectionIndex){
     console.log(sectionIndex)

@@ -13,12 +13,13 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class ViewAmbassadorsPage implements OnInit {
 
-  
+  //Variables
   ambassadorsList:any= [];
   userSesionInfo =[];
   closeResult: string;
   noResults:boolean = false
   search:any
+  username
 
   constructor(private tmpStorage:TemporaryStorage, 
     private api:ApiService,
@@ -37,6 +38,8 @@ export class ViewAmbassadorsPage implements OnInit {
         this.ambassadorsList = data
         console.log(data)     
       })
+
+      this.username = localStorage.getItem('UserName')
   }
 
   SearchAmbassador(event){

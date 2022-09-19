@@ -26,6 +26,7 @@ export class ProfilePage implements OnInit {
   profileinfo= []
   profilereginfo:registerationinfoVM 
   userRoleID:number
+  username
 
   //Data from form to delete or update
   form:FormGroup
@@ -57,7 +58,7 @@ export class ProfilePage implements OnInit {
     this.profileinfo = this.tempStorage.getSessioninfo()
     console.log(this.profileinfo[0])
     this.userRoleID = this.profileinfo[0].userRoleId
-
+    this.username = localStorage.getItem('UserName')
    // console.log(this.profileinfo[0].ambassadors[0].bankAccount)
   //  if( this.profileinfo[0].ambassadors.length ==0){
   //   this.bankAccount = this.profileinfo[0].ambassadors[0].bankAccount

@@ -65,6 +65,7 @@ export class LoginPage implements OnInit {
         //Admin user
         if(pagenavigation[0].userRoleId == 3){
           this.router.navigate(['landing-page-admin'])
+          localStorage.setItem("UserName",pagenavigation[0].name+ ' '+ pagenavigation[0].surname)
           localStorage.setItem('UserRole',"Admin")
           // console.log("go to admin page")
         }
@@ -74,6 +75,7 @@ export class LoginPage implements OnInit {
           //console.log("go to client page")
           this.myOutput.emit(this.outputMessage);
           localStorage.setItem('UserRole',"Client")
+          localStorage.setItem("UserName",pagenavigation[0].name+ ' '+ pagenavigation[0].surname)
           this.router.navigate(['landing-page'])
         }
 
@@ -88,6 +90,7 @@ export class LoginPage implements OnInit {
             if(applicationStatus[0].applicationStatusId==2){
               this.router.navigate(['ambassador-landing-page'])
               localStorage.setItem('UserRole',"Ambassador")
+              localStorage.setItem("UserName",pagenavigation[0].name+ ' '+ pagenavigation[0].surname)
             }
           })
           

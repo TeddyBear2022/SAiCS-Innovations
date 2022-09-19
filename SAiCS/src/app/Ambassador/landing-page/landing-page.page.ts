@@ -13,6 +13,7 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./landing-page.page.scss'],
 })
 export class LandingPagePage implements OnInit {
+  //variables
   cartImages = []
   merchandise = []
   
@@ -21,6 +22,7 @@ export class LandingPagePage implements OnInit {
   ItemQuantity: FormGroup
   inputValue: number  = 1
   session=[]
+  username
 
   constructor(
   public popoverController: PopoverController, 
@@ -40,6 +42,8 @@ export class LandingPagePage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog()
+
+    this.username = localStorage.getItem('UserName')
 
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required)

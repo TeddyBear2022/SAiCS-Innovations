@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { AmbassadorRankingModalPage } from './ambassador-ranking-modal/ambassador-ranking-modal.page';
@@ -14,17 +14,19 @@ export class ViewAmbassadorsPage implements OnInit {
 
   //Variables
   Ambassadors:any = []
-  search:any
+  search:any = undefined
   noResults:boolean = false
   AmbassadorRankings:any = []
   ambassadorRankingsInput
+  username
 
   constructor(private popoverController:PopoverController, 
     private api:ApiService, 
-    private modal: ModalController) { }
+    private modal: ModalController,
+    private alert:AlertController) { }
 
   ngOnInit() {
- 
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewDidEnter(){
@@ -45,6 +47,7 @@ export class ViewAmbassadorsPage implements OnInit {
         console.log(data)
       })
       
+      this.username = localStorage.getItem('UserName')
       
   }
 
@@ -66,23 +69,31 @@ export class ViewAmbassadorsPage implements OnInit {
   }
 
   Search(){
-    console.log("search...",this.search)
-    this.api.SearchAmbassador(this.search).subscribe(data =>{
-      this.noResults = false 
-      this.Ambassadors = data
-      console.log(data);
-      
-    },(response: HttpErrorResponse) => {
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+      console.log("search...",this.search)
+      this.api.SearchAmbassador(this.search).subscribe(data =>{
+        this.noResults = false 
+        this.Ambassadors = data
+        console.log(data);
         
-      if (response.status === 404) {
-        this.noResults = true 
-        console.log("Search result not found")
-      }
-      
-  })}
+      },(response: HttpErrorResponse) => {
+        if (response.status === 404) {
+          this.noResults = true 
+          console.log("Search result not found")
+        }
+        
+    })
+    }
+  
+}
 
   ClearSearch(){
     console.log("clear");
+    this.search= undefined
     this.noResults = false 
     this.api.ViewAllAmbassadors().subscribe(data =>
       {
@@ -111,5 +122,13 @@ export class ViewAmbassadorsPage implements OnInit {
     
   }
 
-  
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
 }
