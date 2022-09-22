@@ -13,8 +13,10 @@ import { UpdateTargetPage } from './Modals/update-target/update-target.page';
 })
 export class TargetPage implements OnInit {
 
+  //Variables
   targets:any = []
   updateTargetInfo
+  username
  
   constructor(private menu:MenuController,
     private modal: ModalController,
@@ -28,12 +30,14 @@ export class TargetPage implements OnInit {
       console.log(this.targets)
 
     })
+    this.username = localStorage.getItem('UserName')
   }
   ionViewDidEnter(){
     this.api.AllTargetInfo().subscribe(data => {
       this.targets = data
       console.log(this.targets)
     })
+    this.username = localStorage.getItem('UserName')
   }
 
   AssignTarget(id:number){

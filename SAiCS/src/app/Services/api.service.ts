@@ -1370,8 +1370,8 @@ export class ApiService {
     })
   }
 
-  AuditTrailByTransactionType(type){
-    return this.api.get(this.apilink+`Admin/AuditTrailByTransactionType?type=${type}`, {
+  AuditTrailByTransactionType(search){
+    return this.api.get(this.apilink+`Admin/AuditTrailByTransactionType?search=${search}`, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

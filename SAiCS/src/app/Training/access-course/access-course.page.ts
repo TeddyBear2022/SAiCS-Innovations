@@ -13,6 +13,7 @@ export class AccessCoursePage implements OnInit {
 
   //Variables
   courses = []
+  username
 
   constructor(private menu:MenuController, 
     private api:ApiService, 
@@ -27,7 +28,7 @@ export class AccessCoursePage implements OnInit {
       console.log("Access course");
       console.log(data)
     })
-
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewWillEnter(){
@@ -36,6 +37,7 @@ export class AccessCoursePage implements OnInit {
       // console.log("Access course");
       console.log(data)
     })
+    this.username = localStorage.getItem('UserName')
   }
   async presentPopover(event)
    {

@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -12,13 +13,19 @@ export class AuditTrailPage implements OnInit {
 
   //Variables
   auditTrails
+  search = undefined
+  noResults:boolean = false
+  username
+
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
-    private api:ApiService) { }
+    private api:ApiService,
+    private alert:AlertController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
     this.AuditTrailData()
+    this.username = localStorage.getItem('UserName')
   }
   AuditTrailData(){
     this.api.AuditTrail().subscribe(data => {
@@ -48,6 +55,54 @@ export class AuditTrailPage implements OnInit {
     )
     console.log(event.detail.value);
     
+  }
+
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+  Search(){
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+      console.log("search...",this.search)
+      this.api.AuditTrailByTransactionType(this.search).subscribe(data =>{
+        this.noResults = false 
+        this.auditTrails = data
+        console.log(data);
+        
+      },(response: HttpErrorResponse) => {
+        if (response.status === 404) {
+          this.noResults = true 
+          console.log("Search result not found")
+        }
+        
+    })
+    }
+  
+}
+
+  ClearSearch(){
+    console.log("clear");
+    this.search= undefined
+    this.noResults = false 
+    this.AuditTrailData()
+  }
+
+  SearchTerm(event){
+    // console.log(event.detail.value);
+    this.search = event.detail.value
+    if(this.search == ''){
+      this.ClearSearch()
+    }
   }
 
 }

@@ -36,6 +36,7 @@ export class ViewFaqPage implements OnInit {
    filter:boolean = false // part of fixed
    showCategory
    categorySelected = false
+   username
 
 
    //new faq method
@@ -48,6 +49,7 @@ export class ViewFaqPage implements OnInit {
     this.menu.enable(true, 'admin-menu');
     // this.menu.open('admin-menu')
 
+    this.username = localStorage.getItem('UserName')
   }
   
    // Show Profile options when icon on right of navbar clicked function

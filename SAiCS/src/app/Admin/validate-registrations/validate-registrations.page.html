@@ -2,16 +2,9 @@
   <ion-toolbar id="navbar">
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
-    </ion-buttons>
+    </ion-buttons>    
 
-    <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
-
-    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -52,11 +45,19 @@
       <td >{{r.title.titleName}}</td>
       <td>{{r.name}}</td>
       <td>{{r.surname}}</td>
-      <td >{{r.ambassadors[0].ambassadorType.ambassadorTypeName}}</td>
+      <!-- <td >{{r.ambassadors[0].ambassadorType.ambassadorTypeName}}</td> -->
+      <td >
+        <form [formGroup]="RegistrationForm">
+        <ion-select formControlName ="ambtype" placeholder="{{r.ambassadors[0].ambassadorType.ambassadorTypeName}}" (ionChange)="ShowAmbType(r.ambassadors[0].ambassadorType.ambassadorTypeId = this.RegistrationForm.get(['ambtype']).value)">
+        <ion-select-option *ngFor="let t of inputInfo.ambassadorTypes" value= {{t.ambassadorTypeId}}>{{t.ambassadorTypeName}}</ion-select-option>
+      </ion-select>
+    </form>
+    </td>
       <td><ion-label id="Link" (click)="ViewRegistration(r.id)"> <u>View Details</u></ion-label></td>
-      <td><ion-button (click)="Accept(r.applications[0])">Accept</ion-button></td>
+      <td><ion-button (click)="Accept(r.applications[0],r.ambassadors[0].ambassadorType.ambassadorTypeId)">Accept</ion-button></td>
       <td><ion-button color="danger" (click)="Reject(r.applications[0])">Reject</ion-button></td>
       </tr>
+      <!-- ambassadorTypeId -->
     </tbody>
     </table>
     <!-- no results found -->

@@ -3,15 +3,7 @@
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-
-    <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
-
-    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -25,19 +17,18 @@
   <br>
   <h1 align="center">Audit Trail</h1>
   <br>
-  <!-- <ion-item lines="none" > -->
-    <div align="center" >
-  <ion-select id="searchbar" placeholder="Select a transaction type" interface="popover" (ionChange)="Filter($event)">
-    <ion-select-option>Select A Transaction Type</ion-select-option>
-    <ion-select-option>Create</ion-select-option>
-    <ion-select-option>Update</ion-select-option>
-    <ion-select-option>Delete</ion-select-option>
-  </ion-select>
+  <ion-item lines="none" >
+    <div align="center" slot="end">
+  <ion-input  id="searchbar"
+   placeholder="Search Audit trail, Eg Create"
+  (ionChange)="SearchTerm($event)">
+</ion-input><br>
+
 </div>
-<!-- <ion-icon slot="end" name="search" ></ion-icon> -->
-<!-- </ion-item> -->
+<ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+</ion-item>
   <br><br><br>
-  <table>
+  <table *ngIf="noResults == false">
     <thead align="center" >
         <tr>
           <th style="width: 100px;">Audit Trail ID</th>
@@ -66,7 +57,7 @@
     </tbody>
     </table>
     <!-- no results found -->
-    <!-- <div align="center" *ngIf="noResults == true">
+    <div align="center" *ngIf="noResults == true">
     <img src="./assets/noresultsfound3.gif" alt="No results found">
-    </div> -->
+    </div>
 </ion-content>

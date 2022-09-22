@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { RegistrationReqVm } from 'src/app/Models/ViewModels/RegistrationReqVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -12,9 +14,13 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class ValidateRegistrationsPage implements OnInit {
 
+  //Variables
   registrations:any = []
   noResults = false
-  search
+  search = undefined
+  inputInfo
+  RegistrationForm:FormGroup
+  username
 
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
@@ -25,9 +31,21 @@ export class ValidateRegistrationsPage implements OnInit {
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
 
+    this.RegistrationForm = new FormGroup({
+      ambtype: new FormControl('', Validators.required)
+    })
+
+    this.RegistrationForm.reset()
+
     this.api.AllRegistrations().subscribe(data => {
       console.log(data)
     })
+    this.api.InputInformation().subscribe(data=>{
+      this.inputInfo = data 
+      console.log(data)
+    })
+
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewDidEnter(){
@@ -35,6 +53,8 @@ export class ValidateRegistrationsPage implements OnInit {
       console.log(data)
       this.registrations = data
     })
+
+    this.RegistrationForm.reset()
   }
 
   SearchAmbassador(event){
@@ -46,24 +66,33 @@ export class ValidateRegistrationsPage implements OnInit {
   }
 
   Search(){
-    console.log("search...",this.search)
-    this.api.SearchAmbassadorReg(this.search).subscribe(data =>{
-      this.noResults = false 
-      this.registrations = data
-      console.log(data);
-      
-    },(response: HttpErrorResponse) => {
+    
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+      console.log("search...",this.search)
+      this.api.SearchAmbassadorReg(this.search).subscribe(data =>{
+        this.noResults = false 
+        this.registrations = data
+        console.log(data);
         
-      if (response.status === 404) {
-        this.noResults = true 
-        console.log("Search result not found")
-      }
-      
-  })
+      },(response: HttpErrorResponse) => {
+          
+        if (response.status === 404) {
+          this.noResults = true 
+          console.log("Search result not found")
+        }
+        
+    })
+    }
+ 
 }
 
   ClearSearch(){
     console.log("clear");
+    this.search= undefined
     this.noResults = false 
     this.api.AllRegistrations().subscribe(data =>
       {
@@ -86,8 +115,17 @@ export class ValidateRegistrationsPage implements OnInit {
     this.route.navigate(['validate-registrations/view-ambassador-info'])
   }
 
-  Accept(request){
-    this.api.AccceptRegistration(request).subscribe(data => {
+  ShowAmbType(event){
+    console.log(event)
+  }
+  Accept(request, ambassadorType){
+    //Registration request object
+    let regRequest:RegistrationReqVm = new RegistrationReqVm()
+    regRequest.Registration = request
+    regRequest.SelectedRanking =Number(ambassadorType)
+
+    //Accept registration request api request
+    this.api.AccceptRegistration(regRequest).subscribe(data => {
       console.log(data)
       if(data ==true){
         this.api.AllRegistrations().subscribe(data => {
@@ -98,8 +136,9 @@ export class ValidateRegistrationsPage implements OnInit {
         })
       }
     })
-    console.log(request)
+    console.log(regRequest)
   }
+
   Reject(request){
     this.api.RejectRegistration(request).subscribe(data => {
       console.log(data)

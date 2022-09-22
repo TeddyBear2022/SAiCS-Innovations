@@ -14,6 +14,7 @@ export class CourseStudioPage implements OnInit {
 
   //Variables
   courses = []
+  username
 
   constructor(private router:Router, 
     private alert:AlertController,
@@ -23,7 +24,7 @@ export class CourseStudioPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
-    
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewDidEnter(){
@@ -33,6 +34,7 @@ export class CourseStudioPage implements OnInit {
       console.log(data);
       
     })
+    this.username = localStorage.getItem('UserName')
   }
   UpdateCourse(id:number){
     console.log(id);

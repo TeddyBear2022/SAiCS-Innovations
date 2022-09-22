@@ -11,6 +11,7 @@ export class AssignCourseModalComponent implements OnInit {
   //Variables
   allcourses
   assignedCourses
+  course = "12"
 
   constructor(private modal: ModalController) { }
 

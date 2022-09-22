@@ -20,6 +20,8 @@ export class AccessCourseIntroPage implements OnInit {
   ytVideo:boolean = false;
   youtubeVieo
   quiz=[];
+  username
+
   constructor(public popoverController: PopoverController,
     private menu:MenuController, 
     private api:ApiService, 
@@ -44,6 +46,9 @@ export class AccessCourseIntroPage implements OnInit {
       this.quiz.push(this.courseDetails.quiz)
       console.log('quiz', this.quiz[0].quizName)
     })
+
+    //Username
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewWillEnter(){

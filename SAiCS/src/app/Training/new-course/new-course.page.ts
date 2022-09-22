@@ -25,6 +25,7 @@ export class NewCoursePage implements OnInit {
   courseDetails:FormGroup;
   quizCreated:boolean = false
   //sectionCreated:boolean = false
+  username
 
   constructor(private modal: ModalController,
   private menu:MenuController,
@@ -42,6 +43,9 @@ export class NewCoursePage implements OnInit {
       coursename: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required)
     })
+
+    //username
+    this.username = localStorage.getItem('UserName')
   }
 
   async alertNotif(message:string, header:string) {
