@@ -28,7 +28,7 @@ export class ProductListReportComponent implements OnInit {
     private api: ApiService,
     private cp: CurrencyPipe,
     private fb: FormBuilder,
-    private alert:AlertController
+    private alert: AlertController
   ) {}
   columnDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', width: 80 },
@@ -72,10 +72,10 @@ export class ProductListReportComponent implements OnInit {
     });
   }
 
-  LoggedInName()
-  {
-    this.api.LoggedInName().subscribe((res) =>{console.log(res);
-    })
+  LoggedInName() {
+    this.api.LoggedInName().subscribe((res) => {
+      console.log(res);
+    });
   }
   GetMerchTypes() {
     this.api.GetMerchTypes().subscribe((data) => {
@@ -91,97 +91,114 @@ export class ProductListReportComponent implements OnInit {
     });
   }
 
-  get dataCount()
-  {
-    return this.rowData.length
+  get dataCount() {
+    return this.rowData.length;
   }
 
-  submitForm() 
-  {
-    if(this.reportForm.valid)
-    {
-      let type =  this.reportForm.get('merchTypeId').value 
-      let category =  this.reportForm.get('merchCatId').value 
-      
+  submitForm() {
+    if (this.reportForm.valid) {
+      let type = this.reportForm.get('merchTypeId').value;
+      let category = this.reportForm.get('merchCatId').value;
+
       this.api.ProductListRep(type, category).subscribe((res) => {
         this.rowData = res;
         console.log(this.rowData);
-  });
+      });
 
-  this.reportForm.reset()
-      
-    }
-    else
-    {
-      this.ErrorAlert("Please Enter Valid Information")
+      this.reportForm.reset();
+    } else {
+      this.ErrorAlert('Please Enter Valid Information');
     }
   }
 
   async ErrorAlert(message: string) {
     const alert = await this.alert.create({
-      header: "Invalid Form",
+      header: 'Invalid Form',
       message: message,
-      buttons: [{text: 'OK'}]
+      buttons: [{ text: 'OK' }],
     });
 
     await alert.present();
-    
   }
 
-  async download() {
-    if(this.rowData.length)
-  {
-    this.reportForm.reset();
-    
-    var doc = new jsPDF('p', 'pt', 'A4');
-    doc.setFontSize(14)
-    var img = new Image();
-    img.src = 'assets/SAICS no bg.png';
+    async download() {
+      if(this.rowData.length)
+    {
+      this.reportForm.reset();
 
+      var doc = new jsPDF('p', 'pt', 'A4');
+      doc.setFontSize(14)
+      var img = new Image();
+      img.src = 'assets/SAICS no bg.png';
+      var totalPagesExp = '{total_pages_count_string}'
 
-    autoTable(doc, {
-      head: [
-        [-
-          'ID',
-          'ITEM',
-          'DESCRIPTION',
-          'MERCHANDISE TYPE',
-          'MERCHANDISE CATEGORY',
-          'UNIT PRICE',
-          'STATUS',
+      autoTable(doc, {
+        head: [
+          [
+            'ID',
+            'ITEM',
+            'DESCRIPTION',
+            'MERCHANDISE TYPE',
+            'MERCHANDISE CATEGORY',
+            'UNIT PRICE',
+            'STATUS',
+          ],
         ],
-      ],
-      body: this.rowData.map((o) => {
-        return [
-          o.id,
-          o.item,
-          o.description,
-          o.merchType,
-          o.merchCat,
-          this.cp.transform(o.unitPrice, 'ZAR', 'symbol-narrow'),
-          o.status,
-        ];
-      }),
-      margin: { top: 110, bottom: 50 },
-      didDrawPage: function (data) {
-        doc.text('Product List Report', 155, 50),
-        doc.text(`Generated on ${new Date().toDateString()}`, 155, 70),
-        doc.addImage(img, 'png', -40, -60, 250, 250);
-      },
-      headStyles: {
-        fillColor: '#ffffff',
-        textColor: '#333333',
+        body: this.rowData.map((o) => {
+          return [
+            o.id,
+            o.item,
+            o.description,
+            o.merchType,
+            o.merchCat,
+            this.cp.transform(o.unitPrice, 'ZAR', 'symbol-narrow'),
+            o.status,
+          ];
+        }),
+        margin: { top: 110, bottom: 50 },
+        didDrawPage: function (data) {
+          doc.setFontSize(20)
+          
+          //doc.text(`Generated on ${new Date().toDateString()}`, 155, 70)
+          if (img) {
+            doc.addImage(img, 'png', -40, -60, 250, 250);
+          }
+          doc.text('Product List Report', 155, 70)
+          
+            // Footer
+      var str = 'Page ' + (doc as any).internal.getNumberOfPages()
+      // Total page number plugin only available in jspdf v1.0+
+      if (typeof doc.putTotalPages === 'function') {
+        str = str + ' of ' + totalPagesExp
+      }
+      doc.setFontSize(10)
+
+      // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+      var pageSize = doc.internal.pageSize
+      var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight()
+      doc.text(str, data.settings.margin.left, pageHeight - 10)
+      doc.text(`Generated on ${new Date().toDateString()}`, data.settings.margin.left + 360, pageHeight - 10)
+          
+        }
+        ,
+        headStyles: {
+          fillColor: '#ffffff',
+          textColor: '#333333',
+
+        },
+        showHead: 'everyPage',
         
-      },
-      showHead: 'everyPage',
-    });
+      });
 
-    doc.save('Product List Report.pdf');
-    //window.location.reload();
+      if (typeof doc.putTotalPages === 'function') {
+        doc.putTotalPages(totalPagesExp)
+      }
+      
+      doc.save('Product List Report.pdf');
+      //window.location.reload();
+    }
+    else{
+      this.ErrorAlert("Generate Report before exporting")
+    }
   }
-  else{
-    this.ErrorAlert("Generate Report before exporting")
-  }
-}
-
 }

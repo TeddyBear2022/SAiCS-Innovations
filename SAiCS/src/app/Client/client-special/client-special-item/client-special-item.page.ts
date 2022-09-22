@@ -1,24 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
-import { CartItem } from 'src/app/Models/CartItem';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
-  selector: 'app-item-details',
-  templateUrl: './item-details.page.html',
-  styleUrls: ['./item-details.page.scss'],
+  selector: 'app-client-special-item',
+  templateUrl: './client-special-item.page.html',
+  styleUrls: ['./client-special-item.page.scss'],
 })
-export class ItemDetailsPage implements OnInit {
+export class ClientSpecialItemPage implements OnInit {
   Item: any;
   ItemFeedback: any = [];
   ItemId: any;
@@ -36,7 +29,7 @@ export class ItemDetailsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.ItemId = JSON.parse(localStorage.getItem('CatalogItem'));
+    this.ItemId = JSON.parse(localStorage.getItem('SpecialItem'));
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
     this.GetItem(this.ItemId);
@@ -49,15 +42,6 @@ export class ItemDetailsPage implements OnInit {
 
   AddToCart() {
     if (this.Item.quantity > 0) {
-      // let newItem = {} as CartItem;
-      // newItem.merchandiseId = this.ItemId;
-      // newItem.specialId = null;
-      // newItem.price = this.Item.price;
-      // newItem.quantity = this.ItemQuantity;
-
-      // this.api.ClientAddToCart(this.session[0].id, newItem).subscribe((res) => {
-      //   console.log(res.body);
-      // });
 
       this.setBorderColor = false;
       if (!this.cartService.itemInCart(this.Item)) {
@@ -67,8 +51,8 @@ export class ItemDetailsPage implements OnInit {
           name: this.Item.name,
           price: this.Item.price,
           quantity: this.Item.quantity,
-          isStandAlone: true,
-          spId: this.Item.spId?? null
+          isStandAlone: this.Item.categoryName != "Stand Alone"? false : null,
+          spId: this.Item.id 
         };
         console.log(addItem);
         this.cartService.addToCart(addItem);
@@ -80,7 +64,7 @@ export class ItemDetailsPage implements OnInit {
   }
 
   async GetItem(id: number) {
-    var data = await this.api.ViewCatalogItem(id).toPromise();
+    var data = await this.api.UserSpecialItem(id).toPromise();
     var dataObj = JSON.parse(JSON.stringify(data));
     this.Item = dataObj;
     this.ItemFeedback = this.Item.feedback;
@@ -101,11 +85,8 @@ export class ItemDetailsPage implements OnInit {
   }
 
   Return() {
-    localStorage.removeItem('CatalogItem')
+    localStorage.removeItem('SpecialItem')
     history.back();
-    //localStorage.removeItem('CatalogItem')
-
-    // this.route.navigate(['/landing-page'])
   }
 
   async presentPopover(event) {
@@ -115,4 +96,5 @@ export class ItemDetailsPage implements OnInit {
     });
     return await popover.present();
   }
+ 
 }

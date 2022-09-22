@@ -53,7 +53,10 @@
     <ion-list>
       <ion-item lines="none">
         <ion-icon size="large" name="help-circle-outline" slot="end"></ion-icon>
-        <ion-label slot="end">Help</ion-label>
+        
+          <ion-button (click)="onHelp('Client')">
+            Help
+          </ion-button>
       </ion-item>
     </ion-list>
   </ion-footer>

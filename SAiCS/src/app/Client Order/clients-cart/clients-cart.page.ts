@@ -18,9 +18,13 @@ export class ClientsCartPage implements OnInit {
   deliveryOption = false;
   vat:any ;
   session: any;
+  deliveryArr: any;
+  SelectedDel;
+  OdrSmry: any;
   ItemsLoaded: boolean = false;
   @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
   imageArray: any = [];
+  data: any = []
 
   constructor(
     public popoverController: PopoverController,
@@ -30,7 +34,9 @@ export class ClientsCartPage implements OnInit {
     private route: Router,
     private menu: MenuController,
     private cartService: CartService,
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
     this.menu.enable(true, 'client-menu');
@@ -38,7 +44,10 @@ export class ClientsCartPage implements OnInit {
     this.cartService.loadCart();
     this.items = this.cartService.getItems();
     this.GetMerchImage()
+    this.CheckStandAlone()
     this.ViewCart();
+    
+    
   }
 
   ionViewDidLoad() {
@@ -53,43 +62,63 @@ export class ClientsCartPage implements OnInit {
       console.log(this.vat);
     })
     
+    let data 
+    this.api.GetUserDeliveryTypes().subscribe((res) =>{
+      data = res
+      this.deliveryArr = data
+      this.SelectedDel = this.deliveryArr[0].id
+      })
+    
+  }
+
+  CheckStandAlone()
+  {
+    
+    this.api.CheckStandAlone().subscribe((res)=>{
+     // console.log(res);
+      this.data = res
+      
+      this.items.forEach((e: any) =>{
+      const sp = this.data.find(x => x.id === e.id)?.price
+
+      if(sp)
+      {
+        e.price = sp
+      }
+       
+      })
+    })
+    //console.log(this.items);
+    
   }
 
   GetMerchImage()
   {
-    this.imageArray = new Array(this.items.length).fill(null);
-    console.log(this.imageArray);
+    this.imageArray = new Array(this.items.length).fill(null)
 
     this.items.forEach((obj: any) => {
       let index = this.items.findIndex(x => x.id == obj.id);
-    console.log(`index: ${index}`);
 
-      this.api.GetMerchImage(obj.id).subscribe((baseImage: any) =>{
-        //console.log(baseImage.image);
-        this.imageArray[index] = baseImage.image
-      })
+      if(obj.spId)
+      {
+        this.api.GetSpImage(obj.spId).subscribe((baseImage: any) => {
+          this.imageArray[index] = { id: obj.id, name: obj.name, image: baseImage.image };
+        });
+      }
+      else
+      {
+        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) =>{
+          this.imageArray[index] = { id: obj.id, name: obj.name, image: baseImage.image };
+        })
+      }
     })
   }
 
-  // loadCart() {
-  //   console.log(this.session[0].id)
-  //   this.api.ClientCartItems(this.session[0].id).subscribe((res) => {
-  //     this.items = res;
-  //     console.log("Request Sent");
-      
-  //     console.log(this.items);
-  //   });
-
-  //   this.ItemsLoaded = true
-  // }
+  LoadImage(name: string) {
+    return this.imageArray.find((x) => x?.name === name)?.image;
+  }
 
   increment(item) {
-    // the quantity and price and get new subtotal
-    // item.quantity += 1;
-    // this.api.ClientIncreaseCartItem(item.id).subscribe((res) => {
-    //   console.log(res.body);
-    // });
-
     item.quantity += 1;
     this.cartService.saveCart();
     var i = this.items.findIndex((x) => x.id === item.id);
@@ -97,13 +126,6 @@ export class ClientsCartPage implements OnInit {
   }
 
   decrement(item) {
-    // the quantity and price and get new subtotal
-    // if (item.quantity > 1) {
-    //   item.quantity -= 1;
-    //   this.api.ClientDecreaseCartItem(item.id).subscribe((res) => {
-    //     console.log(res.body);
-    //   });
-    // }
     if (item.quantity > 1) {
       item.quantity -= 1;
       this.cartService.saveCart();
@@ -113,23 +135,23 @@ export class ClientsCartPage implements OnInit {
   }
 
   RemoveFromCart(item) {
-    // this.api.ClientRemoveFromCart(item.id).subscribe((res) => {
-    //   console.log(res.body);
-    //   this.loadCart();
-    // });
     this.cartService.removeItem(item);
     this.items = this.cartService.getItems();
   }
 
   ClearCart() {
-    // this.api.ClientClearCart(this.items[0].cartId).subscribe((res) =>{
-    //   console.log(res.body);
-    //   this.loadCart();
-    // });
     this.cartService.clearCart()
     this.items.length = 0
  
   }
+
+  onSelectChange(event)
+  {
+    let value = event.target.value
+    this.SelectedDel = value
+    
+  }
+
 
 
 
@@ -157,7 +179,9 @@ export class ClientsCartPage implements OnInit {
 
   get OrderTotal() {
     if (this.deliveryOption == true) {
-      return this.Subtotal + 200;
+    
+    const sp = this.deliveryArr.find(x => x.id === parseInt(this.SelectedDel))?.price 
+      return this.Subtotal + parseInt(sp);
     } else {
       return this.Subtotal;
     }
@@ -193,31 +217,19 @@ export class ClientsCartPage implements OnInit {
   //Place order
   PlaceOrder() {
 
-    var pushToCart = []
-    for(let item of this.items)
-    {
-      let cart = {} as CartItem
-      cart.merchandiseId = item.id
-      cart.quantity = item.quantity
-      cart.price = item.price
-      pushToCart.push(cart)
-    }
-
-    pushToCart.forEach(e =>{
-      this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
-        console.log(res.body);
-      });
-    })
-    
     var orderdetails = {
       itemCount: this.TotalItems,
       vat: this.CalculatedVAT,
+      vatPercentage: this.vat,
       subtotal: this.Subtotal,
       totalCost: this.OrderTotal,
       deliveryOption: this.deliveryOption,
+      delveryId: this.SelectedDel
     };
     localStorage.setItem('checkout', JSON.stringify(orderdetails));
     
     this.route.navigate(['client-checkout']);
   }
+
+ 
 }

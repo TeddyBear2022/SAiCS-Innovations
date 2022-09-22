@@ -127,8 +127,7 @@
         <ng-template>
           <ion-header>
             <ion-toolbar>
-              <ion-title>Modal</ion-title>
-              <ion-buttons slot="end">
+              <ion-buttons style="margin-left: 80%;">
                 <ion-button (click)="CloseRefferralCode(false)">
                   <ion-icon name="close-outline"></ion-icon>
                 </ion-button>
@@ -136,7 +135,10 @@
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
-            <!-- <qrcode [qrdata]="'myAngularxQrCode'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+            <h4>Scan QR Code to Receive a Referral Code</h4>
+            <div style="text-align:center; padding-top: 5%;">
+            <qrcode [qrdata]="getRefCode" [allowEmptyString]="true" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          </div>
           </ion-content>
         </ng-template>
       </ion-modal>

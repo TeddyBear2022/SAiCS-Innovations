@@ -21,7 +21,6 @@ export class ClientOrderDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.OrderDetails(this.order)
-    this.VAT()
   }
 
   OrderDetails(id: number)
@@ -45,26 +44,17 @@ export class ClientOrderDetailsComponent implements OnInit {
 
   get OrderTotal()
   {
-    let discountValue = this.discount * this.subtotal
       if(this.data.delivery)
-      return this.subtotal - ( discountValue + 200)
+      return this.subtotal + this.data.deliveryAmt
       else
-      return this.subtotal - discountValue
+      return this.subtotal 
   }
 
   get CalculatedVAT() {
-    return this.vat * this.subtotal;
+    return this.data.vat * this.subtotal;
   }
 
-  VAT()
-  {
-    let amount
-   this.api.GetVAT().subscribe((res) =>{
-    amount = res
-    this.vat = amount.amount;
-      console.log(this.vat);
-    })
-  }
+ 
 
   dismissModal() {
     this.modalCtrl.dismiss();

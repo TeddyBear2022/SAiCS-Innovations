@@ -24,9 +24,11 @@
     <ion-col size="6">
       <ion-label style="margin-left: 5%;">Select Entity:</ion-label>
       <ion-select interface="popover" placeholder="Select option" #maintainOpt name="maintainOpt" ngModel>
+        <ion-select-option value="delivery">Delivery Type</ion-select-option>
         <ion-select-option value="cat">Merch Category</ion-select-option>
         <ion-select-option value="type">Merch Type</ion-select-option>
         <ion-select-option value="status">Merch Status</ion-select-option>
+        <ion-select-option value="order">Order Status</ion-select-option>
         <ion-select-option value="VAT">VAT</ion-select-option>
       </ion-select>
     </ion-col>
@@ -35,6 +37,8 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+<app-order-status *ngIf="maintainOpt.value == 'order'"></app-order-status>
+<app-delivery-type *ngIf="maintainOpt.value == 'delivery'"></app-delivery-type>
 <app-merch-status *ngIf="maintainOpt.value == 'status'"></app-merch-status>
 <app-merch-cat *ngIf="maintainOpt.value == 'cat'"></app-merch-cat>
 <app-merch-type *ngIf="maintainOpt.value == 'type'"></app-merch-type>

@@ -358,7 +358,10 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'special-maintainance',
     loadChildren: () => import('./Admin/Special/special-maintainance/special-maintainance.module').then( m => m.SpecialMaintainancePageModule)
   },
-
+  {
+    path: 'client-special-item',
+    loadChildren: () => import('./Client/client-special/client-special-item/client-special-item.module').then( m => m.ClientSpecialItemPageModule)
+  },
 
 
 

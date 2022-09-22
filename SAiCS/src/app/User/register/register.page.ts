@@ -24,7 +24,7 @@ export class RegisterPage implements OnInit {
   inputInfo = undefined
   selectedFile:any 
   isModalOpen = false;
-  getRefCode: any
+  getRefCode: any 
   
   constructor(private api: ApiService, 
     private route : Router, 
@@ -78,9 +78,9 @@ export class RegisterPage implements OnInit {
   NoRefferralCode(isOpen: boolean){
 
   this.api.NoRefCode().subscribe((res) => {
-    this.getRefCode = res
+    let data: any = res
+    this.getRefCode = data
      console.log(this.getRefCode);})
-    
     this.isModalOpen = isOpen;
   }
 

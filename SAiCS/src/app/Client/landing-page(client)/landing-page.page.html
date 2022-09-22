@@ -71,7 +71,7 @@
      <ion-row>
       <ion-col size="3" *ngFor="let m of merchandise | filter:search:filterKeys | filter:categorysearch:filterKeys; let i = index">
         <ion-card class="productCard" id="{{m.id}}">
-          <ion-card-header style="text-align: center;"  (click)="ViewItem(m.id)" routerLink="">
+          <ion-card-header style="text-align: center;"  (click)="ViewItem(m.id)">
             <ion-button slot="end" menu="main-menu" ></ion-button><img [src]="m.image | safe: 'url'" />
           </ion-card-header>
           <ion-card-content>

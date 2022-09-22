@@ -8,22 +8,33 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MerchCatComponent } from '../merch-cat/merch-cat.component';
 import { MerchTypeComponent } from '../merch-type/merch-type.component';
 import { VatComponent } from '../vat/vat.component';
-
-
+import { DeliveryTypeComponent } from '../delivery-type/delivery-type.component';
+import { OrderStatusComponent } from '../order-status/order-status.component';
 
 @NgModule({
-  declarations: [MerchStatusComponent, MerchCatComponent, MerchTypeComponent, VatComponent
-     
-    ],
+  declarations: [
+    MerchStatusComponent,
+    MerchCatComponent,
+    MerchTypeComponent,
+    VatComponent,
+    DeliveryTypeComponent,
+    OrderStatusComponent
+  ],
   imports: [
     CommonModule,
     IonicModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
-    NgxPaginationModule
-    
+    NgxPaginationModule,
   ],
-  exports: [MerchStatusComponent, MerchCatComponent, MerchTypeComponent, VatComponent]
+  exports: [
+    MerchStatusComponent,
+    MerchCatComponent,
+    MerchTypeComponent,
+    VatComponent,
+    DeliveryTypeComponent,
+    OrderStatusComponent
+  ],
 })
-export class MaintainModule { }
+export class MaintainModule {}

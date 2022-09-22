@@ -80,7 +80,7 @@
                     <div class="containerItem" id="{{x.id}}">
                       <br /><br />
                       <img
-                      [src]="imageArray[i] | safe: 'url'"
+                      [src]="LoadImage(x.name) | safe: 'url'"
                         height="80cm"
                         width="30cm"
                       />
@@ -222,13 +222,16 @@
               ><br />
             </ion-item>
             <ion-item lines="none">
-              <ion-input
-                readonly
+              <select
                 *ngIf="deliveryOption"
                 id="deliveryInput"
                 type="text"
-                placeholder="Courier - R200"
-              ></ion-input>
+                placeholder="Select delivery type"
+                [(ngModel)]="SelectedDel"
+                (change)=onSelectChange($event)
+              >
+              <option *ngFor="let m of deliveryArr" value="{{m.id}}">{{m.name}} - {{m.price | currency: 'ZAR':'symbol-narrow'}}</option>
+            </select>
             </ion-item>
             <ion-item lines="none">
               <ion-label>VAT Amount</ion-label>

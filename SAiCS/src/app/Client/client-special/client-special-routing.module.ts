@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ClientSpecialPage
+  },  {
+    path: 'client-special-item',
+    loadChildren: () => import('./client-special-item/client-special-item.module').then( m => m.ClientSpecialItemPageModule)
   }
+
 ];
 
 @NgModule({

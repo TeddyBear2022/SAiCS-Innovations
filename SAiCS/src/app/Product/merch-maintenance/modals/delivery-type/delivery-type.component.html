@@ -1,23 +1,26 @@
 <br>
+<br>
 <ion-grid>
     <ion-row>
         <form [formGroup]="lookUpForm" #localForm = 'ngForm' (ngSubmit)="SendData()">
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="text-align: right;">
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <input [(ngModel)]="search" id="searchBox" class="form-control" placeholder="Search by name" [ngModelOptions]="{standalone: true}">
+                        </th>
+                        <th>
                             <ion-button id="addBtn" (click)="startCreate()" [disabled]="isAddClicked || isEditClicked">
                                 <ion-icon name="add-outline"></ion-icon>
                             </ion-button>
                         </th>
-                        <th></th>
-                        <th>
-                        </th>
-                       
                     </tr>
                 <tr>
                     <th width="12%">ID</th>
-                  <th>Percentage</th>
+                  <th>Name</th>
+                  <th>Amount</th>
                   <th>
                     Action:
                   </th>
@@ -30,12 +33,22 @@
                         </td>
                         <td>
                             <input
-                            type="number"
+                            type="text"
                             class="form-control"
-                            formControlName="vatPercentage"
-                            [ngStyle]="{'border':localForm.submitted && lookUpForm.value.vatPercentage <= -1?'1px solid red':''}"
-                           id="priceInput"
+                            formControlName="formName"
+                            [ngStyle]="{'border':localForm.submitted && lookUpForm.controls['formName'].invalid?'1px solid red':'' }"
+                            placeholder="name"
+                            id="nameInput"
                           />
+                        </td>
+                        <td>
+                          <input
+                        id="priceInput"
+                        type="number"
+                        class="form-control"
+                        formControlName="price"
+                        [ngStyle]="{'border':localForm.submitted && lookUpForm.value.price <= -1?'1px solid red':''}"
+                      />
                         </td>
                         <td>
                             <ion-button type="submit" fill="transparent">
@@ -46,41 +59,58 @@
                             </ion-button>
                         </td>
                     </tr>
-                  <tr *ngFor="let data of lookUpArr | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
+                  <tr *ngFor="let data of lookUpArr | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
                     
-                    <td>{{data.vatid}}</td>
+                    <td>{{data.id}}</td>
 
                     <td class="form-group">
-                    <ng-container *ngIf="!editCache[data.vatid].edit; else nameInputTpl">
-                        {{data.vatPercentage}}
+                    <ng-container *ngIf="!editCache[data.id].edit; else nameInputTpl">
+                        {{data.name}}
                     </ng-container>
                     <ng-template  #nameInputTpl>
                       <input
-                      id="priceInput"
-                        type="number"
+                        id="nameInput"
+                        type="text"
                         class="form-control"
-                        [(ngModel)]="editCache[data.vatid].data.vatPercentage"
+                        [(ngModel)]="editCache[data.id].data.name"
                         [ngModelOptions]="{standalone: true}"
-                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.vatid].data.vatPercentage <= -1?'1px solid red':'' }"
+                        placeholder="name"
+                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.id].data.name == ''?'1px solid red':'' }"
                       />
                     </ng-template>
                     </td>
 
+                    <td class="form-group">
+                      <ng-container *ngIf="!editCache[data.id].edit; else priceInputTpl">
+                          {{data.price}}
+                      </ng-container>
+                      <ng-template  #priceInputTpl>
+                        <input
+                        id="priceInput"
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="editCache[data.id].data.price"
+                        [ngModelOptions]="{standalone: true}"
+                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.id].data.price <= -1?'1px solid red':'' }"
+                      />
+                      </ng-template>
+                      </td>
+
                     <td>
-                        <ng-container *ngIf="!editCache[data.vatid].edit; else actionbtn">
-                            <ion-button (click)="startEdit(data.vatid)" fill="transparent" [disabled]="isAddClicked">
+                        <ng-container *ngIf="!editCache[data.id].edit; else actionbtn">
+                            <ion-button (click)="startEdit(data.id)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="editBtn" name="create-outline"></ion-icon>
                             </ion-button>
-                            <ion-button (click)="remove(data.vatid)" fill="transparent" [disabled]="isAddClicked">
+                            <ion-button (click)="remove(data.id)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="deleteBtn" name="trash-bin-outline"></ion-icon>
                             </ion-button>
                         </ng-container>
 
                         <ng-template  #actionbtn>
-                        <ion-button (click)="saveEdit(data.vatid)" fill="transparent">
+                        <ion-button (click)="saveEdit(data.id)" fill="transparent">
                             <ion-icon id="editBtn" name="checkmark-outline"></ion-icon>
                         </ion-button>
-                        <ion-button (click)="cancelEdit(data.vatid)" fill="transparent">
+                        <ion-button (click)="cancelEdit(data.id)" fill="transparent">
                             <ion-icon id="deleteBtn" name="ban-outline"></ion-icon>
                         </ion-button>
                     </ng-template>

@@ -2,14 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { Options } from 'selenium-webdriver';
 import { AdminVM } from '../Models/ViewModels/AdminVM';
-import { Ambassador } from '../Models/Ambassador';
-import { AmbassadorType } from '../Models/AmbassadorType';
 import { AmbassadorVM } from '../Models/ViewModels/AmbassadorVM';
 import { ClientVM } from '../Models/ViewModels/CientVM';
 import { Country } from '../Models/Country';
-import { DeleteUserVM } from '../Models/ViewModels/DeleteUserVM';
 import { LoginVM } from '../Models/ViewModels/LoginVM';
 import { registerVM } from '../Models/ViewModels/registerVM';
 import { User } from '../Models/User';
@@ -41,6 +37,9 @@ import { uOrderStatusVM } from '../Models/ViewModels/uOrderStatusVM';
 import { MerchStatus } from '../Models/MerchStatus';
 import { MerchCategory } from '../Models/MerchCategory';
 import { MerchType } from '../Models/MerchType';
+import { DeliveryTypeVM } from '../Models/ViewModels/DeliveryTypeVM';
+import { OrderStatus } from '../Models/OrderStatus';
+import { Checkout } from '../Models/ViewModels/Checkout';
 
 @Injectable({
   providedIn: 'root'
@@ -283,7 +282,7 @@ export class ApiService {
   //Get MerchTypes
   GetMerchTypes(): Observable<any>
   {
-    return this.api.get(this.apilink + 'Product/GetMerchTypes',{
+    return this.api.get(this.apilink + 'User/GetMerchTypes',{
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + localStorage.getItem("token")
     })});
@@ -358,7 +357,38 @@ export class ApiService {
   })});
   }
 
+  EditOrderStatus(data: OrderStatus): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Product/EditOrderStatus',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
 
+  GetDeliveryTypes(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'Product/GetDeliveryTypes',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  GetUserDeliveryTypes(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'User/GetDeliveryTypes',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  CheckStandAlone(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'User/CheckStandAlone',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
 
   CreateMerch(nMerch: MerchVM)
   {
@@ -366,6 +396,31 @@ export class ApiService {
     headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
   })})
+  }
+
+  AddDeliveryType(data: DeliveryTypeVM)
+  {
+    return this.api.post(this.apilink + "Product/AddDeliveryType", data, {observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  UpdateDeliveryType(data: DeliveryTypeVM)
+  {
+    return this.api.put(this.apilink + `Product/UpdateDeliveryType`, data, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  DeleteDeliveryType(id: number)
+  {
+    return this.api.delete(this.apilink + `Product/DeleteDeliveryType?id=${id}`,
+    {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   GetAllMerch(): Observable<any>
@@ -530,6 +585,24 @@ export class ApiService {
     })})
   }
 
+  UserSpecialItem(id: number)
+  {
+    return this.api.get(this.apilink + `User/UserSpecialItem?id=${id}`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
+  SpecialItemFeedback(id: number)
+  {
+    return this.api.get(this.apilink + `User/SpecialItemFeedback?id=${id}`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
   AddToCart(id: string, newItem: CartItem)
   {
     return this.api.post(this.apilink + `AmbassadorOrder/AddToCart?id=${id}`, newItem, {observe: 'response', 
@@ -659,7 +732,7 @@ export class ApiService {
 })})
   }
 
-  ClientCheckout(order: Order)
+  ClientCheckout(order: Checkout)
   {
     return this.api.post(this.apilink + "ClientOrder/Checkout", order, {observe: 'response', 
     responseType: 'text',headers: new HttpHeaders({
@@ -1052,7 +1125,7 @@ export class ApiService {
 
   GetSpecialTypes()
   {
-    return this.api.get(this.apilink + "Admin/GetSpecialTypes", {
+    return this.api.get(this.apilink + "User/GetSpecialTypes", {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
@@ -1154,6 +1227,15 @@ export class ApiService {
   GetAllOrderStatuses()
   {
     return this.api.get(this.apilink + "Ambassador/GetAllOrderStatuses", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  MerchOrderStatuses()
+  {
+    return this.api.get(this.apilink + "Product/MerchOrderStatuses", {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
