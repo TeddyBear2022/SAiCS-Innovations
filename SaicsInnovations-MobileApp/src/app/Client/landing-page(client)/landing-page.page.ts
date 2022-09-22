@@ -6,6 +6,7 @@ import { CartItem } from 'src/app/Models/CartItem';
 import { CartVM } from 'src/app/Models/ViewModels/CartVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
@@ -14,88 +15,108 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./landing-page.page.scss'],
 })
 export class LandingPagePage implements OnInit {
-
-  
-  products: any
-  ItemQuantity: FormGroup
-  inputValue: number  = 1
-  session=[]
+  public setBorderColor: boolean = false;
+  merchandise = [];
+  session: any;
+  selectedItem;
+  filterKeys = ['name', 'catID', 'type'];
+  search;
+  categorysearch;
 
   constructor(
-  public popoverController: PopoverController, 
-  private api: ApiService, private fb: FormBuilder,
-  private route:Router,
-  private tmpStorage:TemporaryStorage,
-  private menu:MenuController){}
-  
-  async presentPopover(event)
-  {
+    public popoverController: PopoverController,
+    private api: ApiService,
+    private route: Router,
+    private tmpStorage: TemporaryStorage,
+    private menu: MenuController,
+    private cartService: CartService
+  ) {}
+
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }
 
-
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
-    // this.menu.open('client-menu')
-    // this.menu.close()
-    this.GetCatalog()
-
-    this.ItemQuantity = this.fb.group({
-      quantity: new FormControl('', Validators.required)
-    })
-    this.session = this.tmpStorage.getSessioninfo()
+    this.GetCatalog();
   }
 
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
 
- async GetCatalog()
-{
+  async GetCatalog() {
+    var data = await this.api.ViewCatalog().toPromise();
+    var dataObj = JSON.parse(JSON.stringify(data));
+    this.merchandise = dataObj;
+    console.log(this.merchandise);
+  }
 
-var data = await this.api.ViewCatalog().toPromise()
-var dataObj = JSON.parse(JSON.stringify(data));
-this.products = dataObj
-console.log(this.products)
-}
+  AddToCart(id) {
+    var item = this.merchandise.find((x) => x.id === id);
+    if (item.quantity > 0) {
+      if (!this.cartService.itemInCart(item)) {
+        //for storage
+        var addItem = {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          isStandAlone: true,
+          spId: item.spId?? null
+        };
+        console.log(addItem);
+        this.cartService.addToCart(addItem);
+      }
+      item.quantity = 0;
+    } else {
+      console.log('Inavlid Form');
+      this.setBorderColor = true;
+      this.selectedItem = item.id;
+    }
+  }
 
-AddToCart(item: any)
-{
+  incrementQty(index: number) {
+    this.merchandise[index].quantity += 1;
 
-//  let newItem = {} as CartItem
-//  newItem.packageId = item.itemType === 2? item.itemID : null
-//  newItem.productId = item.itemType === 1? item.itemID : null
-//  newItem.specialId = null
-//  newItem.price = item.itemPrice
-//  newItem.quantity = item.itemQuantity
+    if (this.merchandise[index].quantity == 0) {
+      this.setBorderColor = true;
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
+  }
 
-//  let cartvm = {} as CartVM 
-//  cartvm.userID = this.session[0].id //use session storage
-//  cartvm.cartItem = newItem
- 
-// this.api.AddToCart(cartvm).subscribe((res) => {
-//   console.log(res);
-//   var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
-//   localStorage.setItem('MarkedItem',JSON.stringify(marked))
-// });
+  decrementQty(index: number) {
+    if (this.merchandise[index].quantity > 0)
+      this.merchandise[index].quantity -= 1;
 
- //console.log(cartvm)
-}
+    if (this.merchandise[index].quantity == 0) {
+      this.setBorderColor = true;
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
+  }
 
-incrementQty(index: number) {
-  this.products[index].itemQuantity += 1;
-}
+  ViewCart() {
+    console.log('cart');
+    this.route.navigate(['clients-cart']);
+  }
 
-decrementQty(index: number) {
-  if(this.products[index].itemQuantity >  0)
-  this.products[index].itemQuantity -= 1;
-}
-
-ViewCart(){
-  console.log("cart");
-  
-this.route.navigate(['clients-cart'])
-}
-
+  ViewItem(id: number) {
+    localStorage.setItem('CatalogItem', JSON.stringify(id));
+    this.route.navigate(['/item-details']);
+  }
 }
