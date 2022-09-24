@@ -362,6 +362,10 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'client-special-item',
     loadChildren: () => import('./Client/client-special/client-special-item/client-special-item.module').then( m => m.ClientSpecialItemPageModule)
   },
+  {
+    path: 'ambassador-special-item',
+    loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special-item/ambassador-special-item.module').then( m => m.AmbassadorSpecialItemPageModule)
+  },
 
 
 

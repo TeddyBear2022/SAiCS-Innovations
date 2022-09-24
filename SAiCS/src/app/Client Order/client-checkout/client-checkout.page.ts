@@ -30,6 +30,7 @@ export class ClientCheckoutPage implements OnInit {
   isModalOpen = false;
   AgentAccount: any;
   items: any = [];
+  username;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -60,6 +61,7 @@ export class ClientCheckoutPage implements OnInit {
       address: ['', [Validators.required]],
       pdfFile: ['', [Validators.required]],
     });
+    this.username = localStorage.getItem('UserName');
   }
 
   ionViewDidEnter() {
@@ -129,8 +131,17 @@ export class ClientCheckoutPage implements OnInit {
 
   DeleteAddress(id: number) {
     this.api.DeleteSecondaryAddress(id).subscribe((res) => {
-      console.log(res);
-      this.GetAddress();
+      if(res.body == "Deleted")
+      {
+        
+        this.Notif("Address deleted Sucessfully deleted") 
+        this.GetAddress();
+      }
+       else
+       {
+          this.Notif(res.body) 
+          
+       }
     });
   }
 
@@ -198,6 +209,21 @@ export class ClientCheckoutPage implements OnInit {
       delveryId: 0,
     };
     localStorage.setItem('checkout', JSON.stringify(orderdetails));
+  }
+
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{
+      text: 'OK',
+    handler: () =>{
+      history.back()
+    }
+    }]
+    });
+  
+    await alert.present();
+    
   }
 
   async ErrorAlert() {

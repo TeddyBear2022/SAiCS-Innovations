@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path: 'login',
@@ -26,6 +27,18 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./Client/Order/checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
+  {
+    path: 'address',
+    loadChildren: () => import('./Client/Order/address/address.module').then( m => m.AddressPageModule)
+  },
+  {
+    path: 'add-address',
+    loadChildren: () => import('./Client/Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
   }
 
 ];

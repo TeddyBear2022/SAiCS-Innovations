@@ -29,6 +29,7 @@ export class ClientSpecialPage implements OnInit {
   search;
   categorysearch;
   specialTypes: any = [];
+  username;
 
   constructor(
     public popoverController: PopoverController,
@@ -48,6 +49,7 @@ export class ClientSpecialPage implements OnInit {
     this.ItemQuantity = this.fb.group({
       quantity: new FormControl('', Validators.required),
     });
+    this.username = localStorage.getItem('UserName');
   }
 
   get TotalItems() {

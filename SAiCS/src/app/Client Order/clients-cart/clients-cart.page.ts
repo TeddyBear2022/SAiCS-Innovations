@@ -20,11 +20,11 @@ export class ClientsCartPage implements OnInit {
   session: any;
   deliveryArr: any;
   SelectedDel;
-  OdrSmry: any;
   ItemsLoaded: boolean = false;
   @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
   imageArray: any = [];
   data: any = []
+  username;
 
   constructor(
     public popoverController: PopoverController,
@@ -46,6 +46,7 @@ export class ClientsCartPage implements OnInit {
     this.GetMerchImage()
     this.CheckStandAlone()
     this.ViewCart();
+    this.username = localStorage.getItem('UserName');
     
     
   }

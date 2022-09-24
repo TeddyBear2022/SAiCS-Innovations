@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from '../profile-popover/profile-popover.component';
 import { ApiService } from '../Services/api.service';
+import { CartService } from '../Services/cart.service';
 import { TemporaryStorage } from '../Services/TemporaryStorage.service';
+import { IonSelect  } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -12,88 +14,133 @@ import { TemporaryStorage } from '../Services/TemporaryStorage.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  
-  products: any
-  ItemQuantity: FormGroup
-  inputValue: number  = 1
-  session=[]
+  public setBorderColor: boolean = false;
+  merchandise = [];
+  session: any;
+  selectedItem;
+  filterKeys = ['name', 'catID', 'type'];
+  search;
+  categorysearch;
+  username
+  imageArray: any = [];
+  @ViewChild('mySelect') selectRef: IonSelect;
+  showList = true;
 
   constructor(
-  public popoverController: PopoverController, 
-  private api: ApiService, 
-  private fb: FormBuilder,
-  private route:Router,
-  private tmpStorage:TemporaryStorage,
-  private menu:MenuController){}
-  
-  async presentPopover(event)
-  {
+    public popoverController: PopoverController,
+    private api: ApiService,
+    private route: Router,
+    private tmpStorage: TemporaryStorage,
+    private menu: MenuController,
+    private cartService: CartService
+  ) {}
+
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }
 
-
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
-    // this.menu.open('client-menu')
-    // this.menu.close()
-    this.GetCatalog()
+    this.GetCatalog();
+    this.username = localStorage.getItem('UserName')
+  }
 
-    this.ItemQuantity = this.fb.group({
-      quantity: new FormControl('', Validators.required)
-    })
-    this.session = this.tmpStorage.getSessioninfo()
+  OpenSelect()
+  {
+    this.selectRef.open()
   }
 
 
- async GetCatalog()
-{
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
 
-var data = await this.api.ViewCatalog().toPromise()
-var dataObj = JSON.parse(JSON.stringify(data));
-this.products = dataObj
-console.log(this.products)
-}
+  async GetCatalog() {
+    var data = await this.api.ViewCatalog().toPromise();
+    var dataObj = JSON.parse(JSON.stringify(data));
+    this.merchandise = dataObj;
+    console.log(this.merchandise);
+    this.imageArray = new Array(this.merchandise.length).fill(null);
+      //console.log(this.imageArray);
 
-AddToCart(item: any)
-{
+      this.merchandise.forEach((obj: any) => {
+        let index = this.merchandise.findIndex((x) => x.id == obj.id);
 
-//  let newItem = {} as CartItem
-//  newItem.packageId = item.itemType === 2? item.itemID : null
-//  newItem.productId = item.itemType === 1? item.itemID : null
-//  newItem.specialId = null
-//  newItem.price = item.itemPrice
-//  newItem.quantity = item.itemQuantity
+        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+          this.imageArray[index] = { id: obj.id, image: baseImage.image };
+        });
+      });
+  }
 
-//  let cartvm = {} as CartVM 
-//  cartvm.userID = this.session[0].id //use session storage
-//  cartvm.cartItem = newItem
- 
-// this.api.AddToCart(cartvm).subscribe((res) => {
-//   console.log(res);
-//   var marked = {'cartItem': res, 'type': item.itemType, 'Id': item.itemID}
-//   localStorage.setItem('MarkedItem',JSON.stringify(marked))
-// });
-
- //console.log(cartvm)
-}
-
-incrementQty(index: number) {
-  this.products[index].itemQuantity += 1;
-}
-
-decrementQty(index: number) {
-  if(this.products[index].itemQuantity >  0)
-  this.products[index].itemQuantity -= 1;
-}
-
-ViewCart(){
-  console.log("cart");
+  GetMerchImage(id: number) {
+    return this.imageArray.find((x) => x?.id === id)?.image;
+  }
   
-this.route.navigate(['clients-cart'])
-}
+  AddToCart(id) {
+    var item = this.merchandise.find((x) => x.id === id);
+    if (item.quantity > 0) {
+      if (!this.cartService.itemInCart(item)) {
+        //for storage
+        var addItem = {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          isStandAlone: true,
+          spId: item.spId?? null
+        };
+        console.log(addItem);
+        this.cartService.addToCart(addItem);
+      }
+      item.quantity = 0;
+    } else {
+      console.log('Inavlid Form');
+      this.setBorderColor = true;
+      this.selectedItem = item.id;
+    }
+  }
 
+  incrementQty(index: number) {
+    this.merchandise[index].quantity += 1;
+
+    if (this.merchandise[index].quantity == 0) {
+      this.setBorderColor = true;
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
+  }
+
+  decrementQty(index: number) {
+    if (this.merchandise[index].quantity > 0)
+      this.merchandise[index].quantity -= 1;
+
+    if (this.merchandise[index].quantity == 0) {
+      this.setBorderColor = true;
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
+  }
+
+  ViewCart() {
+    console.log('cart');
+    this.route.navigate(['clients-cart']);
+  }
+
+  ViewItem(id: number) {
+    localStorage.setItem('CatalogItem', JSON.stringify(id));
+    this.route.navigate(['/item-details']);
+  }
 }

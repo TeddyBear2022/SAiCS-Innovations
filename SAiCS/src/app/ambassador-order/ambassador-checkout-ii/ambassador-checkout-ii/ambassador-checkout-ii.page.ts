@@ -7,10 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { CartItem } from 'src/app/Models/CartItem';
 import { Order } from 'src/app/Models/Order';
+import { Checkout } from 'src/app/Models/ViewModels/Checkout';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
@@ -27,6 +30,11 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   session: any
   isModalOpen = false;
   AgentAccount: any
+  items: any = [];
+  username;
+  deliveryArr: any;
+  SelectedDel;
+  SubTotal;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -38,26 +46,58 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     private api: ApiService,
     private fb: FormBuilder,
     private router: Router,
-    private tmpStorage:TemporaryStorage
+    private tmpStorage:TemporaryStorage,
+    private menu: MenuController,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo()
+    this.menu.enable(true, 'ambassador-menu');
     this.GetAddress();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'))
     this.deliveryOption = this.OdrSmry.deliveryOption == true? true : false
-    console.log(this.OdrSmry);
-
-    
+    this.cartService.loadCart();
+    this.items = this.cartService.getItems();
+    this.username = localStorage.getItem('UserName');
+    this.GetDelOptions();
     this.checkout = this.fb.group({
       address: ['', [Validators.required]],
       pdfFile:['', [Validators.required]]
     });
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
+    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
     this.GetAddress();
-    this.AgentAccountInfo()
+    this.AgentAccountInfo();
+    this.GetDelOptions();
+  }
+
+  get OrderTotal() {
+    if (this.deliveryOption == true) {
+      const sp = this.deliveryArr?.find(
+        (x) => x?.id === parseInt(this.SelectedDel)
+      )?.price;
+      return (this.SubTotal + parseInt(sp)) - this.OdrSmry.discount;
+    } else {
+      return this.SubTotal - this.OdrSmry.discount;
+    }
+  }
+
+  onSelectChange(event) {
+    let value = event.target.value;
+    this.SelectedDel = value;
+  }
+
+  GetDelOptions() {
+    let data;
+    this.api.GetUserDeliveryTypes().subscribe((res) => {
+      data = res;
+      this.deliveryArr = data;
+    });
+    this.SelectedDel = this.OdrSmry.delveryId;
+    this.SubTotal = this.OdrSmry.subtotal;
   }
 
   AgentAccountInfo() {
@@ -109,46 +149,75 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   EditAddress(id: number)
   {
     localStorage.setItem('EditAddressId', JSON.stringify(id))
-    this.router.navigate(['/edit-address'])
+    this.router.navigate(['./edit-address'])
   }
 
   DeleteAddress(id: number)
   {
-    this.api.DeleteSecondaryAddress(id).subscribe(res => {console.log(res);
-      this.GetAddress();
+    this.api.DeleteSecondaryAddress(id).subscribe(res => {
+      if(res.body == "Deleted")
+      {
+        
+        this.Notif("Address deleted Sucessfully deleted") 
+        this.GetAddress();
+      }
+       else
+       {
+          this.Notif(res.body) 
+          
+       }
+      
     })
   }
 
   submitForm() {
 
-   if(this.deliveryOption == false) 
-   {
-    this.checkout.get('address').clearValidators();
-    this.checkout.get('address').updateValueAndValidity();
-   }
-   
+    if (this.deliveryOption == false) {
+      this.checkout.get('address').clearValidators();
+      this.checkout.get('address').updateValueAndValidity();
+    }
 
     if (this.checkout.valid) {
-            let order = {} as Order;
-            order.addressId = this.deliveryOption == true ? this.checkout.value.address : null;
-            order.userId = this.session[0].id;
-            order.orderStatusId = 1;
-            order.proofOfPayment = this.selectedFile
-            this.api.Checkout(order).subscribe(res => {
-              console.log(res.body);
+      var pushToCart = [];
+      for (let item of this.items) {
+        let cart = {} as CartItem;
+        cart.merchandiseId = item.spId != null ? null : item.id;
+        cart.specialId = item.spId ?? null;
+        cart.quantity = item.quantity;
+        cart.price = item.price;
+        pushToCart.push(cart);
+      }
 
-               if(res.body == "Order Placed")
-               {
-                this.checkout.get('address').setValidators(Validators.required);
-                this.checkout.get('address').updateValueAndValidity();
-                this.showAlert();
-               }
-               else 
-               {
-                this.ErrorAlert()
-               }
-            });
-            console.log(order);
+      pushToCart.forEach((e) => {
+        this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
+          console.log(res.body);
+        });
+      });
+
+      let order = {} as Checkout;
+      order.addressId =
+        this.deliveryOption == true ? this.checkout.value.address : null;
+      order.userId = this.session[0].id;
+      order.orderStatusId = 1;
+      order.proofOfPayment = this.selectedFile;
+      order.Vat =parseFloat(this.OdrSmry.vatPercentage);
+      order.DeliveryTypeId = this.OdrSmry.delveryId;
+      order.ShippingCost = this.deliveryArr.find(
+        (x) => x?.id === parseInt(this.SelectedDel)
+      )?.price;
+
+      this.api.ClientCheckout(order).subscribe((res) => {
+        console.log(res.body);
+        if (res.body == 'Placed') {
+          this.checkout.get('address').setValidators(Validators.required);
+          this.checkout.get('address').updateValueAndValidity();
+
+          this.showAlert();
+        } else {
+          this.ErrorAlert();
+        }
+      });
+      //console.log(order)
     } else {
       console.log('invalid form');
     }
@@ -174,6 +243,35 @@ export class AmbassadorCheckoutIiPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  ClearStore()
+  {
+    var orderdetails = {
+      itemCount: 0,
+      vat: 0,
+      vatPercentage: 0,
+      subtotal: 0,
+      totalCost: 0,
+      deliveryOption: 0,
+      delveryId: 0,
+    };
+    localStorage.setItem('checkout', JSON.stringify(orderdetails));
+  }
+
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{
+      text: 'OK',
+    handler: () =>{
+      history.back()
+    }
+    }]
+    });
+  
+    await alert.present();
+    
   }
 
   async ErrorAlert() {

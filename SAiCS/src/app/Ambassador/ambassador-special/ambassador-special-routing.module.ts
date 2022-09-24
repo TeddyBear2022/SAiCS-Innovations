@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: AmbassadorSpecialPage
+  },  {
+    path: 'ambassador-special-item',
+    loadChildren: () => import('./ambassador-special-item/ambassador-special-item.module').then( m => m.AmbassadorSpecialItemPageModule)
   }
+
 ];
 
 @NgModule({

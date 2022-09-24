@@ -79,6 +79,7 @@ export class ApiService {
   getCountrys():Observable<Country[]>{
     return this.api.get<Country[]>(this.apilink+"Admin/getCountry")
   }
+
   //get login details to login/verify user
   //post: needs to be able to create a user from 
   
@@ -585,6 +586,15 @@ export class ApiService {
     })})
   }
 
+  GetCountries()
+  {
+    return this.api.get(this.apilink + `User/GetCountries`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
   UserSpecialItem(id: number)
   {
     return this.api.get(this.apilink + `User/UserSpecialItem?id=${id}`,
@@ -1011,7 +1021,11 @@ export class ApiService {
 
   DeleteSecondaryAddress(id: number)
   {
-    return this.api.delete(this.apilink + `User/DeleteSecondaryAddress?id=${id}`)
+    return this.api.delete(this.apilink + `User/DeleteSecondaryAddress?id=${id}`,
+    {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
   }
 
   GetProvinces()

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Shipping Information</ng-template>
+        <ion-item lines="none">
+          <ion-label slot="start">Shipping</ion-label>
+          <ion-toggle slot="end" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption"  [ngModelOptions]="{standalone: true}"></ion-toggle><br>
+        </ion-item>
+
+        <br>
+        <p style="margin-left: 6%;" *ngIf="deliveryOption">Select current address or  <a routerLink="/add-address">Add New Address</a></p>
+        <br>
+        <ion-list appearance="fill" *ngIf="deliveryOption">
+          
+          <!-- <ion-item lines="none">
+            <select
+            *ngIf="deliveryOption"
+            type="text"
+            id="deliveryInput"
+            placeholder="Select delivery type"
+            [(ngModel)]="SelectedDel"
+            (change)=onSelectChange($event)
+            [ngModelOptions]="{standalone: true}"
+          >
+          <option *ngFor="let m of deliveryArr" value="{{m.id}}">{{m.name}} - {{m.price | currency: 'ZAR':'symbol-narrow'}}</option>
+        </select>
+        </ion-item> -->
+
+        <ion-radio-group  formControlName="address" name="address">
+          <ion-item lines="none" *ngFor="let a of userAddress; let i = index" >
+            <ion-radio slot="start" mode="md" id="{{a.id}}" [value]="a.id" ></ion-radio>
+            <ion-label>{{a.address}}</ion-label> 
+            <ion-label slot="end">
+              <ion-button (click)="ViewAddress(a.id)" fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">
+               Edit/Delete
+              </ion-button>
+            </ion-label>
+          </ion-item>
+        </ion-radio-group>
+        </ion-list>
+        <div>
+          <ion-button  type="submit" style="--background: #08c10f;" id="button">Next</ion-button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Payment Details</ng-template>
+        <ion-list appearance="fill">
+          <ion-label>Address</ion-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                 required>
+        </ion-list>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Order Summary</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</ion-content>

@@ -39,7 +39,7 @@
               <ion-label class="rightFormLabel">Country</ion-label>
                 <select class="rightFormControl" id="dropdown" placeholder="Country" style="width: 85%; height: 35px;" formControlName="country">
                   <option value="" disabled selected>Select Country</option>
-                  <option  value=1>South Africa</option>
+                  <option *ngFor="let p of countries" value="{{p.countryId}}" >{{p.countryName}}</option>
                 </select><br /><br />
                 <span *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
             </ion-item-group>

@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Address</ion-title>
+    <ion-button fill="clear" slot="end" (click)="Return()">
+     <ion-label style="color: white;">Cancel</ion-label> 
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <form id="addressForm" [formGroup]="newAddress" #localForm ='ngForm' (ngSubmit)="OnSubmit()">
+  <ion-grid>
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label>Country</ion-label>
+            <select id="dropdown" placeholder="Country" formControlName="country">
+              <option value="" disabled selected>Select Country</option>
+            <option *ngFor="let p of countries" value="{{p.countryId}}" >{{p.countryName}}</option>
+            </select><br />
+            <span *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label >Address</ion-label>
+          <input type="text" placeholder="Enter Your Address" formControlName="address"><br />
+          <span *ngIf="localForm.submitted && newAddress.controls['address'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label>City</ion-label>
+          <input type="text" placeholder="Enter Your City" formControlName="city"/><br />
+            <span  *ngIf="localForm.submitted && newAddress.controls['city'].invalid">Required</span>
+          </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label >Province</ion-label>
+          <select  placeholder="Province" formControlName="province">
+            <option value="" disabled selected>Select Province</option>
+            <option *ngFor="let p of provinces" value="{{p.provinceId}}" >{{p.provinceName}}</option>
+          </select><br />
+          <span *ngIf="localForm.submitted && newAddress.controls['province'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label >Postal Code</ion-label>
+          <input  type="text" placeholder="Enter Your Postal Code" formControlName="postalCode"><br />
+            <span *ngIf="localForm.submitted && newAddress.controls['postalCode'].invalid">Required</span>
+          </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label>Phone Number</ion-label>
+          <input type="text" placeholder="XXX-XXX-XXXX" formControlName="phone"><br />
+          <span  *ngIf="localForm.submitted && newAddress.controls['phone'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-button style="--background:#0070c0; text-transform: none;" type="submit">Save</ion-button>
+          <ion-button (click)=" DeleteAddress(existingAddress)" style="--background:#f44336;text-transform: none;">Delete</ion-button>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+</ion-content>

@@ -6,6 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
+  },
+  {
+    path: 'checkout',
+    loadChildren: () => import('../Client/Order/checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
+  {
+    path: 'address',
+    loadChildren: () => import('../Client/Order/address/address.module').then( m => m.AddressPageModule)
   }
 ];
 

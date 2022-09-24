@@ -19,8 +19,8 @@ export class LandingPagePage implements OnInit {
   filterKeys = ['name', 'catID', 'type'];
   search;
   categorysearch;
-  username
-
+  username;
+  imageArray: any = [];
 
   constructor(
     public popoverController: PopoverController,
@@ -43,125 +43,97 @@ export class LandingPagePage implements OnInit {
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog();
-    this.username = localStorage.getItem('UserName')
-    
+    this.username = localStorage.getItem('UserName');
   }
 
-  get TotalItems()
-  {
-   // this.cartService.getItems();
-   this.cartService.loadCart();
-    var cartItemCount = []
-    cartItemCount =this.cartService.getItems();
-    return cartItemCount.length
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
-
 
   async GetCatalog() {
     var data = await this.api.ViewCatalog().toPromise();
     var dataObj = JSON.parse(JSON.stringify(data));
     this.merchandise = dataObj;
     console.log(this.merchandise);
+
+    this.imageArray = new Array(this.merchandise.length).fill(null);
+      //console.log(this.imageArray);
+
+      this.merchandise.forEach((obj: any) => {
+        let index = this.merchandise.findIndex((x) => x.id == obj.id);
+
+        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+          this.imageArray[index] = { id: obj.id, image: baseImage.image };
+        });
+      });
   }
 
-
+  GetMerchImage(id: number) {
+    return this.imageArray.find((x) => x?.id === id)?.image;
+  }
+  
 
   AddToCart(id) {
     var item = this.merchandise.find((x) => x.id === id);
     if (item.quantity > 0) {
-      // let newItem = {} as CartItem;
-      // newItem.merchandiseId = item.id;
-      // newItem.price = item.price;
-      // newItem.quantity = item.quantity;
-
-      // this.api.AddToCart(this.session[0].id, newItem).subscribe((res) => {
-      //   console.log(res.body);
-      // });
-
-      if(!this.cartService.itemInCart(item))
-      {
-        //for storage 
-        var addItem = {'id':item.id, 'name': item.name, 'price': item.price,  'quantity': item.quantity} 
+      if (!this.cartService.itemInCart(item)) {
+        //for storage
+        var addItem = {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          isStandAlone: true,
+          spId: item.spId?? null
+        };
         console.log(addItem);
         this.cartService.addToCart(addItem);
-     }
-      item.quantity = 0
+      }
+      item.quantity = 0;
     } else {
       console.log('Inavlid Form');
       this.setBorderColor = true;
-      this.selectedItem = item.id
+      this.selectedItem = item.id;
     }
   }
 
-  // validateInput(input) {
-  //   if (isNaN(input) || input.value < 0) {
-  //     console.log(input);
-
-  //     return (input = Math.abs(input));
-  //   }
-  // }
 
   incrementQty(index: number) {
     this.merchandise[index].quantity += 1;
 
-    // if(this.merchandise[index].quantity == 0)
-    // {
-    // this.setBorderColor = true;
-    // this.merchandise[index].id
-    // }
-    // else
-    // {
-    //   this.setBorderColor = false;
-    //   this.merchandise[index].id
-      
-    // }
+    if (this.merchandise[index].quantity == 0) {
+      this.setBorderColor = true;
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
   }
 
   decrementQty(index: number) {
     if (this.merchandise[index].quantity > 0)
       this.merchandise[index].quantity -= 1;
 
-      if(this.merchandise[index].quantity == 0)
-      {
+    if (this.merchandise[index].quantity == 0) {
       this.setBorderColor = true;
-      this.merchandise[index].id
-      }
-      else
-      {
-        this.setBorderColor = false;
-      this.merchandise[index].id
-      }
+      this.merchandise[index].id;
+    } else {
+      this.setBorderColor = false;
+      this.merchandise[index].id;
+    }
   }
 
   viewCart(merchandise) {
     this.router.navigate(['/view-ambassador-cart']);
   }
 
-  ViewItem(id: number)
-{
-  localStorage.setItem('CatalogItem', JSON.stringify(id))
-  this.router.navigate(['/product-details'])
-}
+  ViewItem(id: number) {
+    localStorage.setItem('CatalogItem', JSON.stringify(id));
+    this.router.navigate(['/product-details']);
+  }
 
-// get TotalItems()
-// {
-//   //this.cartService.loadCart();
-//   var arr = []
-
-//   arr = this.cartService.getItems()
-//   return arr.length
-// }
-
-// SelectByCategory(e)
-// {
-//   let value = e.target.value
-//   //this.api.ViewCatalog()
-// console.log("vakue");
-
-//   if(value == 5)
-//   {
-//     console.log(value);
-    
-//   }
-// }
 }

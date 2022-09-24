@@ -6,8 +6,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class CartService {
 
-  currentImage = [];
   items = [];
+  total_price: number = 0;
+  total_cart_qty:number = 0;
 
   constructor() {}
 
@@ -30,6 +31,15 @@ export class CartService {
 
     this.saveCart();
 
+  }
+
+  isAddedToCart(id) {
+    return this.items.some(item => item['id'] == id );
+  }
+
+  getCartTotalQty() {
+    console.log(this.items);
+    this.total_cart_qty = this.items.length;
   }
 
   getItems() {
@@ -62,13 +72,18 @@ export class CartService {
     return this.items.findIndex((o) => o.id === item.id) > -1;
   }
 
-  set SetImage(imageData){
-     this.currentImage = imageData
+  calculatePrice(product) {
+    let price = product['price'];
+    return Number(product['quantity']) * Number(price); 
   }
 
-  get GetImage()
-  {
-    return this.currentImage
+  totalPrice() {
+    this.total_price = 0;
+
+    for ( let item of this.items ) {
+      this.total_price += this.calculatePrice(item);
+    }
   }
+ 
 
 }

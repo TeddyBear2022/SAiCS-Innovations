@@ -12,7 +12,7 @@
       </ion-buttons>
       
   
-      <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+      <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
   
       <ion-buttons slot="end">
         <ion-button shape="round">
@@ -86,7 +86,7 @@
             <span style="font-size: 13px; color: #f44336;" *ngIf="localForm.submitted && checkout.controls['pdfFile'].invalid">*Required</span>
             <ion-input (change)="onFileSelected($event) " formControlName="pdfFile" style=" float: left; margin-left: 7%; width: 400px; border: 1px solid black;" type="file" accept="application/pdf"></ion-input><br><br><br>
         
-           <span><a style="font-size: 15px; float: right; margin-right: 80%;" routerLink="/clients-cart" (click)  ="ClearStore()"> <ion-icon name="arrow-back-outline"></ion-icon> Back To Cart</a> </span> 
+           <span><a style="font-size: 15px; float: right; margin-right: 80%;" routerLink="/clients-cart" (click)="ClearStore()"> <ion-icon name="arrow-back-outline"></ion-icon> Back To Cart</a> </span> 
         </ng-container>
     
         </ion-card>

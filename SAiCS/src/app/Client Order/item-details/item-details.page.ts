@@ -25,6 +25,7 @@ export class ItemDetailsPage implements OnInit {
   ItemQuantity = 0;
   session: any;
   public setBorderColor: boolean = false;
+  username;
 
   constructor(
     public popoverController: PopoverController,
@@ -32,7 +33,6 @@ export class ItemDetailsPage implements OnInit {
     private menu: MenuController,
     private tmpStorage: TemporaryStorage,
     private cartService: CartService,
-    private route: Router
   ) {}
 
   ngOnInit() {
@@ -40,6 +40,7 @@ export class ItemDetailsPage implements OnInit {
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
     this.GetItem(this.ItemId);
+    this.username = localStorage.getItem('UserName');
   }
 
   ionViewDidLoad() {
@@ -49,16 +50,6 @@ export class ItemDetailsPage implements OnInit {
 
   AddToCart() {
     if (this.Item.quantity > 0) {
-      // let newItem = {} as CartItem;
-      // newItem.merchandiseId = this.ItemId;
-      // newItem.specialId = null;
-      // newItem.price = this.Item.price;
-      // newItem.quantity = this.ItemQuantity;
-
-      // this.api.ClientAddToCart(this.session[0].id, newItem).subscribe((res) => {
-      //   console.log(res.body);
-      // });
-
       this.setBorderColor = false;
       if (!this.cartService.itemInCart(this.Item)) {
         //for storage
@@ -103,9 +94,6 @@ export class ItemDetailsPage implements OnInit {
   Return() {
     localStorage.removeItem('CatalogItem')
     history.back();
-    //localStorage.removeItem('CatalogItem')
-
-    // this.route.navigate(['/landing-page'])
   }
 
   async presentPopover(event) {

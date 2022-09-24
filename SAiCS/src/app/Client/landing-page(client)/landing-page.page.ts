@@ -19,6 +19,7 @@ export class LandingPagePage implements OnInit {
   filterKeys = ['name', 'catID', 'type'];
   search;
   categorysearch;
+  username
 
   constructor(
     public popoverController: PopoverController,
@@ -41,6 +42,7 @@ export class LandingPagePage implements OnInit {
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
     this.GetCatalog();
+    this.username = localStorage.getItem('UserName')
   }
 
   get TotalItems() {

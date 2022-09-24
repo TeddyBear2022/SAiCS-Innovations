@@ -66,6 +66,12 @@ export class AddAddressPage implements OnInit {
     this.api.GetProvinces().subscribe((data) => {
       this.provinces = data;
     });
+
+    this.api.GetCountries().subscribe(data => {
+      this.countries = data
+      console.log(this.countries);
+      
+    });
   }
 
   OnSubmit() {

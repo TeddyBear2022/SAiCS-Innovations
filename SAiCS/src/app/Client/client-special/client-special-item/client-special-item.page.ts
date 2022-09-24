@@ -18,6 +18,7 @@ export class ClientSpecialItemPage implements OnInit {
   ItemQuantity = 0;
   session: any;
   public setBorderColor: boolean = false;
+  username;
 
   constructor(
     public popoverController: PopoverController,
@@ -33,6 +34,7 @@ export class ClientSpecialItemPage implements OnInit {
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
     this.GetItem(this.ItemId);
+    this.username = localStorage.getItem('UserName');
   }
 
   ionViewDidLoad() {

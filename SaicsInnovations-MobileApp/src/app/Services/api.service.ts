@@ -34,6 +34,8 @@ import { CartItem } from '../Models/CartItem';
 import { OTPVM } from '../Models/ViewModels/OTPVM';
 import { ResetPasswordVM } from '../Models/ViewModels/ResetPasswordVM';
 import { Target } from '../Models/Target';
+import { Checkout } from '../Models/ViewModels/Checkout';
+import { Address } from 'src/app/Models/Address';
 
 @Injectable({
   providedIn: 'root'
@@ -271,21 +273,80 @@ export class ApiService {
     return this.api.get(this.apilink + `AmbassadorOrder/AmbassadorDiscount?id=${id}`)
   }
 
+  AgentAccountInfo(id: string)
+  {
+    return this.api.get(this.apilink + `User/AgentAccountInfo?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+   })})
+  }
+
+  DeleteSecondaryAddress(id: number)
+  {
+    return this.api.delete(this.apilink + `User/DeleteSecondaryAddress?id=${id}`,
+    {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  ClientAddToCart(id: string,newItem: CartItem)
+  {
+    return this.api.post(this.apilink + `ClientOrder/AddToCart?id=${id}`, newItem, {observe: 'response',
+     responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  ClientCheckout(order: Checkout)
+  {
+    return this.api.post(this.apilink + "ClientOrder/Checkout", order, {observe: 'response', 
+    responseType: 'text',headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  GetMerchImage(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetMerchImage?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  GetSpImage(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetSpImage?id=${id}`,{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
+  CheckStandAlone(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'User/CheckStandAlone',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  GetUserDeliveryTypes(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'User/GetDeliveryTypes',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  NewAddress(address: Address)
+  {
+    return this.api.post(this.apilink + "User/AddSecondaryAddress", address, {observe: 'response', responseType: 'text'})
+  }
+
   GetVAT()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/GetVAT")
+    return this.api.get(this.apilink + "User/GetVAT",{headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+   })})
   }
-
-
-  UploadImage(file: FormData)
-  {
-    return this.api.post(this.apilink + "Media/UploadFile", file)
-  }
-
-  // GetImage(imageName: string): Observable<Blob>
-  // {
-  //   return this.api.post<Blob>(this.apilink + "Gallery/GetImage?imageName", imageName,{ responseType: 'blob' as 'json'})
-  // }
+ 
   //View Ambassadors
   ViewAmbassadors(credentials: credentialsVM):Observable<any[]>{
     return this.api.post<any[]>(this.apilink+ 'Ambassador/ViewCurrentAgents', credentials,{
@@ -305,11 +366,11 @@ export class ApiService {
   //Iteration 6 Amanda
   ViewCatalog()
   {
-    return this.api.get(this.apilink + "AmbassadorOrder/Catalog",{
+    return this.api.get(this.apilink + "User/ViewCatalog",
+    {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
+    })})
   }
 
   AddToCart(id: string,newItem: CartItem[])
@@ -350,11 +411,37 @@ export class ApiService {
 
   GetAddress(id: string)
   {
-    return this.api.get(this.apilink +`AmbassadorOrder/GetAddress?userID=${id}`,{
+    return this.api.get(this.apilink +`User/GetSecondaryAddress?id=${id}`, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
     })
+  }
+
+  GetCountries()
+  {
+    return this.api.get(this.apilink + `User/GetCountries`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
+
+
+  GetSecondaryAddressById(id: number)
+  {
+    return this.api.get(this.apilink + `User/GetSecondaryAddressById?id=${id}`)
+  }
+
+  EditSecondaryAddress(address: Address)
+  {
+    return this.api.put(this.apilink + "User/EditSecondaryAddress", address, {observe: 'response', responseType: 'text'})
+  }
+
+  GetProvinces()
+  {
+    return this.api.get(this.apilink +"User/GetProvinces")
   }
 
   Checkout(order: Order)
