@@ -8,13 +8,15 @@ import { AmbassadorOrderHistoryPageRoutingModule } from './ambassador-order-hist
 
 import { AmbassadorOrderHistoryPage } from './ambassador-order-history.page';
 import { ViewOrderhistoryDetailsComponent } from '../view-orderhistory-details/view-orderhistory-details.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AmbassadorOrderHistoryPageRoutingModule
+    AmbassadorOrderHistoryPageRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [AmbassadorOrderHistoryPage, ViewOrderhistoryDetailsComponent],
   entryComponents:[ViewOrderhistoryDetailsComponent]

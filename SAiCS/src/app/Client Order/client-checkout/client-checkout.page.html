@@ -8,6 +8,8 @@
       <ion-buttons slot="secondary">
         <ion-button shape="round" routerLink="/clients-cart">
           <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+          <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+          </div>
         </ion-button>
       </ion-buttons>
       
@@ -56,7 +58,7 @@
                             <p>{{a.city}}</p>
                             <p>{{a.province}}</p>
                             <p>{{a.postalCode}}</p>
-                            <p>0{{a.phone}}</p>
+                            <p>0{{a.phone | phoneNumber}}</p>
                           </ion-label>
                           <ion-label slot="end">
                             <ion-button (click)="DeleteAddress(a.id)" fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Delete</ion-button>

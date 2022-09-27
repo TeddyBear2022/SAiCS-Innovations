@@ -36,6 +36,7 @@
     "angularx-qrcode": "^13.0.6",
     "bootstrap": "^5.2.0",
     "chart.js": "^3.9.1",
+    "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "html2canvas": "^1.4.1",
@@ -46,7 +47,6 @@
     "ngx-pagination": "^6.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
-    "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@ import {
 } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 import { ClientOrderDetailsComponent } from '../client-order-details/client-order-details.component';
 
@@ -21,6 +22,7 @@ export class ClientOrderhistoryPage implements OnInit {
   p
   p1
   p2
+  username;
 
   @ViewChild('All' ) fileInput: ElementRef;
   @ViewChild('clickOnView') clickOnView: ElementRef;
@@ -30,7 +32,8 @@ export class ClientOrderhistoryPage implements OnInit {
     private tmpStorage: TemporaryStorage,
     private api: ApiService,
     public popoverController: PopoverController,
-    private menu: MenuController
+    private menu: MenuController,
+    private cartService: CartService
   ) {
     for (let key in this.orders) {
       if (this.orders.hasOwnProperty(key)) {
@@ -44,10 +47,19 @@ export class ClientOrderhistoryPage implements OnInit {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo();
     this.ViewHistory();
+    this.username = localStorage.getItem('UserName');
   }
 
   ionViewDidEnter(){
     document.getElementById("All").style.display = 'flex';
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   openOrder(evt, cityName) {

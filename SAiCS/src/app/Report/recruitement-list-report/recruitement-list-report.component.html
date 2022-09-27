@@ -42,27 +42,30 @@
       <span>Export</span>
     </ion-button>
   </ion-row>
-  <ion-row>
-    <ion-card>
-      <ion-card-header>
-        <h4>Ambassador Recruitment Report</h4>
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #pieCanvas width="800" height="400">
-      </canvas>
-      </ion-card-content>
-    </ion-card>
-
+  <ion-row >
+      <ion-card >
+        <ion-card-header>
+          <h4>Ambassador Recruitment Report</h4>
+        </ion-card-header>
+        <ion-card-content>
+          <canvas id="myChart" #barCanvas width="800" height="600">
+          </canvas>
+        </ion-card-content>
+      </ion-card>
   </ion-row>
   <ion-row>
     <br />
     <ag-grid-angular
-      style="height: 800px; width: 81%"
+      style="height: 400px; width: 81%"
       class="ag-theme-alpine"
       #specialGrid
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      (rowDataUpdated)="rowDataUpdated($event)"
+      [getRowStyle]="getRowStyle"
     >
     </ag-grid-angular>
   </ion-row>

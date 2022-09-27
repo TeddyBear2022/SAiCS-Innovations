@@ -8,6 +8,7 @@ import { ClientCheckoutPageRoutingModule } from './client-checkout-routing.modul
 
 import { ClientCheckoutPage } from './client-checkout.page';
 import { AddAddressPage } from '../add-address/add-address.page';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AddAddressPage } from '../add-address/add-address.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    ClientCheckoutPageRoutingModule
+    ClientCheckoutPageRoutingModule,
+    PipesModule
   ],
   declarations: [ClientCheckoutPage]
 })

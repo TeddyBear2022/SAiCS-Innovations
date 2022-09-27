@@ -5,14 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PhoneNumberPipe implements PipeTransform {
 
-  transform(rawNum:any) {
+  transform(phone:number) {
 
-   // const countryCodeStr = rawNum.slice(0,2);
-    const areaCodeStr = rawNum.slice(0,2);
-    const midSectionStr = rawNum.slice(2,5);
-    const lastSectionStr = rawNum.slice(5,8);
+    let rawNum:string = phone.toString()
 
-    return `0${areaCodeStr} ${midSectionStr} ${lastSectionStr}`;
+    rawNum = "0"+ rawNum;
+
+    const countryCodeStr = rawNum.slice(0,3);
+    const areaCodeStr = rawNum.slice(2,5);
+    const midSectionStr = rawNum.slice(5,9);
+
+    return `${countryCodeStr} ${areaCodeStr} ${midSectionStr}`;
   }
 
 }

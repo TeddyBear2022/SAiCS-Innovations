@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ViewAmbassadorPageRoutingModule } from './view-ambassador-routing.module';
 
 import { ViewAmbassadorPage } from './view-ambassador.page';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewAmbassadorPageRoutingModule
+    ViewAmbassadorPageRoutingModule,
+    PipesModule
   ],
   declarations: [ViewAmbassadorPage]
 })

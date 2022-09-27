@@ -7,6 +7,7 @@ import { PopoverController } from '@ionic/angular';
 import { Address } from 'src/app/Models/Address';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class AddAddressPage implements OnInit {
   countries: any;
   provinces: any;
   session: any;
+  username;
 
   constructor(
     public popoverController: PopoverController,
@@ -32,6 +34,7 @@ export class AddAddressPage implements OnInit {
     private tmpStorage: TemporaryStorage,
     public alertController: AlertController,
     private menu: MenuController,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -47,6 +50,15 @@ export class AddAddressPage implements OnInit {
       country: ['', [Validators.required]],
       province: ['', [Validators.required]],
     });
+    this.username = localStorage.getItem('UserName');
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   toggleValue() {

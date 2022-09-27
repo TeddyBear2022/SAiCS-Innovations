@@ -10,6 +10,8 @@ import {
 import { uOrderStatusVM } from 'src/app/Models/ViewModels/uOrderStatusVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 import { UpdateOrderStatusComponent } from '../update-order-status/update-order-status.component';
 
 @Component({
@@ -23,6 +25,9 @@ export class ViewOrdersPage implements OnInit {
   orderStats: any = []
   isModalOpen = false;
   item = {};
+  session: any;
+  username;
+  commission:any;
   
   ionCheck={isChecked:false}
 
@@ -33,17 +38,29 @@ export class ViewOrdersPage implements OnInit {
     private api: ApiService,
     private router: Router,
     private fb: FormBuilder,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private tmpStorage: TemporaryStorage,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'ambassador-menu');
     this.ViewSalesOrder();
-
+    this.username = localStorage.getItem('UserName');
     this.update = this.fb.group({
       status: new FormControl('', Validators.required),
       tNumber: new FormControl('', Validators.required),
     });
+    this.AmbassadorDiscount()
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   ViewSalesOrder() {
@@ -53,6 +70,20 @@ export class ViewOrdersPage implements OnInit {
     });
 
    
+  }
+
+  async AmbassadorDiscount() {
+    var data = await this.api.AmbassadorDiscount(this.session[0].id).toPromise();
+    var dataObj = JSON.parse(JSON.stringify(data[0].commission));
+    this.commission = parseFloat(dataObj) 
+    console.log(this.commission);
+    
+  }
+
+  GetCommission(id:number)
+  {
+    let item = this.orders.find(x => x.id === id);
+    return item.amount * this.commission
   }
 
   ViewOrderDetail(id: number) {

@@ -14,14 +14,45 @@ ion-toolbar
 
   table
   {
-    width: 50%;
+    width: 100%;
     margin-left: 100px;
+    text-align: center;
   }
 
   th{
     background-color: #008080;
     color: white;
     height: 40px;
+
+    .pagination {
+      font-size: 14px;
+      text-align: center;
+      margin: 20px auto;
+    }
+  
+    ::ng-deep .pagination-next a,
+    ::ng-deep .pagination-previous a {
+      outline: none;
+    }
+  
+    ::ng-deep .ngx-pagination .current {
+      border-radius: 4px;
+    }
+  
+    ::ng-deep .ngx-pagination {
+      padding: 0 !important;
+    }
+  
+    ::ng-deep .ngx-pagination a:hover,
+    ::ng-deep .ngx-pagination button:hover {
+      border-radius: 4px;
+    }
+  
+    ::ng-deep .ngx-pagination a,
+    ::ng-deep .ngx-pagination button {
+      border-radius: 4px;
+      outline: none;
+    }
   }
 
   tbody{
@@ -79,6 +110,28 @@ ion-toolbar
   float: left;
 
   table{margin-top: 3%;}
+  ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+}
 }
 
 ::ng-deep .customModal{--width: 30% !important}
+
+.cart-length {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  z-index: 10;
+  background-color: #9c27b0;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

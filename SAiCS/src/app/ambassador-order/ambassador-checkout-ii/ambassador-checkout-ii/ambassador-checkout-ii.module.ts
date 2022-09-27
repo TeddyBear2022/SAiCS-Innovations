@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AmbassadorCheckoutIiPageRoutingModule } from './ambassador-checkout-ii-routing.module';
 
 import { AmbassadorCheckoutIiPage } from './ambassador-checkout-ii.page';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { AmbassadorCheckoutIiPage } from './ambassador-checkout-ii.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    AmbassadorCheckoutIiPageRoutingModule
+    AmbassadorCheckoutIiPageRoutingModule,
+    PipesModule
   ],
   declarations: [AmbassadorCheckoutIiPage]
 })

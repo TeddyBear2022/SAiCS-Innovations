@@ -83,7 +83,10 @@ export class UpdateOrderStatusComponent implements OnInit {
       
       
       this.api.UpdateSalesOrderStatus(order).subscribe((res) =>{
-        console.log(res.body);
+        if(res.body == "true")
+        {
+        //  this.dismissModal()
+        }
         
       })
 

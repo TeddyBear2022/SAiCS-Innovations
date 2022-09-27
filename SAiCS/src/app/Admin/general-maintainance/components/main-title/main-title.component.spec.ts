@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LeaderboardReportComponent } from './leaderboard-report.component';
+import { MainTitleComponent } from './main-title.component';
 
-describe('LeaderboardReportComponent', () => {
-  let component: LeaderboardReportComponent;
-  let fixture: ComponentFixture<LeaderboardReportComponent>;
+describe('MainTitleComponent', () => {
+  let component: MainTitleComponent;
+  let fixture: ComponentFixture<MainTitleComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardReportComponent ],
+      declarations: [ MainTitleComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LeaderboardReportComponent);
+    fixture = TestBed.createComponent(MainTitleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

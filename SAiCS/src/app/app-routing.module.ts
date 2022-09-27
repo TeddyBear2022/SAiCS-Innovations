@@ -319,6 +319,11 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     canLoad: [ClientAuthGuard]
   },
   {
+    path: 'edit-address',
+    loadChildren: () => import('./ambassador-order/ambassador-checkout/edit-address/edit-address.module').then( m => m.EditAddressPageModule),
+    canLoad: [AmbassadorAuthGuard]
+  },
+  {
     path: 'client-orderhistory',
     loadChildren: () => import('./Client Order/client-orderhistory/client-orderhistory.module').then( m => m.ClientOrderhistoryPageModule),
     canLoad: [ClientAuthGuard]
@@ -365,7 +370,13 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
   {
     path: 'ambassador-special-item',
     loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special-item/ambassador-special-item.module').then( m => m.AmbassadorSpecialItemPageModule)
+  },  {
+    path: 'general-maintainance',
+    loadChildren: () => import('./Admin/general-maintainance/general-maintainance.module').then( m => m.GeneralMaintainancePageModule)
   },
+
+
+
 
 
 

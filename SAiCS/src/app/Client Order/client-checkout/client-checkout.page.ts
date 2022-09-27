@@ -82,6 +82,14 @@ export class ClientCheckoutPage implements OnInit {
     }
   }
 
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
+
   onSelectChange(event) {
     let value = event.target.value;
     this.SelectedDel = value;
@@ -215,11 +223,7 @@ export class ClientCheckoutPage implements OnInit {
     const alert = await this.alert.create({
       message: message,
       buttons: [{
-      text: 'OK',
-    handler: () =>{
-      history.back()
-    }
-    }]
+      text: 'OK'}]
     });
   
     await alert.present();

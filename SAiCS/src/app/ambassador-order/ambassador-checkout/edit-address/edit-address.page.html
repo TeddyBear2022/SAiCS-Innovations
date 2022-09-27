@@ -8,9 +8,11 @@
     <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
-    <ion-label slot="secondary" style="color: white;">John van de Merwe</ion-label>
+    <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -37,7 +39,7 @@
             <ion-label class="rightFormLabel">Country</ion-label>
               <select class="rightFormControl" id="dropdown" placeholder="Country" style="width: 85%; height: 35px;" formControlName="country">
                 <option value="" disabled selected>Select Country</option>
-                <option  value=1>South Africa</option>
+                  <option *ngFor="let p of countries" value="{{p.countryId}}" >{{p.countryName}}</option>
               </select><br /><br />
               <span *ngIf="localForm.submitted && newAddress.controls['country'].invalid">Required</span>
           </ion-item-group>
@@ -128,7 +130,7 @@
             <ion-label slot="end">{{OdrSmry.totalCost | currency: 'ZAR':'symbol-narrow'}}</ion-label>
           </ion-item>
           <ion-item lines="none">
-            <ion-button [disabled]="true" style="background-color: #08c10f; width: 60%;" id="button">Place Order</ion-button>
+            <ion-button [disabled]="true" style="--background: #08c10f; width: 65%; text-transform: none;" id="button">Place Order</ion-button>
           </ion-item>
         </ion-list>
       

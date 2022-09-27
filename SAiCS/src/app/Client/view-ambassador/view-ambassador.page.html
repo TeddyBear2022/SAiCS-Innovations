@@ -8,11 +8,13 @@
     <ion-buttons slot="secondary">
       <ion-button shape="round" routerLink="/clients-cart">
         <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
     
 
-    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -43,7 +45,7 @@
         <p>{{myAmbassador.address.city}}</p>
         <p>{{myAmbassador.address.address}}</p>
         <p>{{myAmbassador.address.code}}</p>
-        <p>{{myAmbassador.phone}}</p>
+        <p>{{myAmbassador.phone | phoneNumber}}</p>
          </ion-card-content>
         </ion-col>
       </ion-row>

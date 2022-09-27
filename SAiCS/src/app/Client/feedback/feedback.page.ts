@@ -15,6 +15,7 @@ import {
 import { Feedback } from 'src/app/Models/Feedback';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
@@ -31,6 +32,7 @@ export class FeedbackPage implements OnInit {
   ambassador: number;
   MerchCat: any = [];
   session: any;
+  username;
 
   constructor(
     private api: ApiService,
@@ -40,7 +42,8 @@ export class FeedbackPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController,
     private tmpStorage: TemporaryStorage,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {
     this.feedbackForm = formBuilder.group({
       feedbackType: new FormControl('', Validators.required),
@@ -60,9 +63,18 @@ export class FeedbackPage implements OnInit {
 
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo();
+    this.username = localStorage.getItem('UserName');
     this.menu.enable(true, 'client-menu');
     this.MyAmbassador();
     this.RetrieveInfo();
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   RetrieveInfo() {

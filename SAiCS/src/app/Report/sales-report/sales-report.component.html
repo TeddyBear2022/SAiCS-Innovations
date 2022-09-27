@@ -29,7 +29,7 @@
     </div>
   </ion-row>
   <ion-row>
-    <ion-button id="export2" (click)="download()">
+    <ion-button id="export2" (click)="DownloadOption()">
       <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
       <span>Export</span>
     </ion-button>
@@ -43,7 +43,10 @@
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef"
-      
+      [pagination]="true"
+      [paginationPageSize]="10"
+      (rowDataUpdated)="rowDataUpdated($event)"
+      [getRowStyle]="getRowStyle"
     >
     </ag-grid-angular>
   </ion-row>

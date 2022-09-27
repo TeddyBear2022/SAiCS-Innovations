@@ -24,7 +24,7 @@
         <p>{{subtotal | currency: 'ZAR':'symbol-narrow'}}</p> 
         <p *ngIf="data.delivery != null">{{200 | currency: 'ZAR':'symbol-narrow'}}</p> 
         <p>-{{subtotal * discount | currency: 'ZAR':'symbol-narrow'}}</p> 
-        <p>{{subtotal * vat | currency: 'ZAR':'symbol-narrow'}}</p> 
+        <p>{{CalculatedVAT| currency: 'ZAR':'symbol-narrow'}}</p> 
       </ion-label>
     </ion-item>
     <hr style="border: none; border-top: 2px solid black; margin: auto; text-align: center; height: 5px; width: 90%;">
@@ -42,7 +42,7 @@
     </ion-item>
     <ion-item lines="none">
       <ion-label>
-        <p *ngIf="data.delivery != null"> Delivery</p>
+        <p *ngIf="data.delivery != null">{{data.deliveryType}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

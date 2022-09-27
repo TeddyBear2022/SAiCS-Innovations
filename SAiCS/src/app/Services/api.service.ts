@@ -40,6 +40,7 @@ import { MerchType } from '../Models/MerchType';
 import { DeliveryTypeVM } from '../Models/ViewModels/DeliveryTypeVM';
 import { OrderStatus } from '../Models/OrderStatus';
 import { Checkout } from '../Models/ViewModels/Checkout';
+import { FeedbackType } from '../Models/FeedbackType';
 
 @Injectable({
   providedIn: 'root'
@@ -156,6 +157,8 @@ export class ApiService {
       Authorization: 'Bearer ' + localStorage.getItem("token")
   })})
   }
+
+ 
 
   DeleteFeedback(id: number): Observable<any>
   {
@@ -358,6 +361,15 @@ export class ApiService {
   })});
   }
 
+  UpdateFeedbackType(data: FeedbackType): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateFeedbackType',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
   EditOrderStatus(data: OrderStatus): Observable<any>
   {
     return this.api.post(this.apilink + 'Product/EditOrderStatus',data,{
@@ -427,6 +439,14 @@ export class ApiService {
   GetAllMerch(): Observable<any>
   {
     return this.api.get(this.apilink + 'Product/GetMerch',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  GetFeebackTypes(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'User/GetFeebackTypes',{
     headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
   })})

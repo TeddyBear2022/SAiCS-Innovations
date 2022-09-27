@@ -5,9 +5,11 @@
         
       </ion-menu-button>
     </ion-buttons>    
-    <ion-buttons slot="secondary">
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
     <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
@@ -54,7 +56,7 @@
                           <p>{{a.city}}</p>
                           <p>{{a.province}}</p>
                           <p>{{a.postalCode}}</p>
-                          <p>0{{a.phone}}</p>
+                          <p>0{{a.phone | phoneNumber}}</p>
                         </ion-label>
                         <ion-label slot="end">
                           <ion-button (click)="DeleteAddress(a.id)" fill="clear" style="color: #062b80; text-transform: none; font-size: 14px;">Delete</ion-button>

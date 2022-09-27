@@ -12,11 +12,13 @@
     </ion-buttons>
     
 
-    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button shape="round">
         <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -126,7 +128,7 @@
               <ion-label slot="end">{{OdrSmry.totalCost | currency: 'ZAR':'symbol-narrow'}}</ion-label>
             </ion-item>
             <ion-item lines="none">
-              <ion-button [disabled]="true" style="background-color: #08c10f; width: 60%;" id="button">Place Order</ion-button>
+              <ion-button [disabled]="true" style="--background: #08c10f; width: 65%; text-transform: none;" id="button">Place Order</ion-button>-button>
             </ion-item>
           </ion-list>
         

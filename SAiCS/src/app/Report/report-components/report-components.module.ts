@@ -6,11 +6,12 @@ import { RecruitementListReportComponent } from '../recruitement-list-report/rec
 import { BestSellingReportComponent } from '../best-selling-report/best-selling-report.component';
 import { SalesReportComponent } from '../sales-report/sales-report.component';
 import { TargetReportComponent } from '../target-report/target-report.component';
-import { LeaderboardReportComponent } from '../leaderboard-report/leaderboard-report.component';
 import { IonicModule } from '@ionic/angular';
 import { AgGridModule } from 'ag-grid-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Chart } from 'chart.js';
+import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
+import { PhoneNumberPipe } from 'src/app/Pipes/phone-number.pipe';
 
 
 
@@ -23,13 +24,12 @@ import { Chart } from 'chart.js';
   BestSellingReportComponent,
   SalesReportComponent,
   TargetReportComponent,
-  LeaderboardReportComponent
 ],
   imports: [
     CommonModule,
     IonicModule.forRoot(),
     AgGridModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports:[
   ProductListReportComponent, 
@@ -37,7 +37,7 @@ import { Chart } from 'chart.js';
   RecruitementListReportComponent,
   BestSellingReportComponent,
   SalesReportComponent,
-  TargetReportComponent,
-  LeaderboardReportComponent]
+  TargetReportComponent,],
+  providers:[PhoneNumberPipe]
 })
 export class ReportComponentsModule { }

@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/Services/api.service';
 import { ViewOrderhistoryDetailsComponent } from '../view-orderhistory-details/view-orderhistory-details.component';
 import { MenuController } from '@ionic/angular';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-ambassador-order-history',
@@ -12,66 +13,91 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./ambassador-order-history.page.scss'],
 })
 export class AmbassadorOrderHistoryPage implements OnInit {
-  @ViewChild('keywordsInput' ) fileInput: ElementRef<HTMLInputElement>;
-  orders: any = []
-  session: any
-  constructor(public popoverController: PopoverController, private tmpStorage:TemporaryStorage, private modalCtrl: ModalController, private api: ApiService, private menu:MenuController) { }
+  orders: any = [];
+  orderTray: any = [];
+  session: any;
+  p
+  p1
+  p2
+  username;
 
-  ngOnInit() {
-    this.session = this.tmpStorage.getSessioninfo()
-    //this.fileInput.nativeElement.click()
-    this.ViewHistory()
+  @ViewChild('All' ) fileInput: ElementRef;
+  @ViewChild('clickOnView') clickOnView: ElementRef;
 
+  constructor(
+    private modalCtrl: ModalController,
+    private tmpStorage: TemporaryStorage,
+    private api: ApiService,
+    public popoverController: PopoverController,
+    private menu: MenuController,
+    private cartService: CartService
+  ) {
+    for (let key in this.orders) {
+      if (this.orders.hasOwnProperty(key)) {
+        this.orderTray.push(this.orders[key]);
+      }
+    }
+  
   }
 
-  ionViewDidEnter(){
-    document.getElementById("All").style.display = 'flex';
+  ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo();
+    this.menu.enable(true, 'ambassador-menu');
+    this.ViewHistory();
+    this.username = localStorage.getItem('UserName');
+  }
+
+  ionViewDidEnter() {
+    document.getElementById('All').style.display = 'flex';
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   openOrder(evt, cityName) {
     var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
+    tabcontent = document.getElementsByClassName('tabcontent');
     for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+      tabcontent[i].style.display = 'none';
     }
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementsByClassName('tablinks');
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+      tablinks[i].className = tablinks[i].className.replace(' active', '');
     }
-    document.getElementById(cityName).style.display = "flex";
-    evt.currentTarget.className += " active";
+    document.getElementById(cityName).style.display = 'flex';
+    evt.currentTarget.className += ' active';
   }
 
-  ViewHistory()
-  {
-    this.api.OrderHistory(this.session[0].id).subscribe(res => {
-      this.orders = res
+  ViewHistory() {
+    this.api.OrderHistory(this.session[0].id).subscribe((res) => {
+      this.orders = res;
 
       console.log(this.orders);
-      
-    })
+    });
     this.menu.enable(true, 'ambassador-menu');
   }
-  
-async ViewOrderDetails(id: number)
-{
-  
- const modal = await this.modalCtrl.create({
-    component: ViewOrderhistoryDetailsComponent,
-    componentProps: {
-     order: id
-    },
-    cssClass: 'customModal'
-  });
-  await modal.present();
-}
+
+  async ViewOrderDetails(id: number) {
+    const modal = await this.modalCtrl.create({
+      component: ViewOrderhistoryDetailsComponent,
+      componentProps: {
+        order: id,
+      },
+      cssClass: 'customModal',
+    });
+    await modal.present();
+  }
 
   //Profile popover
-  async presentPopover(event)
-  {
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event
+      event,
     });
     return await popover.present();
   }

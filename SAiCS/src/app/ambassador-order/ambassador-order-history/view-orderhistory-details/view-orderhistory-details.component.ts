@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController} from '@ionic/angular';
 import { ApiService } from 'src/app/Services/api.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
   selector: 'app-view-orderhistory-details',
@@ -14,10 +15,12 @@ export class ViewOrderhistoryDetailsComponent implements OnInit {
   vat = 0;
   orderItems: any = [];
   data: any
+  session: any;
 
-  constructor( private modalCtrl: ModalController, private api: ApiService) { }
+  constructor( private modalCtrl: ModalController, private tmpStorage: TemporaryStorage, private api: ApiService) { }
 
   ngOnInit() {
+    this.session = this.tmpStorage.getSessioninfo();
     this.AmbassadorDiscount()
     this.OrderDetails(this.order)
     //console.log(this.order);
@@ -26,8 +29,7 @@ export class ViewOrderhistoryDetailsComponent implements OnInit {
   }
 
   async AmbassadorDiscount() {
-    let two = 2;
-    var data = await this.api.AmbassadorDiscount(two.toString()).toPromise();
+    var data = await this.api.AmbassadorDiscount(this.session[0].id).toPromise();
     var dataObj = JSON.parse(JSON.stringify(data[0].discount));
     this.discount = dataObj;
     console.log(`discount: ${this.discount}`);
@@ -62,9 +64,13 @@ export class ViewOrderhistoryDetailsComponent implements OnInit {
   {
     let discountValue = this.discount * this.subtotal
       if(this.data.delivery)
-      return this.subtotal - ( discountValue + 200)
+      return (this.subtotal + this.data.deliveryAmt) - discountValue 
       else
       return this.subtotal - discountValue
+  }
+
+  get CalculatedVAT() {
+    return this.data.vat * this.subtotal;
   }
 
   dismissModal() {
