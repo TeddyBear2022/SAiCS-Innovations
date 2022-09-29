@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ViewAmbassadorsPage
+  },
+  {
+    path: 'import-ambassadors',
+    loadChildren: () => import('./import-ambassadors/import-ambassadors.module').then( m => m.ImportAmbassadorsPageModule)
   }
 ];
 

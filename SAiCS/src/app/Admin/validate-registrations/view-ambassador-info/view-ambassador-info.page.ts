@@ -14,6 +14,8 @@ export class ViewAmbassadorInfoPage implements OnInit {
   //Variables 
   registrationInfo
   registrationFetched: boolean = false
+  username
+
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 
     private route:Router, 
@@ -26,6 +28,7 @@ export class ViewAmbassadorInfoPage implements OnInit {
       this.registrationInfo =data
       console.log(data)
     })
+    this.username = localStorage.getItem('UserName')
   }
 
   ionViewDidEnter(){

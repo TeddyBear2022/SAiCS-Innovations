@@ -574,6 +574,13 @@ export class ApiService {
       })
     })
   }
+  SearchCurrentClients(searchInput:string, userid:string){
+    return this.api.get(this.apilink+`Ambassador/SearchCurrentClients?userid=${userid}&searchInput=${searchInput}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
 
   AmbassadorAccessCourse():Observable<any[]>{
     return this.api.get<any[]>(this.apilink+ `Training/GetAmbassadorsCourses`, {
@@ -785,6 +792,14 @@ export class ApiService {
 
   SearchAmbassadorReg(searchInput:string){
     return this.api.get(this.apilink+`Admin/SearchAmbassadorReg?nameorsurname=${searchInput}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  SearchAmbassadorTarget(searchInput:string){
+    return this.api.get(this.apilink+`Admin/SearchAmbassadorTarget?nameorsurname=${searchInput}`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

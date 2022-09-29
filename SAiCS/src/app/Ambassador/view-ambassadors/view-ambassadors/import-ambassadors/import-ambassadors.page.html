@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    <ion-buttons  slot="secondary">
+      <ion-button  shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button  (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <br>
+  <br>
+  <div align="center"><h1>Import Ambassadors</h1>
+  <br><br>
+<ion-row>
+  <ion-item lines="none" >
+    <ion-button (click)="Back()" style="width: 100px;height: 40px;font-size: 13px;">Back</ion-button>
+    <ion-input type="file" requiredFileType=".csv" (change)="Import($event)" id="importButton" color="primary" style="width: 300px;height: 40px;font-size: 13px;">Import</ion-input>
+   <ion-button (click)="Save()" style="width: 100px;height: 40px;font-size: 13px;">Save</ion-button>
+</ion-item>
+
+</ion-row>
+<br><br>
+  <table>
+    <thead align="center">
+    <th>Title</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Ranking</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>Postal code</th>
+    <th>Country</th>
+    <th>Id number</th>
+    
+    </thead>
+    <tbody >
+    <tr>
+    <td>Mr</td>
+    <td>Lethabo</td>
+    <td>Mkwenu</td>
+    <td>Junior Agent</td>
+    <td>lethabo@gmail.com</td>
+    <td>0767337784</td> 
+    <td>23245 Model park</td>
+    <td>Witbank</td>
+    <td>1020</td>
+    <td>South Africa</td> 
+    <td>0111295012087</td>    
+    </tbody>
+    </table>
+  </div>
+  </ion-grid>
+</ion-content>

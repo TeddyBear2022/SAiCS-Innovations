@@ -13,7 +13,7 @@
     <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button (click)="presentPopover($event)" shape="round">
         <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>    

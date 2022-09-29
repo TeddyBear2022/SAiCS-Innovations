@@ -7,7 +7,7 @@
     <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button  (click)="presentPopover($event)" shape="round">
         <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -65,7 +65,7 @@
           <td ><div *ngIf="x.enrolled ==null" id="NoCourses">No Course assigned yet</div><div *ngIf="x.enrolled != null" id="Assigned">Course(s) assigned</div></td>
           <td><ion-list>
             <ion-item lines="none">
-              <ion-select placeholder="Select all the courses that apply" [multiple]="true" (ionChange)=" Format($event)"  [(ngModel)]="assignedCourses">
+              <ion-select placeholder="Select all the courses that apply" [multiple]="true" (ionChange)=" Format($event)" value="{{x.assignedCourses}}">
                 <ion-select-option  *ngFor="let x of courses" value="{{x.courseId}}">{{x.courseName}}</ion-select-option>
               </ion-select>
             </ion-item>
