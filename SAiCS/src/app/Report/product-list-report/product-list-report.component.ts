@@ -74,11 +74,7 @@ export class ProductListReportComponent implements OnInit {
     });
   }
 
-  LoggedInName() {
-    this.api.LoggedInName().subscribe((res) => {
-      console.log(res);
-    });
-  }
+
   GetMerchTypes() {
     this.api.GetMerchTypes().subscribe((data) => {
       this.merchTypes = data;

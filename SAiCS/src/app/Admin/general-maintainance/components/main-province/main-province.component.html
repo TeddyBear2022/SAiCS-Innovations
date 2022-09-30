@@ -46,7 +46,7 @@
                             </ion-button>
                         </td>
                     </tr>
-                  <tr *ngFor="let data of lookUpArr | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
+                  <tr *ngFor="let data of lookUpArr | filter:search:filterKeys | paginate: { itemsPerPage: 5, currentPage: p, id: 'TB'}; let i = index">
                     
                     <td>{{data.id}}</td>
 

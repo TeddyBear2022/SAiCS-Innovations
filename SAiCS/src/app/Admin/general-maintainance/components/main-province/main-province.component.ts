@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { Title } from 'src/app/Models/Title';
+import { Province } from 'src/app/Models/Province';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
-  selector: 'app-main-title',
-  templateUrl: './main-title.component.html',
-  styleUrls: ['./main-title.component.scss'],
+  selector: 'app-main-province',
+  templateUrl: './main-province.component.html',
+  styleUrls: ['./main-province.component.scss'],
 })
-export class MainTitleComponent implements OnInit {
+export class MainProvinceComponent implements OnInit {
   lookUpForm: FormGroup;
   lookUpArr = [];
   editCache: { [key: string]: any } = {};
@@ -31,15 +31,15 @@ ngOnInit() {
 
 //Loadsection
 LoadInfo() {
-  this.api.GetTitles().subscribe((res) => {
+  this.api.GetProvinces().subscribe((res) => {
     let data: any = res
     console.log(data);
     
     for(let d of data)
     {
        this.lookUpArr.push({
-        id: d.titleId,
-        name: d.titleName
+        id: d.provinceId,
+        name: d.provinceName
        })
     }
     //console.log(this.lookUpArr);
@@ -80,7 +80,7 @@ SendData()
   {
     let value = `'${this.lookUpForm.get('formName').value}'`
     console.log(value)
-     this.api.CreateLookUp("Title", value).subscribe((res) => {
+     this.api.CreateLookUp("Province", value).subscribe((res) => {
       if(res.body == 1 || res.body == 0)
       {
         console.log(res.body);
@@ -123,10 +123,10 @@ this.isSaveEditClicked = true;
 let item = this.lookUpArr.find(item => item.id === id);
 if(this.editCache[id].data.name)
 {
-  let update = {} as Title;
-  update.TitleId = item.id
-  update.TitleName = this.editCache[id].data.name
- this.api.UpdateTitle(update).subscribe(res =>{
+  let update = {} as Province;
+  update.ProvinceId = item.id
+  update.ProvinceName = this.editCache[id].data.name
+ this.api.UpdateProvince(update).subscribe(res =>{
   if(res.body == "Success")
   {
     this.isEditClicked = false;
@@ -154,7 +154,7 @@ this.isEditClicked = false;
 //Remove Section
 
 remove(index: number) {
-  this.api.DeleteLookUp("Title",index).subscribe((res) => {
+  this.api.DeleteLookUp("Province",index).subscribe((res) => {
     if(res.body == 1 || res.body == 0)
     {
       this.lookUpArr.length = 0

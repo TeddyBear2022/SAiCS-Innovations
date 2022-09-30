@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title } from 'src/app/Models/Title';
 import { Observable } from 'rxjs';
 import { AdminVM } from '../Models/ViewModels/AdminVM';
 import { AmbassadorVM } from '../Models/ViewModels/AmbassadorVM';
@@ -41,6 +41,9 @@ import { DeliveryTypeVM } from '../Models/ViewModels/DeliveryTypeVM';
 import { OrderStatus } from '../Models/OrderStatus';
 import { Checkout } from '../Models/ViewModels/Checkout';
 import { FeedbackType } from '../Models/FeedbackType';
+import { Province } from '../Models/Province';
+import { AccountType } from '../Models/AccountType';
+import { ReferralLinkType } from '../Models/ReferralLinkType';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +75,11 @@ export class ApiService {
   getTitles():Observable<Title[]>{
     return this.api.get<Title[]>(this.apilink+"Admin/getTitles")
   }
+
+  GetTitles():Observable<Title[]>{
+    return this.api.get<Title[]>(this.apilink+"User/GetTitles")
+  }
+  
   //get Userrolename
   getUserTypes():Observable<UserType[]>{
     return this.api.get<UserType[]>(this.apilink+"Admin/GetUserRoles")
@@ -369,6 +377,53 @@ export class ApiService {
       Authorization: 'Bearer ' + localStorage.getItem("token")
   })});
   }
+
+  UpdateTitle(data: Title): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateTitle',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateCountry(data: Country): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateCountry',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateReferralType(data: ReferralLinkType): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateReferralType',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateAccountType(data: AccountType): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateAccountType',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+
+  UpdateProvince(data: Province): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateProvince',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
 
   EditOrderStatus(data: OrderStatus): Observable<any>
   {
@@ -1053,6 +1108,24 @@ export class ApiService {
     return this.api.get(this.apilink +"User/GetProvinces")
   }
 
+  GetAccountTypes()
+  {
+    return this.api.get(this.apilink +"Admin/GetAccountTypes",{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  GetReferralTypes()
+  {
+    return this.api.get(this.apilink +"Admin/GetReferralTypes",{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   OrderHistory(id: string)
   {
     return this.api.get(this.apilink + `AmbassadorOrder/ViewOrderHistory?userID=${id}`, {
@@ -1093,6 +1166,15 @@ export class ApiService {
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })} )
   }
+
+  OrderEmail(EmailTo: string, Body: any,  Subject: string)
+  {
+    return this.api.get(this.apilink + `User/OrderEmail?EmailTo=${EmailTo}&Body=${Body}&Subject=${Subject}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
 
 
   ProductListRep(type: number, category: number)

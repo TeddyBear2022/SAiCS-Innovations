@@ -7,10 +7,10 @@ import {
   ModalController,
 } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
-import { Order } from 'src/app/Models/Order';
 import { Checkout } from 'src/app/Models/ViewModels/Checkout';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { SendEmailService } from 'src/app/Services/send-email.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 @Component({
   selector: 'app-client-checkout',
@@ -45,7 +45,8 @@ export class ClientCheckoutPage implements OnInit {
     private route: Router,
     private tmpStorage: TemporaryStorage,
     private menu: MenuController,
-    private cartService: CartService
+    private cartService: CartService,
+    private email: SendEmailService
   ) {}
 
   ngOnInit() {
@@ -170,11 +171,11 @@ export class ClientCheckoutPage implements OnInit {
         pushToCart.push(cart);
       }
 
-      pushToCart.forEach((e) => {
-        this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
-          console.log(res.body);
-        });
-      });
+      // pushToCart.forEach((e) => {
+      //   this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
+      //     console.log(res.body);
+      //   });
+      // });
 
       let order = {} as Checkout;
       order.addressId =
@@ -188,23 +189,36 @@ export class ClientCheckoutPage implements OnInit {
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
 
-      this.api.ClientCheckout(order).subscribe((res) => {
-        console.log(res.body);
-        if (res.body == 'Placed') {
-          this.checkout.get('address').setValidators(Validators.required);
-          this.checkout.get('address').updateValueAndValidity();
+      let EmailDelivery =  this.userAddress.find(x => x?.id === this.checkout.value.address);
+      this.ClientEmail(EmailDelivery, 1, order.ShippingCost)
+      // this.api.ClientCheckout(order).subscribe((res) => {
+      //   console.log(res.body);
+      //   if (res.status === 200) {
+      //     this.checkout.get('address').setValidators(Validators.required);
+      //     this.checkout.get('address').updateValueAndValidity();
 
-          this.showAlert();
-        } else {
-          this.ErrorAlert();
-        }
-      });
-      //console.log(order)
+      //     this.ClientEmail(EmailDelivery, res.body, order.ShippingCost)
+          
+      //     this.showAlert();
+
+
+      //   } else {
+      //     this.ErrorAlert();
+      //   }
+      // });
+      console.log(order)
     } else {
       console.log('invalid form');
     }
   }
 
+ClientEmail(Delivery: any, OrderNum: any, ShippingCost: any)
+{
+  let test = this.email.ClientOrderConfirmation(this.username, this.session[0].email, Delivery, OrderNum, ShippingCost)
+  console.log(test);
+  
+}
+  
   ClearStore()
   {
     var orderdetails = {
@@ -217,6 +231,7 @@ export class ClientCheckoutPage implements OnInit {
       delveryId: 0,
     };
     localStorage.setItem('checkout', JSON.stringify(orderdetails));
+    this.cartService.clearCart();
   }
 
   async Notif(message:string) {
