@@ -39,7 +39,7 @@ export class AmbassadorRankingModalPage implements OnInit {
   SelectedAmbassadorRanking(event){
     console.log(event)
     console.log(this.ranking[event.detail.value-1])
-    this.discount.controls['ambDiscount'].setValue(this.ranking[event.detail.value-1].discountPercentage)
+    this.discount.controls['ambDiscount'].setValue(this.ranking[event.detail.value-1].discountPercentage*100)
     this.updateID = event.detail.value-1
     
     this.updateRanking = this.ranking[event.detail.value-1]
@@ -50,7 +50,7 @@ export class AmbassadorRankingModalPage implements OnInit {
   AssignAmbRanking(){
     if(this.discount.valid){
       console.log(this.updateID)
-      this.ranking[this.updateID].discountPercentage = this.discount.get(['ambDiscount']).value
+      this.ranking[this.updateID].discountPercentage = (this.discount.get(['ambDiscount']).value/100)
       console.log("update",this.updateRanking)
       this.api.UpdateAmbassadorDiscounts(this.updateRanking).subscribe(data => {
         console.log(data)

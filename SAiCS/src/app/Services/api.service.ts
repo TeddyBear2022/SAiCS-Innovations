@@ -199,19 +199,35 @@ export class ApiService {
 
   //FAQ Category
   GetFAQategory():Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories',this.httpOptions)
+    return this.api.get<FAQ[]>(this.apilink+'Admin/getFAQCategories',{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   CreateFAQCategory(createFAQ:FAQCategory){
-    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ,this.httpOptions)
+    return this.api.post(this.apilink+'Admin/createFAQCategory', createFAQ,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   DeleteFAQCategory(faqCategoryID:number){
-    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`,this.httpOptions)
+    return this.api.delete(this.apilink+`Admin/deleteFAQCategory?faqCategoryID=${faqCategoryID}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   UpdateFAQ(updateFAQ:FAQ):Observable<boolean>{
-    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ,this.httpOptions)
+    return this.api.patch<boolean>(this.apilink+'Admin/updateFAQ', updateFAQ,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
   //Ambassadors
   MyAmbassador(id: number): Observable<AmbassadorVM[]>
@@ -511,6 +527,10 @@ export class ApiService {
     return this.api.post<loginToken>(this.apilink+ `User/ForgotPassword`, forgotPassword)
   }
 
+  // ForgotPasswordAlternative
+  ForgotPasswordAlternative(forgotPassword:LoginVM):Observable<loginToken>{
+    return this.api.post<loginToken>(this.apilink+ `User/ForgotPasswordAlternative`, forgotPassword)
+  }
   //Verify OTP 
   VerifyOTP(otp:string, token:string){
   return this.api.get(this.apilink+ `User/VerifyOTP?otp=${otp}`, 
@@ -553,6 +573,13 @@ export class ApiService {
 
   ViewAllAmbassadors(){
     return this.api.get(this.apilink + `Admin/ViewAmbassadors`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  ViewAllAmbassadorsTest(){
+    return this.api.get(this.apilink + `Admin/ViewAmbassadorstest`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })

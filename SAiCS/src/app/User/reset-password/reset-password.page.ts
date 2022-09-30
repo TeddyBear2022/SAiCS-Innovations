@@ -93,6 +93,54 @@ export class ResetPasswordPage implements OnInit {
     this.EmailResetPassword()
   }
 
+  EmailResetPasswordAlt(){
+    
+    if(this.EmailorUsernameForm.valid == true){
+      //Create variable to send to the api
+      var resetPassword:LoginVM = new LoginVM()
+      resetPassword.EmailorUsername = this.EmailorUsernameForm.get(['emailorusername']).value
+
+    //Send a forgot password request
+      this.api.ForgotPasswordAlternative(resetPassword).subscribe(data =>
+      {
+      //Log
+      this.resetPwdToken = data.token.toString()
+      console.log(data)
+      this.OtpSent("A Email with the OTP pin has been sent to the associated account","")
+
+      if(data != null){
+      this.EmailSent = false
+      this.OTPSent = true
+      this.OTPValidated = false
+        }
+      },(response: HttpErrorResponse) => {
+        
+        if (response.status === 404) {
+          this.alertNotif("User doesnt exist!","Oops!")
+          console.log("User doesnt exist!")
+        }
+        if (response.status === 500){
+          this.alertNotif("Encountered an error","Oops!")
+          console.log("Encountered an error")
+        }
+        if (response.status === 400){
+          this.alertNotif("Something went wrong","")
+          console.log("Internal server error")
+        }
+        
+      })
+      console.log(this.EmailorUsernameForm.value);
+    }
+    else{
+      console.log("Invalid details");
+    }
+    
+  }
+
+  ForgotPasswordAlt(){
+    this.EmailResetPasswordAlt()
+  }
+
   ValidateOTP(){
     if(this.OTPForm.valid == true){
       console.log(this.OTPForm.value)

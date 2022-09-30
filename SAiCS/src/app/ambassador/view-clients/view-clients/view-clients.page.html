@@ -5,7 +5,7 @@
         
       </ion-menu-button>
     </ion-buttons>    
-    <ion-buttons  (click)="presentPopover($event)" slot="secondary">
+    <ion-buttons   slot="secondary">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
       </ion-button>
@@ -13,7 +13,7 @@
     <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
 
     <ion-buttons slot="end">
-      <ion-button shape="round">
+      <ion-button (click)="presentPopover($event)" shape="round">
         <ion-icon size="large" name="person-circle" id="person-circle" style="color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>    

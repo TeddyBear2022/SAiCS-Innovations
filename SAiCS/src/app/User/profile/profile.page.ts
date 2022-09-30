@@ -31,6 +31,8 @@ export class ProfilePage implements OnInit {
   //Data from form to delete or update
   form:FormGroup
   AdminUserForm:FormGroup
+  refferralCode
+  referralForm
   // bankAccount = []
   
   constructor(public popoverController: PopoverController, 
@@ -89,7 +91,15 @@ export class ProfilePage implements OnInit {
       cityForm: new FormControl(this.profileinfo[0].addresses[0].city,Validators.required),
       addressForm: new FormControl(this.profileinfo[0].addresses[0].address1,Validators.required),
       postalForm: new FormControl(this.profileinfo[0].addresses[0].postalCode,Validators.required),
+     // refferralCode: new FormControl(this.profileinfo[0].ambassadors[0].referralCodes[0].referralCode1)
     })
+
+    if(this.profileinfo[0].ambassadors.length != 0){
+      this.referralForm = new FormGroup({
+        refferralCode: new FormControl(this.profileinfo[0].ambassadors[0].referralCodes[0].referralCode1)
+      })
+      //this.refferralCode = this.profileinfo[0].ambassadors[0].referralCodes[0].referralCode1
+    }
     
 
     //Admin user form
@@ -110,6 +120,7 @@ export class ProfilePage implements OnInit {
   
     console.log
     (this.userRoleID)
+   // console.log("Referral Code:", this.profileinfo[0].ambassadors[0].referralCodes[0].referralCode1)
 
   }
 

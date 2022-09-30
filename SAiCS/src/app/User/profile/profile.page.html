@@ -109,6 +109,13 @@
               <ion-input placeholder="Postal" formControlName="postalForm"> </ion-input>
             </ion-item>
             <span *ngIf="ProfileForm.submitted && form.controls.postalForm.invalid">Please enter a postal code</span>
+            <form *ngIf="this.userRoleID == 2" [formGroup]="referralForm">
+            <ion-item lines="none">
+              
+              <ion-input placeholder="refferral code" formControlName="refferralCode" readonly="true"> </ion-input>
+            
+            </ion-item>
+          </form>
             <ion-item lines="none">
               <ion-label style="text-align: right;color: #0000EE;"><a href="/reset-password">Change Password?</a></ion-label>
             </ion-item>
