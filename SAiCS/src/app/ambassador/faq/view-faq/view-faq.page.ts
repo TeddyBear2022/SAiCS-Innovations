@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class ViewFaqPage implements OnInit {
 
   constructor(private menu:MenuController, 
     private api:ApiService, 
-    private route:Router) { }
+    private route:Router, 
+    private popoverController:PopoverController) { }
 
   ngOnInit() {
     //Menu
@@ -35,5 +37,15 @@ export class ViewFaqPage implements OnInit {
     localStorage.setItem('faq', catId)
     this.route.navigate(['/view-faq-details'])
   }
+
+   // Show Profile optionss when icon on right of navbar clicked function
+   async presentPopover(event)
+   {
+     const popover = await this.popoverController.create({
+       component: ProfilePopoverComponent,
+       event
+     });
+     return await popover.present();
+   }
 
 }

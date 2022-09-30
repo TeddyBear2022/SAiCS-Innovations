@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgModel, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import {  Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { UserType } from 'src/app/Models/UserType';
 import { registerationinfoVM } from 'src/app/Models/ViewModels/registerationinfoVM';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { NoRefferralCodePage } from './modals/no-refferral-code/no-refferral-code.page';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,8 @@ export class RegisterPage implements OnInit {
   constructor(private api: ApiService, 
     private route : Router, 
     private registerInfo: TemporaryStorage, 
-    private alert:AlertController) { }
+    private alert:AlertController,
+    private modal:ModalController) { }
 
   ngOnInit() {
 

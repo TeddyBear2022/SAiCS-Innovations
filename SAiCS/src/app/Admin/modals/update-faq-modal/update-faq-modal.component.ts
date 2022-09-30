@@ -74,6 +74,7 @@ export class UpdateFaqModalComponent implements OnInit {
        apiUpdateFAQ.faqanswers = this.FAQ.get('answer').value
        apiUpdateFAQ.faqquestion = this.FAQ.get('question').value
        
+       console.log(apiUpdateFAQ)
        this.api.UpdateFAQ(apiUpdateFAQ).subscribe(data =>{
          if(data == true){
           this.api.GetAllFAQS().subscribe(data=> {

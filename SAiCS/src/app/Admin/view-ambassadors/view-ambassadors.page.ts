@@ -27,6 +27,12 @@ export class ViewAmbassadorsPage implements OnInit {
 
   ngOnInit() {
     this.username = localStorage.getItem('UserName')
+    this.api.ViewAllAmbassadors().subscribe(data =>
+      {
+        this.Ambassadors = data
+        console.log(data);
+        
+      })
   }
 
   ionViewDidEnter(){
@@ -36,6 +42,7 @@ export class ViewAmbassadorsPage implements OnInit {
         console.log(data);
         
       })
+      this.api.ViewAllAmbassadorsTest().subscribe(t => console.log(t))
 
       this.api.GetAmbassadorRankings().subscribe(data => {
         //console.log(data)

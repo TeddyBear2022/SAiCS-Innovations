@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoRefferralCodePage implements OnInit {
 
+  //Variables
+  refferralcode
   constructor() { }
 
   ngOnInit() {
+    console.log(this.refferralcode)
   }
 
 }

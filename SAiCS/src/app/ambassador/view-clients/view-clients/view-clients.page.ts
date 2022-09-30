@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -15,12 +15,14 @@ export class ViewClientsPage implements OnInit {
 
   constructor( private tmpStorage:TemporaryStorage,
     private api:ApiService,
-    private menu:MenuController, public popoverController: PopoverController,) { }
+    private menu:MenuController,
+    private popoverController:PopoverController,
+    private alert:AlertController) { }
 
   //Variables
   clientList;
   noResults:boolean = false
-  search:any
+  search:any = undefined
   userSesionInfo = [];
   username
   
@@ -52,15 +54,20 @@ export class ViewClientsPage implements OnInit {
     this.noResults = false 
     let credentials:credentialsVM = new credentialsVM()
     credentials.userID = this.userSesionInfo[0].id
-    // this.api.ViewAmbassadors(credentials).subscribe(data =>
-    //   {
-    //     this.ambassadorsList = data
-        
-    //   })
+    this.api.ViewClients().subscribe(data=> 
+      {
+        this.clientList = data
+        console.log(this.clientList)
+      })
   }
 
   Search(){
-    this.api.SearchCurrentAgents(this.search, this.userSesionInfo[0].id).subscribe(data =>{
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+    this.api.SearchCurrentClients(this.search, this.userSesionInfo[0].id).subscribe(data =>{
       this.noResults = false 
       this.clientList = data
       
@@ -72,12 +79,25 @@ export class ViewClientsPage implements OnInit {
       }
       
   })
+}
   }
 
-  async presentPopover(event) {
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+  // Show Profile optionss when icon on right of navbar clicked function
+  async presentPopover(event)
+  {
     const popover = await this.popoverController.create({
       component: ProfilePopoverComponent,
-      event,
+      event
     });
     return await popover.present();
   }

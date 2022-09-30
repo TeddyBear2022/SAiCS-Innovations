@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ModalCustomEvent } from '@ionic/core';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { AssignCourseModalComponent } from './assign-course-modal/assign-course-modal.component';
 
@@ -19,7 +20,8 @@ export class AssignCoursePage implements OnInit {
 
   constructor(private modal: ModalController,
     private menu:MenuController, 
-    private api:ApiService) { }
+    private api:ApiService, 
+    private popoverController:PopoverController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
@@ -60,7 +62,17 @@ ionViewDidEnter(){
   }
 
   Format(event){
-    console.log(event)
+    console.log(event.detail.value)
+  }
+
+  // Show Profile optionss when icon on right of navbar clicked function
+  async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
+    });
+    return await popover.present();
   }
 
 }

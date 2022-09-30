@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 //import { CreatePackageModalComponent } from 'src/app/Product/create-package-modal/create-package-modal.component';
 import { AssignTargetPage } from './Modals/assign-target/assign-target.page';
@@ -17,11 +19,14 @@ export class TargetPage implements OnInit {
   targets:any = []
   updateTargetInfo
   username
+  search = undefined
+  noResults:boolean = false
  
   constructor(private menu:MenuController,
     private modal: ModalController,
     private alert:AlertController, 
-    private api:ApiService) { }
+    private api:ApiService,
+    private popoverController:PopoverController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
@@ -134,5 +139,69 @@ TargetDoesntExists(){
       this.targets = data.data.targets
     })
      await modals.present();
+  }
+
+
+
+
+  SearchTerm(event){
+    // console.log(event.detail.value);
+    this.search = event.detail.value
+    if(this.search == ''){
+      this.ClearSearch()
+    }
+  }
+  Search(){
+    
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.errorAlertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
+      console.log("search...",this.search)
+      this.api.SearchAmbassadorTarget(this.search).subscribe(data =>{
+        this.noResults = false 
+        this.targets = data
+        console.log(data);
+        
+      },(response: HttpErrorResponse) => {
+          
+        if (response.status === 404) {
+          this.noResults = true 
+          console.log("Search result not found")
+        }
+        
+    })
+    }
+ 
+}
+
+  ClearSearch(){
+    console.log("clear");
+    this.search= undefined
+    this.noResults = false 
+    this.api.AllTargetInfo().subscribe(data => {
+      this.targets = data
+      console.log(this.targets)
+
+    })
+  }
+  async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
+    });
+    return await popover.present();
+  }
+
+  async errorAlertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
   }
 }

@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
@@ -18,12 +20,15 @@ export class ViewAmbassadorsPage implements OnInit {
   userSesionInfo =[];
   closeResult: string;
   noResults:boolean = false
-  search:any
+  search:any= undefined
   username
 
   constructor(private tmpStorage:TemporaryStorage, 
     private api:ApiService,
-    private menu:MenuController) { }
+    private menu:MenuController,
+    private popoverController:PopoverController,
+    private alert:AlertController,
+    private route:Router) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -52,6 +57,7 @@ export class ViewAmbassadorsPage implements OnInit {
   ClearSearch(){
     console.log("clear");
     this.noResults = false 
+    this.search= undefined
     let credentials:credentialsVM = new credentialsVM()
     credentials.userID = this.userSesionInfo[0].id
     this.api.ViewAmbassadors(credentials).subscribe(data =>
@@ -62,6 +68,11 @@ export class ViewAmbassadorsPage implements OnInit {
   }
 
   Search(){
+    if(this.search == undefined){
+      console.log("No search in the box...")
+      this.alertNotif("Please enter something in the search box", "")
+    }
+    if(this.search != undefined){
     this.api.SearchCurrentAgents(this.search, this.userSesionInfo[0].id).subscribe(data =>{
       this.noResults = false 
       this.ambassadorsList = data
@@ -75,5 +86,30 @@ export class ViewAmbassadorsPage implements OnInit {
       }
       
   })
+}
   }
+  async alertNotif(message:string, header:string) {
+    const alert = await this.alert.create({
+      header: header,
+      message: message,
+      buttons: [{text: 'OK'}]
+    });
+
+    await alert.present();
+  }
+
+   // Show Profile optionss when icon on right of navbar clicked function
+   async presentPopover(event)
+   {
+     const popover = await this.popoverController.create({
+       component: ProfilePopoverComponent,
+       event
+     });
+     return await popover.present();
+   }
+
+   Import(){
+    this.route.navigate(['view-ambassadors/import-ambassadors'])
+    console.log("import")
+   }
 }
