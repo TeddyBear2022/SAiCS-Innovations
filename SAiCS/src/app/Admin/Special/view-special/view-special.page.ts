@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
-import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -12,21 +12,25 @@ import { ApiService } from 'src/app/Services/api.service';
 export class ViewSpecialPage implements OnInit {
   specials: any= []
   specialTypes: any = [];
-  specialOption = 'All'
+  specialOption = ''
   imageArray: any = [];
-  filterKeys = ['name', 'description','type'];
+  filterKeys = ['name', 'description','typeId'];
   search;
   p;
+  username
 
   constructor( public popoverController: PopoverController,
     private api: ApiService, private router: Router,
     public alertController: AlertController,
     public toastController: ToastController,
-    private alert:AlertController
+    private alert:AlertController,
+    private menu:MenuController
     ) { }
 
   ngOnInit() {
     this.GetInfo()
+    this.menu.enable(true, 'admin-menu');
+    this.username = localStorage.getItem('UserName')
    
    // console.log(this.specials);
   }
@@ -43,11 +47,10 @@ export class ViewSpecialPage implements OnInit {
     this.api.GetAllSpecials().subscribe((data) => {
       this.specials = data
       this.imageArray = new Array(this.specials.length).fill(null);
-    console.log(this.imageArray);
+    console.log(this.specials);
 
     this.specials.forEach((obj: any) => {
       let index = this.specials.findIndex(x => x.id == obj.id);
-    console.log(`index: ${index}`);
 
       this.api.GetSpImage(obj.id).subscribe((baseImage: any) =>{
         //console.log(baseImage);
@@ -59,27 +62,12 @@ export class ViewSpecialPage implements OnInit {
 
       this.api.GetSpecialTypes().subscribe(res => {
         this.specialTypes = res
-        //console.log(this.specials);
+        console.log(this.specialTypes);
         
       })
 
   }
 
-  // GetMerchImage()
-  // {
-  //   this.imageArray = new Array(this.specials.length).fill(null);
-  //   console.log(this.imageArray);
-
-  //   this.specials.forEach((obj: any) => {
-  //     let index = this.specials.findIndex(x => x.id == obj.id);
-  //   console.log(`index: ${index}`);
-
-  //     this.api.GetSpImage(obj.id).subscribe((baseImage: any) =>{
-  //       //console.log(baseImage);
-  //       this.imageArray[index] = baseImage.image
-  //     })
-  //   })
-  // }
 
   PerformDelete(id: number)
   {

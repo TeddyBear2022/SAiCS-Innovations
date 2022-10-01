@@ -34,6 +34,12 @@ export class ViewOrderDetailsPage implements OnInit {
     this.orderId = JSON.parse(localStorage.getItem('SalesOrderDetails'));
     this.SalesOrderDetails(this.orderId);
     this.username = localStorage.getItem('UserName');
+    
+  }
+
+  Back()
+  {
+    history.back()
   }
 
   get TotalItems() {

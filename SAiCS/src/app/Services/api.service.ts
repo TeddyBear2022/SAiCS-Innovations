@@ -46,6 +46,8 @@ import { AccountType } from '../Models/AccountType';
 import { ReferralLinkType } from '../Models/ReferralLinkType';
 import { Bank } from '../Models/Bank';
 import { FAQType } from '../Models/FAQType';
+import { SpecialStatus } from '../Models/SpecialStatus';
+import { HtmlParser } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -318,6 +320,14 @@ export class ApiService {
     })});
   }
 
+  GetSpecialStatuses(): Observable<any>
+  {
+    return this.api.get(this.apilink + 'Admin/GetSpecialStatuses',{
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+    })});
+  }
+
   GetMerchCat(): Observable<any>
   {
     return this.api.get(this.apilink + 'Product/GetMerchCats',{
@@ -454,6 +464,15 @@ export class ApiService {
   UpdateFaqType(data: FAQType): Observable<any>
   {
     return this.api.post(this.apilink + 'Admin/UpdateFaqType',data,{
+    observe: 'response', responseType: 'text',
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
+  }
+
+  UpdateSepcialStatus(data: SpecialStatus): Observable<any>
+  {
+    return this.api.post(this.apilink + 'Admin/UpdateSepcialStatus',data,{
     observe: 'response', responseType: 'text',
     headers: new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem("token")
@@ -1271,12 +1290,45 @@ export class ApiService {
       })} )
   }
 
-  OrderEmail(EmailTo: string, Body: any,  Subject: string)
+  AmbLandingInfo(id: string)
   {
-    return this.api.get(this.apilink + `User/OrderEmail?EmailTo=${EmailTo}&Body=${Body}&Subject=${Subject}`, {
+    return this.api.get(this.apilink + `Ambassador/AmbLandingInfo?id=${id}`, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })} )
+  }
+
+  OrderEmail(EmailTo: string, checkout: number)
+  {
+    return this.api.post(this.apilink + `User/OrderEmail?EmailTo=${EmailTo}&Order=${checkout}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
+  OrderStatusTracking(EmailTo: string, checkout: number, tracker: string)
+  {
+    return this.api.post(this.apilink + `User/OrderStatusTracking?EmailTo=${EmailTo}&Order=${checkout}&tracker=${tracker}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
+ OrderStatusEmail(EmailTo: string, checkout: number)
+  {
+    return this.api.post(this.apilink + `User/OrderEmail?EmailTo=${EmailTo}&Order=${checkout}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
+
+  AmbassaodorNotification(EmailTo: string, checkout: number)
+  {
+    return this.api.post(this.apilink + `User/AmbassaodorNotification?EmailTo=${EmailTo}&Order=${checkout}`,checkout,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
   }
 
 

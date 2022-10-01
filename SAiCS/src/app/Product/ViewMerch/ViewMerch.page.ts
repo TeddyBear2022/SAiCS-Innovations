@@ -4,6 +4,7 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 import { ApiService } from 'src/app/Services/api.service';
 import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
 import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.component';
+import { MerchVM } from 'src/app/Models/ViewModels/MerchVM';
 
 @Component({
   selector: 'app-view-merch',
@@ -13,12 +14,14 @@ import { UpdateMerchModalComponent } from '../UpdateMerchModal/UpdateMerchModal.
 export class ViewMerchPage implements OnInit {
   merch = []
   merchCat = [];
-  merchCatOption = 'All'
+  merchStatus = [];
+  merchCatOption = ''
   filterKeys = ['name', 'description', 'type','catID'];
   search;
   typeSelect = "";
   p;
   username
+  imageArray: any = [];
   
 
   constructor(
@@ -35,17 +38,24 @@ export class ViewMerchPage implements OnInit {
     this.username = localStorage.getItem('UserName')
     this.GetAllMerch()
     this.GetMerchCat()
+    this.GetMerchStatuses();
   }
 
   ionViewDidEnter(){
     this.GetAllMerch()
     this.GetMerchCat()
+    this.GetMerchStatuses();
   }
   
   GetMerchCat() {
     this.api.GetMerchCat().subscribe((data) => {
       this.merchCat = data;
-      console.log(this.merchCat);
+    });
+  }
+
+  GetMerchStatuses() {
+    this.api.GetMerchStatuses().subscribe((data) => {
+      this.merchStatus = data;
     });
   }
 
@@ -56,9 +66,23 @@ GetAllMerch()
     {
       this.merch = data
       console.log(this.merch);
+
+      this.imageArray = new Array(this.merch.length).fill(null);
+      //console.log(this.imageArray);
+
+      this.merch.forEach((obj: any) => {
+        let index = this.merch.findIndex((x) => x.id == obj.id);
+
+        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+          this.imageArray[index] = { id: obj.id, image: baseImage.image };
+        });
+      });
     })
 }
 
+GetMerchImage(id: number) {
+  return this.imageArray.find((x) => x?.id === id)?.image;
+}
   
 
 //create product
@@ -133,6 +157,31 @@ DeleteItem(id: number)
       message = "Item deleted Sucessfully deleted"
       this.Notif(message) 
       //this.presentToast()
+    }
+    else if(res.body.includes('547'))
+    {
+      console.log(547);
+      this.Notif(res.body) 
+
+      const statusId = this.merchStatus.find(x => x.merchStatusName == "Discontinued");
+      
+      let uMerch = {} as MerchVM;
+      uMerch.statusId = statusId.merchStatusId;
+
+    
+    this.api.UpdateMerch(id, uMerch).subscribe((res) =>{
+      if(res.body == "Item Updated successfully")
+      {
+        console.log(res.body);
+      }
+      else
+      {
+        console.log(res.body);
+      }
+     
+      
+    })
+      
     }
      else
      {

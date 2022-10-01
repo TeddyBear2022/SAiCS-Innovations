@@ -76,13 +76,20 @@ export class ClientCheckoutPage implements OnInit {
   }
 
   get OrderTotal() {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
     if (this.deliveryOption == true) {
       const sp = this.deliveryArr?.find(
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
-      return this.SubTotal + parseInt(sp);
+      deliverValue.totalCost = this.SubTotal + parseInt(sp)
+      localStorage.setItem('checkout', JSON.stringify(deliverValue));
+      return deliverValue.totalCost;
     } else {
-      return this.SubTotal;
+      deliverValue.totalCost = this.SubTotal
+      localStorage.setItem('checkout', JSON.stringify(deliverValue));
+      return deliverValue.totalCost;
     }
   }
 
@@ -186,11 +193,11 @@ export class ClientCheckoutPage implements OnInit {
         pushToCart.push(cart);
       }
 
-      // pushToCart.forEach((e) => {
-      //   this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
-      //     console.log(res.body);
-      //   });
-      // });
+      pushToCart.forEach((e) => {
+        this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
+          console.log(res.body);
+        });
+      });
 
       let order = {} as Checkout;
       order.addressId =
@@ -203,36 +210,32 @@ export class ClientCheckoutPage implements OnInit {
       order.ShippingCost = this.deliveryArr.find(
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
+      order.TotalCost = this.OrderTotal
 
-      let EmailDelivery =  this.userAddress.find(x => x?.id === this.checkout.value.address);
-      this.ClientEmail(EmailDelivery, 1, order.ShippingCost)
-      // this.api.ClientCheckout(order).subscribe((res) => {
-      //   console.log(res.body);
-      //   if (res.status === 200) {
-      //     this.checkout.get('address').setValidators(Validators.required);
-      //     this.checkout.get('address').updateValueAndValidity();
+      let address = this.userAddress.find(x => x.id === order.addressId)
+      
 
-      //     this.ClientEmail(EmailDelivery, res.body, order.ShippingCost)
-          
-      //     this.showAlert();
+      this.api.ClientCheckout(order).subscribe((res) => {
+        console.log(res.body);
+        if (res.status === 200) {
+          this.checkout.get('address').setValidators(Validators.required);
+          this.checkout.get('address').updateValueAndValidity();
+          this.api.OrderEmail(this.session[0].email, parseInt(res.body)).subscribe()
+          this.api.AmbassaodorNotification(this.AgentAccount.email, parseInt(res.body)).subscribe()
+          //this.ClientEmail(this.username, this.session[0].email, address, res.body, order.ShippingCost, "Client")
+          //this.ClientEmail(this.username, this.AgentAccount.email, address, res.body, order.ShippingCost, "Ambassador")
+          this.showAlert();
 
 
-      //   } else {
-      //     this.ErrorAlert();
-      //   }
-      // });
+        } else {
+          this.ErrorAlert();
+        }
+      });
       console.log(order)
     } else {
       console.log('invalid form');
     }
   }
-
-ClientEmail(Delivery: any, OrderNum: any, ShippingCost: any)
-{
-  let test = this.email.ClientOrderConfirmation(this.username, this.session[0].email, Delivery, OrderNum, ShippingCost)
-  console.log(test);
-  
-}
   
   ClearStore()
   {
@@ -283,7 +286,7 @@ ClientEmail(Delivery: any, OrderNum: any, ShippingCost: any)
     const alert = await this.alert.create({
       header: 'Thank You For Your Order!',
       message:
-        'At SAICS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintainable lifestyle with our top of the range and clinically tested products',
+        'An Email has been sent to you to confirm the order! At SAICS we know the struggles many of us face everyday and that is why we are offering you the opportunity to take control of your health and start living a healthy and maintainable lifestyle with our top of the range and clinically tested products.',
       buttons: [
         {
           text: 'Back To Home',

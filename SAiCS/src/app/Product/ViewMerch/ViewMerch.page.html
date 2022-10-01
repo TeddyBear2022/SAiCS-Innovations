@@ -59,7 +59,7 @@
       
           <ion-item lines="none">
             <ion-label>Show All...</ion-label>
-            <ion-radio slot="start" value="All"></ion-radio>
+            <ion-radio slot="start" value=""></ion-radio>
           </ion-item>
 
         </ion-radio-group>
@@ -84,16 +84,16 @@
       </thead>
       <tbody>
         <ng-container *ngFor="let m of merch | filter:search:filterKeys | filter:typeSelect:filterKeys  | filter:merchCatOption:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
-          <tr>
+          <tr [ngClass]="{'disableRow': m.status == 'Discontinued'}">
             <td>{{m.id}}</td>
-            <td><img [src]="m.image | safe: 'url'" height="100px" alt='The Image' /></td>
+            <td><img [src]="GetMerchImage(m.id) | safe: 'url'" height="100px" alt='The Image' /></td>
             <td>{{m.name}}</td>
             <td>{{m.category}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>
             <td>{{m.price | currency: 'ZAR':'symbol-narrow'}}</td>
             <td style="display: block;text-align: center;">
-              <ion-button id="update" (click)="updateProduct(m.id)">Update</ion-button>
-              <ion-button id="delete" (click)="DeleteMerch(m.id)">Remove</ion-button>
+              <ion-button id="update" *ngIf="m.status != 'Discontinued'" (click)="updateProduct(m.id)">Update</ion-button>
+              <ion-button id="delete" *ngIf="m.status != 'Discontinued'" (click)="DeleteMerch(m.id)">Remove</ion-button>
             </td>
           </tr>
         </ng-container>

@@ -74,24 +74,35 @@ export class UpdateOrderStatusComponent implements OnInit {
     {
       let order = {} as uOrderStatusVM;
       order.orderId = this.info.id
-      order.orderStatusId = this.update.controls['status'].value
+      order.orderStatusId = this.update.value.status 
       if(this.info.delivery != null)
       {
+        order.checked = true
         order.deliveryId = this.info.delivery
-      order.trackingNumber = this.update.controls['tNumber'].value
+        order.trackingNumber = this.update.value.tNumber 
       }
       
       
       this.api.UpdateSalesOrderStatus(order).subscribe((res) =>{
+        console.log(res.body);
+        
         if(res.body == "true")
         {
-        //  this.dismissModal()
+          if(order.trackingNumber)
+          {
+            
+            this.api.OrderStatusTracking(this.info.email, this.info.id, order.trackingNumber).subscribe()
+          }
+          else{
+            this.api.OrderStatusEmail(this.info.email, this.info.id).subscribe()
+          }
+        this.dismissModal()
         }
-        
+        this.update.get('tNumber').setValidators(Validators.required);
+      this.update.get('tNumber').updateValueAndValidity();
       })
 
-      this.update.get('tNumber').setValidators(Validators.required);
-      this.update.get('tNumber').updateValueAndValidity();
+      
     }
   }
 

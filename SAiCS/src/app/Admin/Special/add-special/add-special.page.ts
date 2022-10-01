@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import {RowSelectedEvent, SelectionChangedEvent} from 'ag-grid-community';
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class AddSpecialPage implements OnInit {
 
+  username
   columnDefs = [
 		{headerName: 'Item', field: 'item' , 
     cellRenderer: (params) => `<img style="height: 42px; width: 42px; margin-top: 5%;" src="data:image/png;base64,${params.value}" />`
@@ -37,9 +38,12 @@ export class AddSpecialPage implements OnInit {
     public popoverController: PopoverController,
      private api: ApiService,
      private fb: FormBuilder, private router: Router,
-     private alert:AlertController) { }
+     private alert:AlertController,
+     private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'admin-menu');
+    this.username = localStorage.getItem('UserName')
     this.GetSpecialOptions()
 
     this.addForm = this.fb.group({
@@ -121,8 +125,9 @@ export class AddSpecialPage implements OnInit {
   {
     let message = ""
 
+   
     if(this.addForm.valid && this.specialItemsArr.length > 0 &&
-      this.addForm.get(['startDate']).value <=this.addForm.get(['endDate']).value)
+      this.addForm.get(['startDate']).value <this.addForm.get(['endDate']).value && this.addForm.value.endDate )
     {
       let nSpecial = {} as Special;
       nSpecial.specialName = this.addForm.value.sName;
@@ -149,20 +154,47 @@ export class AddSpecialPage implements OnInit {
           this.Notif(message);
         }
 
-       
       })
-      
     }
-    else if(this.addForm.valid && this.specialItemsArr.length > 0 && this.addForm.get(['startDate']).value > this.addForm.get(['endDate']).value)
+    else if(
+      this.addForm.valid &&
+      this.specialItemsArr.length > 0 &&
+      this.addForm.get(['startDate']).value >
+        this.addForm.get(['endDate']).value
+    )
     {
-       message = "Please ensure that the start and end date are in the correct format"
-       this.Notif(message)
+      message = "Please ensure that the end date is greater or equal to the current date"
+      this.Notif(message)
     }
     else{
     // message = "Please Ensure that all the form values are filled in correctly"
     //    this.Notif(message)
       console.log("Invalid Form");
     }
+    
+  }
+
+  compareDates(event) {
+    // Create date from input value
+   var inputDate = new Date(this.addForm.value.endDate);
+
+// Get today's date
+var todaysDate = new Date();
+
+// call setHours to take the time out of the comparison
+if(inputDate.setHours(0,0,0,0) >= todaysDate.setHours(0,0,0,0)) {
+    console.log("Works");
+    console.log(inputDate);
+}
+else
+{
+  let control = this.addForm.controls['endDate'];
+  control.setErrors({invalid: true});
+  control.markAsDirty()
+  console.log("error");
+  this.Notif("Please enter an end date that is equal to or greater than the current date")
+  
+}
   }
 
   async Notif(message:string) {

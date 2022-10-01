@@ -17,6 +17,9 @@
 <ion-content>
 <ion-grid>
 <ion-row>
+  <ion-button id="SpecifiButtopns" (click)="Back()"  style="margin-right: 90%; color: white; border-radius: 20%;">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+</ion-button>
   <h2>Maintain Entities</h2>
 </ion-row>
 <br>
@@ -25,6 +28,7 @@
       <ion-label style="margin-left: 5%;">Select Entity:</ion-label>
       <ion-select interface="popover" placeholder="Select option" #maintainOpt name="maintainOpt" ngModel>
         <ion-select-option value="cat">Special Category</ion-select-option>
+        <ion-select-option value="status">Special Status</ion-select-option>
         <ion-select-option value="type">Special Type</ion-select-option>
       </ion-select>
     </ion-col>
@@ -35,4 +39,5 @@
 </ion-grid>
 <app-main-special-type *ngIf="maintainOpt.value == 'type'"></app-main-special-type>
 <app-main-special-cat *ngIf="maintainOpt.value == 'cat'"></app-main-special-cat>
+<app-main-special-status *ngIf="maintainOpt.value == 'status'"></app-main-special-status>
 </ion-content>

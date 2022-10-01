@@ -20,6 +20,12 @@ export class LandingPagePage implements OnInit {
   search;
   categorysearch;
   username
+  imageArray: any = [];
+
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
 
   constructor(
     public popoverController: PopoverController,
@@ -58,6 +64,21 @@ export class LandingPagePage implements OnInit {
     var dataObj = JSON.parse(JSON.stringify(data));
     this.merchandise = dataObj;
     console.log(this.merchandise);
+
+    this.imageArray = new Array(this.merchandise.length).fill(null);
+      //console.log(this.imageArray);
+
+      this.merchandise.forEach((obj: any) => {
+        let index = this.merchandise.findIndex((x) => x.id == obj.id);
+
+        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+          this.imageArray[index] = { id: obj.id, image: baseImage.image };
+        });
+      });
+  }
+
+  GetMerchImage(id: number) {
+    return this.imageArray.find((x) => x?.id === id)?.image;
   }
 
   AddToCart(id) {

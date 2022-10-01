@@ -18,6 +18,11 @@ export class SpecialMaintainancePage implements OnInit {
     this.username = localStorage.getItem('UserName')
   }
 
+  Back()
+  {
+    history.back()
+  }
+
   async presentPopover(event)
   {
     const popover = await this.popoverController.create({

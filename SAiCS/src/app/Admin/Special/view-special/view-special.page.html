@@ -4,7 +4,7 @@
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>    
     
-    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName" >{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -48,7 +48,7 @@
       
           <ion-item lines="none">
             <ion-label>Show All...</ion-label>
-            <ion-radio slot="start" value="All" checked="true"></ion-radio>
+            <ion-radio slot="start" value="" checked="true"></ion-radio>
           </ion-item>
 
         </ion-radio-group>
@@ -70,8 +70,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let s of specials | filter:search:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
-          <tr  *ngIf="s.typeId == specialOption || specialOption == 'All'">
+        <ng-container *ngFor="let s of specials | filter:search:filterKeys | filter:specialOption:filterKeys | paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
+          <tr>
             <td> <div class="containerItem" id="{{s.id}}" style="display:inline-block;vertical-align:top;">
               <img [src]="imageArray[i]  | safe: 'url'" style="height:75px; width:80px; padding-right: 10%;"  alt='The Image' />
            

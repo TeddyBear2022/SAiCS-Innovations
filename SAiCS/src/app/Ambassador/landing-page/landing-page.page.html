@@ -34,7 +34,7 @@
     </ion-col>
     <ion-col style="text-align: center;" size="9">
       <ion-card-content>
-        <ion-card-title>0</ion-card-title>
+        <ion-card-title>{{LandingInfo[0]?.clients}}</ion-card-title>
         <ion-card-subtitle>Clients</ion-card-subtitle>
       </ion-card-content>
     </ion-col>
@@ -50,7 +50,7 @@
     </ion-col>
     <ion-col style="text-align: center;" size="9">
       <ion-card-content>
-        <ion-card-title>0</ion-card-title>
+        <ion-card-title>{{LandingInfo[0]?.income | currency: 'ZAR':'symbol-narrow'}}</ion-card-title>
         <ion-card-subtitle>Total Earned</ion-card-subtitle>
       </ion-card-content>
     </ion-col>
@@ -66,7 +66,7 @@
     </ion-col>
     <ion-col style="text-align: center;" size="9">
       <ion-card-content>
-        <ion-card-title>0</ion-card-title>
+        <ion-card-title>{{LandingInfo[0]?.order}}</ion-card-title>
         <ion-card-subtitle>Pending Orders</ion-card-subtitle>
       </ion-card-content>
     </ion-col>

@@ -5,6 +5,7 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { OrdersFaqPage } from '../faq/orders-faq/orders-faq.page';
 
 @Component({
   selector: 'app-landing-page',
@@ -21,6 +22,7 @@ export class LandingPagePage implements OnInit {
   categorysearch;
   username;
   imageArray: any = [];
+  LandingInfo: any = [];
 
   constructor(
     public popoverController: PopoverController,
@@ -44,6 +46,7 @@ export class LandingPagePage implements OnInit {
     this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog();
     this.username = localStorage.getItem('UserName');
+    this.AmbLandingInfo();
   }
 
   get TotalItems() {
@@ -76,6 +79,22 @@ export class LandingPagePage implements OnInit {
     return this.imageArray.find((x) => x?.id === id)?.image;
   }
   
+  AmbLandingInfo()
+  {
+    this.api.AmbLandingInfo(this.session[0].id).subscribe(res => 
+    {
+      let data: any = res
+      
+      
+      const sum = data.income.reduce((sum, current) => sum + current.commisson, 0);
+      
+      this.LandingInfo.push({
+        clients: data.clients,
+        order: data.order,
+        income: sum
+      })
+    })
+  }
 
   AddToCart(id) {
     var item = this.merchandise.find((x) => x.id === id);

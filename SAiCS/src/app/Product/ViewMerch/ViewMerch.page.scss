@@ -78,6 +78,12 @@ ion-content {
       #delete{--background: #f44336; text-transform: none; font-style: italic;}
   }
 
+  .disableRow
+  {
+    background-color: #dddddd;
+    color: #dddddd;
+  }
+
   .pagination {
     font-size: 14px;
     text-align: center;

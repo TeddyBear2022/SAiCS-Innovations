@@ -6,11 +6,12 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MainSpecialStatusComponent } from '../main-special-status/main-special-status.component';
 
 
 
 @NgModule({
-  declarations: [MainSpecialCatComponent, MainSpecialTypeComponent],
+  declarations: [MainSpecialCatComponent, MainSpecialTypeComponent, MainSpecialStatusComponent],
   imports: [
     CommonModule,
     IonicModule.forRoot(),
@@ -19,6 +20,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PipesModule,
     NgxPaginationModule
   ],
-  exports: [MainSpecialCatComponent, MainSpecialTypeComponent],
+  exports: [MainSpecialCatComponent, MainSpecialTypeComponent, MainSpecialStatusComponent],
 })
 export class SpModuleModule { }

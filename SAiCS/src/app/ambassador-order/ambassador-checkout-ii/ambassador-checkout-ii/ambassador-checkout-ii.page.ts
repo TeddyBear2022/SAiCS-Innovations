@@ -209,9 +209,11 @@ export class AmbassadorCheckoutIiPage implements OnInit {
 
       this.api.Checkout(order).subscribe((res) => {
         console.log(res.body);
-        if (res.body == 'Placed') {
+        if (res.status === 200) {
           this.checkout.get('address').setValidators(Validators.required);
           this.checkout.get('address').updateValueAndValidity();
+          this.api.OrderEmail(this.session[0].email, parseInt(res.body)).subscribe()
+          this.api.AmbassaodorNotification(this.AgentAccount.email, parseInt(res.body)).subscribe()
 
           this.showAlert();
         } else {

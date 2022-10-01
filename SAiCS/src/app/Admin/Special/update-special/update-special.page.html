@@ -3,13 +3,8 @@
     <ion-buttons slot="start" menu="main-menu">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button shape="round">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-label slot="secondary" id="toolbarUserName"
-      >John van de Merwe</ion-label
+      >{{username}}</ion-label
     >
 
     <ion-buttons slot="end">
@@ -98,7 +93,7 @@
                     *ngIf="localForm.submitted && addForm.controls['endDate'].invalid"
                     >*</span> End Date:</ion-label
                   >
-                  <input type="date" formControlName="endDate"/>
+                  <input type="date" formControlName="endDate" (change)="compareDates($event)"/>
                 </ion-col>
               </ion-row>
 
@@ -146,6 +141,8 @@
               [columnDefs]="columnDefs"
               [rowSelection]="rowSelection"
               [rowMultiSelectWithClick]="true"
+              [pagination]="true"
+              [paginationPageSize]="7"
               (rowSelected)="onRowSelected($event)"
               (selectionChanged)="onSelectionChanged($event)"
               (firstDataRendered)="onFirstDataRendered($event)"
@@ -157,7 +154,7 @@
 
       <ion-row>
         <ion-item-group style="float: right; margin-left: 85%">
-          <ion-button id="create" slot="end" type="submit">Update</ion-button>
+          <ion-button id="create" slot="end" type="submit" (click)="compareDates($event)">Update</ion-button>
           <ion-button id="cancel" slot="end" (click)="Return()">Cancel</ion-button>
         </ion-item-group>
       </ion-row>

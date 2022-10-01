@@ -71,8 +71,7 @@
                             <ion-button (click)="startEdit(data.id)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="editBtn" name="create-outline"></ion-icon>
                             </ion-button>
-
-                            <ion-button *ngIf="data.name != 'Client' && data.name !='Ambassador'" (click)="remove(data.id)" fill="transparent" [disabled]="isAddClicked">
+                            <ion-button (click)="remove(data.id)" fill="transparent" [disabled]="isAddClicked">
                                 <ion-icon id="deleteBtn" name="trash-bin-outline"></ion-icon>
                             </ion-button>
                         </ng-container>

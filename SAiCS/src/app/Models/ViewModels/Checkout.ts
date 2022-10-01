@@ -7,6 +7,9 @@ export class Checkout{
     proofOfPayment: string
     DeliveryTypeId: number
     ShippingCost: number
+    TotalCost: number
     Date: Date
     Vat: number
+
+
 }

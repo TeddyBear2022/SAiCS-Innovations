@@ -57,7 +57,7 @@
           </ion-card-header>
           <ion-card-content>
             <ion-card-title  name="ItemName" value="p.itemName">{{m.name}}</ion-card-title>
-            <ion-card-subtitle>R{{m.price}}</ion-card-subtitle>
+            <ion-card-subtitle>{{m.price | currency: 'ZAR':'symbol-narrow'}}</ion-card-subtitle>
             <ion-buttons>
               <ion-button shape="round" style="color: #0070c0;" (click)="decrementQty(i)" >
                 <ion-icon size="large" name="bag-remove" id="toolbarCartIcon"></ion-icon>
