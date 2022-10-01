@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quiz-session.page.scss'],
 })
 export class QuizSessionPage implements OnInit {
+  username
 
   constructor() { }
 
   ngOnInit() {
+       //Username
+       this.username = localStorage.getItem('UserName')
   }
 
 }

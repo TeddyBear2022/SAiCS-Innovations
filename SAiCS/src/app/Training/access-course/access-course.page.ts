@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-access-course',
@@ -18,7 +19,7 @@ export class AccessCoursePage implements OnInit {
   constructor(private menu:MenuController, 
     private api:ApiService, 
     private popoverController:PopoverController, 
-    private route:Router) { }
+    private route:Router,private cartService: CartService) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -39,6 +40,16 @@ export class AccessCoursePage implements OnInit {
     })
     this.username = localStorage.getItem('UserName')
   }
+
+  
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
+  
   async presentPopover(event)
    {
      const popover = await this.popoverController.create({

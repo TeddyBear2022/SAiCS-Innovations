@@ -5,14 +5,15 @@
     </ion-buttons>
 
     
-    <ion-buttons slot="secondary">
-      <ion-button shape="round" routerLink="/clients-cart">
-        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
-    
 
-    <ion-label slot="secondary" id="toolbarUserName">John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button shape="round">

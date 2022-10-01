@@ -5,6 +5,7 @@ import { AlertController, MenuController, PopoverController } from '@ionic/angul
 import { credentialsVM } from 'src/app/Models/ViewModels/credentialsVM';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 
@@ -28,7 +29,8 @@ export class ViewAmbassadorsPage implements OnInit {
     private menu:MenuController,
     private popoverController:PopoverController,
     private alert:AlertController,
-    private route:Router) { }
+    private route:Router,
+    private cartService: CartService) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -45,6 +47,14 @@ export class ViewAmbassadorsPage implements OnInit {
       })
 
       this.username = localStorage.getItem('UserName')
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   SearchAmbassador(event){

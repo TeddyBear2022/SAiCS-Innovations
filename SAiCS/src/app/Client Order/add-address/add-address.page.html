@@ -93,7 +93,7 @@
   
             <ion-item-group style="float: right; margin-right: 5%;">
               <ion-button style="--background:#0070c0; text-transform: none;" type="submit">Save</ion-button>
-              <ion-button style="--background:#424242;text-transform: none;" routerLink="/ambassador-checkout-ii">Cancel</ion-button>
+              <ion-button style="--background:#424242;text-transform: none;" (click)="Return()">Cancel</ion-button>
             </ion-item-group>
           </form>
           </ion-list>
@@ -112,10 +112,21 @@
             </ion-item>
             <ion-item lines="none">
               <ion-label slot="start">Shipping</ion-label>
-              <ion-toggle slot="end" disabled="true" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption" (ngModelChange)="toggleValue()"></ion-toggle><br>
+              <ion-toggle [disabled]="true"  slot="end" [checked]="deliveryOption==true? true: false" [(ngModel)]="deliveryOption"  [ngModelOptions]="{standalone: true}" (ngModelChange)="toggleValue()"></ion-toggle><br>
             </ion-item>
             <ion-item lines="none">
-              <ion-input *ngIf="deliveryOption" readonly id="deliveryInput" type="text" placeholder="Courier - R200"></ion-input>
+              <select
+              *ngIf="deliveryOption"
+              id="deliveryInput"
+              type="text"
+              placeholder="Select delivery type"
+              [(ngModel)]="SelectedDel"
+              (change)=onSelectChange($event)
+              [ngModelOptions]="{standalone: true}"
+              [disabled]="true"
+            >
+            <option *ngFor="let m of deliveryArr" value="{{m.id}}">{{m.name}} - {{m.price | currency: 'ZAR':'symbol-narrow'}}</option>
+          </select>
             </ion-item>
             <ion-item lines="none">
               <ion-label>Discount</ion-label>
@@ -128,7 +139,7 @@
             <hr style="border: none;border-top: 1px double #333; color: #333; overflow: visible; text-align: center; height: 5px; width: 85%;">
             <ion-item lines="none">
               <ion-label>Total Cost</ion-label>
-              <ion-label slot="end">{{OdrSmry.totalCost | currency: 'ZAR':'symbol-narrow'}}</ion-label>
+              <ion-label slot="end">{{OrderTotal | currency: 'ZAR':'symbol-narrow'}}</ion-label>
             </ion-item>
             <ion-item lines="none">
               <ion-button [disabled]="true" style="--background: #08c10f; text-transform: none; width: 60%;"  id="button">Place Order</ion-button>

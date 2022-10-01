@@ -9,9 +9,13 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class YtVideoPage implements OnInit {
 
+  username
+
   constructor(private popoverController:PopoverController) { }
 
   ngOnInit() {
+     //Username
+     this.username = localStorage.getItem('UserName')
   }
 
   async presentPopover(event)

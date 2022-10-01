@@ -93,13 +93,12 @@ export class SalesReportComponent implements OnInit {
     {
       let result = {
         name: 'Grand Total',
-        price:0,
+        price:'',
         quantity:0,
         total: 0
     }
 
     params.api.forEachNodeAfterFilter(i=>{
-      result.price += Number(i.data.price);
       result.quantity += Number(i.data.quantity);
       result.total += Number(i.data.total);
   });

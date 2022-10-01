@@ -34,6 +34,7 @@ export class ViewAmbassadorCartPage implements OnInit {
   data: any = [];
   discount: any;
   username;
+  OdrSmry: any;
 
   constructor(
     public popoverController: PopoverController,
@@ -50,13 +51,14 @@ export class ViewAmbassadorCartPage implements OnInit {
     this.menu.enable(true, 'ambassador-menu');
     this.cartService.loadCart();
     this.items = this.cartService.getItems();
-    this.GetMerchImage();
     this.ViewCart();
+    this.GetMerchImage();
     this.username = localStorage.getItem('UserName');
   }
 
-  ionViewDidLoad() {
-    this.GetMerchImage();
+  ionViewDidEnter() {
+    this.ViewCart();
+    this.GetMerchImage()
   }
 
   async ViewCart() {
@@ -78,7 +80,17 @@ export class ViewAmbassadorCartPage implements OnInit {
     this.api.GetUserDeliveryTypes().subscribe((res) => {
       del = res;
       this.deliveryArr = del;
-      this.SelectedDel = this.deliveryArr[0].id;
+      this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
+      if(this.OdrSmry)
+      {
+        this.deliveryOption = this.OdrSmry.deliveryOption;
+        this.SelectedDel = this.OdrSmry.delveryId
+  
+      }
+      else
+      {
+        this.SelectedDel = this.deliveryArr[0].id
+      }
     });
   }
 
@@ -147,11 +159,29 @@ export class ViewAmbassadorCartPage implements OnInit {
   RemoveFromCart(item) {
     this.cartService.removeItem(item);
     this.items = this.cartService.getItems();
+    if(this.items.length == 0)
+    {
+      
+      if(localStorage.getItem('checkout'))
+      {
+        this.deliveryOption = false;
+        localStorage.removeItem('checkout')
+        
+      }
+      
+    }
   }
 
   ClearCart() {
     this.cartService.clearCart();
     this.items.length = 0;
+    if(localStorage.getItem('checkout'))
+    {
+      this.deliveryOption = false;
+      localStorage.removeItem('checkout')
+      
+    }
+      
   }
 
   onSelectChange(event) {

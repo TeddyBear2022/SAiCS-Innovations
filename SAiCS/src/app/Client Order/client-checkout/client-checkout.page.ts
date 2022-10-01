@@ -5,9 +5,11 @@ import {
   AlertController,
   MenuController,
   ModalController,
+  PopoverController,
 } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { Checkout } from 'src/app/Models/ViewModels/Checkout';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { SendEmailService } from 'src/app/Services/send-email.service';
@@ -46,7 +48,8 @@ export class ClientCheckoutPage implements OnInit {
     private tmpStorage: TemporaryStorage,
     private menu: MenuController,
     private cartService: CartService,
-    private email: SendEmailService
+    private email: SendEmailService,
+    public popoverController: PopoverController,
   ) {}
 
   ngOnInit() {
@@ -94,6 +97,17 @@ export class ClientCheckoutPage implements OnInit {
   onSelectChange(event) {
     let value = event.target.value;
     this.SelectedDel = value;
+
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.delveryId = this.SelectedDel
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+  }
+
+  toggleValue()
+  {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.deliveryOption = this.deliveryOption
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
   }
 
   GetAddress() {
@@ -112,6 +126,7 @@ export class ClientCheckoutPage implements OnInit {
     this.SelectedDel = this.OdrSmry.delveryId;
     this.SubTotal = this.OdrSmry.subtotal;
   }
+
   AgentAccountInfo() {
     this.api.AgentAccountInfo(this.session[0].id).subscribe((data) => {
       this.AgentAccount = data;
@@ -254,6 +269,14 @@ ClientEmail(Delivery: any, OrderNum: any, ShippingCost: any)
     });
 
     await alert.present();
+  }
+
+  async presentPopover(event) {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event,
+    });
+    return await popover.present();
   }
 
   async showAlert() {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-access-course-intro',
@@ -25,7 +26,7 @@ export class AccessCourseIntroPage implements OnInit {
   constructor(public popoverController: PopoverController,
     private menu:MenuController, 
     private api:ApiService, 
-    private route:Router) { }
+    private route:Router,private cartService: CartService) { }
 
   ngOnInit() {
     //menu bar
@@ -62,6 +63,14 @@ export class AccessCourseIntroPage implements OnInit {
       this.quiz.push(this.courseDetails.quiz)
       console.log('quiz', this.quiz[0].quizName)
     })
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   async presentPopover(event)

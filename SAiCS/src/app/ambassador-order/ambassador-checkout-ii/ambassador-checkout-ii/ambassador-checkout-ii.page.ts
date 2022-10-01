@@ -9,7 +9,6 @@ import {
 import { Router } from '@angular/router';
 import { AlertController, MenuController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
-import { Order } from 'src/app/Models/Order';
 import { Checkout } from 'src/app/Models/ViewModels/Checkout';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -96,6 +95,17 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   onSelectChange(event) {
     let value = event.target.value;
     this.SelectedDel = value;
+
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.delveryId = this.SelectedDel
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+  }
+
+  toggleValue()
+  {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.deliveryOption = this.deliveryOption
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
   }
 
   GetDelOptions() {
@@ -113,23 +123,6 @@ export class AmbassadorCheckoutIiPage implements OnInit {
       this.AgentAccount = data;
       console.log(this.AgentAccount);
     });
-  }
-
-  toggleValue() {
-    var deliverValue = JSON.parse(localStorage.getItem('checkout'))
-    if (this.deliveryOption == true)
-    {
-      this.OdrSmry.totalCost += 200;
-      deliverValue.deliveryOption = true;
-  
-    }
-    else
-    {
-     this.OdrSmry.totalCost -= 200;
-     deliverValue.deliveryOption = false;
-    }
-    
-    localStorage.setItem('checkout', JSON.stringify(deliverValue))
   }
 
   GetAddress() {
@@ -214,7 +207,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
 
-      this.api.ClientCheckout(order).subscribe((res) => {
+      this.api.Checkout(order).subscribe((res) => {
         console.log(res.body);
         if (res.body == 'Placed') {
           this.checkout.get('address').setValidators(Validators.required);

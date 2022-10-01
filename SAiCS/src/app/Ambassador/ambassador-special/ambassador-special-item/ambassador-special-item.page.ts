@@ -32,7 +32,7 @@ export class AmbassadorSpecialItemPage implements OnInit {
   ngOnInit() {
     this.ItemId = JSON.parse(localStorage.getItem('SpecialItem'));
     this.session = this.tmpStorage.getSessioninfo();
-    this.menu.enable(true, 'client-menu');
+    this.menu.enable(true, 'ambassador-menu');
     this.GetItem(this.ItemId);
     this.username = localStorage.getItem('UserName');
   }

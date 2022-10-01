@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-view-ambassador-feedback',
@@ -8,10 +10,32 @@ import { MenuController } from '@ionic/angular';
 })
 export class ViewAmbassadorFeedbackPage implements OnInit {
 
-  constructor(private menu:MenuController) { }
+  username
+  
+  constructor(private menu:MenuController,
+    private cartService: CartService,
+    public popoverController: PopoverController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
+    this.username = localStorage.getItem('UserName')
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
+
+  async presentPopover(event)
+  {
+    const popover = await this.popoverController.create({
+      component: ProfilePopoverComponent,
+      event
+    });
+    return await popover.present();
   }
 
 }

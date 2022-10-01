@@ -4,6 +4,7 @@ import { AlertController, MenuController, PopoverController } from '@ionic/angul
 import { Console } from 'console';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 import { runInThisContext } from 'vm';
 
 @Component({
@@ -27,7 +28,9 @@ export class StartQuizPage implements OnInit {
   constructor(public popoverController: PopoverController, 
     private api:ApiService, 
     private menu:MenuController, 
-    private alert:AlertController, private route:Router) { }
+    private alert:AlertController, 
+    private route:Router,
+    private cartService: CartService) { }
 
   ngOnInit() {
     //Menu
@@ -41,6 +44,14 @@ export class StartQuizPage implements OnInit {
       this.QuestionArray()
     })
     this.username = localStorage.getItem('UserName')
+  }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
   }
 
   QuestionArray(){

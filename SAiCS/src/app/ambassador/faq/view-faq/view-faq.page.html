@@ -5,11 +5,15 @@
         
       </ion-menu-button>
     </ion-buttons>    
-    <ion-buttons slot="secondary">
+    
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
       <ion-button shape="round">
         <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
       </ion-button>
     </ion-buttons>
+
     <ion-label slot="secondary" style="color: white;">{{username}}</ion-label>
 
     <ion-buttons slot="end">

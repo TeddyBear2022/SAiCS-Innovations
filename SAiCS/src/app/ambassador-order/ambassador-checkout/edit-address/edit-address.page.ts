@@ -20,6 +20,9 @@ import { CartService } from 'src/app/Services/cart.service';
 })
 export class EditAddressPage implements OnInit {
   deliveryOption = false;
+  SelectedDel;
+  deliveryArr: any;
+  SubTotal;
   newAddress: FormGroup;
   OdrSmry: any;
   countries: any;
@@ -44,7 +47,9 @@ export class EditAddressPage implements OnInit {
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
+    this.deliveryOption = this.OdrSmry.deliveryOption;
     this.GetCountries();
+    this.GetDelOptions();
     this.newAddress = this.fb.group({
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -66,6 +71,11 @@ export class EditAddressPage implements OnInit {
     this.username = localStorage.getItem('UserName');
   }
 
+  ionViewDidEnter() {
+    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
+    this.GetDelOptions();
+  }
+
   get TotalItems() {
     // this.cartService.getItems();
     this.cartService.loadCart();
@@ -74,16 +84,21 @@ export class EditAddressPage implements OnInit {
     return cartItemCount.length;
   }
 
-  toggleValue() {
-    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+  get OrderTotal() {
     if (this.deliveryOption == true) {
-      this.OdrSmry.totalCost += 200;
-      deliverValue.deliveryOption = true;
+      const sp = this.deliveryArr?.find(
+        (x) => x?.id === parseInt(this.SelectedDel)
+      )?.price;
+      return this.SubTotal + parseInt(sp);
     } else {
-      this.OdrSmry.totalCost -= 200;
-      deliverValue.deliveryOption = false;
+      return this.SubTotal;
     }
+  }
 
+  toggleValue()
+  {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.deliveryOption = this.deliveryOption
     localStorage.setItem('checkout', JSON.stringify(deliverValue));
   }
 
@@ -96,6 +111,21 @@ export class EditAddressPage implements OnInit {
       this.countries = data;
       console.log(this.countries);
     });
+  }
+
+  onSelectChange(event) {
+    let value = event.target.value;
+    this.SelectedDel = value;
+  }
+
+  GetDelOptions() {
+    let data;
+    this.api.GetUserDeliveryTypes().subscribe((res) => {
+      data = res;
+      this.deliveryArr = data;
+    });
+    this.SelectedDel = this.OdrSmry.delveryId;
+    this.SubTotal = this.OdrSmry.subtotal;
   }
 
   GetSecondaryAddressById(id: number) {

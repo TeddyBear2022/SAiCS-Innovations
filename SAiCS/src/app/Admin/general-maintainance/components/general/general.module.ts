@@ -10,6 +10,8 @@ import { MainCountryComponent } from '../main-country/main-country.component';
 import { MainProvinceComponent } from '../main-province/main-province.component';
 import { MainAccountTypeComponent } from '../main-account-type/main-account-type.component';
 import { MainReferralTypeComponent } from '../main-referral-type/main-referral-type.component';
+import { MainBankComponent } from '../main-bank/main-bank.component';
+import { MainFaqTypeComponent } from '../main-faq-type/main-faq-type.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MainReferralTypeComponent } from '../main-referral-type/main-referral-t
     MainCountryComponent,
     MainProvinceComponent,
     MainAccountTypeComponent,
-    MainReferralTypeComponent
+    MainReferralTypeComponent,
+    MainBankComponent,
+    MainFaqTypeComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +38,9 @@ import { MainReferralTypeComponent } from '../main-referral-type/main-referral-t
     MainCountryComponent,
     MainProvinceComponent,
     MainAccountTypeComponent,
-    MainReferralTypeComponent
+    MainReferralTypeComponent,
+    MainBankComponent,
+    MainFaqTypeComponent
   ],
 })
 export class GeneralModule {}

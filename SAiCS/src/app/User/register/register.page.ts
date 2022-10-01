@@ -78,7 +78,6 @@ export class RegisterPage implements OnInit {
 
   //REVAMP BEGIN
   NoRefferralCode(isOpen: boolean){
-
   this.api.NoRefCode().subscribe((res) => {
     let data: any = res
     this.getRefCode = data

@@ -15,6 +15,9 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class AmbassadorCheckoutPage implements OnInit {
   deliveryOption = false;
+  SelectedDel;
+  deliveryArr: any;
+  SubTotal;
   newAddress: FormGroup;
   isExisting: boolean = false;
   OdrSmry: any;
@@ -36,7 +39,9 @@ export class AmbassadorCheckoutPage implements OnInit {
   ngOnInit() {
     this.session = this.tmpStorage.getSessioninfo();
     this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
+    this.deliveryOption = this.OdrSmry.deliveryOption;
     this.GetCountries();
+    this.GetDelOptions();
     this.newAddress = this.fb.group({
       address: ['', [Validators.required]],
       city: ['', [Validators.required]],
@@ -56,6 +61,11 @@ export class AmbassadorCheckoutPage implements OnInit {
     this.username = localStorage.getItem('UserName');
   }
 
+  ionViewDidEnter() {
+    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
+    this.GetDelOptions();
+  }
+
   get TotalItems() {
     // this.cartService.getItems();
     this.cartService.loadCart();
@@ -64,19 +74,39 @@ export class AmbassadorCheckoutPage implements OnInit {
     return cartItemCount.length;
   }
 
-  toggleValue() {
-    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
-    if (this.deliveryOption == true) {
-      this.OdrSmry.totalCost += 200;
-      deliverValue.deliveryOption = true;
-    } else {
-      this.OdrSmry.totalCost -= 200;
-      deliverValue.deliveryOption = false;
-    }
-
-    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+  onSelectChange(event) {
+    let value = event.target.value;
+    this.SelectedDel = value;
   }
 
+  GetDelOptions() {
+    let data;
+    this.api.GetUserDeliveryTypes().subscribe((res) => {
+      data = res;
+      this.deliveryArr = data;
+    });
+    this.SelectedDel = this.OdrSmry.delveryId;
+    this.SubTotal = this.OdrSmry.subtotal;
+  }
+
+  get OrderTotal() {
+    if (this.deliveryOption == true) {
+      const sp = this.deliveryArr?.find(
+        (x) => x?.id === parseInt(this.SelectedDel)
+      )?.price;
+      return this.SubTotal + parseInt(sp);
+    } else {
+      return this.SubTotal;
+    }
+  }
+
+  toggleValue()
+  {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.deliveryOption = this.deliveryOption
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+  }
+  
   GetCountries() {
     this.api.GetProvinces().subscribe((data) => {
       this.provinces = data;

@@ -22,10 +22,12 @@
 <br>
   <ion-row>
     <ion-col size="6">
-      <ion-label style="margin-left: 5%;">Select Entity:</ion-label>
+      <ion-label style="margin-left: 5%;" id="Selectlabel">Select Entity:</ion-label>
       <ion-select interface="popover" placeholder="Select option" #maintainOpt name="maintainOpt" ngModel>
         <ion-select-option value="type">Account Type</ion-select-option>
+        <ion-select-option value="bank">Bank</ion-select-option>
         <ion-select-option value="country">Country</ion-select-option>
+        <ion-select-option value="faq">FAQ Type</ion-select-option>
         <ion-select-option value="feedback">Feedback Type</ion-select-option>
         <ion-select-option value="province">Province</ion-select-option>
         <ion-select-option value="title">Title</ion-select-option>
@@ -43,4 +45,6 @@
 <app-main-province *ngIf="maintainOpt.value == 'province'"></app-main-province>
 <app-main-title *ngIf="maintainOpt.value == 'title'"></app-main-title>
 <app-main-referral-type *ngIf="maintainOpt.value == 'refferal'"></app-main-referral-type>
+<app-main-bank *ngIf="maintainOpt.value == 'bank'"></app-main-bank>
+<app-main-faq-type *ngIf="maintainOpt.value == 'faq'"></app-main-faq-type>
 </ion-content>

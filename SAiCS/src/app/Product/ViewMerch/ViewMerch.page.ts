@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
@@ -14,10 +14,11 @@ export class ViewMerchPage implements OnInit {
   merch = []
   merchCat = [];
   merchCatOption = 'All'
-  filterKeys = ['name', 'description'];
+  filterKeys = ['name', 'description', 'type','catID'];
   search;
   typeSelect = "";
   p;
+  username
   
 
   constructor(
@@ -26,9 +27,12 @@ export class ViewMerchPage implements OnInit {
   private modalCtrl: ModalController,
   public alertController: AlertController,
   public toastController: ToastController,
-  private alert:AlertController) { }
+  private alert:AlertController,
+  private menu:MenuController) { }
 
   ngOnInit() {
+    this.menu.enable(true, 'admin-menu');
+    this.username = localStorage.getItem('UserName')
     this.GetAllMerch()
     this.GetMerchCat()
   }
@@ -128,7 +132,7 @@ DeleteItem(id: number)
     {
       message = "Item deleted Sucessfully deleted"
       this.Notif(message) 
-      this.presentToast()
+      //this.presentToast()
     }
      else
      {

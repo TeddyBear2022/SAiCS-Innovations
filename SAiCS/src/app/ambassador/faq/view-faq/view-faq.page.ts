@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-view-faq',
@@ -18,7 +19,8 @@ export class ViewFaqPage implements OnInit {
   constructor(private menu:MenuController, 
     private api:ApiService, 
     private route:Router, 
-    private popoverController:PopoverController) { }
+    private popoverController:PopoverController,
+    private cartService: CartService) { }
 
   ngOnInit() {
     //Menu
@@ -30,6 +32,15 @@ export class ViewFaqPage implements OnInit {
     console.log("show data")
     this.username = localStorage.getItem('UserName')
   }
+
+  get TotalItems() {
+    // this.cartService.getItems();
+    this.cartService.loadCart();
+    var cartItemCount = [];
+    cartItemCount = this.cartService.getItems();
+    return cartItemCount.length;
+  }
+
 
   showFAQ(catId){
     console.log(catId);

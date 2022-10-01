@@ -4,7 +4,7 @@
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>    
    
-    <ion-label slot="secondary" id="toolbarUserName" >John van de Merwe</ion-label>
+    <ion-label slot="secondary" id="toolbarUserName" >{{username}}</ion-label>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)" shape="round">
@@ -18,7 +18,7 @@
 <ion-grid>
   <ion-row>
     <ion-col size="6">
-      <ion-label style="margin-left: 5%;">Select Report:</ion-label>
+      <ion-label style="margin-left: 5%;"  id="Selectlabel">Select Report:</ion-label>
       <ion-select interface="popover" placeholder="Select report" #reportOption name="reportOption" ngModel>
         <ion-select-option value="ambassadorlist">Ambassador list</ion-select-option>
         <ion-select-option value="recruitmentlist">Ambassador recruitment</ion-select-option>

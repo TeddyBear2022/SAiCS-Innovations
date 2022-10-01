@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 
 @Component({
@@ -9,11 +9,13 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 })
 export class ReportPage implements OnInit {
 
-  constructor(public popoverController: PopoverController) { }
-
-  //showReport = {ambassadorlist:true, recruitmentlist: false, bestselling: false,productlist: false, sales: false}
-
+  username
+  constructor(public popoverController: PopoverController,
+    private menu:MenuController) { }
+ 
   ngOnInit() {
+    this.menu.enable(true, 'admin-menu');
+    this.username = localStorage.getItem('UserName')
   }
 
 
