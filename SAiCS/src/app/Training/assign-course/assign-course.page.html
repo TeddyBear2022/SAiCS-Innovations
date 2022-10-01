@@ -42,7 +42,7 @@
 <!-- </div> -->
 <ion-row>
   <ion-col>
-    <table id="AssignCourseTable">
+    <!-- <table id="AssignCourseTable">
       <thead>
         <tr>
           <th>Title</th>
@@ -70,8 +70,33 @@
               </ion-select>
             </ion-item>
           </ion-list></td>
-          <!-- <td><ion-button (click)="AssignCourse()">Assign Course</ion-button></td> -->
           
+        </tr>
+      </tbody>
+    </table> -->
+    <!-- Course based on ranking -->
+    <table id="AssignCourseTable">
+      <thead>
+        <tr>
+          <th>Ambassador Type</th>
+          <th>Course Assigned</th>
+          <th></th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of courseAssignedData; let i = index">
+          <td>{{x.ambassadorType}}</td>
+          <td ><div *ngIf="x.coursesAssigned ==null" id="NoCourses">No Course assigned yet</div><div *ngIf="x.coursesAssigned != null" id="Assigned">Course(s) assigned</div></td>
+          <td>
+            <!-- <ion-list> -->
+            <!-- <ion-item lines="none"> -->
+              <ion-select  [multiple]="true" (ionChange)=" Assign($event, x)" [(ngModel)]="courseAssignedData[i].updateCourse" >
+                <ion-select-option  *ngFor="let x of courses" value="{{x.courseId}}">{{x.courseName}}</ion-select-option>
+              </ion-select>
+            <!-- </ion-item> -->
+          <!-- </ion-list> -->
+        </td>
         </tr>
       </tbody>
     </table>

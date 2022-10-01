@@ -441,13 +441,29 @@ export class ApiService {
   }
 
   GetCourseDetails(){
-    var specicCourse = localStorage.getItem('updateCourse')
-    var courseID = specicCourse.replace(',','')
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseID}`)
+    var specicCourse = localStorage.getItem('course')
+    // var course = specicCourse.replace(',','')
+    var courseId = Number(specicCourse)
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  GetAccessCourseDetails(id:number){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
-  GetAccessCourseDetails(){
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${localStorage.getItem('course')}`)
+  GetAccessCourseDetailsv1(){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${localStorage.getItem('course')}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
@@ -713,7 +729,7 @@ export class ApiService {
     })
   }
 
-  GetQuizData(courseId = localStorage.getItem('course')){
+  GetQuizData(courseId:number){
     return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
@@ -729,13 +745,14 @@ export class ApiService {
     })
   }
 
-  AssignCourse(courseId:number){
-    return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // AssignCourse(courseId:number){
+  //   return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
+
   BankInputInfo(){
     return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{
       headers: new HttpHeaders({
@@ -832,5 +849,21 @@ export class ApiService {
       })
     })
   }
-  // 
+
+  AssignCourseInfo(){
+    return this.api.get(this.apilink+`Training/AssignCourseInfo`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+   AssignCourse(assign:any){
+    return this.api.post(this.apilink+ `Training/AssignCourse`, assign, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  
 }
