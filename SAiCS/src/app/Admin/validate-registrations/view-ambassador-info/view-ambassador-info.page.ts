@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-view-ambassador-info',
@@ -51,6 +52,21 @@ export class ViewAmbassadorInfoPage implements OnInit {
 
   Back(){
     this.route.navigate(['validate-registrations'])
+  }
+
+  DownloadIDFile() {
+    console.log("Download file")
+    const byteCharacters = atob(this.registrationInfo.ambassadors[0].idphoto);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    FileSaver.saveAs(
+      blob,
+      `${this.registrationInfo.name + ' '+ this.registrationInfo.surname}-IDPhotFile.pdf`
+    );
   }
 
 }

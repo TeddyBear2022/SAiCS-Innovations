@@ -29,6 +29,7 @@ export class AccessCoursePage implements OnInit {
       console.log("Access course");
       console.log(data)
     })
+    
     this.username = localStorage.getItem('UserName')
   }
 
@@ -38,6 +39,8 @@ export class AccessCoursePage implements OnInit {
       // console.log("Access course");
       console.log(data)
     })
+
+    
     this.username = localStorage.getItem('UserName')
   }
 

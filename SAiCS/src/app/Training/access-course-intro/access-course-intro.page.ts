@@ -39,7 +39,10 @@ export class AccessCourseIntroPage implements OnInit {
     })
 
     //Getting course details
-    this.api.GetAccessCourseDetails().subscribe(data =>{
+    let data = localStorage.getItem('course')
+    let courseData = data.replace(',','')
+    console.log(courseData)
+    this.api.GetAccessCourseDetails(Number(courseData)).subscribe(data =>{
       console.log('access intro info', data);
       this.courseDetails = data
       this.course = this.courseDetails.course;
@@ -55,7 +58,10 @@ export class AccessCourseIntroPage implements OnInit {
   ionViewWillEnter(){
     this.ytVideo= false;
     //Getting course details
-    this.api.GetAccessCourseDetails().subscribe(data =>{
+    let data = localStorage.getItem('course')
+    let courseData = data.replace(',','')
+    console.log(courseData)
+    this.api.GetAccessCourseDetails(Number(courseData)).subscribe(data =>{
       console.log('access intro info', data);
       this.courseDetails = data
       this.course = this.courseDetails.course;

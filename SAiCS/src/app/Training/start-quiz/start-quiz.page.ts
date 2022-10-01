@@ -37,7 +37,10 @@ export class StartQuizPage implements OnInit {
     this.menu.enable(true, 'ambassador-menu');
 
     //Quiz data
-    this.api.GetQuizData().subscribe(data => {
+    let data = localStorage.getItem('course')
+    let courseData = data.replace(',','')
+    console.log(Number(courseData))
+    this.api.GetQuizData(Number(courseData)).subscribe(data => {
       this.questions = data
 
       console.log(data)

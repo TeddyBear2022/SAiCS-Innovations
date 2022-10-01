@@ -120,13 +120,13 @@ export class ApiService {
  
 
   //get ambassador rankings
-  GetAmbassadorRankings(){
-    return this.api.get(this.apilink+ `Admin/GetAmbassadorRankings`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // GetAmbassadorRankings(){
+  //   return this.api.get(this.apilink+ `Admin/GetAmbassadorRankings`,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
 
   
   AmbassadorAccessCourse():Observable<any[]>{
@@ -281,21 +281,21 @@ export class ApiService {
     })})
   }
 
-  AssignCourse(courseId:number){
-    return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // AssignCourse(courseId:number){
+  //   return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
 
-  GetQuizData(courseId = localStorage.getItem('course')){
-    return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // GetQuizData(courseId = localStorage.getItem('course')){
+  //   return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
 
   QuizCompleted(completed:boolean = true){
     return this.api.post(this.apilink+ `Training/QuizCompleted`, completed,{
@@ -672,13 +672,13 @@ export class ApiService {
     })
   }
 
-  GetSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
-    return this.api.get<FAQ[]>(this.apilink+ `Ambassador/GetSpecificFaq?categoryID=${categoryId}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // GetSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
+  //   return this.api.get<FAQ[]>(this.apilink+ `Ambassador/GetSpecificFaq?categoryID=${categoryId}`, {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
 
   ClientSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
     return this.api.get<FAQ[]>(this.apilink+ `Client/GetSpecificFaq?categoryID=${categoryId}`, {
@@ -942,13 +942,29 @@ export class ApiService {
   }
 
   GetCourseDetails(){
-    var specicCourse = localStorage.getItem('updateCourse')
-    var courseID = specicCourse.replace(',','')
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseID}`)
+    var specicCourse = localStorage.getItem('course')
+    // var course = specicCourse.replace(',','')
+    var courseId = Number(specicCourse)
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  GetAccessCourseDetails(id:number){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
-  GetAccessCourseDetails(){
-    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${localStorage.getItem('course')}`)
+  GetAccessCourseDetailsv1(){
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${localStorage.getItem('course')}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
   }
 
   UpdateSectionContent(sectionContent:SectionContent):Observable<boolean>{
@@ -1367,13 +1383,10 @@ export class ApiService {
       })} )
   }
 
-  RecruitmentRep(month: number)
-  {
-    return this.api.get(this.apilink + `Report/RecruitmentRep?month=${month}`, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })} )
-  }
+  // AmbassadorListRep()
+  // {
+  //   return this.api.get(this.apilink + "Report/AmbassadorListRep")
+  // }
 
 
   GetSalesRep(report: any)
@@ -1532,6 +1545,14 @@ export class ApiService {
   
   }
 
+  GetQuizData(courseId:number){
+    return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   AccountExists(email:string):Observable<boolean>{
     return this.api.get<boolean>(this.apilink +`User/UserExist?email=${email}`)
   }
@@ -1559,20 +1580,21 @@ export class ApiService {
     })
   }
 
-  CreateTarget(target:Target){
-    return this.api.post(this.apilink+ `Admin/CreateTarget`, target,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
-  BankInputInfo(){
-    return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + localStorage.getItem("token")
-      })
-    })
-  }
+  // CreateTarget(target:Target){
+  //   return this.api.post(this.apilink+ `Admin/CreateTarget`, target,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
+
+  // BankInputInfo(){
+  //   return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
 
   UpdateTarget(target:Target){
     return this.api.patch(this.apilink+ `Admin/UpdateTarget`, target,{
@@ -1603,6 +1625,65 @@ export class ApiService {
       })
     })
   }
+  GetAmbassadorRankings(){
+    return this.api.get(this.apilink+ `Admin/GetAmbassadorRankings`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  // GetQuizData(courseId:number){
+  //   return this.api.get(this.apilink+ `Training/GetQuizData?courseID=${courseId}`,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
+
+  // QuizCompleted(completed:boolean = true){
+  //   return this.api.post(this.apilink+ `Training/QuizCompleted`, completed,{
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
+
+  // AssignCourse(courseId:number){
+  //   return this.api.post(this.apilink+ `Training/QuizCompleted`, courseId, {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
+
+  BankInputInfo(){
+    return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  // InputInformation(){
+  //   return this.api.get(this.apilink+ `User/InputInformation`)
+  // }
+
+  GetSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+ `Ambassador/GetSpecificFaq?categoryID=${categoryId}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  // GetAmbassadorFAQS
+  // GetAmbassadorFAQS(){
+  //   return this.api.get(this.apilink+ `Ambassador/GetAmbassadorFAQS`, {
+  //     headers: new HttpHeaders({
+  //         Authorization: 'Bearer ' + localStorage.getItem("token")
+  //     })
+  //   })
+  // }
   AssignCourseData(){
     return this.api.get(this.apilink+ `Training/AssignCourseData`, {
       headers: new HttpHeaders({
@@ -1672,5 +1753,21 @@ export class ApiService {
       })
     })
   }
-  // 
+
+  AssignCourseInfo(){
+    return this.api.get(this.apilink+`Training/AssignCourseInfo`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+   AssignCourse(assign:any){
+    return this.api.post(this.apilink+ `Training/AssignCourse`, assign, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  
 }
