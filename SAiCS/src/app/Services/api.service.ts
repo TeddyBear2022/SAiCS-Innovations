@@ -881,4 +881,12 @@ export class ApiService {
       })
     })
   }
+
+  ViewAmbassadorFeedback(){
+    return this.api.get(this.apilink+ `Ambassador/AmbassadorsFeedback`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
 }

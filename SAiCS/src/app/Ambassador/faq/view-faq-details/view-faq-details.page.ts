@@ -14,6 +14,7 @@ export class ViewFaqDetailsPage implements OnInit {
 
   DeliveryFAQs: any[]
   showText: any = []
+  username
   constructor(public popoverController: PopoverController, 
     private api:ApiService, 
     private menu:MenuController, 
@@ -33,8 +34,10 @@ export class ViewFaqDetailsPage implements OnInit {
     this.api.GetSpecificFaq().subscribe(data => {
       this.DeliveryFAQs =data
       console.log(data);
+
       
     })
+    this.username = localStorage.getItem('UserName')
   }
 
   hoverStateIn(index){

@@ -1,6 +1,7 @@
 ion-toolbar
   {
     --background: #062b80;
+    color: #fafafa;
   }
 
   ion-menu-button
@@ -8,10 +9,11 @@ ion-toolbar
     --color: #FFFFFF;
   }
   ion-content {
-    --background: #f5f5f5;
-    --color : black;
+    --background: #fafafa;
   }
 
   ion-card{
     box-shadow:  10px 10px 10px;
   }
+
+  

@@ -347,7 +347,11 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'contexthelp',
     loadChildren: () => import('./User/contexthelp/contexthelp.module').then( m => m.ContexthelpPageModule),
     canLoad: [AuthGuard]
+  },  {
+    path: 'rejected',
+    loadChildren: () => import('./User/rejected/rejected.module').then( m => m.RejectedPageModule)
   },
+
 
 
 
