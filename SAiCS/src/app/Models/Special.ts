@@ -7,4 +7,5 @@ export class Special{
     specialName: string
     specialImage: string
     price: number
+    SpecialStatusId: number
 }

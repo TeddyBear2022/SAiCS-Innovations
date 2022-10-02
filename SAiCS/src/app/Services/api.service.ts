@@ -943,14 +943,27 @@ export class ApiService {
 
   GetCourseDetails(){
     var specicCourse = localStorage.getItem('course')
-    // var course = specicCourse.replace(',','')
-    var courseId = Number(specicCourse)
+    var course = specicCourse.replace(',','')
+    var courseId = Number(course)
     return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseId}`,{
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
     })
   }
+
+  
+  UpdateCourseDetails(){
+    var specicCourse = localStorage.getItem('updateCourse')
+    var course = specicCourse.replace(',','')
+    var courseId = Number(course)
+    return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${courseId}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
   GetAccessCourseDetails(id:number){
     return this.api.get(this.apilink+`Training/GetSpecificCourse?id=${id}`,{
       headers: new HttpHeaders({
@@ -1174,6 +1187,14 @@ export class ApiService {
       })} )
   }
 
+  SetSpecialStatus(Id:number, status: string)
+  {
+    return this.api.put(this.apilink + `Admin/SetSpecialStatus?id=${Id}&statusID=${status}`, null, {observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
   UpdateSpecialCategory(Id:number, Name: string)
   {
     return this.api.put(this.apilink + `Admin/UpdateSpecialCategory?id=${Id}&Name=${Name}`, null, {observe: 'response', responseType: 'text',
@@ -1383,6 +1404,14 @@ export class ApiService {
       })} )
   }
 
+  RecruitmentRep(month: number)
+  {
+    return this.api.get(this.apilink + `Report/RecruitmentRep?month=${month}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })} )
+  }
+
   // AmbassadorListRep()
   // {
   //   return this.api.get(this.apilink + "Report/AmbassadorListRep")
@@ -1580,13 +1609,13 @@ export class ApiService {
     })
   }
 
-  // CreateTarget(target:Target){
-  //   return this.api.post(this.apilink+ `Admin/CreateTarget`, target,{
-  //     headers: new HttpHeaders({
-  //         Authorization: 'Bearer ' + localStorage.getItem("token")
-  //     })
-  //   })
-  // }
+  CreateTarget(target:Target){
+    return this.api.post(this.apilink+ `Admin/CreateTarget`, target,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
 
   // BankInputInfo(){
   //   return this.api.get(this.apilink+ `Ambassador/BankInputInfo`,{

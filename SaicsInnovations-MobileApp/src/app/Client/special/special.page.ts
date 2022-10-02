@@ -1,36 +1,36 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
-import { ProfilePopoverComponent } from '../profile-popover/profile-popover.component';
-import { ApiService } from '../Services/api.service';
-import { CartService } from '../Services/cart.service';
-import { TemporaryStorage } from '../Services/TemporaryStorage.service';
-import { IonSelect  } from '@ionic/angular';
+import { IonSelect, PopoverController } from '@ionic/angular';
+import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
+import { ApiService } from 'src/app/Services/api.service';
+import { CartService } from 'src/app/Services/cart.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-special',
+  templateUrl: './special.page.html',
+  styleUrls: ['./special.page.scss'],
 })
-export class Tab1Page {
+export class SpecialPage implements OnInit {
   public setBorderColor: boolean = false;
-  merchandise = [];
+  merchandise: any = [];
   session: any;
   selectedItem;
-  filterKeys = ['name', 'catID', 'type'];
+  filterKeys = ['name', 'typeId'];
   search;
   categorysearch;
   username
   imageArray: any = [];
   @ViewChild('mySelect') selectRef: IonSelect;
   showList = true;
+  specialTypes: any = [];
 
   constructor(
     private api: ApiService,
     private route: Router,
     private tmpStorage: TemporaryStorage,
-    private cartService: CartService
+    private cartService: CartService,
+    private popoverController:PopoverController
   ) {}
 
 
@@ -55,20 +55,25 @@ export class Tab1Page {
   }
 
   async GetCatalog() {
-    var data = await this.api.ViewCatalog().toPromise();
-    var dataObj = JSON.parse(JSON.stringify(data));
-    this.merchandise = dataObj;
-    console.log(this.merchandise);
-    this.imageArray = new Array(this.merchandise.length).fill(null);
+    this.api.ViewCatelogSpecials().subscribe((data) => {
+      this.merchandise = data;
+      console.log(this.merchandise);
+      this.imageArray = new Array(this.merchandise.length).fill(null);
       //console.log(this.imageArray);
 
       this.merchandise.forEach((obj: any) => {
         let index = this.merchandise.findIndex((x) => x.id == obj.id);
 
-        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+        this.api.GetSpImage(obj.id).subscribe((baseImage: any) => {
           this.imageArray[index] = { id: obj.id, image: baseImage.image };
         });
       });
+    });
+
+    this.api.GetSpecialTypes().subscribe((res) => {
+      this.specialTypes = res;
+      //console.log(this.specials);
+    });
   }
 
   GetMerchImage(id: number) {
@@ -133,4 +138,14 @@ export class Tab1Page {
     localStorage.setItem('CatalogItem', JSON.stringify(id));
     this.route.navigate(['/item-details']);
   }
+
+   // Show Profile optionss when icon on right of navbar clicked function
+   async presentPopover(event)
+   {
+     const popover = await this.popoverController.create({
+       component: ProfilePopoverComponent,
+       event
+     });
+     return await popover.present();
+   }
 }

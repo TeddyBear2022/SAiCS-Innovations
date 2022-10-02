@@ -8,6 +8,7 @@ import { ViewOrdersPageRoutingModule } from './view-orders-routing.module';
 
 import { ViewOrdersPage } from './view-orders.page';
 import { UpdateOrderStatusComponent } from '../update-order-status/update-order-status.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { UpdateOrderStatusComponent } from '../update-order-status/update-order-
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    ViewOrdersPageRoutingModule
+    ViewOrdersPageRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [ViewOrdersPage, UpdateOrderStatusComponent],
   entryComponents: [UpdateOrderStatusComponent]

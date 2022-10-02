@@ -10,7 +10,6 @@ import { LandingPagePage } from './landing-page.page';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +17,8 @@ import { PipesModule } from 'src/app/Pipes/pipes/pipes.module';
     LandingPagePageRoutingModule,
     IonicModule,
     NgbModule,
-    PipesModule
+    PipesModule,
+
   ],
   declarations: [LandingPagePage]
 })

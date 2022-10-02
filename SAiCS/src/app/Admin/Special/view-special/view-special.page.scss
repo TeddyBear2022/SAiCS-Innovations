@@ -56,6 +56,16 @@ ion-content {
     color: white;
   }
 
+  .disableRow
+  {
+    background-color: #dddddd;
+    color: #dddddd;
+    img {
+      opacity:0.5;
+    }
+  }
+
+
 //   Buttons for table 
   table{
       #update{--background: #0070c0; text-transform: none; font-style: italic;}

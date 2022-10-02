@@ -21,7 +21,7 @@
         <ion-row>
           <ion-input formControlName="AccountHolder" placeholder="Please Enter the account holders full name"></ion-input>
         </ion-row>
-        <span *ngIf="BankingDetailForm.submitted && BankingDetails.controls.AccountHolder.invalid">Please the account holder full name</span>
+        <span *ngIf="BankingDetailForm.submitted && BankingDetails.controls.AccountHolder.invalid">Please enter the account holder full name</span>
         <ion-row>
       <ion-label>Account Number:</ion-label>
     </ion-row>
@@ -29,7 +29,7 @@
     <ion-row>
       <ion-input formControlName="AccountNumber" placeholder="Please enter a account number"></ion-input>
     </ion-row>
-    <span *ngIf="BankingDetailForm.submitted && BankingDetails.controls.AccountNumber.invalid ">Please a valid account number</span>
+    <span *ngIf="BankingDetailForm.submitted && BankingDetails.controls.AccountNumber.invalid ">Please enter a valid account number</span>
     <ion-row>
       <ion-label>Account Type:</ion-label>
     </ion-row>

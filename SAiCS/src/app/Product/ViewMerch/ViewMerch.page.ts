@@ -173,6 +173,7 @@ DeleteItem(id: number)
       if(res.body == "Item Updated successfully")
       {
         console.log(res.body);
+        this.GetAllMerch()
       }
       else
       {
@@ -181,13 +182,14 @@ DeleteItem(id: number)
      
       
     })
+   
       
     }
      else
      {
         this.Notif(res.body) 
      }
-    this.GetAllMerch()
+     this.GetAllMerch()
   })
   
   console.log('Confirm Ok');

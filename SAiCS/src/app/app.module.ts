@@ -14,7 +14,6 @@ import { NavbarMenuPage } from './navbar-menu/navbar-menu.page';
 import { AddContentModalComponent } from './Training/new-course/add-content-modal/add-content-modal.component';
 
 
-
 //import { YouTubePlayerModule } from "@angular/youtube-player";
 
 @NgModule({
@@ -28,7 +27,6 @@ import { AddContentModalComponent } from './Training/new-course/add-content-moda
     ReactiveFormsModule,
     NgbModule,
     FormsModule,
-    
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

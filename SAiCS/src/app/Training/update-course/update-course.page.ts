@@ -39,7 +39,7 @@ export class UpdateCoursePage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
-    this.api.GetCourseDetails().subscribe(data =>{
+    this.api.UpdateCourseDetails().subscribe(data =>{
       console.log(data);
       this.courseDetails = data
       this.course = this.courseDetails.course;

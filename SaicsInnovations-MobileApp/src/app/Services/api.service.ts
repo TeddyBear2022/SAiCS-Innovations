@@ -305,6 +305,50 @@ export class ApiService {
 })})
   }
 
+  ViewCatalogItem(id: number)
+  {
+    return this.api.get(this.apilink + `User/ViewCatalogItem?id=${id}`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
+  }
+
+  ViewCatelogSpecials()
+  {
+    return this.api.get(this.apilink + "User/ViewCatelogSpecials", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+  
+  GetSpecialTypes()
+  {
+    return this.api.get(this.apilink + "User/GetSpecialTypes", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+
+  OrderEmail(EmailTo: string, checkout: number)
+  {
+    return this.api.post(this.apilink + `User/OrderEmail?EmailTo=${EmailTo}&Order=${checkout}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
+  AmbassaodorNotification(EmailTo: string, checkout: number)
+  {
+    return this.api.post(this.apilink + `User/AmbassaodorNotification?EmailTo=${EmailTo}&Order=${checkout}`,checkout,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
   GetMerchImage(id: number)
   {
     return this.api.get(this.apilink + `User/GetMerchImage?id=${id}`,{headers: new HttpHeaders({

@@ -1,3 +1,9 @@
+ion-toolbar{
+  --background: #0070c0;
+  --color: #ffffff;
+}
+
+
 #deliveryInput{
     border-radius: 3px;
     border:black solid 2px; 
@@ -13,4 +19,29 @@
     font-size: 15px;
     border-radius: 5px;
     height: 35px;
+    width: 100px;
+  }
+
+  ion-modal{
+    ion-toolbar,ion-content{--background: #f1f1f1;}
+    button{
+      text-transform: none;
+      font-weight: bold;
+    }
+    ion-list {
+      --ion-background-color: transparent !important;
+      --ion-border-color: transparent !important;
+      }
+  }
+
+  #deliveryInput{
+    border-radius: 3px;
+    border:black solid 2px; 
+    height: 30px; width: 250px;
+    color: black;
+
+  }
+  select::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+    opacity: 1; /* Firefox */
   }

@@ -82,3 +82,81 @@ td {
   justify-content: center;
   align-items: center;
 }
+
+ /* Style the tab */
+ .tab {
+  overflow: hidden;
+  width: 86%;
+  margin: 0 auto;
+  // border: 1px solid #ccc;
+  // background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  border-bottom: 3px solid #000000;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  border-top: none;
+  width: 85%;
+  margin: 0 auto;
+  float: left;
+
+  table{margin-top: 3%;}
+  ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+}
+}
+
+.pagination {
+  font-size: 14px;
+  text-align: center;
+  margin: 20px auto;
+}
+
+::ng-deep .pagination-next a,
+::ng-deep .pagination-previous a {
+  outline: none;
+}
+
+::ng-deep .ngx-pagination .current {
+  border-radius: 4px;
+}
+
+::ng-deep .ngx-pagination {
+  padding: 0 !important;
+}
+
+::ng-deep .ngx-pagination a:hover,
+::ng-deep .ngx-pagination button:hover {
+  border-radius: 4px;
+}
+
+::ng-deep .ngx-pagination a,
+::ng-deep .ngx-pagination button {
+  border-radius: 4px;
+  outline: none;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -28,8 +28,14 @@ export class ViewOrdersPage implements OnInit {
   session: any;
   username;
   commission:any;
+  p
+  p1
+  p2
   
   ionCheck={isChecked:false}
+  
+  @ViewChild('All' ) fileInput: ElementRef;
+  @ViewChild('clickOnView') clickOnView: ElementRef;
 
   constructor(
     private menu: MenuController,
@@ -55,12 +61,30 @@ export class ViewOrdersPage implements OnInit {
     this.AmbassadorDiscount()
   }
 
+  ionViewDidEnter() {
+    document.getElementById('Pending').style.display = 'flex';
+  }
+
   get TotalItems() {
     // this.cartService.getItems();
     this.cartService.loadCart();
     var cartItemCount = [];
     cartItemCount = this.cartService.getItems();
     return cartItemCount.length;
+  }
+
+  openOrder(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName('tabcontent');
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = 'none';
+    }
+    tablinks = document.getElementsByClassName('tablinks');
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(' active', '');
+    }
+    document.getElementById(cityName).style.display = 'flex';
+    evt.currentTarget.className += ' active';
   }
 
   ViewSalesOrder() {
@@ -108,29 +132,6 @@ export class ViewOrdersPage implements OnInit {
     });
     await modal.present();
   }
-    // this.isModalOpen = isOpen;
-
-    // if(this.isModalOpen == true)
-    // {
-    //   let info: any;
-    //   this.api.SalesOrderDetails(id).subscribe((res) => {
-    //     info = res;
-  
-    //     if(info.delivery == null)
-    //       this.ionCheck.isChecked = false
-    //     else
-    //     this.ionCheck.isChecked = true
-  
-  
-    //     this.item = {
-    //       id: info.id,
-    //       delivery: info.delivery,
-    //       orderStatus: info.orderStatus,
-    //     };
-    //   });
-    // }
-    
-  //}
 
   returnFalse()
   {

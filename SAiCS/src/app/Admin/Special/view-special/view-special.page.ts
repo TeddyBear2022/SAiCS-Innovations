@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
 import { AlertController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { Special } from 'src/app/Models/Special';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -18,6 +19,7 @@ export class ViewSpecialPage implements OnInit {
   search;
   p;
   username
+  spStat: any = []
 
   constructor( public popoverController: PopoverController,
     private api: ApiService, private router: Router,
@@ -66,17 +68,52 @@ export class ViewSpecialPage implements OnInit {
         
       })
 
+      this.api.GetSpecialStatuses().subscribe((res) => {
+        let data: any = res
+        console.log(data);
+        
+        for(let d of data)
+        {
+           this.spStat.push({
+            id: d.specialStatusId,
+            name: d.statusName
+           })
+        }
+      });
+
   }
 
 
   PerformDelete(id: number)
   {
     this.api.DeleteSpecial(id).subscribe((res) => {
+      let message = ""
+
       if(res.body == "Deleted")
       {
+        message = "Item deleted Sucessfully deleted"
+        this.Notif(message) 
         this.GetInfo()
         this.presentToast()
         console.log('Confirm Ok');
+      }
+      else if(res.body.includes('547'))
+      {
+        console.log(547);
+        this.Notif(res.body) 
+
+        const statusId = this.spStat.find(x => x.name == "Expired");
+
+        this.api.SetSpecialStatus(id, statusId.id).subscribe((res) =>{
+          if(res.body == "Updated")
+          {
+            console.log(res.body);
+          }
+          else
+          {
+            console.log(res.body);
+          }
+        })
       }
       else
       {

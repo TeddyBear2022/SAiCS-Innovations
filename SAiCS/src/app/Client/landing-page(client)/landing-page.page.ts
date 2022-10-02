@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
-import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service'
 
 @Component({
   selector: 'app-landing-page',
@@ -24,7 +24,9 @@ export class LandingPagePage implements OnInit {
 
   slideOpts = {
     initialSlide: 1,
-    speed: 400
+    speed: 400,
+    autoplay: {delay: 4000},
+    loop: true
   };
 
   constructor(
@@ -51,6 +53,8 @@ export class LandingPagePage implements OnInit {
     this.username = localStorage.getItem('UserName')
   }
 
+ 
+
   get TotalItems() {
     // this.cartService.getItems();
     this.cartService.loadCart();
@@ -76,6 +80,8 @@ export class LandingPagePage implements OnInit {
         });
       });
   }
+
+ 
 
   GetMerchImage(id: number) {
     return this.imageArray.find((x) => x?.id === id)?.image;

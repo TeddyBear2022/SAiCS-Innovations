@@ -171,16 +171,17 @@ export class Tab2Page {
   //Place order
   PlaceOrder() {
 
-    // var orderdetails = {
-    //   itemCount: this.TotalItems,
-    //   vat: this.CalculatedVAT,
-    //   vatPercentage: this.vat,
-    //   subtotal: this.Subtotal,
-    //   totalCost: this.OrderTotal,
-    //   deliveryOption: this.deliveryOption,
-    //   delveryId: this.SelectedDel
-    // };
-    // localStorage.setItem('checkout', JSON.stringify(orderdetails));
+    var orderdetails = {
+      itemCount: this.TotalItems,
+      vat: this.CalculatedVAT,
+      vatPercentage: this.vat,
+      subtotal: this.Subtotal,
+      totalCost: this.OrderTotal,
+      deliveryOption: false,
+      delveryId: null,
+      addressId: null
+    };
+    localStorage.setItem('checkout', JSON.stringify(orderdetails));
     
     this.router.navigate(['/tabs/tab2/checkout']);
   }

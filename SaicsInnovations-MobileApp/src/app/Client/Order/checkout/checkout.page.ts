@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
@@ -14,26 +14,26 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  @ViewChild('stepper') stepper;
   selectedFile: any;
   userAddress: any;
   deliveryOption = false;
-  SelectedDel;
-  SubTotal;
+  SelectedDel = "";
   deliveryArr: any;
   checkout: FormGroup;
-  OdrSmry: any;
   session: any;
   isModalOpen = false;
   AgentAccount: any;
   items: any = [];
-  isLinear = false;
-
+  OrdSumAddress: any;
+  OrdSmry: any;
+//
   firstFormGroup = this.fb.group({
     address: ['', Validators.required],
-    DelCtrl: ['', Validators.required],
   });
   secondFormGroup = this.fb.group({
-    secondCtrl: ['', Validators.required],
+    pdfFile: ['', Validators.required],
+    SelectedDel: ['', Validators.required]
   });
 
   setOpen(isOpen: boolean) {
@@ -42,7 +42,6 @@ export class CheckoutPage implements OnInit {
 
   constructor(
     public alertController: AlertController,
-    private modal: ModalController,
     private alert: AlertController,
     private api: ApiService,
     private fb: FormBuilder,
@@ -56,39 +55,88 @@ export class CheckoutPage implements OnInit {
     this.menu.enable(true, 'client-menu');
     this.session = this.tmpStorage.getSessioninfo();
     this.GetAddress();
-    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
-    this.deliveryOption = this.OdrSmry.deliveryOption;
     this.cartService.loadCart();
     this.items = this.cartService.getItems();
+    this.OrdSmry = JSON.parse(localStorage.getItem('checkout'))
     this.GetDelOptions();
+    this.AgentAccountInfo();
     this.checkout = this.fb.group({
       address: ['', [Validators.required]],
       pdfFile: ['', [Validators.required]],
     });
   }
 
-  ionViewWillEnter() {
-    this.OdrSmry = JSON.parse(localStorage.getItem('checkout'));
-    this.GetAddress();
-    this.AgentAccountInfo();
-    this.GetDelOptions();
+  ViewCart() {
+    console.log('cart');
+    this.route.navigate(['tabs/tab2']);
   }
 
-  get OrderTotal() {
-    if (this.deliveryOption == true) {
-      const sp = this.deliveryArr?.find(
-        (x) => x?.id === parseInt(this.SelectedDel)
-      )?.price;
-      return this.SubTotal + parseInt(sp);
-    } else {
-      return this.SubTotal;
-    }
+
+  toggleValue()
+  {
+   console.log(this.deliveryOption);
+   if(this.deliveryOption == false)
+   {
+    this.secondFormGroup.value.SelectedDel = ""
+    this.firstFormGroup.value.address == ""
+   }
+   
   }
+
+
+
+SubmitAddressFrom()
+{
+   if(this.deliveryOption == true && this.firstFormGroup.value.address == "")
+   {
+     this.Notif("Please select and address")
+   }
+   else
+   {
+    this.firstFormGroup.get('address').clearValidators();
+    this.firstFormGroup.get('address').updateValueAndValidity();
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.deliveryOption = this.deliveryOption
+    deliverValue.addressId = this.deliveryOption == true ? this.firstFormGroup.value.address : null;
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+    
+    this.stepper.next()
+   }
+}
+
+PaymentForm()
+{
+  if (this.deliveryOption == false) {
+    this.secondFormGroup.get('SelectedDel').clearValidators();
+    this.secondFormGroup.get('SelectedDel').updateValueAndValidity();
+  }
+
+  if(this.secondFormGroup.valid)
+  {
+    var deliverValue = JSON.parse(localStorage.getItem('checkout'));
+    deliverValue.delveryId = this.secondFormGroup.value.SelectedDel
+    localStorage.setItem('checkout', JSON.stringify(deliverValue));
+    this.stepper.next()
+  }
+  else
+  {
+    console.log("Nah");
+  }
+}
+
+GetSummaryAddress()
+{
+  this.OrdSumAddress = this.userAddress.filter(x => x.id == this.firstFormGroup.value.address);
+}
 
   onSelectChange(event) {
-    let value = event.target.value;
-    this.SelectedDel = value;
+    // let value = event.target.value;
+    // this.SelectedDel = value;
+    console.log(this.secondFormGroup.value.SelectedDel);
+    
   }
+
+
 
   GetAddress() {
     this.api.GetAddress(this.session[0].id).subscribe((data) => {
@@ -103,9 +151,8 @@ export class CheckoutPage implements OnInit {
       data = res;
       this.deliveryArr = data;
     });
-    this.SelectedDel = this.OdrSmry.delveryId;
-    this.SubTotal = this.OdrSmry.subtotal;
   }
+
   AgentAccountInfo() {
     this.api.AgentAccountInfo(this.session[0].id).subscribe((data) => {
       this.AgentAccount = data;
@@ -134,14 +181,10 @@ export class CheckoutPage implements OnInit {
     this.route.navigate(['/address']);
   }
 
-  submitForm() {
-    if (this.deliveryOption == false) {
-      this.checkout.get('address').clearValidators();
-      this.checkout.get('address').updateValueAndValidity();
-    }
-
-    if (this.checkout.valid) {
-      var pushToCart = [];
+  PlaceOrder() {
+    if(this.selectedFile)
+    {
+     var pushToCart = [];
       for (let item of this.items) {
         let cart = {} as CartItem;
         cart.merchandiseId = item.spId != null ? null : item.id;
@@ -151,39 +194,56 @@ export class CheckoutPage implements OnInit {
         pushToCart.push(cart);
       }
 
-      pushToCart.forEach((e) => {
+    pushToCart.forEach((e) => {
         this.api.ClientAddToCart(this.session[0].id, e).subscribe((res) => {
           console.log(res.body);
         });
       });
 
-      let order = {} as Checkout;
-      order.addressId =
-        this.deliveryOption == true ? this.checkout.value.address : null;
+         let order = {} as Checkout;
+      order.addressId = this.deliveryOption == true ? parseInt(this.firstFormGroup.value.address) : null;
       order.userId = this.session[0].id;
       order.orderStatusId = 1;
       order.proofOfPayment = this.selectedFile;
-      order.Vat =parseFloat(this.OdrSmry.vatPercentage);
-      order.DeliveryTypeId = this.OdrSmry.delveryId;
+      order.Vat =parseFloat(this.OrdSmry.vatPercentage);
+      order.DeliveryTypeId = parseInt(this.secondFormGroup.value.SelectedDel);
       order.ShippingCost = this.deliveryArr.find(
-        (x) => x?.id === parseInt(this.SelectedDel)
+        (x) => x?.id === parseInt(this.secondFormGroup.value.SelectedDel)
       )?.price;
 
       this.api.ClientCheckout(order).subscribe((res) => {
         console.log(res.body);
-        if (res.body == 'Placed') {
-          this.checkout.get('address').setValidators(Validators.required);
-          this.checkout.get('address').updateValueAndValidity();
-
+        if (res.status === 200) {
+          this.api.OrderEmail(this.session[0].email, parseInt(res.body)).subscribe()
+          this.api.AmbassaodorNotification(this.AgentAccount.email, parseInt(res.body)).subscribe()
+          //this.ClientEmail(this.username, this.session[0].email, address, res.body, order.ShippingCost, "Client")
+          //this.ClientEmail(this.username, this.AgentAccount.email, address, res.body, order.ShippingCost, "Ambassador")
           this.showAlert();
+
+
         } else {
           this.ErrorAlert();
         }
       });
-      //console.log(order)
-    } else {
-      console.log('invalid form');
+      console.log(order)
     }
+    else
+    {
+      console.log("Inavlid form");
+      
+    }
+   
+  }
+
+  async Notif(message:string) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [{
+      text: 'OK'}]
+    });
+  
+    await alert.present();
+    
   }
 
   ClearStore()
