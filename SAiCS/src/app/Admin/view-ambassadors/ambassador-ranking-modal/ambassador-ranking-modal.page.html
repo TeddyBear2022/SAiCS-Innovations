@@ -20,14 +20,19 @@
 </ion-row>
 
 <ion-row *ngIf="this.updateRanking != undefined">
-  
+  <h4>Discount Percentage</h4>
   <ion-row><ion-input readonly="true" placeholder="Ambassador ranking" [value]="this.updateRanking.ambassadorTypeName" ></ion-input> 
     <ion-input *ngIf="updateRanking != undefined" formControlName="ambDiscount" placeholder="Discount percentage" ></ion-input><ion-label id="percentage">%</ion-label><br></ion-row>
   <ion-row>
     <span *ngIf="this.discount.controls.ambDiscount.invalid && Form.submitted"> Please enter a valid discount percentage</span></ion-row>
-</ion-row>
+    <h4>Commissions Percentage</h4>
+    <ion-row><ion-input readonly="true" placeholder="Ambassador ranking" [value]="this.updateRanking.ambassadorTypeName" ></ion-input> 
+      <ion-input *ngIf="updateRanking != undefined" formControlName="ambCommissionRate" placeholder="Commission rate percentage" ></ion-input><ion-label id="percentage">%</ion-label><br></ion-row>
+    <ion-row>
+      <span *ngIf="this.discount.controls.ambCommissionRate.invalid && Form.submitted"> Please enter a valid commission percentage</span></ion-row>
+  </ion-row>
 
-<ion-row id="buttons">
+<ion-row id="buttons" *ngIf="this.updateRanking != undefined">
   <ion-col></ion-col>
   <ion-col></ion-col>
   <ion-button type="submit" (click)="AssignAmbRanking()">Assign</ion-button>
@@ -35,6 +40,7 @@
 </ion-row>
 </div>
 </form>
+
 </ion-content>
 <ion-footer>
   

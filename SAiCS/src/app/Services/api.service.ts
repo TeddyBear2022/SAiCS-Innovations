@@ -865,5 +865,20 @@ export class ApiService {
       })
     })
   }
+
+  ContextHelp(keyword:string, ambassadorType:number){
+    return this.api.get(this.apilink+`User/ContextHelp?keyword=${keyword}&faqtype=${ambassadorType}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
   
+  SearchHelp(keyword:string, ambassadorType:number,category:number){
+    return this.api.get(this.apilink+`User/SearchHelp?keyword=${keyword}&faqtype=${ambassadorType}&category=${category}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
 }

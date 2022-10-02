@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';;
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 
 @Component({
   selector: 'app-landing-page',
@@ -28,7 +29,8 @@ export class LandingPagePage implements OnInit {
   public popoverController: PopoverController, 
   private api: ApiService, private cartService: CartService, private fb: FormBuilder,
   private tmpStorage:TemporaryStorage,
-  private menu:MenuController,public router: Router){}
+  private menu:MenuController,public router: Router,
+  private modal:ModalController){}
   
   async presentPopover(event)
   {
@@ -108,5 +110,19 @@ viewCart(merchandise)
 {
   this.cartService.SetImage = merchandise
   this.router.navigate(['/view-ambassador-cart'])
+}
+
+async ContextHelp(){
+  console.log("Open context help");
+  const modal = await this.modal.create({
+    component: ContexthelpPage,
+    componentProps:{keyword : "bank", type: 2}
+  });
+  modal.onDidDismiss().then((info) => {
+    
+  })
+  
+  await modal.present();
+  
 }
 }

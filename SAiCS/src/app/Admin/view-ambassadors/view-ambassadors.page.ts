@@ -138,4 +138,5 @@ export class ViewAmbassadorsPage implements OnInit {
 
     await alert.present();
   }
+  
 }
