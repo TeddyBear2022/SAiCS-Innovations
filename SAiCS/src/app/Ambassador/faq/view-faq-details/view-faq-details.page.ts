@@ -36,6 +36,7 @@ export class ViewFaqDetailsPage implements OnInit {
     this.api.GetSpecificFaq().subscribe(data => {
       this.DeliveryFAQs =data
       console.log(data);
+
       
     })
     this.username = localStorage.getItem('UserName')

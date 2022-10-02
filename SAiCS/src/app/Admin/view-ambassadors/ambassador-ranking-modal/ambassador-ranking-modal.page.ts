@@ -24,7 +24,8 @@ export class AmbassadorRankingModalPage implements OnInit {
   ngOnInit() {
     console.log(this.ranking)
     this.discount = new FormGroup({
-      ambDiscount : new FormControl("", Validators.compose([Validators.required, Validators.pattern(/^([0-9]*)(.)([0-9]*)/)]))
+      ambDiscount : new FormControl("", Validators.compose([Validators.required, Validators.pattern(/^([0-9]*)(.)([0-9]*)/)])),
+      ambCommissionRate : new FormControl("", Validators.compose([Validators.required, Validators.pattern(/^([0-9]*)(.)([0-9]*)/)]))
     })
   }
 
@@ -40,6 +41,7 @@ export class AmbassadorRankingModalPage implements OnInit {
     console.log(event)
     console.log(this.ranking[event.detail.value-1])
     this.discount.controls['ambDiscount'].setValue(this.ranking[event.detail.value-1].discountPercentage*100)
+    this.discount.controls['ambCommissionRate'].setValue(this.ranking[event.detail.value-1].commissionRate*100)
     this.updateID = event.detail.value-1
     
     this.updateRanking = this.ranking[event.detail.value-1]
@@ -51,6 +53,7 @@ export class AmbassadorRankingModalPage implements OnInit {
     if(this.discount.valid){
       console.log(this.updateID)
       this.ranking[this.updateID].discountPercentage = (this.discount.get(['ambDiscount']).value/100)
+      this.ranking[this.updateID].commissionRate = (this.discount.get(['ambCommissionRate']).value/100)
       console.log("update",this.updateRanking)
       this.api.UpdateAmbassadorDiscounts(this.updateRanking).subscribe(data => {
         console.log(data)

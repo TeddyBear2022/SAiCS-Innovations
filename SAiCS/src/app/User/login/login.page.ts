@@ -87,6 +87,9 @@ export class LoginPage implements OnInit {
             if(applicationStatus[0].applicationStatusId==1){
               this.router.navigate(['waiting'])
             }
+            if(applicationStatus[0].applicationStatusId==3){
+              this.router.navigate(['rejected'])
+            }
             if(applicationStatus[0].applicationStatusId==2){
               this.router.navigate(['ambassador-landing-page'])
               localStorage.setItem('UserRole',"Ambassador")

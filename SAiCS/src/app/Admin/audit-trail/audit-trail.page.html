@@ -38,7 +38,7 @@
           <th>Date Stamp</th>
           <th>New Values</th>
           <th>Old Values</th>
-          <th>UserId</th>
+          <th>Admin user full name</th>
           <!-- <th>Primary Key</th> -->
         </tr>    
     </thead>
@@ -51,7 +51,7 @@
       <td>{{a.dateTime | date: 'dd/MM/yyyy'}}</td>
       <td >{{a.newValues}}</td>
       <td><div *ngIf="a.oldValues == null">None</div><div *ngIf="a.oldValues != null">{{a.oldValues}}</div></td>
-      <td>{{a.userId}}</td>
+      <td>{{a.fullName}}</td>
       <!-- <td></td > -->
       </tr>
     </tbody>

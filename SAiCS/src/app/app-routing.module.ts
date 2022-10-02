@@ -334,11 +334,6 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     canLoad: [ClientAuthGuard]
   },
   {
-    path: 'audit-trail',
-    loadChildren: () => import('./Admin/audit-trail/audit-trail.module').then( m => m.AuditTrailPageModule),
-    // canLoad: [AdminAuthGuard]
-  },
-  {
     path: 'view-faq-details',
     loadChildren: () => import('./Ambassador/faq/view-faq-details/view-faq-details.module').then( m => m.ViewFaqDetailsPageModule),
     canLoad: [AmbassadorAuthGuard]
@@ -370,9 +365,24 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
   {
     path: 'ambassador-special-item',
     loadChildren: () => import('./Ambassador/ambassador-special/ambassador-special-item/ambassador-special-item.module').then( m => m.AmbassadorSpecialItemPageModule)
-  },  {
+  },
+  {
     path: 'general-maintainance',
     loadChildren: () => import('./Admin/general-maintainance/general-maintainance.module').then( m => m.GeneralMaintainancePageModule)
+  },
+  {
+    path: 'audit-trail',
+    loadChildren: () => import('./Admin/audit-trail/audit-trail.module').then( m => m.AuditTrailPageModule),
+    canLoad: [AdminAuthGuard]
+  },
+  {
+    path: 'contexthelp',
+    loadChildren: () => import('./User/contexthelp/contexthelp.module').then( m => m.ContexthelpPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'rejected',
+    loadChildren: () => import('./User/rejected/rejected.module').then( m => m.RejectedPageModule)
   },
 
 
