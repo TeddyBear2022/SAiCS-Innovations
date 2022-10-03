@@ -68,7 +68,9 @@ export class CheckoutPage implements OnInit {
 
   ionViewWillEnter()
   {
-    
+    this.GetAddress();
+    this.GetDelOptions();
+    this.AgentAccountInfo();
   }
 
   ViewCart() {
