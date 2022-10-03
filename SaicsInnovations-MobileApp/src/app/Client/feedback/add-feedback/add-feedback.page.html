@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="margin-left: 50px;">Add Feedback</ion-title>
+    <ion-button fill="clear" slot="start" (click)="Back()">
+      <ion-icon size="large" name="arrow-back" color="light"></ion-icon>
+     </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <form [formGroup]= "feedbackForm" #localForm = 'ngForm' id="clientFeedbackForm" (ngSubmit)="submitForm()">
+  <ion-grid>
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-select placeholder="Feedback Type" interface="popover" formControlName="feedbackType" (ngModelChange)="clearControl($event)">
+            <ion-select-option value="1">Product</ion-select-option>
+            <ion-select-option value="2">Ambassador</ion-select-option>
+          </ion-select>
+          <span *ngIf="localForm.submitted && feedbackForm.controls['feedbackType'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-item *ngIf="feedbackForm.value.feedbackType  == 2" id="myAmbassadorItem">
+            <ion-label name="ambassador" >
+              {{myAmbassador.name}}
+              </ion-label>
+          </ion-item>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-select placeholder="Product Type" interface="popover" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById($event)">
+            <ion-select-option *ngFor="let m of MerchCat" value= {{m.merchCategoryId}}>{{m.merchCategoryName}}</ion-select-option>
+          </ion-select>
+          <span *ngIf="feedbackForm.value.feedbackType  == 1 && localForm.submitted && feedbackForm.controls['productType'].invalid">Required</span>
+          </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-select  placeholder="Product Name" interface="popover" formControlName="productName" *ngIf="feedbackForm.value.feedbackType  == 1">
+            <ion-select-option *ngFor="let p of products" value="{{p.id}}">{{p.name}}</ion-select-option>
+          </ion-select>
+          <span *ngIf="feedbackForm.value.feedbackType  == 1 && localForm.submitted && feedbackForm.controls['productName'].invalid">Required</span>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-label style="display: block;text-align: center;">Description:</ion-label>
+          <ion-textarea formControlName="description"></ion-textarea>
+          <span *ngIf="localForm.submitted && feedbackForm.controls['description'].invalid">Required</span>
+          </ion-item-group>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col align="center">
+        <ion-item-group>
+          <ion-button  type="submit" id="submitButton">Submit</ion-button>
+          <ion-button  id="cancelButton" (click)="Cancel()">Cancel</ion-button>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+</ion-content>
+

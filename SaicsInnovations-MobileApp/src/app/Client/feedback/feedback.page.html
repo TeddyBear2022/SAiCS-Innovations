@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">Let's get your Feedback!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <ion-row>
+    <ion-button style="margin-left: 60%;" fill="#08c10f" routerLink="./add-feedback" id="addBtn">
+      Add Feedback
+    </ion-button>
+  </ion-row>
+  <br>
+
+  <ion-row>
+    <div class="tab">
+      <button class="tablinks" (click)="ChooseOption('agent')" [ngClass]="feedbackOpt == 'agent' ?'active' : ''">Ambassador</button>
+      <button class="tablinks" (click)="ChooseOption('product')" [ngClass]="feedbackOpt == 'product' ?'active' : ''">Products</button>
+    </div>
+  </ion-row>
+
+  <ion-row *ngIf="feedbackOpt == 'product'" id="showData">
+    <ion-list>
+      <ion-item  *ngFor="let f of ProductFeedback">
+        <ion-label class="ion-text-wrap ">
+          <h4>{{f.date | date: 'dd/MM/yyyy'}}</h4>
+          <p style="font-weight: 600;">{{f.name}}</p>
+          <p>{{f.description}}
+          </p>
+        </ion-label>
+        <ion-label slot="end">
+          <ion-button
+            (click)="DeleteFeedback(f.id, select.value)"
+            fill="clear"
+            style="color: #062b80; text-transform: none; font-size: 14px"
+          >
+            <ion-icon id="editBtn" name="trash"></ion-icon>
+          </ion-button>
+        </ion-label>
+    </ion-item>
+    </ion-list>
+</ion-row>
+
+
+<ion-row *ngIf="feedbackOpt == 'agent'" id="showData">
+  <ion-list>
+    <ion-item  *ngFor="let f of AmbassadorFeedback">
+      <ion-label class="ion-text-wrap ">
+        <h4>{{f.date | date: 'dd/MM/yyyy'}}</h4>
+        <p style="font-weight: 600;">{{f.name}}</p>
+        <p>{{f.description}}
+        </p>
+      </ion-label>
+      <ion-label slot="end">
+        <ion-button
+          (click)="DeleteFeedback(f.id, select.value)"
+          fill="clear"
+          style="color: #062b80; text-transform: none; font-size: 14px"
+        >
+          <ion-icon id="editBtn" name="trash"></ion-icon>
+        </ion-button>
+      </ion-label>
+  </ion-item>
+  </ion-list>
+</ion-row>
+
+</ion-content>

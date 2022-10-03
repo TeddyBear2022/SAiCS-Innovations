@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SpecialItemPageRoutingModule } from './special-item-routing.module';
 
 import { SpecialItemPage } from './special-item.page';
+import { PipesModule } from 'Pipes/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SpecialItemPageRoutingModule
+    SpecialItemPageRoutingModule,
+    PipesModule
   ],
   declarations: [SpecialItemPage]
 })

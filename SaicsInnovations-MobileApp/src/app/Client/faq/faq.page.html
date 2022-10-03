@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">Let Us Answer Your Questions!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let f of faqCategories" id="rowData">
+        <ion-card >
+          <ion-card-header>
+          </ion-card-header>
+          <br>
+          <ion-card-content>
+            {{f.categoryName}}
+            <br>
+          </ion-card-content>
+          <ion-footer >
+            <ion-label (click)="showFAQ(f.faqcategoryId)"><u>Learn more</u></ion-label>
+          </ion-footer>
+        </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>

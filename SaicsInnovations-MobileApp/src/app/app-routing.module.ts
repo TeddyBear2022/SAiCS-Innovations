@@ -45,8 +45,16 @@ const routes: Routes = [
     loadChildren: () => import('./Client/item-details/item-details.module').then( m => m.ItemDetailsPageModule)
   },
   {
-    path: 'special',
-    loadChildren: () => import('./Client/special/special.module').then( m => m.SpecialPageModule)
+    path: 'special-item',
+    loadChildren: () => import('./Client/special/special-item/special-item.module').then( m => m.SpecialItemPageModule)
+  },
+  {
+    path: 'faq-details',
+    loadChildren: () => import('./Client/faq/faq-details/faq-details.module').then( m => m.FaqDetailsPageModule)
+  },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./User/about-us/about-us.module').then( m => m.AboutUsPageModule)
   }
 
 ];

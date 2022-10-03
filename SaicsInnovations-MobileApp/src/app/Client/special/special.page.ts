@@ -90,8 +90,8 @@ export class SpecialPage implements OnInit {
           name: item.name,
           price: item.price,
           quantity: item.quantity,
-          isStandAlone: true,
-          spId: item.spId?? null
+          isStandAlone: item.categoryName != "Stand Alone"? false : null,
+          spId: item.id 
         };
         console.log(addItem);
         this.cartService.addToCart(addItem);
@@ -136,7 +136,7 @@ export class SpecialPage implements OnInit {
 
   ViewItem(id: number) {
     localStorage.setItem('CatalogItem', JSON.stringify(id));
-    this.route.navigate(['/item-details']);
+    this.route.navigate(['/special-item']);
   }
 
    // Show Profile optionss when icon on right of navbar clicked function

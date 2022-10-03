@@ -25,6 +25,8 @@
 
   <div class="cart-items">
     <ion-card mode="ios" *ngFor="let m of merchandise | filter:search:filterKeys | filter:categorysearch:filterKeys; let i = index">
+      <div class="sp-item" *ngIf="m.spId != null" color="danger">Special
+      </div>
       <ion-card-content>
         <div class="item-img"  (click)="ViewItem(m.id)">
           <img [src]="GetMerchImage(m.id) | safe: 'url'"/>

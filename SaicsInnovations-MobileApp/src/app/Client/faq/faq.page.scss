@@ -1,0 +1,47 @@
+ion-toolbar{
+    --background: #0070c0;
+    --color: #ffffff;
+  }
+
+  ion-content {
+    --padding-top: 20px;
+    --padding-bottom: 16px;
+    --padding-start: 26px;
+    --padding-end: 26px;
+    --background: #f5f5f5;
+    --color : black;
+  }
+
+
+#rowData
+{
+  ion-card{
+    --background: #f5f5f5;
+    border: solid 1pt #0070c0;
+    height: 60%;
+    width: 400px;
+  }
+
+  u{
+    color: #0070c0;
+  }
+
+  ion-card-content{
+    color: black;
+    font-size: 12pt;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  ion-footer{
+    text-align: center;
+}
+
+}
+
+  div{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      margin: auto;
+  }

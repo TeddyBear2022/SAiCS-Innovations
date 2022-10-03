@@ -183,7 +183,7 @@ export class Tab2Page {
     };
     localStorage.setItem('checkout', JSON.stringify(orderdetails));
     
-    this.router.navigate(['/tabs/tab2/checkout']);
+    this.router.navigate(['checkout']);
   }
 
 }

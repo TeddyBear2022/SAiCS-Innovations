@@ -23,7 +23,18 @@
 </ion-header>
 
 <ion-content>
-  <br>
+
+   <br>
+   <ion-row>
+    <ion-col>
+      <h1 style="font-weight: 600; margin-left: 25%;">Client Orders</h1>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+      <ion-button (click)="ContextHelp()" style="margin-left: 50%;"><ion-icon  name="help-circle-outline"></ion-icon></ion-button>
+    </ion-col>
+   </ion-row>
+ 
   <div class="tab">
     <button class="tablinks" (click)="openOrder($event, 'Pending')">Current Orders</button>
     <button class="tablinks" (click)="openOrder($event, 'Complete')">Completed orders</button>
@@ -109,4 +120,6 @@
   </ion-row>
     </ion-grid>
   </div>
+
+ 
 </ion-content>

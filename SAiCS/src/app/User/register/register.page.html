@@ -88,8 +88,31 @@
         <ion-input formControlName="ambassadorreferralcode" id="refferralcode" ></ion-input>
         <span *ngIf="BasicInfoForm.submitted && AmbassadorForm.controls.ambassadorreferralcode.invalid">Please enter your refferral code</span>
         <br>
-        <ion-label style="color: #3f51b5;" (click)="NoRefferralCode(true)"><u>Don't have a referal Code?</u></ion-label>
-        <br>
+        <ion-label style="color: #3f51b5;" (click)="AmbNoRefCode(true)"><u>Don't have a referal Code?</u></ion-label>
+        <br><br>
+<!-- Ambasador No Ref -->
+        <ion-modal [isOpen]="AmbModalOpen">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons style="margin-left: 80%;">
+                  <ion-button (click)="CloseAmbNoRefCode(false)">
+                    <ion-icon name="close-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <h4>Scan QR Code to Receive a Referral Code</h4>
+              <div style="text-align:center; padding-top: 5%;">
+              <qrcode [qrdata]="getAmbRefCode" [allowEmptyString]="true" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+              <p>Your assigned referral code is: {{getAmbRefCode}} </p>
+            </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+  <!-- Ambasador No Ref -->
+
         <ion-label>
           ID Number :
         </ion-label>
@@ -139,6 +162,7 @@
             <h4>Scan QR Code to Receive a Referral Code</h4>
             <div style="text-align:center; padding-top: 5%;">
             <qrcode [qrdata]="getRefCode" [allowEmptyString]="true" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+            <p>Your assigned referral code is: {{getRefCode}} </p>
           </div>
           </ion-content>
         </ng-template>

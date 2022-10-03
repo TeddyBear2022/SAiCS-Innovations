@@ -81,12 +81,8 @@ export class ViewFeedbackPage implements OnInit {
 
   DeleteFeedback(id: number, feedbackType: number) {
     this.api.DeleteFeedback(id).subscribe((data) => {
-      if (feedbackType == 1) {
-        this.GetProductFeedback();
-      } else if (feedbackType == 2) {
-        this.GetAmbassadorFeedback();
-      }
-
+      this.GetProductFeedback();
+      this.GetAmbassadorFeedback();
       console.log(data);
     });
   }

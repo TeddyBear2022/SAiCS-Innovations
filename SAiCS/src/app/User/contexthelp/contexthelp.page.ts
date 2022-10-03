@@ -33,7 +33,7 @@ export class ContexthelpPage implements OnInit {
         this.Help = data
         this.context = this.Help.contextHelp
         this.otherHelp = this.Help.otherHelp
-        console.log(this.Help)
+        console.log(this.context, this.otherHelp)
       })
   }
   Close(){

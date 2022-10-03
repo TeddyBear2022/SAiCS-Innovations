@@ -75,6 +75,15 @@
   </ion-col>
 </ion-row>
 
+<!-- <ion-row>
+  <ion-col>
+  </ion-col>
+  <ion-col></ion-col>
+  <ion-col>
+    <ion-button (click)="ContextHelp()" style="margin-left: 80%;"><ion-icon  name="help-circle-outline"></ion-icon></ion-button>
+  </ion-col>
+ </ion-row> -->
+
   <!--Div for cart items-->  
   <!--Will Name better-->  
   <div id="products" style="margin-left: 3%;margin-right: 3%;">
@@ -97,6 +106,17 @@
     </ion-col>
     </ion-row>
 <br>
+
+<ion-row>
+  <ion-col>
+  </ion-col>
+  <ion-col></ion-col>
+  <ion-col>
+    <ion-button (click)="ContextHelp()" style="margin-left: 80%;"><ion-icon  name="help-circle-outline"></ion-icon></ion-button>
+  </ion-col>
+ </ion-row>
+
+ <br>
     <!--Product rows-->
     <ion-row>
       <ion-col size="3" *ngFor="let m of merchandise | filter:search:filterKeys | filter:categorysearch:filterKeys; let i = index">

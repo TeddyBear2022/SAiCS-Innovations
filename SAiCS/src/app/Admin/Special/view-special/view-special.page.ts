@@ -108,6 +108,7 @@ export class ViewSpecialPage implements OnInit {
           if(res.body == "Updated")
           {
             console.log(res.body);
+            this.GetInfo()
           }
           else
           {

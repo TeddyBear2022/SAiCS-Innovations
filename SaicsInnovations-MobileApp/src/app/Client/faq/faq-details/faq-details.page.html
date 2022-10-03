@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="margin-left: 50px;" *ngIf="DeliveryFAQs != undefined">{{DeliveryFAQs[0].faqcategory.categoryName}} FAQs</ion-title>
+    <ion-button fill="clear" slot="start" (click)="Back()">
+      <ion-icon size="large" name="arrow-back" color="light"></ion-icon>
+     </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+          <ion-accordion-group>
+            <ion-accordion value="{{a.faqid}}" *ngFor="let a of DeliveryFAQs; let i = index">
+              <ion-item slot="header" color="light">
+                <ion-label class="ion-text-wrap"> <h2> Q.. {{a.faqquestion}}</h2></ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <h3>A.. {{a.faqanswers}}</h3> 
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+  </div>
+</ion-content>

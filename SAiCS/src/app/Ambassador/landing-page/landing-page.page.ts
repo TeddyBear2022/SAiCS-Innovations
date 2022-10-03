@@ -158,17 +158,18 @@ export class LandingPagePage implements OnInit {
   }
 
 
-async ContextHelp(){
-  console.log("Open context help");
-  const modal = await this.modal.create({
-    component: ContexthelpPage,
-    componentProps:{keyword : "bank", type: 2}
-  });
-  modal.onDidDismiss().then((info) => {
+  async ContextHelp(){
+    console.log("Open context help");
+    const modal = await this.modal.create({
+      component: ContexthelpPage,
+      componentProps:{keyword : "orders", type: "Ambassador"}
+    });
+    modal.onDidDismiss().then((info) => {
+      
+    })
     
-  })
-  
-  await modal.present();
-  
-}
+    await modal.present();
+    
+  }
+
 }

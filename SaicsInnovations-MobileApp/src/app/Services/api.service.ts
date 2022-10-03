@@ -115,26 +115,93 @@ export class ApiService {
  
   //Feedback
 
-  CreateFeedback(newFeedback: Feedback): Observable<Feedback>
+  CreateFeedback(id: string, newFeedback: Feedback): Observable<any>
   {
-    return this.api.post<Feedback>(this.apilink + "Client/CreateFeedback", newFeedback)
+    return this.api.post(this.apilink +`Client/CreateFeedback?userId=${id}`, newFeedback,{ observe: 'response', responseType: 'text',
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
-  GetAmbassadorFeedback(): Observable<FeedbackVM[]>
+  GetAmbassadorFeedback(id: number): Observable<any>
   {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetAmbassadorFeedback')
+    return this.api.get(this.apilink + `Client/GetAmbassadorFeedback?id=${id}`, {headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
-  GetProductFeedback(): Observable<FeedbackVM[]>
+  GetProductFeedback(id: number): Observable<any>
   {
-    return this.api.get<FeedbackVM[]>(this.apilink + 'Client/GetProductFeedback')
+    return this.api.get(this.apilink + `Client/GetProductFeedback?id=${id}`, {headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
   }
 
-  DeleteFeedback(id: number): Observable<FeedbackVM[]>
+  ClientGetMerchCat(): Observable<any>
   {
-    return this.api.delete<FeedbackVM[]>(this.apilink + `Client/DeleteFeedback?id=${id}`)
+    return this.api.get(this.apilink + 'Client/GetMerchCats',{
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })});
   }
 
+  PurchasedProducts()
+  {
+    return this.api.get(this.apilink + "Client/PurchasedProducts", {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  
+  }
+
+   //Ambassadors
+   GetAssociatedAmbassador(id: number): Observable<any>
+   {
+     return this.api.get(this.apilink + `User/GetAssociatedAmbassador?id=${id}`,{
+       headers: new HttpHeaders({
+         Authorization: 'Bearer ' + localStorage.getItem("token")
+     })})
+   }
+
+   DeleteFeedback(id: number): Observable<any>
+  {
+    return this.api.delete(this.apilink + `Client/DeleteFeedback?id=${id}`,{observe: 'response', responseType: 'text', headers: new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+  })})
+  }
+
+  GetClientFAQS(){
+    return this.api.get(this.apilink+ `Client/GetClientFAQS`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  ClientSpecificFaq(categoryId = localStorage.getItem('faq')):Observable<FAQ[]>{
+    return this.api.get<FAQ[]>(this.apilink+ `Client/GetSpecificFaq?categoryID=${categoryId}`, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })
+    })
+  }
+
+  ClientOrderHistory(id: string)
+  {
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderHistory?userID=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
+
+  ClientViewOrderDetails(id: number)
+  {
+    return this.api.get(this.apilink + `ClientOrder/ViewOrderDetails?id=${id}`,{
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+      })})
+  }
   // Catalog
   // GetCatalog()
   // {
@@ -330,6 +397,15 @@ export class ApiService {
           Authorization: 'Bearer ' + localStorage.getItem("token")
       })
     })
+  }
+
+  UserSpecialItem(id: number)
+  {
+    return this.api.get(this.apilink + `User/UserSpecialItem?id=${id}`,
+    {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + localStorage.getItem("token")
+    })})
   }
 
 

@@ -15,6 +15,6 @@ import { ContexthelpPage } from './contexthelp.page';
     IonicModule,
     ContexthelpPageRoutingModule
   ],
-  declarations: [ContexthelpPage]
+  declarations: []
 })
 export class ContexthelpPageModule {}

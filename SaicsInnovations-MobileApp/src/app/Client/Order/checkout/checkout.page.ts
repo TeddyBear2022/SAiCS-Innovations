@@ -66,6 +66,11 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+  ionViewWillEnter()
+  {
+    
+  }
+
   ViewCart() {
     console.log('cart');
     this.route.navigate(['tabs/tab2']);

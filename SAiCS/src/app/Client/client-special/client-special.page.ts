@@ -6,12 +6,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 
 @Component({
   selector: 'app-client-special',
@@ -38,7 +39,8 @@ export class ClientSpecialPage implements OnInit {
     private tmpStorage: TemporaryStorage,
     private menu: MenuController,
     private fb: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private modal:ModalController
   ) {}
 
   ngOnInit() {
@@ -146,5 +148,19 @@ export class ClientSpecialPage implements OnInit {
       event,
     });
     return await popover.present();
+  }
+
+  async ContextHelp(){
+    console.log("Open context help");
+    const modal = await this.modal.create({
+      component: ContexthelpPage,
+      componentProps:{keyword : "product", type: "Client"}
+    });
+    modal.onDidDismiss().then((info) => {
+      
+    })
+    
+    await modal.present();
+    
   }
 }

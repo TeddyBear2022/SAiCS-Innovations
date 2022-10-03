@@ -12,6 +12,7 @@ import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
+import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 import { UpdateOrderStatusComponent } from '../update-order-status/update-order-status.component';
 
 @Component({
@@ -138,7 +139,19 @@ export class ViewOrdersPage implements OnInit {
     this.ionCheck.isChecked = false
   }
 
-
+  async ContextHelp(){
+    console.log("Open context help");
+    const modal = await this.modalCtrl.create({
+      component: ContexthelpPage,
+      componentProps:{keyword : "order", type: "Ambassador"}
+    });
+    modal.onDidDismiss().then((info) => {
+      
+    })
+    
+    await modal.present();
+    
+  }
 
   async presentPopover(event) {
     const popover = await this.popoverController.create({

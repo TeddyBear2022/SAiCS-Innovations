@@ -1,10 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service'
+import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 
 @Component({
   selector: 'app-landing-page',
@@ -35,7 +36,8 @@ export class LandingPagePage implements OnInit {
     private route: Router,
     private tmpStorage: TemporaryStorage,
     private menu: MenuController,
-    private cartService: CartService
+    private cartService: CartService,
+    private modal:ModalController
   ) {}
 
   async presentPopover(event) {
@@ -144,5 +146,19 @@ export class LandingPagePage implements OnInit {
   ViewItem(id: number) {
     localStorage.setItem('CatalogItem', JSON.stringify(id));
     this.route.navigate(['/item-details']);
+  }
+
+  async ContextHelp(){
+    console.log("Open context help");
+    const modal = await this.modal.create({
+      component: ContexthelpPage,
+      componentProps:{keyword : "orders", type: "Client"}
+    });
+    modal.onDidDismiss().then((info) => {
+      
+    })
+    
+    await modal.present();
+    
   }
 }

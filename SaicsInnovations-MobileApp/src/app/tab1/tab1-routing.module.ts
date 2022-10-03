@@ -6,18 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
-    children:[
-      {
-        path: 'special',
-        loadChildren: () => import('../Client/special/special.module').then( m => m.SpecialPageModule)
-      },
-      {
-        path: 'view-ambassador',
-        loadChildren: () => import('./view-ambassador/view-ambassador.module').then( m => m.ViewAmbassadorPageModule)
-      }
-    ]
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../User/profile/profile.module').then( m => m.ProfilePageModule)
   }
-  
   
 ];
 

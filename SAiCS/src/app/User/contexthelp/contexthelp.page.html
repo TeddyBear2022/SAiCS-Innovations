@@ -12,10 +12,10 @@
   <ion-card-content>
     <ion-list class="txt-block">
       <div>
-        <ion-text *ngFor="let a of context ; let i = index">
+        <div *ngFor="let a of context ; let i = index">
           <H2 >{{i}}. {{a.faqquestion}}</H2><br>
           <H3>  {{a.faqanswers}}</H3><br><br>
-        </ion-text>
+        </div>
       </div>
       </ion-list>
   </ion-card-content>

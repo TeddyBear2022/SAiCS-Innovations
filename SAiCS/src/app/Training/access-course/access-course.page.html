@@ -26,6 +26,12 @@
 <ion-content>
 
   <h1>Courses</h1>
+  <ion-row>
+    <ion-col>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-button (click)="ContextHelp()"><ion-icon  name="help-circle-outline"></ion-icon></ion-button>
+  </ion-row>
  <ion-row>
 
  <ion-card *ngFor="let course of courses">
@@ -44,4 +50,6 @@
  </ion-card>
 
 </ion-row>
+
+
 </ion-content>

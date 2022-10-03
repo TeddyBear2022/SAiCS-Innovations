@@ -25,7 +25,9 @@ export class RegisterPage implements OnInit {
   inputInfo = undefined
   selectedFile:any 
   isModalOpen = false;
+  AmbModalOpen = false;
   getRefCode: any 
+  getAmbRefCode: any 
   
   constructor(private api: ApiService, 
     private route : Router, 
@@ -89,6 +91,19 @@ export class RegisterPage implements OnInit {
       
       this.isModalOpen = isOpen;
   }
+
+  AmbNoRefCode(isOpen: boolean){
+    this.api.AmbNoRefCode().subscribe((res) => {
+      let data: any = res
+      this.getAmbRefCode = data
+       console.log(this.getRefCode);})
+      this.AmbModalOpen = isOpen;
+    }
+  
+    CloseAmbNoRefCode(isOpen: boolean){
+        
+        this.AmbModalOpen = isOpen;
+    }
     
 
   Step2(){

@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs tabsHideOnSubPages="false">
 
   <ion-tab-bar slot="bottom">
 
@@ -12,6 +12,8 @@
 
     <ion-tab-button tab="tab2">
       <ion-icon name="cart"></ion-icon>
+      <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+      </div>
     </ion-tab-button>
 
     <ion-tab-button (click)="presentPopover($event)">

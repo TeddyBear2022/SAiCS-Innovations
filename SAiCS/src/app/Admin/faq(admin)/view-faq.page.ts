@@ -64,7 +64,6 @@ export class ViewFaqPage implements OnInit {
 
    ionViewWillEnter(){
     this.api.GetAllFAQS().subscribe(data=> {
-      
       this.FAQs = data
       console.log(this.FAQs)
     
@@ -81,11 +80,16 @@ export class ViewFaqPage implements OnInit {
        component: AddFAQModalComponent,
        componentProps: {testingFAQ: this.FAQs}
      });
-     modal.onDidDismiss().then((data) => {
-      console.log(data.data.addedFaq)
+     modal.onDidDismiss().then(() => {
+      this.api.GetAllFAQS().subscribe(data=> {
+        this.FAQs = data
+        console.log(this.FAQs)
       
-      //make current list equal to the one sent from the modal
-      this.FAQs = data.data.addedFaq
+      })
+      // console.log(data.data.addedFaq)
+      
+      // //make current list equal to the one sent from the modal
+      // this.FAQs = data.data.addedFaq
       
     })
      await modal.present();

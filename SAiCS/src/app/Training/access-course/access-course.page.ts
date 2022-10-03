@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, PopoverController } from '@ionic/angular';
+import { MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 
 @Component({
   selector: 'app-access-course',
@@ -19,7 +20,8 @@ export class AccessCoursePage implements OnInit {
   constructor(private menu:MenuController, 
     private api:ApiService, 
     private popoverController:PopoverController, 
-    private route:Router,private cartService: CartService) { }
+    private route:Router,private cartService: CartService,
+    private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -70,5 +72,19 @@ export class AccessCoursePage implements OnInit {
     this.route.navigate(['access-course-intro'])
 
    }
+
+   async ContextHelp(){
+    console.log("Open context help");
+    const modal = await this.modalCtrl.create({
+      component: ContexthelpPage,
+      componentProps:{keyword : "course", type: 5}
+    });
+    modal.onDidDismiss().then((info) => {
+      
+    })
+    
+    await modal.present();
+    
+  }
 
 }

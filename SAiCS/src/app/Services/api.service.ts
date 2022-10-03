@@ -590,6 +590,14 @@ export class ApiService {
 })})
   }
 
+  AmbNoRefCode()
+  {
+    return this.api.get(this.apilink + `User/AmbNoRefCode`,{responseType: 'text',headers: new HttpHeaders({
+      
+      Authorization: 'Bearer ' + localStorage.getItem("token")
+})})
+  }
+
   //Update product
   UpdateMerch(id: number, uMerch: MerchVM)
   {
@@ -1799,7 +1807,7 @@ export class ApiService {
     })
   }
 
-  ContextHelp(keyword:string, ambassadorType:number){
+  ContextHelp(keyword:string, ambassadorType:string){
     return this.api.get(this.apilink+`User/ContextHelp?keyword=${keyword}&faqtype=${ambassadorType}`, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + localStorage.getItem("token")

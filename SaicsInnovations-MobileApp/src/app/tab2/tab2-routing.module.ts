@@ -14,7 +14,11 @@ const routes: Routes = [
       {
         path: 'address',
         loadChildren: () => import('../Client/Order/address/address.module').then( m => m.AddressPageModule)
-      }
+      },
+       {
+       path: 'add-address',
+       loadChildren: () => import('../Client/Order/add-address/add-address.module').then( m => m.AddAddressPageModule)
+     },
     ]
   },
   

@@ -28,7 +28,7 @@ export class ViewClientFaqPage implements OnInit {
     this.username = localStorage.getItem('UserName');
     this.api.GetClientFAQS().subscribe(data => {
       this.faqCategories = data
-      console.log("show data")
+      console.log(this.faqCategories)
     })
     
   }
