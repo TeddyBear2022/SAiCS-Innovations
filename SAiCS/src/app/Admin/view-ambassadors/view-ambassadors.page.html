@@ -48,7 +48,7 @@
         </tr>    
     </thead>
     <tbody align="center">
-    <tr *ngFor="let a of Ambassadors">
+    <tr *ngFor="let a of Ambassadors | paginate: { itemsPerPage: 10, currentPage: p, id: 'TB'}">
     <td >{{a.titleName}}</td>
     <td>{{a.name + " "+ a.surname}}</td>
     <td >{{a.ambassadorTypeName}}</td>
@@ -58,9 +58,13 @@
     <tr>
     </tbody>
     </table>
+ 
     <!-- no results found -->
     <div align="center" *ngIf="noResults == true">
     <img src="./assets/noresultsfound3.gif" alt="No results found">
+    </div>
+    <div class="pagination">
+      <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
     </div>
   </ion-grid>
 </ion-content>

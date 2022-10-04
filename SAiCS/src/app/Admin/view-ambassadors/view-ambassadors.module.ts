@@ -9,6 +9,7 @@ import { ViewAmbassadorsPageRoutingModule } from './view-ambassadors-routing.mod
 import { ViewAmbassadorsPage } from './view-ambassadors.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AmbassadorRankingModalPage } from './ambassador-ranking-modal/ambassador-ranking-modal.page';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { AmbassadorRankingModalPage } from './ambassador-ranking-modal/ambassado
     IonicModule,
     ReactiveFormsModule,
     ViewAmbassadorsPageRoutingModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgxPaginationModule
     
   ],
   declarations: [ViewAmbassadorsPage, AmbassadorRankingModalPage],

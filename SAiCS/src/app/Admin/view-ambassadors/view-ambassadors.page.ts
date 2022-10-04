@@ -19,6 +19,7 @@ export class ViewAmbassadorsPage implements OnInit {
   AmbassadorRankings:any = []
   ambassadorRankingsInput
   username
+  p
 
   constructor(private popoverController:PopoverController, 
     private api:ApiService, 

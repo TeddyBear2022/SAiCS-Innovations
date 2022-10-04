@@ -94,10 +94,34 @@ ion-content {
     align-items: center;
   }
 
-
-
-
-
-
-
+  .pagination {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px auto;
+    margin-left: 51%;
+  }
+  
+  ::ng-deep .pagination-next a,
+  ::ng-deep .pagination-previous a {
+    outline: none;
+  }
+  
+  ::ng-deep .ngx-pagination .current {
+    border-radius: 4px;
+  }
+  
+  ::ng-deep .ngx-pagination {
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .ngx-pagination a:hover,
+  ::ng-deep .ngx-pagination button:hover {
+    border-radius: 4px;
+  }
+  
+  ::ng-deep .ngx-pagination a,
+  ::ng-deep .ngx-pagination button {
+    border-radius: 4px;
+    outline: none;
+  }
 

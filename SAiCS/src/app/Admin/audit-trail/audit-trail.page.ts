@@ -16,6 +16,7 @@ export class AuditTrailPage implements OnInit {
   search = undefined
   noResults:boolean = false
   username
+  p;
 
   constructor(private popoverController:PopoverController, 
     private menu:MenuController, 

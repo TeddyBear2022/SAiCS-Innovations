@@ -46,7 +46,7 @@
     <th>Phone Number</th>
     </thead>
     <tbody>
-    <tr *ngFor="let x of clientList">
+    <tr *ngFor="let x of clientList | paginate: { itemsPerPage: 10, currentPage: p, id: 'TB'}">
     <td>{{x.user.title.titleName}}</td>
     <td>{{x.user.name }}</td>
     <td>{{x.user.surname}}</td>
@@ -55,10 +55,15 @@
     </tr>
     
     </tbody>
+   
     </table>
+    
 <!-- no results found -->
 <div align="center" *ngIf="noResults == true">
   <img src="./assets/noresultsfound3.gif" alt="No results found">
+  </div>
+  <div class="pagination">
+    <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
   </div>
     
     <ion-row> 

@@ -43,7 +43,7 @@
         </tr>    
     </thead>
     <tbody align="center">
-    <tr *ngFor="let a of auditTrails">
+    <tr *ngFor="let a of auditTrails | paginate: { itemsPerPage: 10, currentPage: p, id: 'TB'}">
       <td >{{a.auditTrailId}}</td>
       <td>{{a.transactionType}}</td>
       <td>{{a.tableName}}</td>
@@ -56,8 +56,12 @@
       </tr>
     </tbody>
     </table>
+    
     <!-- no results found -->
     <div align="center" *ngIf="noResults == true">
     <img src="./assets/noresultsfound3.gif" alt="No results found">
+    </div>
+    <div class="pagination">
+      <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
     </div>
 </ion-content>

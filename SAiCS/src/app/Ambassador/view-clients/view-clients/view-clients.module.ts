@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ViewClientsPageRoutingModule } from './view-clients-routing.module';
 
 import { ViewClientsPage } from './view-clients.page';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewClientsPageRoutingModule
+    ViewClientsPageRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [ViewClientsPage]
 })

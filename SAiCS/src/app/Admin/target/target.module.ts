@@ -17,7 +17,7 @@ import { UpdateTargetPage } from './Modals/update-target/update-target.page';
     FormsModule,
     IonicModule,
     TargetPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [TargetPage ,AssignTargetPage,UpdateTargetPage],
   entryComponents:[AssignTargetPage,UpdateTargetPage]

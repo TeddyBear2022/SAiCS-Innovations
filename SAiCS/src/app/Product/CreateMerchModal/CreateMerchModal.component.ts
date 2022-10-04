@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import {
   FormBuilder,
   FormControl,
@@ -26,7 +26,8 @@ export class CreateMerchModalComponent implements OnInit {
     private modalCtrl: ModalController,
     private fb: FormBuilder,
     private api: ApiService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -70,16 +71,30 @@ export class CreateMerchModalComponent implements OnInit {
   //convert image to base64
   onFileSelected(event) {
     let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-      if (encoded.length % 4 > 0) {
-        encoded += '='.repeat(4 - (encoded.length % 4));
-      }
-      this.selectedFile = encoded;
-      console.log('encoded successfully');
-    };
+    if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg")
+    {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+        if (encoded.length % 4 > 0) {
+          encoded += '='.repeat(4 - (encoded.length % 4));
+        }
+        this.selectedFile = encoded;
+        console.log('encoded successfully');
+        
+        
+      };
+      
+    }
+    else
+    {
+      this.Notif(`Incorrect file format. Please select a png, jpg or jpeg file.`)
+      console.log(`Incorrect Format: ${file.type}`);
+      this.merch.controls['merchImage'].setValue(null);
+      
+    }
+  
   }
 
   submitForm() {
@@ -130,5 +145,14 @@ export class CreateMerchModalComponent implements OnInit {
     });
     toast.present();
     //window.location.reload();
+  }
+
+  async Notif(message: string) {
+    const alert = await this.alertController.create({
+      message: message,
+      buttons: [{ text: 'OK' }],
+    });
+
+    await alert.present();
   }
 }

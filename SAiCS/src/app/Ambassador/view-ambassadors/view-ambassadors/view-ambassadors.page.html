@@ -66,7 +66,7 @@
     
     </thead>
     <tbody >
-    <tr *ngFor="let ambassador of ambassadorsList">
+    <tr *ngFor="let ambassador of ambassadorsList | paginate: { itemsPerPage: 10, currentPage: p, id: 'TB'}">
     <td>{{ambassador.user.title.titleName}}</td>
     <td>{{ambassador.user.name}} </td>
     <td>{{ambassador.user.surname}}</td>
@@ -82,7 +82,9 @@
     <div align="center" *ngIf="noResults == true">
       <img src="./assets/noresultsfound3.gif" alt="No results found">
       </div>
-
+      <div class="pagination">
+        <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
+      </div>
     <ion-row> 
       <ion-col style="margin-top: 18%;">
         <div id="bubbles">

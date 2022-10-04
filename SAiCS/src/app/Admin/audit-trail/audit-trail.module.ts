@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AuditTrailPageRoutingModule } from './audit-trail-routing.module';
 
 import { AuditTrailPage } from './audit-trail.page';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AuditTrailPageRoutingModule
+    AuditTrailPageRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [AuditTrailPage]
 })

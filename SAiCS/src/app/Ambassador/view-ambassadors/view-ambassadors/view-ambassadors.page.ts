@@ -23,6 +23,7 @@ export class ViewAmbassadorsPage implements OnInit {
   noResults:boolean = false
   search:any= undefined
   username
+  p;
 
   constructor(private tmpStorage:TemporaryStorage, 
     private api:ApiService,

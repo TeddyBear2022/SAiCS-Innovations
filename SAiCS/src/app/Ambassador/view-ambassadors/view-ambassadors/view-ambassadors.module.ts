@@ -8,13 +8,15 @@ import { ViewAmbassadorsPageRoutingModule } from './view-ambassadors-routing.mod
 
 import { ViewAmbassadorsPage } from './view-ambassadors.page';
 import { AmbassadorOrderHistoryComponent } from 'src/app/modals/ambassador-order-history/ambassador-order-history.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewAmbassadorsPageRoutingModule
+    ViewAmbassadorsPageRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [
     ViewAmbassadorsPage,

@@ -14,6 +14,8 @@ import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 })
 export class ViewClientsPage implements OnInit {
 
+  p;
+  
   constructor( private tmpStorage:TemporaryStorage,
     private api:ApiService,
     private menu:MenuController,

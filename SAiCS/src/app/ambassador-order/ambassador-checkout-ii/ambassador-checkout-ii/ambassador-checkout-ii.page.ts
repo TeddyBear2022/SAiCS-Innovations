@@ -133,19 +133,33 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   onFileSelected(event) {
-     let file = event.target.files[0];
-     let reader = new FileReader();
-     reader.readAsDataURL(file);
-     reader.onload = () => {
-       let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-       if ((encoded.length % 4) > 0) {
-         encoded += '='.repeat(4 - (encoded.length % 4));
-       }
-     this.selectedFile = encoded
-     console.log("encoded successfully")
-      }
-    
-  }
+    let file = event.target.files[0];
+    if(file.type == "application/pdf")
+    {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+        if (encoded.length % 4 > 0) {
+          encoded += '='.repeat(4 - (encoded.length % 4));
+        }
+        this.selectedFile = encoded;
+        console.log('encoded successfully');
+        
+        
+      };
+      
+    }
+    else
+    {
+      this.Notif(`Incorrect file format. Please select a pdf file.`)
+      console.log(`Incorrect Format: ${file.type}`);
+      this.checkout.controls['pdfFile'].setValue(null);
+      
+    }
+
+  
+}
 
   EditAddress(id: number)
   {

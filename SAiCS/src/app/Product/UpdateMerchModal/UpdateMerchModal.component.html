@@ -41,7 +41,7 @@
 
       <ion-item-group>
         <ion-label style="margin-left: 10%;">Merchandise Image:</ion-label>
-        <ion-input formControlName="merchImage" type="file" (change)="onFileSelected($event)"></ion-input>
+        <ion-input formControlName="merchImage" type="file"  accept="image/x-png,image/jpeg" (change)="onFileSelected($event)"></ion-input>
       </ion-item-group>
 
       <ion-item-group>
