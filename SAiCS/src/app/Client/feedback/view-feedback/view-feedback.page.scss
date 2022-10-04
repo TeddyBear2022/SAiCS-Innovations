@@ -1,0 +1,101 @@
+ion-select{
+  border: solid 1pt black;
+  border-radius: 12px !important;
+  width: 300px;
+  margin-left: 15px;
+}
+
+select
+{
+  border: 2px solid #9e9e9e;
+    width: 250px;
+    margin-left: 15px;
+    border-radius: 10px;
+    text-align: left;
+    --background:white;
+    color: #000000;
+    height: 40px;
+    margin-bottom: 1%;
+}
+
+#addIcon
+{
+  color: #08c10f;
+}
+
+#deleteIcon{color: #000000;}
+
+/*Table styling*/
+#feedbackTable{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%
+  }
+  
+  #feedbackTable td, #feedbackTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #feedbackTable tr{background-color: #f6ffff;}
+  
+  #feedbackTable tr:hover {background-color: #ddd;}
+  
+  #feedbackTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #008080;
+    color: white;
+  }
+
+  ion-content{
+    --background: #f5f5f5;
+    --color : black;
+  }
+
+  .pagination {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px auto;
+  }
+
+  ::ng-deep .pagination-next a,
+  ::ng-deep .pagination-previous a {
+    outline: none;
+  }
+
+  ::ng-deep .ngx-pagination .current {
+    border-radius: 4px;
+  }
+
+  ::ng-deep .ngx-pagination {
+    padding: 0 !important;
+  }
+
+  ::ng-deep .ngx-pagination a:hover,
+  ::ng-deep .ngx-pagination button:hover {
+    border-radius: 4px;
+  }
+
+  ::ng-deep .ngx-pagination a,
+  ::ng-deep .ngx-pagination button {
+    border-radius: 4px;
+    outline: none;
+  }
+
+
+  .cart-length {
+    position: absolute;
+    top: 0px;
+    right: -5px;
+    font-weight: 600;
+    width: 18px;
+    height: 18px;
+    z-index: 10;
+    background-color: #9c27b0;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

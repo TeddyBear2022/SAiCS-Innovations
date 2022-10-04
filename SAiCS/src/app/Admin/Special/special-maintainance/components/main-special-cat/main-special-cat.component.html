@@ -1,0 +1,108 @@
+<br>
+<ion-grid>
+    <ion-row>
+        <form [formGroup]="lookUpForm" #localForm = 'ngForm' (ngSubmit)="SendData()">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <input [(ngModel)]="search" id="searchBox" class="form-control" placeholder="Search by name" [ngModelOptions]="{standalone: true}">
+                        </th>
+                        <th>
+                            <ion-button id="addBtn" (click)="startCreate()" [disabled]="isAddClicked || isEditClicked">
+                                <ion-icon name="add-outline"></ion-icon>
+                            </ion-button>
+                        </th>
+                    </tr>
+                <tr>
+                    <th width="12%">ID</th>
+                  <th>Name</th>
+                  <th>
+                    Action:
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container>
+                    <tr *ngIf="isAddClicked">
+                        <td>
+                        </td>
+                        <td>
+                            <input
+                            type="text"
+                            class="form-control"
+                            formControlName="formName"
+                            [ngStyle]="{'border':localForm.submitted && lookUpForm.controls['formName'].invalid?'1px solid red':'' }"
+                            placeholder="name"
+                          />
+                        </td>
+                        <td>
+                            <ion-button type="submit" fill="transparent">
+                                <ion-icon id="editBtn" name="checkmark-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button (click)="CancelCreate()" fill="transparent">
+                                <ion-icon id="deleteBtn" name="ban-outline"></ion-icon>
+                            </ion-button>
+                        </td>
+                    </tr>
+                  <tr *ngFor="let data of lookUpArr | filter:search:filterKeys | paginate: { itemsPerPage: 8, currentPage: p, id: 'TB'}; let i = index">
+                    
+                    <td>{{data.id}}</td>
+
+                    <td class="form-group">
+                    <ng-container *ngIf="!editCache[data.id].edit; else nameInputTpl">
+                        {{data.name}}
+                    </ng-container>
+                    <ng-template  #nameInputTpl>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="editCache[data.id].data.name"
+                        [ngModelOptions]="{standalone: true}"
+                        placeholder="name"
+                        [ngStyle]="{'border':isSaveEditClicked && editCache[data.id].data.name == ''?'1px solid red':'' }"
+                      />
+                    </ng-template>
+                    </td>
+
+                    <td>
+                        <ng-container *ngIf="!editCache[data.id].edit; else actionbtn">
+                            <ion-button (click)="startEdit(data.id)" fill="transparent" [disabled]="isAddClicked">
+                                <ion-icon id="editBtn" name="create-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button (click)="remove(data.id)" fill="transparent" [disabled]="isAddClicked">
+                                <ion-icon id="deleteBtn" name="trash-bin-outline"></ion-icon>
+                            </ion-button>
+                        </ng-container>
+
+                        <ng-template  #actionbtn>
+                        <ion-button (click)="saveEdit(data.id)" fill="transparent">
+                            <ion-icon id="editBtn" name="checkmark-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button (click)="cancelEdit(data.id)" fill="transparent">
+                            <ion-icon id="deleteBtn" name="ban-outline"></ion-icon>
+                        </ion-button>
+                    </ng-template>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" *ngIf="lookUpArr.length == 0">
+                        No Result
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+        </form>
+    </ion-row>
+    <ion-row>
+        <div class="pagination">
+          <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </ion-row>
+</ion-grid>
+
+<!-- <p>
+ <ion-button (click)="CreateLookUp()">Click me</ion-button>
+</p> -->

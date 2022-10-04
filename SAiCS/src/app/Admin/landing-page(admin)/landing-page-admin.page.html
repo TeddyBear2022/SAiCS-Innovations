@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    
+
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #3f9b94">
+          <ion-card-content>
+            <img src="./assets/Admin-members.png" alt="SaiCS member photo" />
+           SAiCs Members
+          </ion-card-content>
+         
+          <div><a routerLink="/view-ambassadors-admin">View</a></div>
+          
+        </ion-card>
+      </ion-col>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #519b3f">
+            <ion-card-content>
+              <img src="./assets/FAQ.png" alt="SaiCS member photo"/>
+             FAQs
+            </ion-card-content>
+           
+            <div><a routerLink="/view-faq">View</a></div>
+            
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #673ab7">
+            <ion-card-content>
+              <img src="./assets/Admin-product.png" alt="SaiCS member photo"/>
+             Available Merchandise 
+            </ion-card-content>
+           
+            <div><a routerLink="/view-merch">View</a></div>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #ffeb3b">
+            <ion-card-content>
+              <img style="width:220px" src="./assets/Admin-position request.png" alt="SaiCS member photo"/>
+              Registrations
+            </ion-card-content>
+           
+            <div><a routerLink="/validate-registrations">View</a></div>
+            
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #062b80">
+            <ion-card-content>
+              <img src="./assets/Admin-reports.png" alt="SaiCS member photo"/>
+             Generated Reports
+            </ion-card-content>
+           
+            <div><a routerLink="/report">View</a></div>
+            
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card style=" border-top: 10px solid #2196f3">
+            <ion-card-content>
+              <img src="./assets/Admin-training.png" alt="SaiCS member photo"/>
+             Training Course
+            </ion-card-content>
+           
+            <div><a routerLink="/course-studio">View</a></div>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+     
+    </ion-grid>
+   
+  </div>
+
+</ion-content>

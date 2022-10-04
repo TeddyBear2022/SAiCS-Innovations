@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-item><h2 style="margin-left: 10pt;"><b>Update Banking Details</b> </h2> <ion-icon  slot="end"  name="close-outline" (click)="Close()"></ion-icon></ion-item>
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <form [formGroup] ="updateBankAccount" #BankingDetailForm= 'ngForm'>
+  <ion-row style="margin-left: 5%;">
+    <ion-col></ion-col>
+    <ion-col>
+      <ion-row>
+        <ion-label>Account Holder:</ion-label><br>
+        
+      </ion-row>
+      <ion-row>
+        <ion-input formControlName="AccountHolder" placeholder="Please enter the account holder"></ion-input>
+      </ion-row>
+      <span *ngIf="BankingDetailForm.submitted && updateBankAccount.controls.AccountHolder.invalid">Please enter a valid account holder full name</span>
+      <ion-row>
+        <ion-label>Account Number:</ion-label><br>
+      </ion-row>
+
+      <ion-row><ion-input formControlName="AccountNumber" placeholder="Please enter the account number"></ion-input></ion-row>
+      <span *ngIf="BankingDetailForm.submitted && updateBankAccount.controls.AccountNumber.invalid">Please enter a valid account number</span>
+      <ion-row>
+        <ion-label>Account type:</ion-label>
+      </ion-row>
+      <ion-row>
+        
+        <ion-select formControlName="AccountTypeId"[placeholder]="this.bankInfo.accountType.accountTypeName" interface="popover">
+          <ion-select-option *ngFor="let p of BankingInputs.accountTypesNames" value="{{p.accountTypeId}}">{{p.accountTypeName}}</ion-select-option>>
+        </ion-select>
+      </ion-row>
+      <span *ngIf="BankingDetailForm.submitted && updateBankAccount.controls.AccountTypeId.invalid">Please select a valid account type</span>
+      <ion-row>
+        <ion-label>Bank Name:</ion-label>
+      </ion-row>
+      <ion-row>
+        
+        <ion-select formControlName="BankId" interface="popover" [placeholder]="this.bankInfo.bank.bankName">
+          <ion-select-option *ngFor="let x of BankingInputs.bankNames" value="{{x.bankId}}">{{x.bankName}}</ion-select-option>
+        </ion-select>
+      </ion-row>
+      <span *ngIf="BankingDetailForm.submitted && updateBankAccount.controls.BankId.invalid">Please select a bank</span>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <ion-row style="margin-left: 65%;">
+    <ion-button type="submit" (click)="Update()">Update</ion-button>
+    <ion-button type="submit" color="danger" (click)="Close()">Cancel</ion-button>
+  </ion-row>
+</form>
+</ion-grid>
+
+</ion-content>

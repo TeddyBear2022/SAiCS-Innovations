@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons> 
+
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Courses</h1>
+  <ion-button fill="white" data-backdrop="static" data-keyboard="false" routerLink="/new-course">
+    <ion-icon name="add-circle-outline" size="large" id="addIcon" style="color: #08c10f;" ></ion-icon>
+  </ion-button>
+  <ion-button fill="white" data-backdrop="static" data-keyboard="false" routerLink="/assign-course">
+    <ion-icon name="people" size="large" ></ion-icon>
+  </ion-button><br>
+  <!-- <ion-icon name="people"></ion-icon> -->
+
+
+ <ion-row>
+
+ <ion-card *ngFor="let course of courses">
+  <ion-card-content>
+    <ion-card-header>{{course.courseName}}</ion-card-header>
+    <hr style="border: none; border-top: 2px double #333; overflow: visible; text-align: center; height: 1px">
+    
+   <ion-row>
+     {{course.description}}
+   </ion-row>
+   
+   <div align="right">
+   <ion-button (click)="UpdateCourse(course.courseId)" >Edit</ion-button>
+   <ion-button (click)="DeleteCourse(course.courseId)">Delete</ion-button>
+  </div>
+  </ion-card-content>
+ </ion-card>
+
+</ion-row>
+
+</ion-content>

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <form [formGroup]="courseDetails" #localForm = 'ngForm' (ngSubmit)="CreateCourse()">
+  <ion-grid>
+<h1 style="text-align: center;font-size: 50px;color: #333333;">New Course</h1>
+<ion-row>
+  <ion-button  (click)="Back()" style="margin-right: 90%; color: white; border-radius: 20%;">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+  </ion-button>
+  <ion-col></ion-col>
+    <ion-button type="submit" style="margin-left: 90%; background-color: #08c10f; color: white; border-radius: 20%;">
+      Create
+    </ion-button>
+</ion-row>
+<ion-row>
+  <ion-col size="5" id="UploadSection">
+    <!-- <ion-content class="UploadSection"> -->
+      <div align="center" id="card">
+      <ion-card id="courseDetails">
+        <img src="./assets/newcoursepic.png"  alt="SaiCS member photo" />
+        <ion-input placeholder="Enter a Course Name" formControlName="coursename"></ion-input>
+        <span *ngIf="localForm.submitted && courseDetails.controls['coursename'].invalid">Please Enter a valid Course Name</span>
+        <br><br>
+        <ion-textarea  placeholder="Enter a Description" formControlName="description"></ion-textarea>
+        <span *ngIf="localForm.submitted && courseDetails.controls['description'].invalid">Please Enter a valid Course Description</span>
+      
+        
+      </ion-card>
+      </div>
+    <!-- </ion-content> -->
+    </ion-col>
+  <ion-col size="7" id="leftSection">
+    
+<div class="CourseLeft">
+  <h2 style="color: #333333">Course Content</h2>  
+  <ion-button shape="round" fill="clear" (click)="AddContent()">
+    <ion-icon name="add-circle-outline" size="large" id="addIcon" style="border-radius: 10%; color: #08c10f;" ></ion-icon>
+  </ion-button><br><br>
+  <ion-accordion-group >
+    <ion-accordion *ngFor="let content of contents" >
+      <ion-item slot="header" color="light">
+        <ion-label>{{content.SectionName}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-label routerLink="{{content.ContentLink}}">-{{content.ContentHeading}}</ion-label><br>
+        <ion-label routerLink="{{content.YoutubeLink}}">-{{content.YoutubeHeading}}</ion-label>        
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+  <span *ngIf="localForm.submitted && this.contents.length == 0 ">Please add some section content for this course </span>
+<h2>Quiz</h2>
+<ion-button *ngIf="quizCreated == false" shape="round" fill="clear" (click)="AddQuiz()">
+  <ion-icon name="add-circle-outline" size="large" id="addIcon" style="border-radius: 10%; color: #08c10f;" ></ion-icon>
+</ion-button>
+<div *ngIf="quizCreated">
+<ion-card  >
+  <ion-card-content>
+    {{quiz.QuizName}}
+  </ion-card-content>
+</ion-card>
+</div>
+</div>
+<span *ngIf="localForm.submitted && quizCreated == false">Please create a quiz for this course </span>
+</ion-col>
+
+</ion-row>
+</ion-grid>
+</form>
+</ion-content>

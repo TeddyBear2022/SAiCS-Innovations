@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName"
+      >{{username}}</ion-label
+    >
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon
+          size="large"
+          name="person-circle"
+          id="toolbarProfileIcon"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form
+    [formGroup]="addForm"
+    #localForm="ngForm"
+    class="ion-padding"
+    (ngSubmit)="submitForm()"
+  >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item no-padding lines="none" color="none">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-4>
+                  <ion-label>
+                    <span
+                      class="required"
+                      *ngIf="localForm.submitted && addForm.controls['sName'].invalid"
+                      >*</span
+                    >
+                    Special Name:</ion-label
+                  >
+                  <ion-input
+                    type="text"
+                    placeholder="Enter special name"
+                    formControlName="sName"
+                  ></ion-input>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['sType'].invalid">*</span> Special Type:</ion-label
+                  >
+                  <select placeholder="Select special type" formControlName="sType">
+                    <option value="" disabled selected>Select type</option>
+                    <option *ngFor="let s of specialTypes"  value="{{s.id}}">{{s.type}}</option>
+                  </select>
+                </ion-col>
+              </ion-row>
+              <br />
+              <ion-row>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['sImage'].invalid"
+                    >*</span> Special Image:</ion-label
+                  >
+                  <ion-input type="file" (change)="onFileSelected($event)" placeholder="Select file" accept="image/x-png,image/jpeg" formControlName="sImage"></ion-input>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['sPrice'].invalid"
+                    >*</span> Special Price:</ion-label
+                  >
+                  <ion-input
+                    type="number"
+                    formControlName="sPrice"
+                    oninput="this.value = Math.abs(this.value)"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <br />
+              <ion-row>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['startDate'].invalid"
+                    >*</span> Start Date:</ion-label
+                  >
+                  <input type="date" formControlName="startDate" />
+                </ion-col>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['endDate'].invalid"
+                    >*</span> End Date:</ion-label
+                  >
+                  <input type="date" formControlName="endDate" (change)="compareDates($event)"/>
+                </ion-col>
+              </ion-row>
+
+              <br />
+              <ion-row>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && addForm.controls['sDescription'].invalid"
+                    >*</span> Special Description:
+                  </ion-label>
+                  <ion-textarea
+                    placeholder="Enter special description..."
+                    formControlName="sDescription"></ion-textarea>
+                </ion-col>
+                <ion-col col-4>
+                  <ion-label
+                    ><span class="required"
+                    *ngIf="localForm.submitted && specialItemsArr.length == 0"
+                    >*</span> Special Items:
+                  </ion-label>
+                  <ion-card id="specialItemsCard">
+                    <ion-content style="top:0%; --background: white;" [scrollEvents]="true">
+                      <ion-list>
+                         <ion-item *ngFor="let s of specialItemsArr" lines="none">{{s.name}} 
+                          <ion-fab-button (click)="RemoveItem(s.name)" color="light" slot="end">
+                            <ion-icon name="close" ></ion-icon>
+                          </ion-fab-button>
+                        </ion-item> 
+                      </ion-list>
+                    </ion-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <div id="productTable">
+            <ag-grid-angular
+              style="height: 600px"
+              class="ag-theme-alpine"
+              #specialGrid
+              [rowData]="rowData"
+              [columnDefs]="columnDefs"
+              [rowSelection]="rowSelection"
+              [rowMultiSelectWithClick]="true"
+              [pagination]="true"
+              [paginationPageSize]="7"
+              (rowSelected)="onRowSelected($event)"
+              (selectionChanged)="onSelectionChanged($event)"
+            >
+            </ag-grid-angular>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-item-group style="float: right; margin-left: 85%">
+          <ion-button id="create" slot="end" type="submit" (click)="compareDates($event)">Create</ion-button>
+          <ion-button id="cancel" slot="end" routerLink="/view-special">Cancel</ion-button>
+        </ion-item-group>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

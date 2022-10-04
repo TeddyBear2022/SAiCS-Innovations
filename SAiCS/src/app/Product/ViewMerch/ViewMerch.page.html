@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>  
+    
+    <ion-label slot="secondary" id="toolbarUserName" >{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+  <ion-row>
+    <ion-col>
+      <ion-button fill="clear" (click)="createProduct()">
+        <ion-icon name="add-circle-outline" size="large" id="addIcon"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-searchbar [(ngModel)]="search" id="searchProductBar" placeholder="Search Product..."></ion-searchbar>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <!-- Filter box -->
+   <ion-col size="2.1">
+    <ion-row>
+      <ion-button routerLink="/merch-maintenance" fill="clear" style="color: #0070c0; text-transform: none; text-decoration: underline; font-size: 16px;">Maintainance</ion-button>
+    </ion-row>
+
+    <ion-row>
+      <select placeholder="Pick" id="typeSelect" name="typeSelect" [(ngModel)]="typeSelect">
+          <option value="" selected>Select product type</option>
+          <option value="Product">Product</option>
+          <option value="Package">Package</option>
+        </select>
+    </ion-row>
+
+
+    <ion-card id="filterBox">
+      <ion-card-header>
+        <ion-card-title>Categories...</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-radio-group [(ngModel)]="merchCatOption">
+
+          <ion-item lines="none" *ngFor="let m of merchCat; index as i">
+            <ion-label>{{m.merchCategoryName}}</ion-label>
+            <ion-radio slot="start" value="{{m.merchCategoryId}}"></ion-radio>
+          </ion-item>
+      
+          <ion-item lines="none">
+            <ion-label>Show All...</ion-label>
+            <ion-radio slot="start" value=""></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </ion-card-content>
+    </ion-card>
+   </ion-col>
+
+   <!-- Table -->
+   <ion-col size="9">
+    
+     <table id="productTable">
+      <thead>
+        <tr>
+          <th width="5%">ID</th>
+          <th width="15%">Product</th>
+          <th width="10%">Name</th>
+          <th width="10%">Category</th>
+          <th width="20%">Description</th>
+          <th width="10%">Price</th>
+          <th width="20%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let m of merch | filter:search:filterKeys | filter:typeSelect:filterKeys  | filter:merchCatOption:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
+          <tr [ngClass]="{'disableRow': m.status == 'Discontinued'}">
+            <td>{{m.id}}</td>
+            <td><img [src]="GetMerchImage(m.id) | safe: 'url'" height="100px" alt='The Image' /></td>
+            <td>{{m.name}}</td>
+            <td>{{m.category}}</td>
+            <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>
+            <td>{{m.price | currency: 'ZAR':'symbol-narrow'}}</td>
+            <td style="display: block;text-align: center;">
+              <ion-button id="update" *ngIf="m.status != 'Discontinued'" (click)="updateProduct(m.id)">Update</ion-button>
+              <ion-button id="delete" *ngIf="m.status != 'Discontinued'" (click)="DeleteMerch(m.id)">Remove</ion-button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+     </table>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+    <div class="pagination">
+      <pagination-controls id="TB" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </ion-row>
+  <br>
+</ion-grid>
+</ion-content>

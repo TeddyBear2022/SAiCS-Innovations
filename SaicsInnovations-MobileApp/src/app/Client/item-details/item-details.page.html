@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="margin-left: 50px;">Product Details</ion-title>
+    <ion-button fill="clear" slot="start" (click)="Back()">
+      <ion-icon size="large" name="arrow-back" color="light"></ion-icon>
+     </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="productDetailsCard">
+    <ion-card *ngIf="Item != undefined">
+      <ion-row>
+        <img [src]="Item.image | safe: 'url'" height='300' width='300'/>
+      </ion-row>
+      <br>
+      <ion-row>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            <h1  style="color: black;"><b>{{Item.name}}</b></h1>
+          </ion-label>
+          <ion-label slot="end">
+            <p style="color: black; font-size: 20px;">{{Item.price | currency: 'ZAR':'symbol-narrow'}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>Qty:</ion-label>
+    <ion-input type="number" min="0" oninput="this.value = Math.abs(this.value)" [ngStyle]="{'border-bottom': setBorderColor == true ? '2px solid #f44336' : ' 1px solid black'}" [(ngModel)]="Item.quantity" (ionChange)="transform($event)"  ></ion-input>
+
+    <ion-button fill="clear" shape="round" icon-only (click)="AddToCart()">
+      <ion-icon size="large" name="cart"></ion-icon>
+    </ion-button>
+        </ion-item>
+      </ion-row>
+    </ion-card>
+  </div>
+<br>
+  <ion-grid>
+    <div class="tab">
+      <button class="tablinks" (click)="ChooseOption('description')" [ngClass]="DesRev == 'description' ?'active' : ''">Decription</button>
+      <button class="tablinks" (click)="ChooseOption('reviews')" [ngClass]="DesRev == 'reviews' ?'active' : ''">Reviews</button>
+    </div>
+    <ion-row *ngIf="Item != undefined">
+      <ion-item *ngIf="DesRev == 'description'" lines="none">
+          <ion-label class="ion-text-wrap">{{Item.description}}</ion-label>
+      </ion-item>
+    </ion-row>
+    <ion-row *ngIf="DesRev == 'reviews'" id="reviewRow">
+      <ion-item  *ngFor="let i of ItemFeedback">
+        <ion-label class="ion-text-wrap ">
+          <h4>{{i.customer}} - {{i.date | date: 'dd/MM/yyyy'}}</h4>
+          <p style="font-weight: 600;">{{Item.category}} - {{Item.name}}</p>
+          <p>{{i.description}}
+          </p>
+        </ion-label>
+        
+    </ion-item>
+    <ion-item *ngIf="ItemFeedback.length == 0">
+      <ion-label>
+        <h4>There are currentlty no reviews</h4>
+      </ion-label>
+    </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-content>

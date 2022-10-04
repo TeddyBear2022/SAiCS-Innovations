@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">My Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <br>
+  <ion-row>
+    <div class="tab">
+      <button class="tablinks" (click)="ChooseOption('pending')" [ngClass]="orderStat == 'pending' ?'active' : ''">Pending</button>
+      <button class="tablinks" (click)="ChooseOption('complete')" [ngClass]="orderStat == 'complete' ?'active' : ''">Completed</button>
+    </div>
+  </ion-row>
+  <br>
+
+  <ion-row *ngIf="orderStat == 'pending'" id="showData">
+    <ion-list>
+      <ng-container *ngFor="let o of orders">
+      <ion-item *ngIf="o.status == 'Pending'" >
+        
+        <ion-label class="ion-text-wrap " style="margin-right: 60px;">
+          <h4>{{o.date | date: 'dd/MM/yyyy'}}</h4>
+          <p style="font-weight: 600;">{{o.status}}</p>
+          <p>{{o.amount| currency: 'ZAR':'symbol-narrow'}}
+          </p>
+        </ion-label>
+        <ion-label slot="end">
+          <ion-button
+          (click)="ViewOrderDetails(o.id)" 
+            fill="clear"
+            
+            style="color: #062b80; text-transform: none; font-size: 14px"
+          >
+            <ion-icon id="editBtn" name="eye-outline"></ion-icon>
+          </ion-button>
+        </ion-label>
+      </ion-item>
+      </ng-container>
+    
+    </ion-list>
+</ion-row>
+
+<ion-row *ngIf="orderStat == 'complete'" id="showData">
+  <ion-list>
+    <ng-container  *ngFor="let o of orders">
+    <ion-item  *ngIf="o.status == 'Complete'">
+      <ion-label class="ion-text-wrap " style="margin-right: 60px;">
+        <h4>{{o.date | date: 'dd/MM/yyyy'}}</h4>
+        <p style="font-weight: 600;">{{o.status}}</p>
+        <p>{{o.amount| currency: 'ZAR':'symbol-narrow'}}
+        </p>
+      </ion-label>
+      <ion-label slot="end">
+        <ion-button
+        (click)="ViewOrderDetails(o.id)" 
+          fill="clear"
+          
+          style="color: #062b80; text-transform: none; font-size: 14px"
+        >
+          <ion-icon id="editBtn" name="eye-outline"></ion-icon>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+    </ng-container>
+  
+  </ion-list>
+</ion-row>
+
+</ion-content>

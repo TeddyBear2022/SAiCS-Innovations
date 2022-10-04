@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false">
+        
+      </ion-menu-button>
+    </ion-buttons>    
+    
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<br>
+<p style="text-align: center; font-size:40px;">My Feedback</p>
+<br>
+
+<div id="shadow" *ngIf="noResults == false">
+<ion-card *ngFor="let x of feedbacks" style="margin-left: 10%; margin-right: 10%; border-radius: 20px;  height: 130px; text-shadow: 100px;">
+  <ion-card-header>
+    <ion-card-subtitle style="color: #008080;font-size: 22px;">{{x.date| date: 'dd/MM/yyyy'}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content style="font-size:19px;">
+    {{x.description}}
+  </ion-card-content>
+</ion-card>
+</div><br>
+
+<div align="center" *ngIf="noResults == true"><br><img src="/assets/Empty3.gif" height="400px" width="600px"><br></div>
+<!-- <ion-card style="margin-left: 10%; margin-right: 10%; border-radius: 20px;  height: 130px; text-shadow: 100px;">
+  <ion-card-header>
+    <ion-card-subtitle style="color: #008080;font-size: 18px;">23/05/2022 : Mack Maine</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    Ambassador is doing a good job, providing more information to help make ordering process easy
+  </ion-card-content>
+</ion-card><br> -->
+
+</ion-content>

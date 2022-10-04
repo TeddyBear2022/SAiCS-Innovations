@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-toolbar id="navbar">
+      <ion-buttons slot="start" menu="main-menu">
+        <ion-menu-button auto-hide="false"></ion-menu-button>
+      </ion-buttons>
+  
+      
+      <ion-buttons slot="secondary">
+        <ion-button shape="round" routerLink="/view-ambassador-cart">
+          <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+          <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+          </div>
+        </ion-button>
+      </ion-buttons>
+      
+  
+      <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+  
+      <ion-buttons slot="end">
+        <ion-button (click)="presentPopover($event)" shape="round">
+          <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <div>
+        <ion-button fill="clear" type="string" size="medium" (click)="Return()">
+            <ion-icon slot="start" name="arrow-back"></ion-icon>
+            Return
+          </ion-button>
+    </div>
+
+    <div id="productDetailsCard">
+      <ion-card *ngIf="Item != undefined">
+        <ion-row>
+          <ion-col><img [src]="Item.image | safe: 'url'" height='300' width='300'/></ion-col>
+
+          <ion-col style="margin-left:10%;">
+        <ion-card-content>
+          <h1  style="color: black;"><b>{{Item.name}}</b></h1>
+          <br>
+          <p  style="color: #333333;">{{Item.description}}</p>
+          <p style="color: black; font-weight: bold;">{{Item.price | currency: 'ZAR':'symbol-narrow'}}</p>
+    </ion-card-content>
+          </ion-col>
+        </ion-row>
+        <ion-row class="quantity">
+          <ion-col size="5"></ion-col>
+          <ion-col size="5"></ion-col>
+          <ion-col>
+          <ion-item>
+          <ion-label>Qty:</ion-label>
+          <ion-input type="number" min="0" oninput="this.value = Math.abs(this.value)" [ngStyle]="{'border-bottom': setBorderColor == true ? '2px solid #f44336' : ' 1px solid black'}" [(ngModel)]="Item.quantity" (ionChange)="transform($event)"  ></ion-input>
+          <ion-button fill="clear" shape="round" icon-only (click)="AddToCart()">
+            <ion-icon size="large" name="cart"></ion-icon>
+          </ion-button>
+          </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+
+    <div id="reviews">
+     <h1 style="font-weight: bold;">Reviews</h1>
+     <ion-card *ngFor="let i of ItemFeedback">
+      <h6>{{i.customer}} - {{i.date | date: 'dd/MM/yyyy'}}</h6>
+      <p style="font-weight: 600;">{{Item.category}} - {{Item.name}}</p>
+      <p>{{i.description}}
+      </p>
+     </ion-card>
+     <ion-card *ngIf="ItemFeedback.length == 0">
+      <h6>There are currentlty no reviews</h6>
+     </ion-card>
+    </div>
+
+  </ion-content>

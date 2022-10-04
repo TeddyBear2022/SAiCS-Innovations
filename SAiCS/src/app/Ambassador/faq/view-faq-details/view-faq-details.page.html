@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>    
+   
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
+      </ion-button>
+    </ion-buttons>
+    <ion-label slot="secondary" id="toolbarProfileIcon">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true">
+<ion-grid>
+  <br>
+  <ion-row>
+    <ion-button  (click)="Back()" style="margin-right: 90%; color: white; border-radius: 20%;">
+  <ion-icon name="arrow-back-outline"></ion-icon>
+</ion-button>
+</ion-row>
+  <br> <br> <br>
+    <ion-label class="Heading"><h1 style="text-align: center; font-style: normal;"> <b>Let Us Answer Your Questions!</b></h1></ion-label>
+    <br>
+
+  <div class="container">
+
+  <ion-card class="accfaq-margin">
+    <ion-card-header>
+      <ion-card-title><ion-label *ngIf="DeliveryFAQs != undefined">{{DeliveryFAQs[0].faqcategory.categoryName}}</ion-label></ion-card-title>
+    </ion-card-header>
+    <br>
+
+    <ion-card-content>
+      <ion-list class="txt-block" *ngFor="let a of DeliveryFAQs; let i = index">
+        <div>
+          <ion-text >
+            <H2 (mouseenter)="hoverStateIn(i)" (mouseleave)="hoverStateOut(i)">Q.. {{a.faqquestion}}</H2><br>
+            <H3 *ngIf = 'showText[i]'>  A.. {{a.faqanswers}}</H3><br><br>
+          </ion-text>
+        </div>
+        </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+</div>
+
+<ion-row> 
+  <ion-col style="margin-top: 2%;">
+    <div id="bubbles">
+      <svg >
+        <circle id="gray" cx="10" cy="60" r="60" fill="#a0a3a5"/>
+        <circle id="teal" cx="50" cy="130" r="60" fill="#00008b" fill-opacity="0.8" />
+        <circle id="blue" cx="120" cy="165" r="60" fill="#0070c0" fill-opacity="0.8" />
+      </svg>
+  </div>
+  </ion-col>
+</ion-row>
+</ion-grid>
+</ion-content>

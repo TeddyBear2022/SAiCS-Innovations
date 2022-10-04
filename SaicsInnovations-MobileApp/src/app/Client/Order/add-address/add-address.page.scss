@@ -1,0 +1,22 @@
+h3{font-weight: 400;}
+ion-toolbar{
+  --background: #0070c0;
+  --color: #ffffff;
+}
+
+ion-content{padding-top: 5% !important;}
+
+#addressForm{
+    ion-item-group{
+        padding-top: 2%;
+      }
+
+    span{font-size: 13px; color: #f44336;}
+
+    input, select, ion-input{
+        width: 250px;
+        height: 35px;
+        border: 1px solid black;
+        color: black;
+      }
+}

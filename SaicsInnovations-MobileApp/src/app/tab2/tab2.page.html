@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">
+      My Cart
+    </ion-title>
+    <ion-button fill="clear" slot="end" (click)="ClearCart()" [disabled]="items == undefined || items.length == 0">
+      <i class="fa-solid fa-eraser" style=" font-size:25px;color: white;"></i>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray">
+
+  <div *ngIf="items.length < 1" class="noitem">
+    <div
+    style="
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    "
+  >
+    <img src="./assets/empty-cart.svg" alt="" />
+  </div>
+  <div style="justify-content: center; text-align: center">
+    <h4>
+      Your cart is currently empty.
+      <a href="/tabs/tab1">Continue Shopping</a>
+    </h4>
+  </div>
+  </div>
+
+  <ion-list *ngIf="items.length > 0" class="bg-gray">
+    <ion-row *ngFor="let x of items; let i = index"class="rrow" class="ion-no-padding mt-1 bg-white">
+        <ion-col size="3">
+            <img [src]="LoadImage(x.name) | safe: 'url'"style="height: 100%;"/>
+        </ion-col>
+        <ion-col size="9">
+            <h4 class="brand">{{ x.name }} <span (click)="RemoveFromCart(x)" style="float:right; font-size: 1.4rem;"><ion-icon name="close"></ion-icon></span></h4>
+            <h5 class="amount">{{ x.price | currency: 'ZAR':'symbol-narrow'}}</h5>
+            
+            <ion-row class="left">
+              <ion-col size="12" style="display: flex; align-items: center;">
+                <p class="ion-no-margin">Quantity  </p> 
+                <p class="qty-bar ion-no-margin" style="padding: 0px 10px;"> <ion-icon (click)="decrement(x)" style="margin-right:5px; color: #0070c0;"  name="bag-remove"></ion-icon>{{ x.quantity}}<ion-icon (click)="increment(x)" style="margin-left:5px; color: #0070c0;" name="bag-add"></ion-icon></p>
+              </ion-col>  
+            </ion-row>
+        </ion-col>
+    </ion-row>
+  </ion-list>
+  
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="bg-gray" *ngIf="items.length > 0">
+    <ion-row class="footer-bar">
+      <ion-col class="p-12-15">
+        <div>
+          <h2 class="heading">Order Info</h2>
+          <p class="mb-1">Items : {{TotalItems}}</p>
+          <p class="mt-1">Total Price    : {{ OrderTotal | currency: 'ZAR':'symbol-narrow' }}</p>
+          <p class="mt-1">VAT Amount (Inclusive)    : {{CalculatedVAT | currency: 'ZAR':'symbol-narrow'}}</p>
+        </div>
+        <ion-button mode="ios" id="OrderBtn" expand="full" (click)="PlaceOrder()"> Checkout </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

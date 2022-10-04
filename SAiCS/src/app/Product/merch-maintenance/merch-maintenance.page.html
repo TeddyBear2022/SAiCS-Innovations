@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>    
+   
+    <ion-label slot="secondary" id="toolbarUserName" >{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+<ion-row>
+  <ion-button id="SpecifiButtopns" (click)="Back()"  style="margin-right: 90%; color: white; border-radius: 20%;">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+</ion-button>
+  <h2>Maintain Entities</h2>
+</ion-row>
+
+<br>
+  <ion-row>
+    <ion-col size="6">
+      <ion-label style="margin-left: 5%;" id="Selectlabel">Select Entity:</ion-label>
+      <ion-select interface="popover" placeholder="Select option" #maintainOpt name="maintainOpt" ngModel>
+        <ion-select-option value="delivery">Delivery Type</ion-select-option>
+        <ion-select-option value="cat">Merch Category</ion-select-option>
+        <ion-select-option value="type">Merch Type</ion-select-option>
+        <ion-select-option value="status">Merch Status</ion-select-option>
+        <ion-select-option value="order">Order Status</ion-select-option>
+        <ion-select-option value="VAT">VAT</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="6">
+     
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<app-order-status *ngIf="maintainOpt.value == 'order'"></app-order-status>
+<app-delivery-type *ngIf="maintainOpt.value == 'delivery'"></app-delivery-type>
+<app-merch-status *ngIf="maintainOpt.value == 'status'"></app-merch-status>
+<app-merch-cat *ngIf="maintainOpt.value == 'cat'"></app-merch-cat>
+<app-merch-type *ngIf="maintainOpt.value == 'type'"></app-merch-type>
+<app-vat *ngIf="maintainOpt.value == 'VAT'"></app-vat>
+</ion-content>

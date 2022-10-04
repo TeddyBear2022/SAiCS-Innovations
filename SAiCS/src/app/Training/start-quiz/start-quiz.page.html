@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons slot="secondary" routerLink="/view-ambassador-cart">
+      <ion-button shape="round">
+        <ion-icon size="large" name="cart" style="color: #08c10f;"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round" id="ProfileIcon">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+  <h1 style="text-align: center;font-size: 50px;color: #333333;">Quiz Name</h1>
+  <!-- <ion-row *ngFor="let q of questions; let i = index">
+    
+    <div>
+      <br>
+      <ion-label>Question {{i+1}}: {{q.questions}}</ion-label><br>
+
+          <ion-radio-group (ionChange)="addPoint($event, i)" >
+        <ion-radio value="op1"></ion-radio><ion-label> {{q.option1}}</ion-label><br>
+        <ion-radio value="point"></ion-radio><ion-label> {{q.answers}}</ion-label><br>
+        <ion-radio value="op2"></ion-radio><ion-label> {{q.option2}}</ion-label><br>
+        <ion-radio value="op3"></ion-radio><ion-label> {{q.option3}}</ion-label><br>
+      </ion-radio-group>
+
+    <br>
+  </div>
+  </ion-row>
+  <br> -->
+
+
+  <ion-row *ngFor="let q of questionsList; let i = index">
+    
+    <div>
+      <br>
+      <ion-label>Question {{i+1}}: {{q[0].question}}</ion-label><br>
+      
+        <ion-radio-group (ionChange)="addPoint($event, i)" >
+        <ion-radio value="{{q[0].value}}"></ion-radio><ion-label > {{q[0].item}}</ion-label><br>
+        <ion-radio value="{{q[1].value}}"></ion-radio><ion-label> {{q[1].item}}</ion-label><br>
+        <ion-radio value="{{q[2].value}}"></ion-radio><ion-label> {{q[2].item}}</ion-label><br>
+        <ion-radio value="{{q[3].value}}"></ion-radio><ion-label> {{q[3].item}}</ion-label><br>
+      </ion-radio-group>
+
+    <br>
+  </div>
+  </ion-row>
+  <br>
+  
+</ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col></ion-col>
+    <ion-button (click)="CheckAnswers()">Submit</ion-button>
+    <ion-button color="danger" (click)=" StopQuiz()">Stop Quiz</ion-button>
+    
+  </ion-row>
+</ion-footer>

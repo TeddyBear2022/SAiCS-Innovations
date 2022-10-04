@@ -1,0 +1,543 @@
+node_modules
+MobileApp/.browserslistrc
+MobileApp/.editorconfig
+MobileApp/.eslintrc.json
+MobileApp/.gitignore
+MobileApp/angular.json
+MobileApp/capacitor.config.ts
+MobileApp/ionic.config.json
+MobileApp/karma.conf.js
+MobileApp/package-lock.json
+MobileApp/package.json
+MobileApp/tsconfig.app.json
+MobileApp/tsconfig.json
+MobileApp/tsconfig.spec.json
+MobileApp/android/.gitignore
+MobileApp/android/build.gradle
+MobileApp/android/gradle.properties
+MobileApp/android/gradlew
+MobileApp/android/gradlew.bat
+MobileApp/android/settings.gradle
+MobileApp/android/variables.gradle
+MobileApp/android/app/.gitignore
+MobileApp/android/app/build.gradle
+MobileApp/android/app/proguard-rules.pro
+MobileApp/android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java
+MobileApp/android/app/src/main/AndroidManifest.xml
+MobileApp/android/app/src/main/java/io/ionic/starter/MainActivity.java
+MobileApp/android/app/src/main/res/drawable/ic_launcher_background.xml
+MobileApp/android/app/src/main/res/drawable/splash.png
+MobileApp/android/app/src/main/res/drawable-land-hdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-land-mdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-land-xhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-land-xxhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-land-xxxhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-port-hdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-port-mdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-port-xhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-port-xxhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-port-xxxhdpi/splash.png
+MobileApp/android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml
+MobileApp/android/app/src/main/res/layout/activity_main.xml
+MobileApp/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+MobileApp/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+MobileApp/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
+MobileApp/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png
+MobileApp/android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+MobileApp/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png
+MobileApp/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png
+MobileApp/android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+MobileApp/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
+MobileApp/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png
+MobileApp/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+MobileApp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
+MobileApp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png
+MobileApp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+MobileApp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+MobileApp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
+MobileApp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+MobileApp/android/app/src/main/res/values/ic_launcher_background.xml
+MobileApp/android/app/src/main/res/values/strings.xml
+MobileApp/android/app/src/main/res/values/styles.xml
+MobileApp/android/app/src/main/res/xml/file_paths.xml
+MobileApp/android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java
+MobileApp/android/gradle/wrapper/gradle-wrapper.jar
+MobileApp/android/gradle/wrapper/gradle-wrapper.properties
+MobileApp/e2e/protractor.conf.js
+MobileApp/e2e/tsconfig.json
+MobileApp/e2e/src/app.e2e-spec.ts
+MobileApp/e2e/src/app.po.ts
+MobileApp/src/global.scss
+MobileApp/src/index.html
+MobileApp/src/main.ts
+MobileApp/src/polyfills.ts
+MobileApp/src/test.ts
+MobileApp/src/zone-flags.ts
+MobileApp/src/app/app-routing.module.ts
+MobileApp/src/app/app.component.html
+MobileApp/src/app/app.component.scss
+MobileApp/src/app/app.component.spec.ts
+MobileApp/src/app/app.component.ts
+MobileApp/src/app/app.module.ts
+MobileApp/src/app/Client/faq/faq-routing.module.ts
+MobileApp/src/app/Client/faq/faq.module.ts
+MobileApp/src/app/Client/faq/faq.page.html
+MobileApp/src/app/Client/faq/faq.page.scss
+MobileApp/src/app/Client/faq/faq.page.spec.ts
+MobileApp/src/app/Client/faq/faq.page.ts
+MobileApp/src/app/Client/faq/account-faq/account-faq-routing.module.ts
+MobileApp/src/app/Client/faq/account-faq/account-faq.module.ts
+MobileApp/src/app/Client/faq/account-faq/account-faq.page.html
+MobileApp/src/app/Client/faq/account-faq/account-faq.page.scss
+MobileApp/src/app/Client/faq/account-faq/account-faq.page.spec.ts
+MobileApp/src/app/Client/faq/account-faq/account-faq.page.ts
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq-routing.module.ts
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.module.ts
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.html
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.scss
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.spec.ts
+MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.ts
+MobileApp/src/app/Client/faq/product-faq/product-faq-routing.module.ts
+MobileApp/src/app/Client/faq/product-faq/product-faq.module.ts
+MobileApp/src/app/Client/faq/product-faq/product-faq.page.html
+MobileApp/src/app/Client/faq/product-faq/product-faq.page.scss
+MobileApp/src/app/Client/faq/product-faq/product-faq.page.spec.ts
+MobileApp/src/app/Client/faq/product-faq/product-faq.page.ts
+MobileApp/src/app/Client/feedback/feedback-routing.module.ts
+MobileApp/src/app/Client/feedback/feedback.module.ts
+MobileApp/src/app/Client/feedback/feedback.page.html
+MobileApp/src/app/Client/feedback/feedback.page.scss
+MobileApp/src/app/Client/feedback/feedback.page.spec.ts
+MobileApp/src/app/Client/feedback/feedback.page.ts
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback-routing.module.ts
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback.module.ts
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.html
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.scss
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.spec.ts
+MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.ts
+MobileApp/src/app/Client/landing-page(client)/landing-page-routing.module.ts
+MobileApp/src/app/Client/landing-page(client)/landing-page.module.ts
+MobileApp/src/app/Client/landing-page(client)/landing-page.page.html
+MobileApp/src/app/Client/landing-page(client)/landing-page.page.scss
+MobileApp/src/app/Client/landing-page(client)/landing-page.page.spec.ts
+MobileApp/src/app/Client/landing-page(client)/landing-page.page.ts
+MobileApp/src/app/Client/view-ambassador/view-ambassador-routing.module.ts
+MobileApp/src/app/Client/view-ambassador/view-ambassador.module.ts
+MobileApp/src/app/Client/view-ambassador/view-ambassador.page.html
+MobileApp/src/app/Client/view-ambassador/view-ambassador.page.scss
+MobileApp/src/app/Client/view-ambassador/view-ambassador.page.spec.ts
+MobileApp/src/app/Client/view-ambassador/view-ambassador.page.ts
+MobileApp/src/app/Models/Address.ts
+MobileApp/src/app/Models/Admin.ts
+MobileApp/src/app/Models/Ambassador.ts
+MobileApp/src/app/Models/AmbassadorType.ts
+MobileApp/src/app/Models/AmbassadorVM.ts
+MobileApp/src/app/Models/CartItem.ts
+MobileApp/src/app/Models/Client.ts
+MobileApp/src/app/Models/Country.ts
+MobileApp/src/app/Models/Course.ts
+MobileApp/src/app/Models/FAQ.ts
+MobileApp/src/app/Models/FAQCategory.ts
+MobileApp/src/app/Models/Feedback.ts
+MobileApp/src/app/Models/Option.ts
+MobileApp/src/app/Models/Order.ts
+MobileApp/src/app/Models/QuestionBank.ts
+MobileApp/src/app/Models/Quiz.ts
+MobileApp/src/app/Models/Section.ts
+MobileApp/src/app/Models/SectionContent.ts
+MobileApp/src/app/Models/Title.ts
+MobileApp/src/app/Models/User.ts
+MobileApp/src/app/Models/UserApplicationsStatus.ts
+MobileApp/src/app/Models/UserType.ts
+MobileApp/src/app/Models/ViewModels/accessinfoVM.ts
+MobileApp/src/app/Models/ViewModels/AdminVM.ts
+MobileApp/src/app/Models/ViewModels/AmbassadorVM.ts
+MobileApp/src/app/Models/ViewModels/CartVM.ts
+MobileApp/src/app/Models/ViewModels/CientVM.ts
+MobileApp/src/app/Models/ViewModels/credentialsVM.ts
+MobileApp/src/app/Models/ViewModels/DeleteUserVM.ts
+MobileApp/src/app/Models/ViewModels/FeedbackVM.ts
+MobileApp/src/app/Models/ViewModels/loginToken.ts
+MobileApp/src/app/Models/ViewModels/LoginVM.ts
+MobileApp/src/app/Models/ViewModels/MerchVM.ts
+MobileApp/src/app/Models/ViewModels/NewCourseVM.ts
+MobileApp/src/app/Models/ViewModels/OTPVM.ts
+MobileApp/src/app/Models/ViewModels/PackageVM.ts
+MobileApp/src/app/Models/ViewModels/PositionRequestVM.ts
+MobileApp/src/app/Models/ViewModels/ProfileVM.ts
+MobileApp/src/app/Models/ViewModels/registerationinfoVM.ts
+MobileApp/src/app/Models/ViewModels/registerVM.ts
+MobileApp/src/app/Models/ViewModels/ResetPasswordVM.ts
+MobileApp/src/app/Services/api.service.spec.ts
+MobileApp/src/app/Services/api.service.ts
+MobileApp/src/app/Services/cart.service.spec.ts
+MobileApp/src/app/Services/cart.service.ts
+MobileApp/src/app/Services/TemporaryStorage.service.ts
+MobileApp/src/app/User/login/login-routing.module.ts
+MobileApp/src/app/User/login/login.module.ts
+MobileApp/src/app/User/login/login.page.html
+MobileApp/src/app/User/login/login.page.scss
+MobileApp/src/app/User/login/login.page.spec.ts
+MobileApp/src/app/User/login/login.page.ts
+MobileApp/src/app/User/next/next-routing.module.ts
+MobileApp/src/app/User/next/next.module.ts
+MobileApp/src/app/User/next/next.page.html
+MobileApp/src/app/User/next/next.page.scss
+MobileApp/src/app/User/next/next.page.spec.ts
+MobileApp/src/app/User/next/next.page.ts
+MobileApp/src/app/User/profile/profile-routing.module.ts
+MobileApp/src/app/User/profile/profile.module.ts
+MobileApp/src/app/User/profile/profile.page.html
+MobileApp/src/app/User/profile/profile.page.scss
+MobileApp/src/app/User/profile/profile.page.spec.ts
+MobileApp/src/app/User/profile/profile.page.ts
+MobileApp/src/app/User/register/register-routing.module.ts
+MobileApp/src/app/User/register/register.module.ts
+MobileApp/src/app/User/register/register.page.html
+MobileApp/src/app/User/register/register.page.scss
+MobileApp/src/app/User/register/register.page.spec.ts
+MobileApp/src/app/User/register/register.page.ts
+MobileApp/src/app/User/reset-password/reset-password-routing.module.ts
+MobileApp/src/app/User/reset-password/reset-password.module.ts
+MobileApp/src/app/User/reset-password/reset-password.page.html
+MobileApp/src/app/User/reset-password/reset-password.page.scss
+MobileApp/src/app/User/reset-password/reset-password.page.spec.ts
+MobileApp/src/app/User/reset-password/reset-password.page.ts
+MobileApp/src/app/User/waiting/waiting-routing.module.ts
+MobileApp/src/app/User/waiting/waiting.module.ts
+MobileApp/src/app/User/waiting/waiting.page.html
+MobileApp/src/app/User/waiting/waiting.page.scss
+MobileApp/src/app/User/waiting/waiting.page.spec.ts
+MobileApp/src/app/User/waiting/waiting.page.ts
+MobileApp/src/app/clientstabs/clientstabs-routing.module.ts
+MobileApp/src/app/clientstabs/clientstabs.module.ts
+MobileApp/src/app/clientstabs/clientstabs.page.html
+MobileApp/src/app/clientstabs/clientstabs.page.scss
+MobileApp/src/app/clientstabs/clientstabs.page.spec.ts
+MobileApp/src/app/clientstabs/clientstabs.page.ts
+MobileApp/src/app/home/home-routing.module.ts
+MobileApp/src/app/home/home.module.ts
+MobileApp/src/app/home/home.page.html
+MobileApp/src/app/home/home.page.scss
+MobileApp/src/app/home/home.page.spec.ts
+MobileApp/src/app/home/home.page.ts
+MobileApp/src/app/profile-popover/profile-popover.component.html
+MobileApp/src/app/profile-popover/profile-popover.component.scss
+MobileApp/src/app/profile-popover/profile-popover.component.spec.ts
+MobileApp/src/app/profile-popover/profile-popover.component.ts
+MobileApp/src/assets/59.png
+MobileApp/src/assets/Admin-members.png
+MobileApp/src/assets/Admin-position request.png
+MobileApp/src/assets/Admin-product.png
+MobileApp/src/assets/Admin-reports.png
+MobileApp/src/assets/Admin-sales.png
+MobileApp/src/assets/Admin-training.png
+MobileApp/src/assets/avatarIcon.jpg
+MobileApp/src/assets/Bubbles left-corner Attempt.png
+MobileApp/src/assets/Bubbles left-corner.png
+MobileApp/src/assets/Client Navbar logo.png
+MobileApp/src/assets/clock icon.png
+MobileApp/src/assets/Cosmetic SAiCS circle.png
+MobileApp/src/assets/coursepic.png
+MobileApp/src/assets/emoji.png
+MobileApp/src/assets/FAQ.png
+MobileApp/src/assets/FatBurner.png
+MobileApp/src/assets/horizontal line-modal.png
+MobileApp/src/assets/HungerBooster.png
+MobileApp/src/assets/innovations text.png
+MobileApp/src/assets/Innovations.png
+MobileApp/src/assets/Lifestyle SAiCS circle.png
+MobileApp/src/assets/money icon.png
+MobileApp/src/assets/newcoursepic.png
+MobileApp/src/assets/noImage.png
+MobileApp/src/assets/noresultsfound.gif
+MobileApp/src/assets/noresultsfound2.gif
+MobileApp/src/assets/noresultsfound3.gif
+MobileApp/src/assets/people icon.png
+MobileApp/src/assets/ProfileImage.png
+MobileApp/src/assets/quiz.jpg
+MobileApp/src/assets/quizImage.jpg
+MobileApp/src/assets/SAiCS bubbles.png
+MobileApp/src/assets/SAiCS homepage quote.png
+MobileApp/src/assets/SAiCS Innovations-logo.png
+MobileApp/src/assets/SAiCS line.png
+MobileApp/src/assets/SAiCS Logo.png
+MobileApp/src/assets/SAICS no bg.png
+MobileApp/src/assets/shapes.svg
+MobileApp/src/assets/Slimming SAiCS circle.png
+MobileApp/src/assets/SMORT.png
+MobileApp/src/assets/SuperBooster.png
+MobileApp/src/assets/Suptite.png
+MobileApp/src/assets/trainingImage.jpg
+MobileApp/src/assets/truck icon.png
+MobileApp/src/assets/icon/favicon.png
+MobileApp/src/environments/environment.prod.ts
+MobileApp/src/environments/environment.ts
+MobileApp/src/theme/variables.scss
+SAiCSInnovationsAPI 3.0 -test/.vs/SAiCSInnovationsAPI 3.0/DesignTimeBuild/.dtbcache.v2
+SAiCSInnovationsAPI 3.0 -test/.vs/SAiCSInnovationsAPI 3.0/v16/.suo
+SAiCSInnovationsAPI 3.0 -test/Controllers/AdminController.cs
+SAiCSInnovationsAPI 3.0 -test/obj/project.assets.json
+SAiCSInnovationsAPI 3.0 -test/obj/project.nuget.cache
+SAiCSInnovationsAPI 3.0 -test/obj/SAiCSInnovationsAPI 3.0.csproj.nuget.dgspec.json
+SAiCSInnovationsAPI 3.0 -test/obj/SAiCSInnovationsAPI 3.0.csproj.nuget.g.props
+SAiCSInnovationsAPI 3.0 -test/obj/Debug/net5.0/SAiCSInnovationsAPI 3.0.assets.cache
+SAiCSInnovationsAPI 3.0 -test/obj/Debug/net5.0/SAiCSInnovationsAPI 3.0.csproj.AssemblyReference.cache
+SAiCSInnovationsAPI 3.0 -test/obj/Release/net5.0/SAiCSInnovationsAPI 3.0.assets.cache
+SAiCSInnovationsAPI 3.0 -test/.vs/SAiCSInnovationsAPI 3.0/DesignTimeBuild/.dtbcache.v2
+SAiCSInnovationsAPI 3.0 -test/.vs/SAiCSInnovationsAPI 3.0/v16/.suo
+SAiCSInnovationsAPI 3.0 -test/Controllers/AdminController.cs
+SAiCSInnovationsAPI 3.0 -test/obj/project.assets.json
+SAiCSInnovationsAPI 3.0 -test/obj/project.nuget.cache
+SAiCSInnovationsAPI 3.0 -test/obj/SAiCSInnovationsAPI 3.0.csproj.nuget.dgspec.json
+SAiCSInnovationsAPI 3.0 -test/obj/SAiCSInnovationsAPI 3.0.csproj.nuget.g.props
+SAiCSInnovationsAPI 3.0 -test/obj/Debug/net5.0/SAiCSInnovationsAPI 3.0.assets.cache
+SAiCSInnovationsAPI 3.0 -test/obj/Debug/net5.0/SAiCSInnovationsAPI 3.0.csproj.AssemblyReference.cache
+SAiCSInnovationsAPI 3.0 -test/obj/Release/net5.0/SAiCSInnovationsAPI 3.0.assets.cache
+SAiCS-MobileApp/.browserslistrc
+SAiCS-MobileApp/.editorconfig
+SAiCS-MobileApp/.eslintrc.json
+SAiCS-MobileApp/.gitignore
+SAiCS-MobileApp/angular.json
+SAiCS-MobileApp/capacitor.config.ts
+SAiCS-MobileApp/ionic.config.json
+SAiCS-MobileApp/karma.conf.js
+SAiCS-MobileApp/package-lock.json
+SAiCS-MobileApp/package.json
+SAiCS-MobileApp/tsconfig.app.json
+SAiCS-MobileApp/tsconfig.json
+SAiCS-MobileApp/tsconfig.spec.json
+SAiCS-MobileApp/e2e/protractor.conf.js
+SAiCS-MobileApp/e2e/tsconfig.json
+SAiCS-MobileApp/e2e/src/app.e2e-spec.ts
+SAiCS-MobileApp/e2e/src/app.po.ts
+SAiCS-MobileApp/src/global.scss
+SAiCS-MobileApp/src/index.html
+SAiCS-MobileApp/src/main.ts
+SAiCS-MobileApp/src/polyfills.ts
+SAiCS-MobileApp/src/test.ts
+SAiCS-MobileApp/src/zone-flags.ts
+SAiCS-MobileApp/src/app/app-routing.module.ts
+SAiCS-MobileApp/src/app/app.component.html
+SAiCS-MobileApp/src/app/app.component.scss
+SAiCS-MobileApp/src/app/app.component.spec.ts
+SAiCS-MobileApp/src/app/app.component.ts
+SAiCS-MobileApp/src/app/app.module.ts
+SAiCS-MobileApp/src/app/Client/faq/faq-routing.module.ts
+SAiCS-MobileApp/src/app/Client/faq/faq.module.ts
+SAiCS-MobileApp/src/app/Client/faq/faq.page.html
+SAiCS-MobileApp/src/app/Client/faq/faq.page.scss
+SAiCS-MobileApp/src/app/Client/faq/faq.page.spec.ts
+SAiCS-MobileApp/src/app/Client/faq/faq.page.ts
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq-routing.module.ts
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq.module.ts
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq.page.html
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq.page.scss
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq.page.spec.ts
+SAiCS-MobileApp/src/app/Client/faq/account-faq/account-faq.page.ts
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq-routing.module.ts
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.module.ts
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.html
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.scss
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.spec.ts
+SAiCS-MobileApp/src/app/Client/faq/delivery-faq/delivery-faq.page.ts
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq-routing.module.ts
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq.module.ts
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq.page.html
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq.page.scss
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq.page.spec.ts
+SAiCS-MobileApp/src/app/Client/faq/product-faq/product-faq.page.ts
+SAiCS-MobileApp/src/app/Client/feedback/feedback-routing.module.ts
+SAiCS-MobileApp/src/app/Client/feedback/feedback.module.ts
+SAiCS-MobileApp/src/app/Client/feedback/feedback.page.html
+SAiCS-MobileApp/src/app/Client/feedback/feedback.page.scss
+SAiCS-MobileApp/src/app/Client/feedback/feedback.page.spec.ts
+SAiCS-MobileApp/src/app/Client/feedback/feedback.page.ts
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback-routing.module.ts
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback.module.ts
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.html
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.scss
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.spec.ts
+SAiCS-MobileApp/src/app/Client/feedback/view-feedback/view-feedback.page.ts
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page-routing.module.ts
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page.module.ts
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page.page.html
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page.page.scss
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page.page.spec.ts
+SAiCS-MobileApp/src/app/Client/landing-page(client)/landing-page.page.ts
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador-routing.module.ts
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador.module.ts
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador.page.html
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador.page.scss
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador.page.spec.ts
+SAiCS-MobileApp/src/app/Client/view-ambassador/view-ambassador.page.ts
+SAiCS-MobileApp/src/app/Models/Address.ts
+SAiCS-MobileApp/src/app/Models/Admin.ts
+SAiCS-MobileApp/src/app/Models/Ambassador.ts
+SAiCS-MobileApp/src/app/Models/AmbassadorType.ts
+SAiCS-MobileApp/src/app/Models/AmbassadorVM.ts
+SAiCS-MobileApp/src/app/Models/BankAccount.ts
+SAiCS-MobileApp/src/app/Models/CartItem.ts
+SAiCS-MobileApp/src/app/Models/Client.ts
+SAiCS-MobileApp/src/app/Models/Country.ts
+SAiCS-MobileApp/src/app/Models/Course.ts
+SAiCS-MobileApp/src/app/Models/FAQ.ts
+SAiCS-MobileApp/src/app/Models/FAQCategory.ts
+SAiCS-MobileApp/src/app/Models/Feedback.ts
+SAiCS-MobileApp/src/app/Models/Option.ts
+SAiCS-MobileApp/src/app/Models/Order.ts
+SAiCS-MobileApp/src/app/Models/QuestionBank.ts
+SAiCS-MobileApp/src/app/Models/Quiz.ts
+SAiCS-MobileApp/src/app/Models/Section.ts
+SAiCS-MobileApp/src/app/Models/SectionContent.ts
+SAiCS-MobileApp/src/app/Models/Target.ts
+SAiCS-MobileApp/src/app/Models/Title.ts
+SAiCS-MobileApp/src/app/Models/User.ts
+SAiCS-MobileApp/src/app/Models/UserApplicationsStatus.ts
+SAiCS-MobileApp/src/app/Models/UserType.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/accessinfoVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/AdminVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/AmbassadorVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/CartVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/CientVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/credentialsVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/DeleteUserVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/FeedbackVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/loginToken.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/LoginVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/MerchVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/NewCourseVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/OTPVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/PackageVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/PositionRequestVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/ProfileVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/registerationinfoVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/registerVM.ts
+SAiCS-MobileApp/src/app/Models/ViewModels/ResetPasswordVM.ts
+SAiCS-MobileApp/src/app/Services/api.service.spec.ts
+SAiCS-MobileApp/src/app/Services/api.service.ts
+SAiCS-MobileApp/src/app/Services/cart.service.spec.ts
+SAiCS-MobileApp/src/app/Services/cart.service.ts
+SAiCS-MobileApp/src/app/Services/TemporaryStorage.service.ts
+SAiCS-MobileApp/src/app/User/login/login-routing.module.ts
+SAiCS-MobileApp/src/app/User/login/login.module.ts
+SAiCS-MobileApp/src/app/User/login/login.page.html
+SAiCS-MobileApp/src/app/User/login/login.page.scss
+SAiCS-MobileApp/src/app/User/login/login.page.spec.ts
+SAiCS-MobileApp/src/app/User/login/login.page.ts
+SAiCS-MobileApp/src/app/User/next/next-routing.module.ts
+SAiCS-MobileApp/src/app/User/next/next.module.ts
+SAiCS-MobileApp/src/app/User/next/next.page.html
+SAiCS-MobileApp/src/app/User/next/next.page.scss
+SAiCS-MobileApp/src/app/User/next/next.page.spec.ts
+SAiCS-MobileApp/src/app/User/next/next.page.ts
+SAiCS-MobileApp/src/app/User/profile/profile-routing.module.ts
+SAiCS-MobileApp/src/app/User/profile/profile.module.ts
+SAiCS-MobileApp/src/app/User/profile/profile.page.html
+SAiCS-MobileApp/src/app/User/profile/profile.page.scss
+SAiCS-MobileApp/src/app/User/profile/profile.page.spec.ts
+SAiCS-MobileApp/src/app/User/profile/profile.page.ts
+SAiCS-MobileApp/src/app/User/register/register-routing.module.ts
+SAiCS-MobileApp/src/app/User/register/register.module.ts
+SAiCS-MobileApp/src/app/User/register/register.page.html
+SAiCS-MobileApp/src/app/User/register/register.page.scss
+SAiCS-MobileApp/src/app/User/register/register.page.spec.ts
+SAiCS-MobileApp/src/app/User/register/register.page.ts
+SAiCS-MobileApp/src/app/User/reset-password/reset-password-routing.module.ts
+SAiCS-MobileApp/src/app/User/reset-password/reset-password.module.ts
+SAiCS-MobileApp/src/app/User/reset-password/reset-password.page.html
+SAiCS-MobileApp/src/app/User/reset-password/reset-password.page.scss
+SAiCS-MobileApp/src/app/User/reset-password/reset-password.page.spec.ts
+SAiCS-MobileApp/src/app/User/reset-password/reset-password.page.ts
+SAiCS-MobileApp/src/app/User/waiting/waiting-routing.module.ts
+SAiCS-MobileApp/src/app/User/waiting/waiting.module.ts
+SAiCS-MobileApp/src/app/User/waiting/waiting.page.html
+SAiCS-MobileApp/src/app/User/waiting/waiting.page.scss
+SAiCS-MobileApp/src/app/User/waiting/waiting.page.spec.ts
+SAiCS-MobileApp/src/app/User/waiting/waiting.page.ts
+SAiCS-MobileApp/src/app/explore-container/explore-container.component.html
+SAiCS-MobileApp/src/app/explore-container/explore-container.component.scss
+SAiCS-MobileApp/src/app/explore-container/explore-container.component.spec.ts
+SAiCS-MobileApp/src/app/explore-container/explore-container.component.ts
+SAiCS-MobileApp/src/app/explore-container/explore-container.module.ts
+SAiCS-MobileApp/src/app/profile-popover/profile-popover.component.html
+SAiCS-MobileApp/src/app/profile-popover/profile-popover.component.scss
+SAiCS-MobileApp/src/app/profile-popover/profile-popover.component.spec.ts
+SAiCS-MobileApp/src/app/profile-popover/profile-popover.component.ts
+SAiCS-MobileApp/src/app/tab1/tab1-routing.module.ts
+SAiCS-MobileApp/src/app/tab1/tab1.module.ts
+SAiCS-MobileApp/src/app/tab1/tab1.page.html
+SAiCS-MobileApp/src/app/tab1/tab1.page.scss
+SAiCS-MobileApp/src/app/tab1/tab1.page.spec.ts
+SAiCS-MobileApp/src/app/tab1/tab1.page.ts
+SAiCS-MobileApp/src/app/tab2/tab2-routing.module.ts
+SAiCS-MobileApp/src/app/tab2/tab2.module.ts
+SAiCS-MobileApp/src/app/tab2/tab2.page.html
+SAiCS-MobileApp/src/app/tab2/tab2.page.scss
+SAiCS-MobileApp/src/app/tab2/tab2.page.spec.ts
+SAiCS-MobileApp/src/app/tab2/tab2.page.ts
+SAiCS-MobileApp/src/app/tab3/tab3-routing.module.ts
+SAiCS-MobileApp/src/app/tab3/tab3.module.ts
+SAiCS-MobileApp/src/app/tab3/tab3.page.html
+SAiCS-MobileApp/src/app/tab3/tab3.page.scss
+SAiCS-MobileApp/src/app/tab3/tab3.page.spec.ts
+SAiCS-MobileApp/src/app/tab3/tab3.page.ts
+SAiCS-MobileApp/src/app/tabs/tabs-routing.module.ts
+SAiCS-MobileApp/src/app/tabs/tabs.module.ts
+SAiCS-MobileApp/src/app/tabs/tabs.page.html
+SAiCS-MobileApp/src/app/tabs/tabs.page.scss
+SAiCS-MobileApp/src/app/tabs/tabs.page.spec.ts
+SAiCS-MobileApp/src/app/tabs/tabs.page.ts
+SAiCS-MobileApp/src/assets/59.png
+SAiCS-MobileApp/src/assets/Admin-members.png
+SAiCS-MobileApp/src/assets/Admin-position request.png
+SAiCS-MobileApp/src/assets/Admin-product.png
+SAiCS-MobileApp/src/assets/Admin-reports.png
+SAiCS-MobileApp/src/assets/Admin-sales.png
+SAiCS-MobileApp/src/assets/Admin-training.png
+SAiCS-MobileApp/src/assets/avatarIcon.jpg
+SAiCS-MobileApp/src/assets/banking-details.png
+SAiCS-MobileApp/src/assets/Bubbles left-corner Attempt.png
+SAiCS-MobileApp/src/assets/Bubbles left-corner.png
+SAiCS-MobileApp/src/assets/Client Navbar logo.png
+SAiCS-MobileApp/src/assets/clock icon.png
+SAiCS-MobileApp/src/assets/Cosmetic SAiCS circle.png
+SAiCS-MobileApp/src/assets/coursepic.png
+SAiCS-MobileApp/src/assets/emoji.png
+SAiCS-MobileApp/src/assets/Empty.gif
+SAiCS-MobileApp/src/assets/Empty2.gif
+SAiCS-MobileApp/src/assets/Empty3.gif
+SAiCS-MobileApp/src/assets/FAQ.png
+SAiCS-MobileApp/src/assets/FatBurner.png
+SAiCS-MobileApp/src/assets/horizontal line-modal.png
+SAiCS-MobileApp/src/assets/HungerBooster.png
+SAiCS-MobileApp/src/assets/innovations text.png
+SAiCS-MobileApp/src/assets/Innovations.png
+SAiCS-MobileApp/src/assets/Lifestyle SAiCS circle.png
+SAiCS-MobileApp/src/assets/money icon.png
+SAiCS-MobileApp/src/assets/newcoursepic.png
+SAiCS-MobileApp/src/assets/noImage.png
+SAiCS-MobileApp/src/assets/noresultsfound.gif
+SAiCS-MobileApp/src/assets/noresultsfound2.gif
+SAiCS-MobileApp/src/assets/noresultsfound3.gif
+SAiCS-MobileApp/src/assets/people icon.png
+SAiCS-MobileApp/src/assets/ProfileImage.png
+SAiCS-MobileApp/src/assets/quiz.jpg
+SAiCS-MobileApp/src/assets/quizImage.jpg
+SAiCS-MobileApp/src/assets/SAiCS bubbles.png
+SAiCS-MobileApp/src/assets/SAiCS homepage quote.png
+SAiCS-MobileApp/src/assets/SAiCS Innovations-logo.png
+SAiCS-MobileApp/src/assets/SAiCS line.png
+SAiCS-MobileApp/src/assets/SAiCS Logo.png
+SAiCS-MobileApp/src/assets/SAICS no bg.png
+SAiCS-MobileApp/src/assets/shapes.svg
+SAiCS-MobileApp/src/assets/Slimming SAiCS circle.png
+SAiCS-MobileApp/src/assets/SMORT.png
+SAiCS-MobileApp/src/assets/SuperBooster.png
+SAiCS-MobileApp/src/assets/Suptite.png
+SAiCS-MobileApp/src/assets/trainingImage.jpg
+SAiCS-MobileApp/src/assets/truck icon.png
+SAiCS-MobileApp/src/assets/icon/favicon.png
+SAiCS-MobileApp/src/environments/environment.prod.ts
+SAiCS-MobileApp/src/environments/environment.ts
+SAiCS-MobileApp/src/theme/variables.scss

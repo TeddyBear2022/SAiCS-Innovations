@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    
+    <ion-buttons slot="secondary">
+      <ion-button shape="round" routerLink="/clients-cart">
+        <ion-icon size="large" name="cart" id="toolbarCartIcon"></ion-icon>
+        <div class="cart-length" *ngIf="TotalItems > 0" color="danger">{{TotalItems}}
+        </div>
+      </ion-button>
+    </ion-buttons>
+    
+
+    <ion-label slot="secondary" id="toolbarUserName" >{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  
+    <div>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <h1 style="font-weight: bold; text-align: center;">Let's get your Feedback!</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <img src="./assets/SAiCS Logo.png" alt="SAiCS logo">
+        </ion-col>
+
+        <ion-col>
+          <div class="vl"></div>
+        </ion-col>
+
+        <ion-col style="display: flex; align-items: flex-start;" size="5">
+          <form [formGroup]= "feedbackForm" #localForm = 'ngForm' id="clientFeedbackForm" (ngSubmit)="submitForm()">
+            <ion-row>
+              <ion-col>
+                <br><br><br><br>
+              <ion-select placeholder="Feedback Type" interface="popover" formControlName="feedbackType" (ngModelChange)="clearControl($event)">
+                <ion-select-option value="1">Product</ion-select-option>
+                <ion-select-option value="2">Ambassador</ion-select-option>
+              </ion-select>
+              <span *ngIf="localForm.submitted && feedbackForm.controls['feedbackType'].invalid">Required</span>
+            <br>
+
+            <!--Display if Ambassador-->
+            <ion-item *ngIf="feedbackForm.value.feedbackType  == 2" id="myAmbassadorItem">
+              <ion-label name="ambassador" >
+                {{myAmbassador.name}}
+                </ion-label>
+            </ion-item>
+              
+           <br>
+            <!--Display if product-->
+            <ion-select placeholder="Product Type" interface="popover" formControlName="productType" *ngIf="feedbackForm.value.feedbackType  == 1" (ionChange)="feedbackForm.value.productType && GetProductsById($event)">
+              <ion-select-option *ngFor="let m of MerchCat" value= {{m.merchCategoryId}}>{{m.merchCategoryName}}</ion-select-option>
+            </ion-select>
+            <span *ngIf="feedbackForm.value.feedbackType  == 1 && localForm.submitted && feedbackForm.controls['productType'].invalid">Required</span>
+            <br>
+            <ion-select  placeholder="Product Name" interface="popover" formControlName="productName" *ngIf="feedbackForm.value.feedbackType  == 1">
+              <ion-select-option *ngFor="let p of products" value="{{p.id}}">{{p.name}}</ion-select-option>
+            </ion-select>
+            <span *ngIf="feedbackForm.value.feedbackType  == 1 && localForm.submitted && feedbackForm.controls['productName'].invalid">Required</span>
+            <br><br>
+
+              <ion-label style="display: block;text-align: center;">Description:</ion-label>
+              <ion-textarea formControlName="description"></ion-textarea>
+              <span *ngIf="localForm.submitted && feedbackForm.controls['description'].invalid">Required</span>
+              </ion-col>
+            </ion-row>
+            
+            <br><br>
+
+            <ion-row>
+              <ion-col></ion-col>
+             <ion-col><ion-button  type="submit" id="submitButton">Submit</ion-button></ion-col>
+             <ion-col><ion-button  id="cancelButton" (click)="Cancel()">Cancel</ion-button></ion-col>
+            </ion-row>
+            
+          </form>
+        </ion-col>
+       
+      </ion-row>
+      <!-- <ion-row> 
+        <ion-col id="bubbles">
+          <div id="bubbles">
+            <svg >
+              <circle id="gray" cx="10" cy="60" r="60" fill="#bdbdbd"/>
+              <circle id="dark blue" cx="50" cy="130" r="60" fill="#008080" fill-opacity="0.8" />
+              <circle id="light blue" cx="120" cy="165" r="60" fill="#00008b" fill-opacity="0.8" />
+            </svg>
+        </div>
+        </ion-col>
+        
+      </ion-row> -->
+    </div>
+   
+</ion-content>
+
+

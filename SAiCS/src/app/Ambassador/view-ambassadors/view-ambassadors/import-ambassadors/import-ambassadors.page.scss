@@ -1,0 +1,96 @@
+ion-toolbar
+{
+  --background: #062b80;
+}
+
+ion-menu-button
+{
+  --color: #FFFFFF;
+}
+ion-content {
+  --background: #fafafa;
+  --color : black;
+}
+
+  table
+  {
+    width: 95%;
+    margin: auto;
+
+  }
+  
+  th{
+    background-color: #008080;
+    color: white;
+    height: 40px;
+    border-bottom: solid black 1px;
+  }
+
+  tbody{
+    background-color: #f6ffff;
+  }
+
+  td{
+    text-align: center;
+    height: 60px;
+  }
+
+  #importButton{
+    --ion-color-primary: #08c10f;
+    --ion-color-primary-rgb: 8,193,15;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+    --ion-color-primary-shade: #07aa0d;
+    --ion-color-primary-tint: #21c727;
+  }
+  ion-input{
+    width: 300px;;
+    float: right;
+    border-radius: 10px;
+    border: 1px solid black;
+
+    // --placeholder-color: black;
+    // --placeholder-opacity: 1;
+  }
+
+  ion-select{
+    border-radius: 10px;
+    float: left;
+    margin-left: 5%;
+    border: solid 1px;
+    border-radius: 5px;
+    width: 300px;
+    color: black;
+
+    --placeholder-color: black;
+    --placeholder-opacity: 1;
+  }
+
+  #button{
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    background-color: #062b80;
+    border-radius: 5px;
+    height: 35px;
+    font-style: italic;
+  }
+
+  ion-icon{
+    margin-right: 5%;
+  }
+
+  ion-item{
+    --background: #fafafa;
+    
+  }
+
+
+
+
+
+
+
+
+

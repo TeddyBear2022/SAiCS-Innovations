@@ -1,0 +1,92 @@
+#container {
+    text-align: center;
+    position: absolute;
+  }
+
+  ion-content {
+    --background: #f5f5f5;
+    --color : black;
+  }
+
+  ion-header {
+    --background: #f5f5f5;
+    --color : black;
+  }
+
+  ion-input{
+    border-bottom: solid 1pt black ;
+    width: 300px;
+  }
+
+  ion-select{
+    color: black;
+    border-radius: 11px !important;
+    height: 27pt;
+    background-color: white;
+    border: solid 1pt black;
+  }
+
+  ion-label{
+    color: #9e9e9e;
+   
+  }
+
+  input{
+    border: solid 1pt black;border-radius: 11px !important; 
+    height: 27pt;
+    background-color: white;
+
+  }
+  
+  ion-button{
+    text-transform: none;
+    --ion-color-secondary: #00008b;
+    --ion-color-secondary-rgb: 0,0,139;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255,255,255;
+    --ion-color-secondary-shade: #00007a;
+    --ion-color-secondary-tint: #1a1a97;
+  
+  }
+
+  #bubbles
+  {
+    position: absolute;
+    top: 0px;
+    right: 16px;
+  }
+  #country{
+    border: 0; 
+    color: black;
+    background-color: #f5f5f5;
+    border-bottom: solid 1pt black ;
+    border-radius: 0px !important;
+  }
+
+  #province{
+    border: 0; 
+    color: black;
+    background-color: #f5f5f5;  
+    border-bottom: solid 1pt black ;
+    border-radius: 0px !important;
+  }
+
+  #refferralcode{
+    border: solid 1pt black
+    ;border-radius: 11px !important; 
+    height: 27pt;
+    background-color: white;
+  }
+
+  textarea{
+    border-radius: 10px;
+  }
+
+span{
+    color: red;
+    // margin-left: 110px;
+    // margin-left: 20%;
+    // margin-right: 20%;
+    // margin-left: 50%;
+    // margin-right: 50%;
+  }

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="10">
+        <ion-searchbar mode="ios" style="padding: 16px 0px;" id="searchProductBar" [(ngModel)]="search"></ion-searchbar>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button fill="clear" (click)="OpenSelect()">
+          <ion-icon size="large" name="filter-outline" color="light"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>    
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+  <ion-select placeholder="Select category" #mySelect [(ngModel)]="categorysearch" [hidden]='showList'>
+    <ion-select-option value="" selected>Select type</ion-select-option>
+    <ion-select-option *ngFor="let s of specialTypes"  value="{{s.id}}">{{s.type}}</ion-select-option>
+  </ion-select>
+
+  <div class="cart-items">
+    <ion-card mode="ios" *ngFor="let m of merchandise | filter:search:filterKeys | filter:categorysearch:filterKeys; let i = index">
+      <ion-card-content>
+        <div class="item-img"  (click)="ViewItem(m.id)">
+          <img [src]="GetMerchImage(m.id) | safe: 'url'"/>
+        </div>
+
+        <div class="item-info">
+          <p>{{m.name}}</p>
+          <p>{{m.price | currency: 'ZAR':'symbol-narrow'}}</p>
+
+          <div class="qty-selector">
+            <ion-button fill="clear" (click)="decrementQty(i)">
+              -
+            </ion-button>
+            <ion-input id="m{{i}}" [ngClass]="{'InvalidInput': selectedItem == m.id && setBorderColor == true}" class="quantityInput" [(ngModel)]="m.quantity" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}" name="{{m.quantity}}" style=" text-align: center; width: 20px;" inputmode="numeric"></ion-input>
+            <ion-button fill="clear" (click)="incrementQty(i)">
+              +
+            </ion-button>
+            <ion-button class="addToCart" fill="clear" (click)="AddToCart(m.id)" >
+              <ion-icon shape="round" class="cartIcon" style="color: #08c10f;" name="cart"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

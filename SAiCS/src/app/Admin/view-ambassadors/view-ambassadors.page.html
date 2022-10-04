@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar id="navbar">
+    <ion-buttons slot="start" menu="main-menu">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-label slot="secondary" id="toolbarUserName">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)" shape="round">
+        <ion-icon size="large" name="person-circle" id="toolbarProfileIcon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+  <br>
+  <h1 align="center">View Ambassadors</h1>
+  <br>
+  
+  <!-- <ion-button (click)="MaintainAmbRankings()">maintain ambassador ranking discount</ion-button> -->
+  <ion-item lines="none" >
+    <div align="center" slot="end">
+  <ion-input  id="searchbar"
+   placeholder="Search ambassador,Eg John"
+  (ionChange)="SearchAmbassador($event)">
+</ion-input><br>
+
+</div>
+<ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+</ion-item>
+<ion-item lines="none" style="margin-right:100px;">
+  <div  slot="end">
+    <label style="color:#0000EE ;margin-right: 15px;" (click)="MaintainAmbRankings()"><u>Maintain Ambassador Percentages</u></label>
+  </div>
+</ion-item>
+  <br><br>
+  <table *ngIf="noResults == false">
+    <thead align="center" >
+        <tr>
+          <th>Title</th>
+          <th>Full name</th>
+          <th>Ambassador Type</th>
+          <th>Email Address</th>
+          <th>Phone Number</th>
+        </tr>    
+    </thead>
+    <tbody align="center">
+    <tr *ngFor="let a of Ambassadors">
+    <td >{{a.titleName}}</td>
+    <td>{{a.name + " "+ a.surname}}</td>
+    <td >{{a.ambassadorTypeName}}</td>
+    <td>{{a.email}}</td>
+    <td>+27{{a.phoneNumber}}</td>
+    </tr>
+    <tr>
+    </tbody>
+    </table>
+    <!-- no results found -->
+    <div align="center" *ngIf="noResults == true">
+    <img src="./assets/noresultsfound3.gif" alt="No results found">
+    </div>
+  </ion-grid>
+</ion-content>

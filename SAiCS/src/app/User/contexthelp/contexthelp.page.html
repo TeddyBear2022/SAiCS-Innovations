@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item color="primary" lines ="none"> <ion-icon  slot="end" name="close-outline" (click)="Close()"></ion-icon></ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <ion-label class="Heading"><h1 style="text-align: center; font-style: normal;"> <b>Potential Help!</b></h1></ion-label>
+<div class="container">
+<ion-card class="accfaq-margin">
+  <ion-card-content>
+    <ion-list class="txt-block">
+      <div>
+        <div *ngFor="let a of context ; let i = index">
+          <H2 >{{i}}. {{a.faqquestion}}</H2><br>
+          <H3>  {{a.faqanswers}}</H3><br><br>
+        </div>
+      </div>
+      </ion-list>
+  </ion-card-content>
+</ion-card>
+</div>
+<br>
+<ion-label class="Heading"><h1 style="text-align: center; font-style: normal;"> <b>Other Unrelated help!</b></h1></ion-label>
+<br>
+<ion-row><ion-col></ion-col>
+  <ion-item lines="none" color="primary">
+    <div align="center" slot="end">
+  <ion-input  id="searchbar"
+   placeholder="Search specific help ,Eg Account"
+  (ionChange)="Keywords($event)">
+  </ion-input><br>
+  
+  </div>
+  <ion-icon slot="end" name="search" (click)="Search()"></ion-icon>
+  </ion-item>
+  <ion-col></ion-col></ion-row>
+
+<div class="container" *ngIf="noResults == false">
+
+<ion-card class="accfaq-margin">
+<ion-card-content>
+  <ion-list class="txt-block">
+    <div>
+      <ion-text *ngFor="let a of otherHelp ; let i = index">
+        <H2 >Q.. {{a.faqquestion}}</H2><br>
+        <H3>  A.. {{a.faqanswers}}</H3><br><br>
+      </ion-text>
+    </div>
+    </ion-list>
+</ion-card-content>
+</ion-card>
+</div>
+</ion-grid>
+<!-- no results found -->
+<div align="center" *ngIf="noResults == true">
+  <img src="./assets/noresultsfound3.gif" alt="No results found">
+  </div>
+</ion-content>

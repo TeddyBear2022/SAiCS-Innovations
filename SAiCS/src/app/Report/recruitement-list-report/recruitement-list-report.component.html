@@ -1,0 +1,72 @@
+<br />
+<ion-grid>
+  <ion-row>
+    <ion-item style="margin-left: 2%; --background: transparent" lines="none">
+      <ion-label>
+        <h1>Ambassador Recruitment Report</h1>
+      </ion-label>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <div class="card">
+      <div class="container">
+        <form
+          class="form-inline"
+          [formGroup]="reportForm"
+          (ngSubmit)="submitForm()"
+        >
+          <label for="email">Month:</label>
+          <select formControlName="month" slot="end">
+            <option value="" disabled selected>Select Month</option>
+              <option value="01">Jan</option>
+              <option value="02">Feb</option>
+              <option value="03">Mar</option>
+              <option value="04">Apr</option>
+              <option value="05">May</option>
+              <option value="06">Jun</option>
+              <option value="07">Jul</option>
+              <option value="08">Aug</option>
+              <option value="09">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+          <ion-button type="submit" id="submitBtn">Generate</ion-button>
+        </form>
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <ion-button id="export2" (click)="download()">
+      <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+      <span>Export</span>
+    </ion-button>
+  </ion-row>
+  <ion-row >
+      <ion-card >
+        <ion-card-header>
+          <h4>Ambassador Recruitment Report</h4>
+        </ion-card-header>
+        <ion-card-content>
+          <canvas id="myChart" #barCanvas width="800" height="600">
+          </canvas>
+        </ion-card-content>
+      </ion-card>
+  </ion-row>
+  <ion-row>
+    <br />
+    <ag-grid-angular
+      style="height: 400px; width: 81%"
+      class="ag-theme-alpine"
+      #specialGrid
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      (rowDataUpdated)="rowDataUpdated($event)"
+      [getRowStyle]="getRowStyle"
+    >
+    </ag-grid-angular>
+  </ion-row>
+</ion-grid>

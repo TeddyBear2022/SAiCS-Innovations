@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Target</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- If target doesn't exist -->
+  <form [formGroup]="CreateTargetForm" #CreatelocalForm = 'ngForm' >
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+  <label>New Target Amount:</label><br>
+<ion-input id="targetamount" formControlName="target" placeholder="Enter An amount" type="number"></ion-input>
+<span *ngIf="CreatelocalForm.submitted && CreateTargetForm.controls.target.invalid">Please enter a valid amount </span>
+</ion-col>
+<ion-col></ion-col>
+<ion-col></ion-col>
+</ion-row>
+<br>
+<ion-row>
+  <ion-col size="6">
+    <label > Date From:</label>
+    <ion-input formControlName="dateFrom" type="Date"></ion-input>
+    <span *ngIf="CreatelocalForm.submitted && CreateTargetForm.controls.dateFrom.invalid">Please pick a date </span>
+  </ion-col>
+  <ion-col size="6">
+    <ion-label> Date To:</ion-label>
+    <ion-input  formControlName="dateTo" type="Date"></ion-input>
+    <span *ngIf="CreatelocalForm.submitted && CreateTargetForm.controls.dateTo.invalid">Please pick a date </span>
+  </ion-col>
+<span *ngIf="CreatelocalForm.submitted && this.CreateTargetForm.get(['dateFrom']).value >=this.CreateTargetForm.get(['dateTo']).value">Your start date can't be later than your end date</span>
+</ion-row>
+<br><br><br><br>
+<ion-row>
+  <ion-col> </ion-col>
+  <ion-col></ion-col>
+  <ion-button (click)="CreateTarget()" type="submit">Create</ion-button>
+  <ion-button (click)="Cancel()">Cancel</ion-button>
+</ion-row>
+</ion-grid>
+</form>
+
+
+</ion-content>

@@ -1,0 +1,65 @@
+form
+{
+    //margin-left: auto;
+   margin-left: 30%;
+    table{
+        width: 150%;
+    };
+}
+
+ion-row
+{
+    align-content: center;
+}
+
+.table thead td,
+.table thead th {
+    border-top: none;
+    border-bottom: none;
+}
+
+#addBtn {
+    --background: #08c10f;
+    font-size: 15px; 
+    --ionicon-stroke-width: 40px;
+
+  }
+
+#editBtn
+{
+    color: #0070c0;
+}
+
+#deleteBtn {
+    color: #f44336;
+}
+
+.pagination {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px auto;
+  }
+
+  ::ng-deep .pagination-next a,
+  ::ng-deep .pagination-previous a {
+    outline: none;
+  }
+
+  ::ng-deep .ngx-pagination .current {
+    border-radius: 4px;
+  }
+
+  ::ng-deep .ngx-pagination {
+    padding: 0 !important;
+  }
+
+  ::ng-deep .ngx-pagination a:hover,
+  ::ng-deep .ngx-pagination button:hover {
+    border-radius: 4px;
+  }
+
+  ::ng-deep .ngx-pagination a,
+  ::ng-deep .ngx-pagination button {
+    border-radius: 4px;
+    outline: none;
+  }
