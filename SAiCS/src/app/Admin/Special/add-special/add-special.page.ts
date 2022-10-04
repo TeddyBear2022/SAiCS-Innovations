@@ -109,16 +109,30 @@ export class AddSpecialPage implements OnInit {
    //convert image to base64
    onFileSelected(event) {
     let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-      if (encoded.length % 4 > 0) {
-        encoded += '='.repeat(4 - (encoded.length % 4));
-      }
-      this.selectedFile = encoded;
-      console.log('encoded successfully');
-    };
+    if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg")
+    {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+        if (encoded.length % 4 > 0) {
+          encoded += '='.repeat(4 - (encoded.length % 4));
+        }
+        this.selectedFile = encoded;
+        console.log('encoded successfully');
+        
+        
+      };
+      
+    }
+    else
+    {
+      this.Notif(`Incorrect file format. Please select a png, jpg or jpeg file.`)
+      console.log(`Incorrect Format: ${file.type}`);
+      this.addForm.controls['sImage'].setValue(null);
+      
+    }
+  
   }
 
   submitForm()

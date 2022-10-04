@@ -89,7 +89,7 @@ export class AmbassadorListReportComponent implements OnInit {
       let province =  this.reportForm.get('province').value 
       let ranking =  this.reportForm.get('ranking').value 
       
-      this.api.AmbassadorListRep(province, ranking).subscribe((res) => {
+      this.api.AmbassadorListRep(ranking, province).subscribe((res) => {
         this.rowData = res;
         console.log(this.rowData);
         

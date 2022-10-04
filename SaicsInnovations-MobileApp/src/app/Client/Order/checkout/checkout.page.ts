@@ -298,7 +298,7 @@ GetSummaryAddress()
             };
             localStorage.setItem('checkout', JSON.stringify(orderdetails));
             localStorage.removeItem('cart_items');
-            this.route.navigate(['./landing-page']);
+            this.route.navigate(['/tabs/tab1']);
           },
         },
       ],
