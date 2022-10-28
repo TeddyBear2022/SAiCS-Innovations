@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController, ModalController, PopoverController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
@@ -23,6 +23,7 @@ export class LandingPagePage implements OnInit {
   categorysearch;
   username;
   imageArray: any = [];
+  removeImage: any = [];
   LandingInfo: any = [];
 
   constructor(
@@ -32,8 +33,20 @@ export class LandingPagePage implements OnInit {
     private menu: MenuController,
     public router: Router,
     private cartService: CartService,
-    private modal:ModalController
+    private modal:ModalController,
+    private loadingCtrl: LoadingController
   ) {}
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
+  }
 
   async presentPopover(event) {
     const popover = await this.popoverController.create({
@@ -44,6 +57,7 @@ export class LandingPagePage implements OnInit {
   }
 
   ngOnInit() {
+   
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'ambassador-menu');
     this.GetCatalog();
@@ -63,9 +77,12 @@ export class LandingPagePage implements OnInit {
     var data = await this.api.ViewCatalog().toPromise();
     var dataObj = JSON.parse(JSON.stringify(data));
     this.merchandise = dataObj;
-    console.log(this.merchandise);
+    this.removeImage = this.merchandise.map((item)=>{
+      return {id:item.id}})
+    //console.log(this.merchandise);
 
     this.imageArray = new Array(this.merchandise.length).fill(null);
+    if(this.imageArray.length > 0){this.showLoading()}
       //console.log(this.imageArray);
 
       this.merchandise.forEach((obj: any) => {
@@ -80,6 +97,14 @@ export class LandingPagePage implements OnInit {
   GetMerchImage(id: number) {
     return this.imageArray.find((x) => x?.id === id)?.image;
   }
+
+  onLoad(id: number){
+    this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+    if(this.removeImage.length == 0)
+    {
+     this.loadingCtrl.dismiss()
+    }
+ }
   
   AmbLandingInfo()
   {
@@ -124,27 +149,33 @@ export class LandingPagePage implements OnInit {
 
 
   incrementQty(index: number) {
-    this.merchandise[index].quantity += 1;
-
-    if (this.merchandise[index].quantity == 0) {
-      this.setBorderColor = true;
-      this.merchandise[index].id;
-    } else {
-      this.setBorderColor = false;
-      this.merchandise[index].id;
-    }
+    let item = this.merchandise.find((x) => x?.id === index);
+ 
+  
+    item.quantity += 1;
+  
+      if (item.quantity == 0) {
+        this.setBorderColor = true;
+        item.id;
+      } else {
+        this.setBorderColor = false;
+        item.id;
+      }
   }
 
   decrementQty(index: number) {
-    if (this.merchandise[index].quantity > 0)
-      this.merchandise[index].quantity -= 1;
+    let item = this.merchandise.find((x) => x?.id === index);
+    console.log(item);
 
-    if (this.merchandise[index].quantity == 0) {
+    if (item.quantity > 0)
+     item.quantity -= 1;
+
+    if (item.quantity == 0) {
       this.setBorderColor = true;
-      this.merchandise[index].id;
+      item.id;
     } else {
       this.setBorderColor = false;
-      this.merchandise[index].id;
+      item.id;
     }
   }
 

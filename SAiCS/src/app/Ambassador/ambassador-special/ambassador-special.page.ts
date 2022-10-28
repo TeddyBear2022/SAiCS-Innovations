@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController, ModalController, PopoverController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -20,6 +20,7 @@ export class AmbassadorSpecialPage implements OnInit {
   session: any;
   ItemQuantity: FormGroup;
   imageArray: any = [];
+  removeImage: any = [];
   selectedItem;
   filterKeys = ['name', 'typeId'];
   search;
@@ -35,7 +36,8 @@ export class AmbassadorSpecialPage implements OnInit {
     private menu: MenuController,
     private fb: FormBuilder,
     private cartService: CartService,
-    private modal:ModalController) { }
+    private modal:ModalController,
+    private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'ambassador-menu');
@@ -45,13 +47,28 @@ export class AmbassadorSpecialPage implements OnInit {
       quantity: new FormControl('', Validators.required),
     });
     this.username = localStorage.getItem('UserName');
+    
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   async GetCatalog() {
     this.api.ViewCatelogSpecials().subscribe((data) => {
       this.merchandise = data;
-      console.log(this.merchandise);
+      this.removeImage = this.merchandise.map((item)=>{
+        return {id:item.id}})
+     // console.log(this.merchandise);
       this.imageArray = new Array(this.merchandise.length).fill(null);
+      if(this.imageArray.length > 0){this.showLoading()}
       //console.log(this.imageArray);
 
       this.merchandise.forEach((obj: any) => {
@@ -73,6 +90,13 @@ export class AmbassadorSpecialPage implements OnInit {
     return this.imageArray.find((x) => x?.id === id)?.image;
   }
 
+  onLoad(id: number){
+    this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+    if(this.removeImage.length == 0)
+    {
+     this.loadingCtrl.dismiss()
+    }
+ }
   
   get TotalItems() {
     // this.cartService.getItems();
@@ -108,29 +132,34 @@ export class AmbassadorSpecialPage implements OnInit {
   }
 
   incrementQty(index: number) {
-    this.merchandise[index].quantity += 1;
-    if (this.merchandise[index].quantity == 0) {
-      this.setBorderColor = true;
-      this.merchandise[index].id;
-    } else {
-      this.setBorderColor = false;
-      this.merchandise[index].id;
-    }
-    
-  }
-  
-  decrementQty(index: number) {
-    if (this.merchandise[index].quantity > 0)
-    this.merchandise[index].quantity -= 1;
 
-  if (this.merchandise[index].quantity == 0) {
-    this.setBorderColor = true;
-    this.merchandise[index].id;
-  } else {
-    this.setBorderColor = false;
-    this.merchandise[index].id;
-  }
-  }
+    let item = this.merchandise.find((x) => x?.id === index); 
+    item.quantity += 1;
+  
+      if (item.quantity == 0) {
+        this.setBorderColor = true;
+        item.id;
+      } else {
+        this.setBorderColor = false;
+        item.id;
+      }
+  
+    }
+  
+    decrementQty(index: number) {
+      let item = this.merchandise.find((x) => x?.id === index);
+
+      if (item.quantity > 0)
+       item.quantity -= 1;
+  
+      if (item.quantity == 0) {
+        this.setBorderColor = true;
+        item.id;
+      } else {
+        this.setBorderColor = false;
+        item.id;
+      }
+    }
 
   ViewItem(id: number) {
     localStorage.setItem('SpecialItem', JSON.stringify(id));

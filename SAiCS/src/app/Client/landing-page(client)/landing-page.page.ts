@@ -1,10 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, ModalController, PopoverController } from '@ionic/angular';
+import {
+  LoadingController,
+  MenuController,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CartService } from 'src/app/Services/cart.service';
-import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service'
+import { TemporaryStorage } from 'src/app/Services/TemporaryStorage.service';
 import { ContexthelpPage } from 'src/app/User/contexthelp/contexthelp.page';
 
 @Component({
@@ -20,14 +25,15 @@ export class LandingPagePage implements OnInit {
   filterKeys = ['name', 'catID', 'type'];
   search;
   categorysearch;
-  username
+  username;
   imageArray: any = [];
+  removeImage: any = [];
 
   slideOpts = {
     initialSlide: 1,
     speed: 400,
-    autoplay: {delay: 4000},
-    loop: true
+    autoplay: { delay: 4000 },
+    loop: true,
   };
 
   constructor(
@@ -37,8 +43,22 @@ export class LandingPagePage implements OnInit {
     private tmpStorage: TemporaryStorage,
     private menu: MenuController,
     private cartService: CartService,
-    private modal:ModalController
+    private modal: ModalController,
+    private loadingCtrl: LoadingController
   ) {}
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      duration: 3000,
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
+  }
+
 
   async presentPopover(event) {
     const popover = await this.popoverController.create({
@@ -49,13 +69,13 @@ export class LandingPagePage implements OnInit {
   }
 
   ngOnInit() {
+    
     this.session = this.tmpStorage.getSessioninfo();
     this.menu.enable(true, 'client-menu');
     this.GetCatalog();
-    this.username = localStorage.getItem('UserName')
-  }
+    this.username = localStorage.getItem('UserName');
 
- 
+  }
 
   get TotalItems() {
     // this.cartService.getItems();
@@ -66,28 +86,38 @@ export class LandingPagePage implements OnInit {
   }
 
   async GetCatalog() {
+    
     var data = await this.api.ViewCatalog().toPromise();
     var dataObj = JSON.parse(JSON.stringify(data));
     this.merchandise = dataObj;
-    console.log(this.merchandise);
+    this.removeImage = this.merchandise.map((item)=>{
+      return {id:item.id}})
 
     this.imageArray = new Array(this.merchandise.length).fill(null);
-      //console.log(this.imageArray);
+    if(this.imageArray.length > 0){this.showLoading()}
+    //console.log(this.imageArray);
 
-      this.merchandise.forEach((obj: any) => {
-        let index = this.merchandise.findIndex((x) => x.id == obj.id);
+    this.merchandise.forEach((obj: any) => {
+      let index = this.merchandise.findIndex((x) => x.id == obj.id);
 
-        this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
-          this.imageArray[index] = { id: obj.id, image: baseImage.image };
-        });
+      this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
+        this.imageArray[index] = { id: obj.id, image: baseImage.image };
       });
-  }
+    });
 
- 
+  }
 
   GetMerchImage(id: number) {
     return this.imageArray.find((x) => x?.id === id)?.image;
   }
+
+  onLoad(id: number){
+    this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+    if(this.removeImage.length == 0)
+    {
+     this.loadingCtrl.dismiss()
+    }
+ }
 
   AddToCart(id) {
     var item = this.merchandise.find((x) => x.id === id);
@@ -100,7 +130,7 @@ export class LandingPagePage implements OnInit {
           price: item.price,
           quantity: item.quantity,
           isStandAlone: true,
-          spId: item.spId?? null
+          spId: item.spId ?? null,
         };
         console.log(addItem);
         this.cartService.addToCart(addItem);
@@ -114,27 +144,32 @@ export class LandingPagePage implements OnInit {
   }
 
   incrementQty(index: number) {
-    this.merchandise[index].quantity += 1;
 
-    if (this.merchandise[index].quantity == 0) {
+  let item = this.merchandise.find((x) => x?.id === index); 
+  item.quantity += 1;
+
+    if (item.quantity == 0) {
       this.setBorderColor = true;
-      this.merchandise[index].id;
+      item.id;
     } else {
       this.setBorderColor = false;
-      this.merchandise[index].id;
+      item.id;
     }
+
   }
 
   decrementQty(index: number) {
-    if (this.merchandise[index].quantity > 0)
-      this.merchandise[index].quantity -= 1;
+    let item = this.merchandise.find((x) => x?.id === index);
 
-    if (this.merchandise[index].quantity == 0) {
+    if (item.quantity > 0)
+     item.quantity -= 1;
+
+    if (item.quantity == 0) {
       this.setBorderColor = true;
-      this.merchandise[index].id;
+      item.id;
     } else {
       this.setBorderColor = false;
-      this.merchandise[index].id;
+      item.id;
     }
   }
 
@@ -148,17 +183,14 @@ export class LandingPagePage implements OnInit {
     this.route.navigate(['/item-details']);
   }
 
-  async ContextHelp(){
-    console.log("Open context help");
+  async ContextHelp() {
+    console.log('Open context help');
     const modal = await this.modal.create({
       component: ContexthelpPage,
-      componentProps:{keyword : "orders", type: "Client"}
+      componentProps: { keyword: 'orders', type: 'Client' },
     });
-    modal.onDidDismiss().then((info) => {
-      
-    })
-    
+    modal.onDidDismiss().then((info) => {});
+
     await modal.present();
-    
   }
 }

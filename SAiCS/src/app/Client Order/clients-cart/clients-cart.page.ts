@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
@@ -23,6 +23,7 @@ export class ClientsCartPage implements OnInit {
   ItemsLoaded: boolean = false;
   @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
   imageArray: any = [];
+  removeImage: any = [];
   data: any = []
   username;
   OdrSmry: any;
@@ -35,6 +36,7 @@ export class ClientsCartPage implements OnInit {
     private route: Router,
     private menu: MenuController,
     private cartService: CartService,
+    private loadingCtrl: LoadingController
   ) {
     
   }
@@ -45,10 +47,21 @@ export class ClientsCartPage implements OnInit {
     this.cartService.loadCart();
     this.items = this.cartService.getItems();
     this.ViewCart();
-    this.GetMerchImage()
+    //this.GetMerchImage()
     this.CheckStandAlone()
     this.username = localStorage.getItem('UserName');
     
+    
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
     
   }
 
@@ -110,7 +123,7 @@ export class ClientsCartPage implements OnInit {
   GetMerchImage()
   {
     this.imageArray = new Array(this.items.length).fill(null)
-
+    if(this.imageArray.length > 0){this.showLoading()}
     this.items.forEach((obj: any) => {
       let index = this.items.findIndex(x => x.id == obj.id);
 
@@ -132,6 +145,14 @@ export class ClientsCartPage implements OnInit {
   LoadImage(name: string) {
     return this.imageArray.find((x) => x?.name === name)?.image;
   }
+
+  onLoad(id: number){
+    this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+    if(this.removeImage.length == 0)
+    {
+     this.loadingCtrl.dismiss()
+    }
+ }
 
   increment(item) {
     item.quantity += 1;

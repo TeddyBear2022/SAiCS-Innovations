@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, PopoverController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import {RowSelectedEvent, SelectionChangedEvent} from 'ag-grid-community';
@@ -39,13 +39,16 @@ export class AddSpecialPage implements OnInit {
      private api: ApiService,
      private fb: FormBuilder, private router: Router,
      private alert:AlertController,
-     private menu:MenuController) { }
+     private menu:MenuController,
+     private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
+    
     this.menu.enable(true, 'admin-menu');
     this.username = localStorage.getItem('UserName')
+   
     this.GetSpecialOptions()
-
+    
     this.addForm = this.fb.group({
       sName: new FormControl('', Validators.required),
       sType: new FormControl('', Validators.required),
@@ -57,20 +60,31 @@ export class AddSpecialPage implements OnInit {
     });
   }
 
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
+  }
 
   GetSpecialOptions()
   {
-
+    this.showLoading()
     this.api.GetSpecialOptions().subscribe(res =>
-      {
+      { 
         this.rowData =res
         console.log(this.rowData);
+        this.loadingCtrl.dismiss()
       })
 
       this.api.GetSpecialTypes().subscribe(res => {
         this.specialTypes = res
       })
-
+      
   }
 
   onRowSelected(event: RowSelectedEvent) {

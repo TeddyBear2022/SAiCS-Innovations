@@ -24,7 +24,7 @@
       </ion-button>
     </ion-col>
     <ion-col>
-      <ion-searchbar [(ngModel)]="search" id="searchProductBar" placeholder="Search Product..."></ion-searchbar>
+      <ion-searchbar [(ngModel)]="search" id="searchProductBar" placeholder="Search by product name..."></ion-searchbar>
     </ion-col>
   </ion-row>
 
@@ -86,7 +86,7 @@
         <ng-container *ngFor="let m of merch | filter:search:filterKeys | filter:typeSelect:filterKeys  | filter:merchCatOption:filterKeys| paginate: { itemsPerPage: 4, currentPage: p, id: 'TB'}; let i = index">
           <tr [ngClass]="{'disableRow': m.status == 'Discontinued'}">
             <td>{{m.id}}</td>
-            <td><img [src]="GetMerchImage(m.id) | safe: 'url'" height="100px" alt='The Image' /></td>
+            <td><img [src]="GetMerchImage(m.id) | safe: 'url'" height="100px" alt='Image' (load)="onLoad(m.id)" /></td>
             <td>{{m.name}}</td>
             <td>{{m.category}}</td>
             <td style="word-wrap: break-word; text-align: left;">{{m.description}}</td>

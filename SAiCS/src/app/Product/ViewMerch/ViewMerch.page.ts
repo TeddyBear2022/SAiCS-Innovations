@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
 import { CreateMerchModalComponent } from '../CreateMerchModal/CreateMerchModal.component';
@@ -16,12 +16,13 @@ export class ViewMerchPage implements OnInit {
   merchCat = [];
   merchStatus = [];
   merchCatOption = ''
-  filterKeys = ['name', 'description', 'type','catID'];
+  filterKeys = ['name', 'type','catID'];
   search;
   typeSelect = "";
   p;
   username
   imageArray: any = [];
+  removeImage = 0;
   
 
   constructor(
@@ -31,20 +32,23 @@ export class ViewMerchPage implements OnInit {
   public alertController: AlertController,
   public toastController: ToastController,
   private alert:AlertController,
-  private menu:MenuController) { }
+  private menu:MenuController,
+  private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.menu.enable(true, 'admin-menu');
     this.username = localStorage.getItem('UserName')
-    this.GetAllMerch()
+   // this.GetAllMerch()
     this.GetMerchCat()
     this.GetMerchStatuses();
+    
   }
 
   ionViewDidEnter(){
     this.GetAllMerch()
     this.GetMerchCat()
     this.GetMerchStatuses();
+    this.showLoading();
   }
   
   GetMerchCat() {
@@ -62,12 +66,15 @@ export class ViewMerchPage implements OnInit {
 //Get products
 GetAllMerch()
 {
+  
   this.api.GetAllMerch().subscribe(data =>
     {
       this.merch = data
       console.log(this.merch);
 
       this.imageArray = new Array(this.merch.length).fill(null);
+      //if(this.imageArray.length > 0){this.showLoading()}
+      
       //console.log(this.imageArray);
 
       this.merch.forEach((obj: any) => {
@@ -76,12 +83,49 @@ GetAllMerch()
         this.api.GetMerchImage(obj.id).subscribe((baseImage: any) => {
           this.imageArray[index] = { id: obj.id, image: baseImage.image };
         });
+     
       });
+     
+      
+    },
+    (error) => { console.log(error) },
+    () => {
+      console.log("log");
+      setTimeout(() => {
+        this.loadingCtrl.dismiss()
+      }, 10000);
+   
     })
+  
+}
+
+async finishLoading() {
+  await this.loadingCtrl.dismiss().catch(() => {});
 }
 
 GetMerchImage(id: number) {
   return this.imageArray.find((x) => x?.id === id)?.image;
+}
+
+onLoad(id: number){
+  this.removeImage++
+  console.log(this.removeImage);
+  
+  // if(this.removeImage > 3)
+  // {
+  //  this.loadingCtrl.dismiss()
+  // }
+}
+
+async showLoading() {
+  const loading = await this.loadingCtrl.create({
+    message: 'Loading',
+    cssClass: 'custom-loading',
+    spinner: 'lines',
+  });
+  
+  loading.present();
+  
 }
   
 
@@ -95,6 +139,7 @@ GetMerchImage(id: number) {
   });
  
   modal.onDidDismiss().then((data) => {
+    this.showLoading()
     this.GetAllMerch()
   })
 
@@ -113,6 +158,7 @@ async updateProduct(id: number)
   });
 
   modal.onDidDismiss().then((data) => {
+    this.showLoading()
     this.GetAllMerch()
   })
   
@@ -189,6 +235,7 @@ DeleteItem(id: number)
      {
         this.Notif(res.body) 
      }
+     this.showLoading()
      this.GetAllMerch()
   })
   

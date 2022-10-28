@@ -64,7 +64,7 @@
         <td>{{o.customer}}</td>
         <td>{{o.quantity}}</td>
         <td>{{o.amount | currency: 'ZAR':'symbol-narrow'}}</td>
-        <td>{{GetCommission(o.id) | currency: 'ZAR':'symbol-narrow'}}</td>
+        <td>{{o.commission | currency: 'ZAR':'symbol-narrow'}}</td>
         <td> <ion-button (click)="ViewOrderDetail(o.id)" fill="clear" id="OrderDetsBtn">View Details</ion-button></td>
         <td><ion-button (click)="setOpen(o.id)" fill="clear" id="UpdateDetsBtn">Update Order Status</ion-button></td> 
         </tr>
@@ -106,7 +106,7 @@
           <td>{{o.customer}}</td>
           <td>{{o.quantity}}</td>
           <td>{{o.amount | currency: 'ZAR':'symbol-narrow'}}</td>
-          <td>{{GetCommission(o.id) | currency: 'ZAR':'symbol-narrow'}}</td>
+          <td>{{o.commission | currency: 'ZAR':'symbol-narrow'}}</td>
           <td> <ion-button (click)="ViewOrderDetail(o.id)" fill="clear" id="OrderDetsBtn">View Details</ion-button></td> 
           </tr>
       </ng-container>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AlertController,
+  LoadingController,
   MenuController,
   ModalController,
   PopoverController,
@@ -50,6 +51,7 @@ export class ClientCheckoutPage implements OnInit {
     private cartService: CartService,
     private email: SendEmailService,
     public popoverController: PopoverController,
+    private loadingCtrl: LoadingController
     
   ) {}
 
@@ -74,6 +76,17 @@ export class ClientCheckoutPage implements OnInit {
     this.GetAddress();
     this.AgentAccountInfo();
     this.GetDelOptions();
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   get OrderTotal() {
@@ -105,6 +118,8 @@ export class ClientCheckoutPage implements OnInit {
   onSelectChange(event) {
     let value = event.target.value;
     this.SelectedDel = value;
+    console.log(this.SelectedDel);
+    
 
     var deliverValue = JSON.parse(localStorage.getItem('checkout'));
     deliverValue.delveryId = this.SelectedDel
@@ -130,8 +145,10 @@ export class ClientCheckoutPage implements OnInit {
     this.api.GetUserDeliveryTypes().subscribe((res) => {
       data = res;
       this.deliveryArr = data;
+      console.log(this.deliveryArr);
+      
     });
-    this.SelectedDel = this.OdrSmry.delveryId;
+    this.SelectedDel = this.OdrSmry.delveryId ?? this.deliveryArr[0]?.id;
     this.SubTotal = this.OdrSmry.subtotal;
   }
 
@@ -223,15 +240,13 @@ export class ClientCheckoutPage implements OnInit {
       order.orderStatusId = 1;
       order.proofOfPayment = this.selectedFile;
       order.Vat =parseFloat(this.OdrSmry.vatPercentage);
-      order.DeliveryTypeId = this.OdrSmry.delveryId;
+      order.DeliveryTypeId = parseInt(this.SelectedDel);
       order.ShippingCost = this.deliveryArr.find(
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
       order.TotalCost = this.OrderTotal
-
-      let address = this.userAddress.find(x => x.id === order.addressId)
       
-
+      this.showLoading()
       this.api.ClientCheckout(order).subscribe((res) => {
         console.log(res.body);
         if (res.status === 200) {
@@ -247,7 +262,16 @@ export class ClientCheckoutPage implements OnInit {
         } else {
           this.ErrorAlert();
         }
-      });
+      },
+      // (error) => { console.log(error) },
+      // () => {
+      //   console.log("log");
+      //   setTimeout(() => {
+      //     this.loadingCtrl.dismiss()
+      //   }, 2000);
+     
+      // }
+      );
       console.log(order)
     } else {
       console.log('invalid form');
@@ -300,6 +324,7 @@ export class ClientCheckoutPage implements OnInit {
   }
 
   async showAlert() {
+    this.loadingCtrl.dismiss()
     const alert = await this.alert.create({
       header: 'Thank You For Your Order!',
       message:

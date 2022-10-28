@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import {
   AlertController,
+  LoadingController,
   MenuController,
   ModalController,
   PopoverController,
@@ -47,7 +48,8 @@ export class ViewOrdersPage implements OnInit {
     private fb: FormBuilder,
     private modalCtrl: ModalController,
     private tmpStorage: TemporaryStorage,
-    private cartService: CartService
+    private cartService: CartService,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -60,6 +62,17 @@ export class ViewOrdersPage implements OnInit {
       tNumber: new FormControl('', Validators.required),
     });
     this.AmbassadorDiscount()
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   ionViewDidEnter() {
@@ -89,9 +102,18 @@ export class ViewOrdersPage implements OnInit {
   }
 
   ViewSalesOrder() {
+    this.showLoading()
     this.api.ViewSalesOrder().subscribe((res) => {
       console.log(res);
       this.orders = res;
+    },
+    (error) => { console.log(error) },
+    () => {
+      console.log("log");
+      setTimeout(() => {
+        this.loadingCtrl.dismiss()
+      }, 2000);
+   
     });
 
    
@@ -103,12 +125,6 @@ export class ViewOrdersPage implements OnInit {
     this.commission = parseFloat(dataObj) 
     console.log(this.commission);
     
-  }
-
-  GetCommission(id:number)
-  {
-    let item = this.orders.find(x => x.id === id);
-    return item.amount * this.commission
   }
 
   ViewOrderDetail(id: number) {

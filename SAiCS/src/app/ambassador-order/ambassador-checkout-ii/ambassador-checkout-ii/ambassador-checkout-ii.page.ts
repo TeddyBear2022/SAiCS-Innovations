@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { Checkout } from 'src/app/Models/ViewModels/Checkout';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
@@ -47,7 +47,8 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     private router: Router,
     private tmpStorage:TemporaryStorage,
     private menu: MenuController,
-    private cartService: CartService
+    private cartService: CartService,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -71,6 +72,17 @@ export class AmbassadorCheckoutIiPage implements OnInit {
     this.GetAddress();
     this.AgentAccountInfo();
     this.GetDelOptions();
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   get OrderTotal() {
@@ -216,11 +228,12 @@ export class AmbassadorCheckoutIiPage implements OnInit {
       order.orderStatusId = 1;
       order.proofOfPayment = this.selectedFile;
       order.Vat =parseFloat(this.OdrSmry.vatPercentage);
-      order.DeliveryTypeId = this.OdrSmry.delveryId;
+      order.DeliveryTypeId = parseInt(this.SelectedDel);
       order.ShippingCost = this.deliveryArr.find(
         (x) => x?.id === parseInt(this.SelectedDel)
       )?.price;
 
+      this.showLoading()
       this.api.Checkout(order).subscribe((res) => {
         console.log(res.body);
         if (res.status === 200) {
@@ -241,6 +254,7 @@ export class AmbassadorCheckoutIiPage implements OnInit {
   }
 
   async showAlert() {
+    this.loadingCtrl.dismiss()
     const alert = await this.alert.create({
       header: 'Thank You For Your Order!',
       message:

@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import {
   AlertController,
+  LoadingController,
   MenuController,
   PopoverController,
 } from '@ionic/angular';
@@ -31,6 +32,7 @@ export class ViewAmbassadorCartPage implements OnInit {
   ItemsLoaded: boolean = false;
   @ViewChildren('itemTotalSpan') itemTotal: QueryList<ElementRef>;
   imageArray: any = [];
+  removeImage: any = [];
   data: any = [];
   discount: any;
   username;
@@ -43,7 +45,8 @@ export class ViewAmbassadorCartPage implements OnInit {
     private api: ApiService,
     private router: Router,
     private menu: MenuController,
-    private cartService: CartService
+    private cartService: CartService,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -51,14 +54,28 @@ export class ViewAmbassadorCartPage implements OnInit {
     this.menu.enable(true, 'ambassador-menu');
     this.cartService.loadCart();
     this.items = this.cartService.getItems();
+    this.removeImage = this.items.map((item)=>{
+      return {id:item.id}})
     this.ViewCart();
-    this.GetMerchImage();
+    //this.GetMerchImage();
     this.username = localStorage.getItem('UserName');
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   ionViewDidEnter() {
     this.ViewCart();
     this.GetMerchImage()
+   
   }
 
   async ViewCart() {
@@ -112,7 +129,7 @@ export class ViewAmbassadorCartPage implements OnInit {
 
   GetMerchImage() {
     this.imageArray = new Array(this.items.length).fill(null);
-
+    if(this.imageArray.length > 0){this.showLoading()}
     this.items.forEach((obj: any) => {
       let index = this.items.findIndex((x) => x.id == obj.id);
 
@@ -134,11 +151,25 @@ export class ViewAmbassadorCartPage implements OnInit {
         });
       }
     });
+
+  
   }
 
   LoadImage(name: string) {
     return this.imageArray.find((x) => x?.name === name)?.image;
   }
+
+  onLoad(id: number){
+    if(this.imageArray.length > 0)
+    {
+      this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+      if(this.removeImage.length == 0)
+      {
+       this.loadingCtrl.dismiss()
+      }
+    }
+    
+ }
 
   increment(item) {
     item.quantity += 1;

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController, ModalController, PopoverController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { CartItem } from 'src/app/Models/CartItem';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -25,6 +25,7 @@ export class ClientSpecialPage implements OnInit {
   session: any;
   ItemQuantity: FormGroup;
   imageArray: any = [];
+  removeImage: any = [];
   selectedItem;
   filterKeys = ['name', 'typeId'];
   search;
@@ -40,7 +41,8 @@ export class ClientSpecialPage implements OnInit {
     private menu: MenuController,
     private fb: FormBuilder,
     private cartService: CartService,
-    private modal:ModalController
+    private modal:ModalController,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -54,6 +56,17 @@ export class ClientSpecialPage implements OnInit {
     this.username = localStorage.getItem('UserName');
   }
 
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
+  }
+
   get TotalItems() {
     // this.cartService.getItems();
     this.cartService.loadCart();
@@ -65,8 +78,12 @@ export class ClientSpecialPage implements OnInit {
   async GetCatalog() {
     this.api.ViewCatelogSpecials().subscribe((data) => {
       this.merchandise = data;
-      console.log(this.merchandise);
+      this.removeImage = this.merchandise.map((item)=>{
+        return {id:item.id}})
+      //console.log(this.removeImage);
+
       this.imageArray = new Array(this.merchandise.length).fill(null);
+      if(this.imageArray.length > 0){this.showLoading()}
       //console.log(this.imageArray);
 
       this.merchandise.forEach((obj: any) => {
@@ -74,6 +91,7 @@ export class ClientSpecialPage implements OnInit {
 
         this.api.GetSpImage(obj.id).subscribe((baseImage: any) => {
           this.imageArray[index] = { id: obj.id, image: baseImage.image };
+          
         });
       });
     });
@@ -87,6 +105,14 @@ export class ClientSpecialPage implements OnInit {
   GetMerchImage(id: number) {
     return this.imageArray.find((x) => x?.id === id)?.image;
   }
+
+  onLoad(id: number){
+   this.removeImage = this.removeImage.filter((x) => x?.id !== id);
+   if(this.removeImage.length == 0)
+   {
+    this.loadingCtrl.dismiss()
+   }
+}
 
   AddToCart(id) {
     var item = this.merchandise.find((x) => x.id === id);
@@ -113,28 +139,34 @@ export class ClientSpecialPage implements OnInit {
   }
 
   incrementQty(index: number) {
-    this.merchandise[index].quantity += 1;
-    if (this.merchandise[index].quantity == 0) {
-      this.setBorderColor = true;
-      this.merchandise[index].id;
-    } else {
-      this.setBorderColor = false;
-      this.merchandise[index].id;
-    }
-  }
 
-  decrementQty(index: number) {
-    if (this.merchandise[index].quantity > 0)
-      this.merchandise[index].quantity -= 1;
-
-    if (this.merchandise[index].quantity == 0) {
-      this.setBorderColor = true;
-      this.merchandise[index].id;
-    } else {
-      this.setBorderColor = false;
-      this.merchandise[index].id;
+    let item = this.merchandise.find((x) => x?.id === index); 
+    item.quantity += 1;
+  
+      if (item.quantity == 0) {
+        this.setBorderColor = true;
+        item.id;
+      } else {
+        this.setBorderColor = false;
+        item.id;
+      }
+  
     }
-  }
+  
+    decrementQty(index: number) {
+      let item = this.merchandise.find((x) => x?.id === index);
+
+      if (item.quantity > 0)
+       item.quantity -= 1;
+  
+      if (item.quantity == 0) {
+        this.setBorderColor = true;
+        item.id;
+      } else {
+        this.setBorderColor = false;
+        item.id;
+      }
+    }
 
   ViewItem(id: number) {
     localStorage.setItem('SpecialItem', JSON.stringify(id));

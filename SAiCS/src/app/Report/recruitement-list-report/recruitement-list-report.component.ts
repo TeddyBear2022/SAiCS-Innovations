@@ -163,7 +163,10 @@ export class RecruitementListReportComponent implements OnInit {
           scales:{
             y: {
               beginAtZero: true,
-              title: { display: true, text: 'Total Requests' }
+              title: { display: true, text: 'Total Requests' },
+              ticks: {
+                  stepSize: 5
+              }
             },
             x: {
               beginAtZero: true,

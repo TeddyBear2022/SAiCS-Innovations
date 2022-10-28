@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
-import { AlertController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { Special } from 'src/app/Models/Special';
 import { ProfilePopoverComponent } from 'src/app/profile-popover/profile-popover.component';
 import { ApiService } from 'src/app/Services/api.service';
@@ -26,7 +26,8 @@ export class ViewSpecialPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController,
     private alert:AlertController,
-    private menu:MenuController
+    private menu:MenuController,
+    private loadingCtrl: LoadingController
     ) { }
 
   ngOnInit() {
@@ -39,13 +40,24 @@ export class ViewSpecialPage implements OnInit {
   
   ionViewDidEnter(){
     this.GetInfo()
+    this.showLoading()
     //this.GetMerchImage()
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
   }
 
   GetInfo()
   {
   
-
     this.api.GetAllSpecials().subscribe((data) => {
       this.specials = data
       this.imageArray = new Array(this.specials.length).fill(null);
@@ -60,7 +72,15 @@ export class ViewSpecialPage implements OnInit {
       })
     })
 
-    });
+    },
+    (error) => { console.log(error) },
+    () => {
+      console.log("log");
+      setTimeout(() => {
+        this.loadingCtrl.dismiss()
+      }, 10000);
+   
+  });
 
       this.api.GetSpecialTypes().subscribe(res => {
         this.specialTypes = res
@@ -92,8 +112,8 @@ export class ViewSpecialPage implements OnInit {
       if(res.body == "Deleted")
       {
         message = "Item deleted Sucessfully deleted"
-        this.Notif(message) 
-        this.GetInfo()
+        this.Notif(message).then(() => this.GetInfo())
+        
         this.presentToast()
         console.log('Confirm Ok');
       }
@@ -109,6 +129,7 @@ export class ViewSpecialPage implements OnInit {
           {
             console.log(res.body);
             this.GetInfo()
+            this.showLoading()
           }
           else
           {
@@ -132,6 +153,7 @@ export class ViewSpecialPage implements OnInit {
 
  async DeleteSpecial(id: number)
   {
+   
     const alert = await this.alertController.create({
       cssClass: 'messageAlert',
       message: 'Are you sure you would like to permanently remove this item? ',
@@ -150,6 +172,7 @@ export class ViewSpecialPage implements OnInit {
           handler: () => {
             
             console.log('Confirm Cancel');
+            
           }
         }
       ]
@@ -176,7 +199,7 @@ async presentToast() {
     duration: 5000
   });
   toast.present(); 
-  window.location.reload() 
+  //window.location.reload() 
 }
 
   //Profile popover

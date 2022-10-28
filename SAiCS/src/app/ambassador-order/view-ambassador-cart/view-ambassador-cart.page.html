@@ -82,6 +82,7 @@
                         [src]="LoadImage(x.name) | safe: 'url'"
                         height="80cm"
                         width="30cm"
+                        (load)="onLoad(x.id)"
                       />
                       <p>
                         <br />
@@ -120,6 +121,7 @@
                       [ngModelOptions]="{standalone: true}"
                       value="{{x.quantity}}"
                       readonly
+                      type="number"
                     />
 
                     <button

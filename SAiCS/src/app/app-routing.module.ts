@@ -384,6 +384,10 @@ import { ClientAuthGuard } from './AuthGuards/client-guard.guard';
     path: 'rejected',
     loadChildren: () => import('./User/rejected/rejected.module').then( m => m.RejectedPageModule)
   },
+  {
+    path: 'my-ambassador',
+    loadChildren: () => import('./Ambassador/my-ambassador/my-ambassador.module').then( m => m.MyAmbassadorPageModule)
+  },
 
 
 

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, MenuController, PopoverController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, PopoverController } from '@ionic/angular';
 import { AgGridAngular } from 'ag-grid-angular';
 import { RowSelectedEvent, SelectionChangedEvent } from 'ag-grid-community';
 import { Special } from 'src/app/Models/Special';
@@ -50,7 +50,8 @@ export class UpdateSpecialPage implements OnInit {
     private api: ApiService,
     private fb: FormBuilder,
     private alert: AlertController,
-    private menu:MenuController
+    private menu:MenuController,
+    private loadingCtrl: LoadingController
   ) {
     this.existingSpecial = JSON.parse(localStorage.getItem('UpdateId'));
   }
@@ -72,6 +73,17 @@ export class UpdateSpecialPage implements OnInit {
     });
   }
 
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      cssClass: 'custom-loading',
+      spinner: 'lines',
+    });
+    
+    loading.present();
+    
+  }
+  
   GetSpecialById(id: number) {
     this.api.GetSpecialById(id).subscribe((data) => {
       this.setData = data;
